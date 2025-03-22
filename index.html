@@ -7,96 +7,125 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f8f9fa;
-      margin: 20px;
+      background: linear-gradient(to bottom, #f0f4f8, #f8f9fa);
+      margin: 0;
+      padding: 20px;
       text-align: center;
       color: #333;
     }
     .container {
-      max-width: 800px;
+      max-width: 900px;
       margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
     h1 {
       color: #003087;
+      margin-bottom: 10px;
+    }
+    p.description {
+      font-size: 16px;
+      margin-bottom: 20px;
     }
     /* Container for buemodellen */
     #arcContainer {
       position: relative;
-      width: 800px;
+      width: 100%;
+      max-width: 800px;
       height: 300px;
       margin: 20px auto;
-      background-color: #fff;
+      background: #fff;
       border: 1px solid #ddd;
       border-radius: 0 0 10px 10px;
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
     }
-    /* Seat styling */
+    /* Seteelementa langs buen */
     .seat {
       width: 12px;
       height: 12px;
       border-radius: 50%;
       position: absolute;
-      transition: outline 0.3s;
+      transition: transform 0.3s, outline 0.3s;
     }
-    /* Marker dei som stemmer for */
+    .seat:hover {
+      transform: scale(1.2);
+    }
     .seat.voted {
       outline: 2px solid #000;
+      transform: scale(1.3);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
-    /* Partiknappane */
+    /* Partilista */
     #partyList {
       margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
     }
     .party-button {
       display: inline-block;
-      margin: 5px;
-      padding: 8px 12px;
+      padding: 10px 16px;
       cursor: pointer;
-      border: 1px solid;
-      border-radius: 4px;
+      border: 2px solid;
+      border-radius: 6px;
       font-size: 14px;
-      transition: background-color 0.3s, color 0.3s;
+      transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+    }
+    .party-button:hover {
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
     .party-button.selected {
       background-color: #003087;
       color: #fff;
+      border-color: #003087;
     }
     #voteCount {
       margin-top: 15px;
+      font-size: 18px;
       font-weight: bold;
+    }
+    @media (max-width: 600px) {
+      #arcContainer {
+        height: 200px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Stortingsvisualisering</h1>
-    <p>Marker dei partia som stemmer for, og sjå korleis seta i Stortinget vert fremheva.</p>
+    <p class="description">Marker dei partia som stemmer for, og sjå korleis seta i Stortinget vert framheva.</p>
     
-    <!-- Container for buemodellen -->
+    <!-- Buemodellen for sete­fordeling -->
     <div id="arcContainer"></div>
     
-    <!-- Liste over partia -->
+    <!-- Partiknappane -->
     <div id="partyList"></div>
     
-    <!-- Vis stemmeteljaren -->
+    <!-- Stemmeteljaren -->
     <div id="voteCount"></div>
   </div>
   
   <script>
-    // Partidata
+    // Partidata i ønsket rekkefølge (venstre til høgre)
     const parties = [
-      { name: "Arbeiderpartiet", seats: 48, shorthand: "AP", color: "#ed1b34" },
-      { name: "Høyre", seats: 36, shorthand: "H", color: "#007ac8" },
-      { name: "Senterpartiet", seats: 28, shorthand: "SP", color: "#14773c" },
-      { name: "Fremskrittspartiet", seats: 21, shorthand: "FrP", color: "#002e5e" },
-      { name: "Sosialistisk Venstreparti", seats: 13, shorthand: "SV", color: "#eb2e2d" },
-      { name: "Venstre", seats: 8, shorthand: "V", color: "#00807b" },
       { name: "Rødt", seats: 8, shorthand: "R", color: "#da291c" },
-      { name: "Kristelig Folkeparti", seats: 3, shorthand: "KrF", color: "#ffbe00" },
+      { name: "Sosialistisk Venstreparti", seats: 13, shorthand: "SV", color: "#eb2e2d" },
+      { name: "Arbeiderpartiet", seats: 48, shorthand: "AP", color: "#ed1b34" },
+      { name: "Senterpartiet", seats: 28, shorthand: "SP", color: "#14773c" },
       { name: "Miljøpartiet De Grønne", seats: 3, shorthand: "MDG", color: "#439539" },
+      { name: "Kristelig Folkeparti", seats: 3, shorthand: "KrF", color: "#ffbe00" },
+      { name: "Venstre", seats: 8, shorthand: "V", color: "#00807b" },
+      { name: "Høyre", seats: 36, shorthand: "H", color: "#007ac8" },
+      { name: "Fremskrittspartiet", seats: 21, shorthand: "FrP", color: "#002e5e" },
       { name: "Pasientfokus", seats: 1, shorthand: "PF", color: "#a04d94" }
     ];
     const TOTAL_SEATS = 169;
     
-    // Lag ein array som representerer kvar enkelt sete med tilhøyrande partifarge
+    // Opprett array med seteobjekt basert på partidata
     const seatData = [];
     parties.forEach(party => {
       for (let i = 0; i < party.seats; i++) {
@@ -110,19 +139,19 @@
     const containerHeight = arcContainer.clientHeight;
     const centerX = containerWidth / 2;
     const centerY = containerHeight; // bunnen av containeren
-    const radius = containerHeight;  // bruk containerhøgd som radius
+    const radius = containerHeight;  // bruker containerhøgda som radius
     const arcAngle = 150; // total buens vinkel i grader
-    const startAngleDeg = (180 - arcAngle) / 2; // for eksempel 15°
-    const endAngleDeg = startAngleDeg + arcAngle;  // for eksempel 165°
+    const startAngleDeg = (180 - arcAngle) / 2; 
+    const endAngleDeg = startAngleDeg + arcAngle;
     const startAngle = startAngleDeg * Math.PI / 180;
     const endAngle = endAngleDeg * Math.PI / 180;
     const angleIncrement = (endAngle - startAngle) / (TOTAL_SEATS - 1);
     
-    // Opprett sete-elementa og plasser dei langs buen
+    // Tegn sete­elementa langs buen
     seatData.forEach((seat, index) => {
       const angle = startAngle + index * angleIncrement;
-      const x = centerX + radius * Math.cos(angle) - 6; // 6 = halve setebredda (12px/2)
-      const y = centerY - radius * Math.sin(angle) - 6; // 6 = halve setehøgda
+      const x = centerX + radius * Math.cos(angle) - 6; // 6 = halve breidda til seta (12px/2)
+      const y = centerY - radius * Math.sin(angle) - 6; // 6 = halve høgda til seta
       const seatDiv = document.createElement('div');
       seatDiv.className = 'seat';
       seatDiv.style.left = `${x}px`;
@@ -149,7 +178,7 @@
       partyList.appendChild(btn);
     });
     
-    // Oppdater seta for å reflektere kva parti som er markerte
+    // Oppdater setevisninga basert på kva parti som er valgt
     function updateSeats() {
       const selectedParties = Array.from(document.querySelectorAll('.party-button.selected'))
                                   .map(btn => btn.dataset.party);
