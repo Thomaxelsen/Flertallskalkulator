@@ -1,723 +1,180 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flertallskalkulator – Stortinget</title>
-    <style>
-        :root {
-            --primary-color: #003087;
-            --secondary-color: #c8102e;
-            --success-color: #28a745;
-            --fail-color: #dc3545;
-            --neutral-color: #6c757d;
-            --light-bg: #f8f9fa;
-            --border-color: #dee2e6;
-        }
-        
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: var(--light-bg);
-            line-height: 1.6;
-            color: #333;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 30px;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 15px;
-        }
-        
-        .header-image {
-            width: 60px;
-            margin-right: 20px;
-        }
-        
-        header h1 {
-            color: var(--primary-color);
-            font-size: 28px;
-        }
-        
-        .description {
-            margin-bottom: 25px;
-            padding: 15px;
-            background-color: white;
-            border-radius: 6px;
-            border-left: 5px solid var(--primary-color);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .info-text {
-            font-size: 15px;
-            color: #555;
-        }
-        
-        .party-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        
-        .party-card {
-            background: white;
-            border-radius: 6px;
-            padding: 12px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
-            cursor: pointer;
-            border: 2px solid transparent;
-            display: flex;
-            align-items: center;
-        }
-        
-        .party-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        }
-        
-        .party-card.selected {
-            border-color: var(--primary-color);
-            background-color: rgba(0, 48, 135, 0.05);
-        }
-        
-        .party-icon {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            margin-right: 10px;
-            display: inline-block;
-            text-align: center;
-            color: white;
-            font-weight: bold;
-            line-height: 24px;
-            font-size: 12px;
-        }
-        
-        .party-name {
-            flex-grow: 1;
-        }
-        
-        .party-seats {
-            font-weight: bold;
-            color: var(--primary-color);
-            margin-left: 5px;
-        }
-        
-        .result-container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 6px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            margin-bottom: 25px;
-        }
-        
-        .result-header {
-            color: var(--primary-color);
-            margin-bottom: 15px;
-            font-size: 22px;
-        }
-        
-        .result-details {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .result-box {
-            flex: 1;
-            min-width: 220px;
-            padding: 15px;
-            border-radius: 6px;
-            text-align: center;
-        }
-        
-        .result-value {
-            font-size: 32px;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-        
-        .result-label {
-            font-size: 14px;
-            color: #666;
-        }
-        
-        .result-status {
-            padding: 15px;
-            border-radius: 6px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 18px;
-            margin-top: 15px;
-        }
-        
-        .required-votes {
-            background-color: #f8f9fa;
-            color: var(--neutral-color);
-        }
-        
-        .votes-for {
-            background-color: rgba(0, 48, 135, 0.1);
-            color: var(--primary-color);
-        }
-        
-        .votes-against {
-            background-color: rgba(200, 16, 46, 0.1);
-            color: var(--secondary-color);
-        }
-        
-        .has-majority {
-            background-color: var(--success-color);
-            color: white;
-        }
-        
-        .no-majority {
-            background-color: var(--fail-color);
-            color: white;
-        }
-        
-        .progress-container {
-            height: 30px;
-            background-color: #e9ecef;
-            border-radius: 15px;
-            margin: 20px 0;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .progress-bar {
-            height: 100%;
-            background-color: var(--primary-color);
-            transition: width 0.3s ease;
-            border-radius: 15px;
-        }
-        
-        .progress-bar.majority {
-            background-color: var(--success-color);
-        }
-        
-        .progress-labels {
-            position: absolute;
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            padding: 0 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: white;
-            font-weight: bold;
-            text-shadow: 0 0 3px rgba(0,0,0,0.5);
-        }
-        
-        .selected-parties {
-            margin-top: 20px;
-        }
-        
-        .selected-parties-title {
-            font-size: 18px;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-        }
-        
-        .party-tag {
-            display: inline-block;
-            padding: 5px 10px;
-            background-color: var(--light-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            margin: 5px;
-            font-size: 14px;
-        }
-        
-        .party-tag-ap { background-color: rgba(237, 27, 52, 0.1); border-color: #ed1b34; }
-        .party-tag-h { background-color: rgba(0, 122, 200, 0.1); border-color: #007ac8; }
-        .party-tag-sp { background-color: rgba(20, 119, 60, 0.1); border-color: #14773c; }
-        .party-tag-frp { background-color: rgba(0, 46, 94, 0.1); border-color: #002e5e; }
-        .party-tag-sv { background-color: rgba(235, 46, 45, 0.1); border-color: #eb2e2d; }
-        .party-tag-v { background-color: rgba(0, 128, 123, 0.1); border-color: #00807b; }
-        .party-tag-r { background-color: rgba(218, 41, 28, 0.1); border-color: #da291c; }
-        .party-tag-krf { background-color: rgba(255, 190, 0, 0.1); border-color: #ffbe00; }
-        .party-tag-mdg { background-color: rgba(67, 149, 57, 0.1); border-color: #439539; }
-        .party-tag-pf { background-color: rgba(160, 77, 148, 0.1); border-color: #a04d94; }
-        
-        .icon-ap { background-color: #ed1b34; }
-        .icon-h { background-color: #007ac8; }
-        .icon-sp { background-color: #14773c; }
-        .icon-frp { background-color: #002e5e; }
-        .icon-sv { background-color: #eb2e2d; }
-        .icon-v { background-color: #00807b; }
-        .icon-r { background-color: #da291c; }
-        .icon-krf { background-color: #ffbe00; color: #333; }
-        .icon-mdg { background-color: #439539; }
-        .icon-pf { background-color: #a04d94; }
-        
-        .action-buttons {
-            margin: 25px 0;
-            display: flex;
-            gap: 10px;
-        }
-        
-        button {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.2s;
-        }
-        
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        
-        .btn-secondary {
-            background-color: var(--neutral-color);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background-color: #002066;
-        }
-        
-        .btn-secondary:hover {
-            background-color: #5a6268;
-        }
-        
-        footer {
-            margin-top: 30px;
-            border-top: 1px solid var(--border-color);
-            padding-top: 15px;
-            font-size: 14px;
-            color: #777;
-            text-align: center;
-        }
-        
-        @media (max-width: 768px) {
-            .party-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            }
-            
-            .result-details {
-                flex-direction: column;
-            }
-            
-            .progress-labels {
-                font-size: 14px;
-            }
-            
-            .action-buttons {
-                flex-direction: column;
-            }
-        }
-
-        /* Ny CSS for blokk-visualisering av seter */
-        .seat-visualization {
-            display: grid;
-            grid-template-columns: repeat(13, 1fr);
-            gap: 5px;
-            margin: 20px 0;
-            padding: 10px;
-            background-color: white;
-            border-radius: 6px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .seat {
-            width: 20px;
-            height: 20px;
-            border-radius: 3px;
-        }
-        .seat.selected-seat {
-            outline: 2px solid #000;
-        }
-
-        /* Ny CSS for saksbasert analyse */
-        #caseAnalysis {
-            background-color: white;
-            padding: 20px;
-            border-radius: 6px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            margin-bottom: 25px;
-        }
-        #caseAnalysis h2 {
-            color: var(--primary-color);
-            margin-bottom: 15px;
-        }
-        .case-card {
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-        .case-header {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .case-details {
-            font-size: 14px;
-            color: #555;
-            margin-bottom: 10px;
-        }
-        .case-result {
-            font-weight: bold;
-            margin-top: 10px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stortingsvisualisering</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      margin: 20px;
+      text-align: center;
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #003087;
+    }
+    /* Container for buemodellen */
+    #arcContainer {
+      position: relative;
+      width: 800px;
+      height: 300px;
+      margin: 20px auto;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 0 0 10px 10px;
+    }
+    /* Seat styling */
+    .seat {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      position: absolute;
+      transition: outline 0.3s;
+    }
+    /* Marker dei som stemmer for */
+    .seat.voted {
+      outline: 2px solid #000;
+    }
+    /* Partiknappane */
+    #partyList {
+      margin-top: 20px;
+    }
+    .party-button {
+      display: inline-block;
+      margin: 5px;
+      padding: 8px 12px;
+      cursor: pointer;
+      border: 1px solid;
+      border-radius: 4px;
+      font-size: 14px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .party-button.selected {
+      background-color: #003087;
+      color: #fff;
+    }
+    #voteCount {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="header-image">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="#003087">
-                    <path d="M50 5C25.1 5 5 25.1 5 50s20.1 45 45 45 45-20.1 45-45S74.9 5 50 5zm0 85c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40-17.9 40-40 40z"/>
-                    <path d="M65 35H35v30h30V35zm-5 25H40V40h20v20z"/>
-                    <rect x="45" y="25" width="10" height="50"/>
-                    <rect x="25" y="45" width="50" height="10"/>
-                </svg>
-            </div>
-            <h1>Flertallskalkulator – Stortinget</h1>
-        </header>
-        
-        <div class="description">
-            <p>Velg partiene som stemmer <strong>for</strong> forslaget for å se om det oppnår flertall på Stortinget.</p>
-            <p class="info-text">Stortinget har totalt 169 representanter. Et forslag trenger minst 85 stemmer for å få flertall.</p>
-        </div>
-        
-        <div class="party-grid" id="partyGrid">
-            <!-- Partikort opprettast via JavaScript -->
-        </div>
-        
-        <div class="action-buttons">
-            <button class="btn-primary" id="selectAllBtn">Velg alle</button>
-            <button class="btn-secondary" id="clearAllBtn">Fjern alle</button>
-        </div>
-        
-        <div class="result-container">
-            <h2 class="result-header">Resultat</h2>
-            
-            <div class="progress-container">
-                <div class="progress-bar" id="progressBar"></div>
-                <div class="progress-labels">
-                    <span id="votesFor">0</span>
-                    <span id="votesAgainst">169</span>
-                </div>
-            </div>
-            
-            <div class="result-details">
-                <div class="result-box required-votes">
-                    <div class="result-value">85</div>
-                    <div class="result-label">Stemmer nødvendig for flertall</div>
-                </div>
-                
-                <div class="result-box votes-for">
-                    <div class="result-value" id="totalVotesFor">0</div>
-                    <div class="result-label">Stemmer for</div>
-                </div>
-                
-                <div class="result-box votes-against">
-                    <div class="result-value" id="totalVotesAgainst">169</div>
-                    <div class="result-label">Stemmer mot</div>
-                </div>
-            </div>
-            
-            <div class="result-status no-majority" id="majorityStatus">
-                Ingen flertall (trenger 85 stemmer minst)
-            </div>
-            
-            <div class="selected-parties">
-                <h3 class="selected-parties-title">Partier som stemmer for:</h3>
-                <div id="selectedPartyTags"></div>
-            </div>
-        </div>
-        
-        <!-- Ny blokk-visualisering av setefordeling -->
-        <div class="seat-visualization" id="seatVisualization"></div>
-        
-        <!-- Ny saksbasert analyse -->
-        <section id="caseAnalysis">
-            <h2>Saksbasert analyse</h2>
-            <div>
-                <label for="caseCategoryFilter">Filtrer saker etter kategori: </label>
-                <select id="caseCategoryFilter">
-                    <option value="all">Alle</option>
-                    <option value="miljø">Miljø</option>
-                    <option value="skatt">Skatt</option>
-                    <option value="forsvar">Forsvar</option>
-                </select>
-            </div>
-            <div id="caseList"></div>
-        </section>
-        
-        <footer>
-            Data basert på mandatfordeling etter Stortingsvalget 2021. Til bruk for informasjonsformål.
-        </footer>
-    </div>
+  <div class="container">
+    <h1>Stortingsvisualisering</h1>
+    <p>Marker dei partia som stemmer for, og sjå korleis seta i Stortinget vert fremheva.</p>
     
-    <script>
-        // Partidata med fargar og forkortingar
-        const parties = [
-            { name: "Arbeiderpartiet", seats: 48, shorthand: "AP", color: "#ed1b34", classPrefix: "ap" },
-            { name: "Høyre", seats: 36, shorthand: "H", color: "#007ac8", classPrefix: "h" },
-            { name: "Senterpartiet", seats: 28, shorthand: "SP", color: "#14773c", classPrefix: "sp" },
-            { name: "Fremskrittspartiet", seats: 21, shorthand: "FrP", color: "#002e5e", classPrefix: "frp" },
-            { name: "Sosialistisk Venstreparti", seats: 13, shorthand: "SV", color: "#eb2e2d", classPrefix: "sv" },
-            { name: "Venstre", seats: 8, shorthand: "V", color: "#00807b", classPrefix: "v" },
-            { name: "Rødt", seats: 8, shorthand: "R", color: "#da291c", classPrefix: "r" },
-            { name: "Kristelig Folkeparti", seats: 3, shorthand: "KrF", color: "#ffbe00", classPrefix: "krf" },
-            { name: "Miljøpartiet De Grønne", seats: 3, shorthand: "MDG", color: "#439539", classPrefix: "mdg" },
-            { name: "Pasientfokus", seats: 1, shorthand: "PF", color: "#a04d94", classPrefix: "pf" }
-        ];
-
-        const TOTAL_SEATS = 169;
-        const MAJORITY_THRESHOLD = 85;
-
-        // Henting av DOM-element
-        const partyGrid = document.getElementById('partyGrid');
-        const progressBar = document.getElementById('progressBar');
-        const votesForLabel = document.getElementById('votesFor');
-        const votesAgainstLabel = document.getElementById('votesAgainst');
-        const totalVotesFor = document.getElementById('totalVotesFor');
-        const totalVotesAgainst = document.getElementById('totalVotesAgainst');
-        const majorityStatus = document.getElementById('majorityStatus');
-        const selectedPartyTags = document.getElementById('selectedPartyTags');
-        const selectAllBtn = document.getElementById('selectAllBtn');
-        const clearAllBtn = document.getElementById('clearAllBtn');
-        const seatVisualization = document.getElementById('seatVisualization');
-        const caseCategoryFilter = document.getElementById('caseCategoryFilter');
-        const caseList = document.getElementById('caseList');
-
-        // Oppretting av partikort
-        parties.forEach(party => {
-            const partyCard = document.createElement('div');
-            partyCard.className = 'party-card';
-            partyCard.dataset.seats = party.seats;
-            partyCard.dataset.name = party.name;
-            partyCard.dataset.shorthand = party.shorthand;
-            partyCard.dataset.classPrefix = party.classPrefix;
-            
-            const partyIcon = document.createElement('span');
-            partyIcon.className = `party-icon icon-${party.classPrefix}`;
-            partyIcon.textContent = party.shorthand.charAt(0);
-            
-            const partyName = document.createElement('span');
-            partyName.className = 'party-name';
-            partyName.textContent = party.name;
-            
-            const partySeats = document.createElement('span');
-            partySeats.className = 'party-seats';
-            partySeats.textContent = party.seats;
-            
-            partyCard.appendChild(partyIcon);
-            partyCard.appendChild(partyName);
-            partyCard.appendChild(partySeats);
-            
-            partyCard.addEventListener('click', () => toggleParty(partyCard));
-            
-            partyGrid.appendChild(partyCard);
-        });
-
-        // Oppretting av blokk-visualisering av seter
-        function createSeatVisualization() {
-            seatVisualization.innerHTML = '';
-            parties.forEach(party => {
-                for (let i = 0; i < party.seats; i++) {
-                    const seat = document.createElement('div');
-                    seat.className = 'seat';
-                    seat.dataset.classPrefix = party.classPrefix;
-                    seat.title = party.name;
-                    seat.style.backgroundColor = party.color;
-                    seatVisualization.appendChild(seat);
-                }
-            });
+    <!-- Container for buemodellen -->
+    <div id="arcContainer"></div>
+    
+    <!-- Liste over partia -->
+    <div id="partyList"></div>
+    
+    <!-- Vis stemmeteljaren -->
+    <div id="voteCount"></div>
+  </div>
+  
+  <script>
+    // Partidata
+    const parties = [
+      { name: "Arbeiderpartiet", seats: 48, shorthand: "AP", color: "#ed1b34" },
+      { name: "Høyre", seats: 36, shorthand: "H", color: "#007ac8" },
+      { name: "Senterpartiet", seats: 28, shorthand: "SP", color: "#14773c" },
+      { name: "Fremskrittspartiet", seats: 21, shorthand: "FrP", color: "#002e5e" },
+      { name: "Sosialistisk Venstreparti", seats: 13, shorthand: "SV", color: "#eb2e2d" },
+      { name: "Venstre", seats: 8, shorthand: "V", color: "#00807b" },
+      { name: "Rødt", seats: 8, shorthand: "R", color: "#da291c" },
+      { name: "Kristelig Folkeparti", seats: 3, shorthand: "KrF", color: "#ffbe00" },
+      { name: "Miljøpartiet De Grønne", seats: 3, shorthand: "MDG", color: "#439539" },
+      { name: "Pasientfokus", seats: 1, shorthand: "PF", color: "#a04d94" }
+    ];
+    const TOTAL_SEATS = 169;
+    
+    // Lag ein array som representerer kvar enkelt sete med tilhøyrande partifarge
+    const seatData = [];
+    parties.forEach(party => {
+      for (let i = 0; i < party.seats; i++) {
+        seatData.push({ party: party.shorthand, color: party.color });
+      }
+    });
+    
+    // Konfigurasjon for buen
+    const arcContainer = document.getElementById('arcContainer');
+    const containerWidth = arcContainer.clientWidth;
+    const containerHeight = arcContainer.clientHeight;
+    const centerX = containerWidth / 2;
+    const centerY = containerHeight; // bunnen av containeren
+    const radius = containerHeight;  // bruk containerhøgd som radius
+    const arcAngle = 150; // total buens vinkel i grader
+    const startAngleDeg = (180 - arcAngle) / 2; // for eksempel 15°
+    const endAngleDeg = startAngleDeg + arcAngle;  // for eksempel 165°
+    const startAngle = startAngleDeg * Math.PI / 180;
+    const endAngle = endAngleDeg * Math.PI / 180;
+    const angleIncrement = (endAngle - startAngle) / (TOTAL_SEATS - 1);
+    
+    // Opprett sete-elementa og plasser dei langs buen
+    seatData.forEach((seat, index) => {
+      const angle = startAngle + index * angleIncrement;
+      const x = centerX + radius * Math.cos(angle) - 6; // 6 = halve setebredda (12px/2)
+      const y = centerY - radius * Math.sin(angle) - 6; // 6 = halve setehøgda
+      const seatDiv = document.createElement('div');
+      seatDiv.className = 'seat';
+      seatDiv.style.left = `${x}px`;
+      seatDiv.style.top = `${y}px`;
+      seatDiv.style.backgroundColor = seat.color;
+      seatDiv.dataset.party = seat.party;
+      arcContainer.appendChild(seatDiv);
+    });
+    
+    // Opprett knappar for partia
+    const partyList = document.getElementById('partyList');
+    parties.forEach(party => {
+      const btn = document.createElement('div');
+      btn.className = 'party-button';
+      btn.style.borderColor = party.color;
+      btn.style.color = party.color;
+      btn.textContent = `${party.name} (${party.seats})`;
+      btn.dataset.party = party.shorthand;
+      btn.addEventListener('click', () => {
+        btn.classList.toggle('selected');
+        updateSeats();
+        updateVoteCount();
+      });
+      partyList.appendChild(btn);
+    });
+    
+    // Oppdater seta for å reflektere kva parti som er markerte
+    function updateSeats() {
+      const selectedParties = Array.from(document.querySelectorAll('.party-button.selected'))
+                                  .map(btn => btn.dataset.party);
+      const seats = document.querySelectorAll('.seat');
+      seats.forEach(seat => {
+        if (selectedParties.includes(seat.dataset.party)) {
+          seat.classList.add('voted');
+        } else {
+          seat.classList.remove('voted');
         }
-
-        // Oppdater visualiseringa basert på val
-        function updateSeatVisualization() {
-            const seats = seatVisualization.querySelectorAll('.seat');
-            seats.forEach(seat => {
-                const classPrefix = seat.dataset.classPrefix;
-                const partyCard = document.querySelector(`.party-card[data-class-prefix="${classPrefix}"]`);
-                if (partyCard && partyCard.classList.contains('selected')) {
-                    seat.classList.add('selected-seat');
-                } else {
-                    seat.classList.remove('selected-seat');
-                }
-            });
+      });
+    }
+    
+    // Oppdater stemmeteljaren
+    function updateVoteCount() {
+      const selectedParties = Array.from(document.querySelectorAll('.party-button.selected'))
+                                  .map(btn => btn.dataset.party);
+      let votes = 0;
+      parties.forEach(party => {
+        if (selectedParties.includes(party.shorthand)) {
+          votes += party.seats;
         }
-
-        // Dummy saker for saksbasert analyse
-        const cases = [
-            {
-                id: 1,
-                title: "Miljøtiltak for reduksjon av CO2",
-                category: "miljø",
-                description: "Tiltak for å redusere klimagassutslipp og fremme bærekraftig utvikling.",
-                support: ["AP", "SV", "MDG"],
-                oppose: ["FrP"]
-            },
-            {
-                id: 2,
-                title: "Økt skatt for høyinntektsgrupper",
-                category: "skatt",
-                description: "Forslag om høyere skatt for de med høy inntekt for å styrke velferdsstaten.",
-                support: ["AP", "SV", "H"],
-                oppose: ["FrP", "V"]
-            },
-            {
-                id: 3,
-                title: "Økt forsvarsbudsjett",
-                category: "forsvar",
-                description: "Øke bevilgninger til forsvaret for å styrke nasjonal sikkerhet.",
-                support: ["H", "FrP"],
-                oppose: ["AP", "SV"]
-            }
-        ];
-
-        // Oppdater sakslista basert på filtrering
-        function updateCaseList() {
-            caseList.innerHTML = '';
-            const selectedCategory = caseCategoryFilter.value;
-            const filteredCases = selectedCategory === 'all' ? cases : cases.filter(c => c.category === selectedCategory);
-
-            filteredCases.forEach(c => {
-                const caseCard = document.createElement('div');
-                caseCard.className = 'case-card';
-
-                const header = document.createElement('div');
-                header.className = 'case-header';
-                header.textContent = c.title;
-                caseCard.appendChild(header);
-
-                const details = document.createElement('div');
-                details.className = 'case-details';
-                details.textContent = c.description;
-                caseCard.appendChild(details);
-
-                // Kalkuler potensielle stemmer og stemmer frå valde partier
-                let potentialVotes = 0;
-                let selectedVotes = 0;
-                c.support.forEach(shorthand => {
-                    const party = parties.find(p => p.shorthand === shorthand);
-                    if (party) {
-                        potentialVotes += party.seats;
-                        const partyCard = document.querySelector(`.party-card[data-class-prefix="${party.classPrefix}"]`);
-                        if (partyCard && partyCard.classList.contains('selected')) {
-                            selectedVotes += party.seats;
-                        }
-                    }
-                });
-
-                const resultDiv = document.createElement('div');
-                resultDiv.className = 'case-result';
-                resultDiv.innerHTML = `
-                    Potensielle stemmer (hvis alle støtter): ${potentialVotes} <br>
-                    Dine valgte støttande partier: ${selectedVotes} <br>
-                    ${potentialVotes >= MAJORITY_THRESHOLD ? '<span style="color: green;">Flertall kan oppnås</span>' : '<span style="color: red;">Flertall oppnås ikke</span>'}
-                `;
-                caseCard.appendChild(resultDiv);
-
-                caseList.appendChild(caseCard);
-            });
-        }
-
-        // Toggle partivalg
-        function toggleParty(partyCard) {
-            partyCard.classList.toggle('selected');
-            updateResults();
-        }
-
-        // Valgknappar for å velje/fjerne alle
-        selectAllBtn.addEventListener('click', () => {
-            document.querySelectorAll('.party-card').forEach(card => {
-                card.classList.add('selected');
-            });
-            updateResults();
-        });
-
-        clearAllBtn.addEventListener('click', () => {
-            document.querySelectorAll('.party-card').forEach(card => {
-                card.classList.remove('selected');
-            });
-            updateResults();
-        });
-
-        // Oppdater resultata, seteverdien og saksanalysen
-        function updateResults() {
-            const selectedParties = Array.from(document.querySelectorAll('.party-card.selected'));
-            const votesFor = selectedParties.reduce((total, party) => total + parseInt(party.dataset.seats), 0);
-            const votesAgainst = TOTAL_SEATS - votesFor;
-            const hasMajority = votesFor >= MAJORITY_THRESHOLD;
-            
-            // Oppdater progressbar
-            const percentage = (votesFor / TOTAL_SEATS) * 100;
-            progressBar.style.width = `${percentage}%`;
-            
-            if (hasMajority) {
-                progressBar.classList.add('majority');
-            } else {
-                progressBar.classList.remove('majority');
-            }
-            
-            // Oppdater stemmeteljaren
-            votesForLabel.textContent = votesFor;
-            votesAgainstLabel.textContent = votesAgainst;
-            totalVotesFor.textContent = votesFor;
-            totalVotesAgainst.textContent = votesAgainst;
-            
-            // Oppdater flertalstatus
-            if (hasMajority) {
-                majorityStatus.className = 'result-status has-majority';
-                majorityStatus.textContent = `Flertall oppnådd med ${votesFor} stemmer`;
-            } else {
-                majorityStatus.className = 'result-status no-majority';
-                const votesNeeded = MAJORITY_THRESHOLD - votesFor;
-                majorityStatus.textContent = `Ingen flertall (trenger ${votesNeeded} fleire stemmer)`;
-            }
-            
-            // Oppdater lista over valde parti
-            selectedPartyTags.innerHTML = '';
-            if (selectedParties.length === 0) {
-                const noPartyTag = document.createElement('span');
-                noPartyTag.className = 'party-tag';
-                noPartyTag.textContent = 'Ingen partier vald';
-                selectedPartyTags.appendChild(noPartyTag);
-            } else {
-                selectedParties.forEach(party => {
-                    const tag = document.createElement('span');
-                    tag.className = `party-tag party-tag-${party.dataset.classPrefix}`;
-                    tag.textContent = `${party.dataset.shorthand} (${party.dataset.seats})`;
-                    selectedPartyTags.appendChild(tag);
-                });
-            }
-
-            // Oppdater blokk-visualisering og saksanalyse
-            updateSeatVisualization();
-            updateCaseList();
-        }
-
-        // Initialisering
-        createSeatVisualization();
-        updateResults();
-
-        // Oppdater saksanalysen ved endring av kategori
-        caseCategoryFilter.addEventListener('change', updateCaseList);
-    </script>
+      });
+      document.getElementById('voteCount').textContent = `Stemmer for: ${votes} av ${TOTAL_SEATS}`;
+    }
+  </script>
 </body>
 </html>
