@@ -601,21 +601,22 @@ function addQuoteStyles() {
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
-        .info-indicator {
-            position: absolute;
-            right: 5px;
-            top: 4px;
-            font-size: 10px;
-            width: 14px;
-            height: 14px;
-            line-height: 14px;
-            text-align: center;
-            border-radius: 50%;
-            background-color: rgba(255,255,255,0.7);
-            color: #555;
-            font-style: italic;
-            font-weight: bold;
-        }
+       .info-indicator {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 10px;
+    width: 14px;
+    height: 14px;
+    line-height: 14px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: rgba(255,255,255,0.7);
+    color: #555;
+    font-style: italic;
+    font-weight: bold;
+}
         
         .interaction-tip {
             font-size: 0.8rem;
