@@ -56,14 +56,14 @@ function createIssueSelector() {
         </div>
     `;
     
-    // Plasser saksvelgeren på siden
-    // Legg den mellom partilisten og blokkvisualiseringen
-    const partySection = document.querySelector('.party-section');
-    const sectionDivider = document.querySelector('.section-divider');
-    
-    if (partySection && sectionDivider) {
-        partySection.parentNode.insertBefore(issueSelectorContainer, sectionDivider);
-    }
+// Plasser saksvelgeren på siden
+// Legg den i høyre kolonne
+const resultContainer = document.querySelector('.result-container');
+
+if (resultContainer) {
+    // Legg saksvelgeren etter resultatboksen
+    resultContainer.parentNode.insertBefore(issueSelectorContainer, resultContainer.nextSibling);
+}
     
     // Legg til hendelseslyttere
     setupIssueSelectionListeners();
