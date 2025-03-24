@@ -6,7 +6,7 @@ const issues = [
     name: "Fleksibel sykepengeordning",
     partiesInAgreement: ["SP", "FrP"],
     partyQuotes: {
-      "SP": "Giete ut mulighetene for at personer med alvorlige diagnoser som er under aktiv behandling, får nødvendig fleksibilitet når det gjelder sykemeldinga si lengde og gradering, samt bedre høve for arbeidsnærvær og økonomisk tryggleik i behandlingsperioden ut over et år. Arbeidsgiver må i denne perioden gjevast fritak for arbeidsgiveravsperioden for sjukepengar.",
+      "SP": "Greie ut mulighetene for at personer med alvorlige diagnoser som er under aktiv behandling, får nødvendig fleksibilitet når det gjelder sykemeldinga si lengde og gradering, samt bedre høve for arbeidsnærvær og økonomisk tryggleik i behandlingsperioden ut over et år. Arbeidsgiver må i denne perioden gjevast fritak for arbeidsgiveravsperioden for sjukepengar.",
       "FrP": "Sikre en god og forutsigbar sykelønnordning for arbeidstakere, og innføre en tidskonto-ordning som sikrer gode muligheter for å stå delvis i arbeid under sykemelding."
     }
   },
