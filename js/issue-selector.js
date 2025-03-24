@@ -409,10 +409,28 @@ function showPartyQuoteHover(issueId, partyCode, targetElement) {
     // but ensure it stays within viewport
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
+    const scrollY = window.scrollY || window.pageYOffset;
+    
+    // Beregn tilgjengelig plass under og over elementet
+    const spaceBelow = viewportHeight - (rect.bottom - scrollY);
+    const spaceAbove = rect.top - scrollY;
     
     // Default position (right of button)
     let left = rect.right + 10;
-    let top = rect.top - 10;
+    let top;
+    
+    // Sjekk om vi har mer plass under eller over elementet
+    const preferAbove = spaceBelow < 200 && spaceAbove > spaceBelow;
+    
+    if (preferAbove) {
+        // Plasser popup over elementet hvis det er mer plass der
+        top = rect.top - 10;
+        modalContent.style.transformOrigin = 'bottom left';
+    } else {
+        // Plasser popup under eller ved siden av elementet
+        top = rect.top;
+        modalContent.style.transformOrigin = 'top left';
+    }
     
     // Set max-width based on available space
     const maxWidth = viewportWidth - left - 20;
@@ -421,21 +439,54 @@ function showPartyQuoteHover(issueId, partyCode, targetElement) {
     // If not enough space on right, place it on left
     if (left + 400 > viewportWidth) {
         left = Math.max(10, rect.left - 400 - 10);
+        modalContent.style.transformOrigin = preferAbove ? 'bottom right' : 'top right';
     }
     
-    // Check vertical position
-    const modalHeight = 250; // Estimate height
-    if (top + modalHeight > viewportHeight) {
-        top = Math.max(10, viewportHeight - modalHeight - 10);
+    // Sjekk om popup vil gå utenfor skjermen i vertikal retning
+    const modalRect = modalContent.getBoundingClientRect();
+    const modalHeight = modalContent.offsetHeight || 200; // Estimert høyde hvis ikke tilgjengelig
+    
+    // Juster vertikal posisjon for å holde popup innenfor vinduet
+    if (preferAbove) {
+        // Hvis popup er over elementet, sørg for at den ikke går over toppen av vinduet
+        if (top - modalHeight < 0) {
+            top = Math.max(10, scrollY + 10);
+        } else {
+            top = top - modalHeight - 10;
+        }
+    } else {
+        // Hvis popup er under elementet, sørg for at den ikke går utenfor bunnen av vinduet
+        if (top + modalHeight > viewportHeight + scrollY) {
+            // Hvis det ikke er nok plass under, prøv over
+            if (spaceAbove > 200) {
+                top = rect.top - modalHeight - 10;
+                modalContent.style.transformOrigin = left < rect.left ? 'bottom right' : 'bottom left';
+            } else {
+                // Ellers, plasser den så høyt som mulig for å vise så mye som mulig
+                top = scrollY + viewportHeight - modalHeight - 10;
+            }
+        }
     }
     
     // Apply position
     modalContent.style.left = `${left}px`;
     modalContent.style.top = `${top}px`;
-    modalContent.style.position = 'fixed';
+    modalContent.style.position = 'absolute';
     
     // Show the modal
     modal.style.display = 'block';
+    
+    // Sjekk om popup faktisk er synlig og innenfor viewport etter at den er vist
+    setTimeout(() => {
+        const updatedRect = modalContent.getBoundingClientRect();
+        const bottomVisible = updatedRect.bottom <= (window.innerHeight || document.documentElement.clientHeight);
+        
+        // Hvis bunnen av popup ikke er synlig, juster posisjonen ytterligere
+        if (!bottomVisible) {
+            top = scrollY + viewportHeight - modalContent.offsetHeight - 20;
+            modalContent.style.top = `${top}px`;
+        }
+    }, 0);
 }
 
 // Funksjon for å vise parti-sitat (for click mode)
@@ -472,6 +523,7 @@ function showPartyQuoteClick(issueId, partyCode) {
     modalContent.style.top = '';
     modalContent.style.position = '';
     modalContent.style.maxWidth = '';
+    modalContent.style.transformOrigin = '';
     
     // Update content
     const quoteContent = document.getElementById('quoteContent');
@@ -654,6 +706,8 @@ function addQuoteStyles() {
         
         .quote-modal.hover-mode .quote-modal-content {
             pointer-events: auto;
+            max-height: 80vh;
+            overflow-y: auto;
         }
         
         /* Regular modal content styling (centered) */
@@ -664,6 +718,8 @@ function addQuoteStyles() {
             border-radius: 12px;
             width: 90%;
             max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
             box-shadow: 0 4px 25px rgba(0,0,0,0.2);
             animation: modalFadeIn 0.3s;
             position: relative;
@@ -676,10 +732,11 @@ function addQuoteStyles() {
             border-radius: 8px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.15);
             animation: modalFadeIn 0.2s;
-            position: fixed;
+            position: absolute;
             width: auto;
             max-width: 400px;
             z-index: 1001;
+            transition: transform 0.2s ease;
         }
         
         @keyframes modalFadeIn {
@@ -696,9 +753,10 @@ function addQuoteStyles() {
             font-weight: bold;
             cursor: pointer;
             transition: color 0.2s;
+            z-index: 5;
         }
         
-        .hover-mode .close-modal {
+       .hover-mode .close-modal {
             display: none;
         }
         
