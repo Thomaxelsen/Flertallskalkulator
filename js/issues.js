@@ -4,13 +4,13 @@ const issues = [
     id: 1,
     area: "Arbeidsliv",
     name: "Fleksibel sykepengeordning",
-    partiesInAgreement: ["SP", "FRP"] // Partier som har score 2 (helt enig)
+    partiesInAgreement: ["SP", "FrP"] // Partier som har score 2 (helt enig)
   },
   {
     id: 2,
     area: "Arbeidsliv",
     name: "Styrking av kompetansen i NAV",
-    partiesInAgreement: ["R", "AP", "FRP"]
+    partiesInAgreement: ["R", "AP", "FrP"]
   },
   {
     id: 3,
@@ -22,13 +22,13 @@ const issues = [
     id: 4,
     area: "Arbeidsliv",
     name: "Økt bruk av lønnstilskudd",
-    partiesInAgreement: ["SV", "AP", "SP", "MDG", "KRF", "H", "FRP"]
+    partiesInAgreement: ["SV", "AP", "SP", "MDG", "KrF", "H", "FrP"]
   },
   {
     id: 5,
     area: "Arbeidsliv",
     name: "Styrke og øke bruken av arbeidsrettet rehabilitering",
-    partiesInAgreement: ["SP", "H", "FRP"]
+    partiesInAgreement: ["SP", "H", "FrP"]
   },
   {
     id: 6,
@@ -58,19 +58,19 @@ const issues = [
     id: 10,
     area: "Folkehelse og forebygging",
     name: "Nasjonalt tilbud om røykeslutt og forslag om skattlegging av tobakksnæringen",
-    partiesInAgreement: ["AP", "SP", "KRF", "H"]
+    partiesInAgreement: ["AP", "SP", "KrF", "H"]
   },
   {
     id: 11,
     area: "Folkehelse og forebygging",
     name: "Høyere tobakksavgifter",
-    partiesInAgreement: ["KRF"]
+    partiesInAgreement: ["KrF"]
   },
   {
     id: 12,
     area: "Folkehelse og forebygging",
     name: "Restriktiv alkoholpolitikk",
-    partiesInAgreement: ["R", "AP", "SP", "KRF"]
+    partiesInAgreement: ["R", "AP", "SP", "KrF"]
   },
   {
     id: 13,
@@ -94,13 +94,13 @@ const issues = [
     id: 16,
     area: "Folkehelse og forebygging",
     name: "Avvikle taxfree-ordningen for alkohol, tobakks- og nikotinprodukter",
-    partiesInAgreement: ["R", "MDG", "KRF", "V"]
+    partiesInAgreement: ["R", "MDG", "KrF", "V"]
   },
   {
     id: 17,
     area: "Folkehelse og forebygging",
     name: "Utrydde livmorhalskreft og HPV-relatert kreft",
-    partiesInAgreement: ["AP", "H", "FRP"]
+    partiesInAgreement: ["AP", "H", "FrP"]
   },
   {
     id: 18,
@@ -112,7 +112,7 @@ const issues = [
     id: 19,
     area: "Folkehelse og forebygging",
     name: "Sunn skatteveksling",
-    partiesInAgreement: ["R", "KRF", "V"]
+    partiesInAgreement: ["R", "KrF", "V"]
   },
   {
     id: 20,
@@ -130,31 +130,31 @@ const issues = [
     id: 22,
     area: "Forskning og innovasjon",
     name: "Økt satsing på helsenæring",
-    partiesInAgreement: ["AP", "H", "FRP"]
+    partiesInAgreement: ["AP", "H", "FrP"]
   },
   {
     id: 23,
     area: "Forskning og innovasjon",
     name: "Politikk for å begrense antibiotikaresistens",
-    partiesInAgreement: ["R", "AP", "SP", "MDG", "KRF", "V", "H", "FRP"]
+    partiesInAgreement: ["R", "AP", "SP", "MDG", "KrF", "V", "H", "FrP"]
   },
   {
     id: 24,
     area: "Forskning og innovasjon",
     name: "Få opp nasjonal infrastruktur for legemiddelproduksjon",
-    partiesInAgreement: ["R", "SV", "AP", "SP", "MDG", "KRF", "FRP"]
+    partiesInAgreement: ["R", "SV", "AP", "SP", "MDG", "KrF", "FrP"]
   },
   {
     id: 25,
     area: "Forskning og innovasjon",
     name: "Økt bruk av digital hjemmeoppfølging",
-    partiesInAgreement: ["SV", "AP", "MDG", "KRF", "H"]
+    partiesInAgreement: ["SV", "AP", "MDG", "KrF", "H"]
   },
   {
     id: 26,
     area: "Frivillig sektor",
     name: "Økt skattefradrag på gaver",
-    partiesInAgreement: ["SP", "MDG", "KRF", "V", "H", "FRP"]
+    partiesInAgreement: ["SP", "MDG", "KrF", "V", "H", "FrP"]
   },
   {
     id: 27,
@@ -172,7 +172,7 @@ const issues = [
     id: 29,
     area: "Frivillig sektor",
     name: "Gjeninnføre gaveforsterkningsordning",
-    partiesInAgreement: ["V", "H", "FRP"]
+    partiesInAgreement: ["V", "H", "FrP"]
   },
   {
     id: 30,
@@ -226,7 +226,7 @@ const issues = [
     id: 38,
     area: "Rettigheter",
     name: "Omsorgspenger for pårørende",
-    partiesInAgreement: ["R", "SV", "SP", "KRF", "FRP"]
+    partiesInAgreement: ["R", "SV", "SP", "KrF", "FrP"]
   },
   {
     id: 39,
@@ -238,19 +238,19 @@ const issues = [
     id: 40,
     area: "Tilgang til behandling",
     name: "Satsing på flere kliniske studier",
-    partiesInAgreement: ["AP", "V", "H", "FRP"]
+    partiesInAgreement: ["AP", "V", "H", "FrP"]
   },
   {
     id: 41,
     area: "Tilgang til behandling",
     name: "Kortere ventetider på helsehjelp",
-    partiesInAgreement: ["SV", "AP", "SP", "KRF", "H", "FRP"]
+    partiesInAgreement: ["SV", "AP", "SP", "KrF", "H", "FrP"]
   },
   {
     id: 42,
     area: "Tilgang til behandling",
     name: "Raskere tilgang til nye behandlinger og medisiner",
-    partiesInAgreement: ["R", "SP", "H", "FRP"]
+    partiesInAgreement: ["R", "SP", "H", "FrP"]
   },
   {
     id: 43,
