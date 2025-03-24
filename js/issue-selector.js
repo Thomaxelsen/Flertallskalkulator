@@ -56,14 +56,13 @@ function createIssueSelector() {
         </div>
     `;
     
-// Plasser saksvelgeren på siden
-// Legg den i høyre kolonne
-const resultContainer = document.querySelector('.result-container');
-
-if (resultContainer) {
-    // Legg saksvelgeren etter resultatboksen
-    resultContainer.parentNode.insertBefore(issueSelectorContainer, resultContainer.nextSibling);
-}
+    // Plasser saksvelgeren på siden
+    // Legg den i høyre kolonne etter resultatboksen
+    const resultContainer = document.querySelector('.result-container');
+    
+    if (resultContainer) {
+        resultContainer.parentNode.insertBefore(issueSelectorContainer, resultContainer.nextSibling);
+    }
     
     // Legg til hendelseslyttere
     setupIssueSelectionListeners();
@@ -222,10 +221,10 @@ function getPartyClassPrefix(partyShorthand) {
         'AP': 'ap',
         'SP': 'sp',
         'MDG': 'mdg',
-        'KRF': 'krf',
+        'KrF': 'krf',
         'V': 'v',
         'H': 'h',
-        'FRP': 'frp',
+        'FrP': 'frp',
         'PF': 'pf'
     };
     
