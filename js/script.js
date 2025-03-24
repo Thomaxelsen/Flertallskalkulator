@@ -176,10 +176,24 @@ function updateResults() {
   if (hasMajority) {
     majorityStatus.className = 'result-status has-majority';
     majorityStatus.textContent = `Flertall oppnådd med ${votesFor} stemmer`;
+    
+    // Sjekk om vi gikk fra ikke-flertall til flertall
+    if (!majorityStatus.hasAttribute('data-had-majority')) {
+      // Kjør konfetti!
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+      // Marker at vi har vist konfetti
+      majorityStatus.setAttribute('data-had-majority', 'true');
+    }
   } else {
     majorityStatus.className = 'result-status no-majority';
     const votesNeeded = MAJORITY_THRESHOLD - votesFor;
     majorityStatus.textContent = `Ingen flertall (trenger ${votesNeeded} flere stemmer)`;
+    // Fjern markøren når vi ikke lenger har flertall
+    majorityStatus.removeAttribute('data-had-majority');
   }
   
   // Update selected party tags
