@@ -30,8 +30,8 @@ function initializeIssueSelector() {
     createIssueSelector();
     createPopupModal();
     
-    // Gjør showPartyQuote-funksjonen globalt tilgjengelig
-    window.showPartyQuote = showPartyQuote;
+    // Gjør Quote-funksjonen globalt tilgjengelig
+    window.Quote = Quote;
 }
 
 // Create the popup modal that will be used for both hover and click
@@ -73,7 +73,7 @@ function createPopupModal() {
                 if (currentIssueId && partyCode) {
                     e.preventDefault();
                     e.stopPropagation();
-                    showPartyQuote(currentIssueId, partyCode);
+                    Quote(currentIssueId, partyCode);
                 }
             }
         });
@@ -148,7 +148,7 @@ function handlePartyHover(e) {
         
         // Set a small delay
         hoverTimer = setTimeout(() => {
-            showPartyQuoteHover(currentIssueId, partyCode, partyElement);
+            QuoteHover(currentIssueId, partyCode, partyElement);
             currentHoveredParty = partyElement;
         }, 100);
     }
@@ -410,32 +410,44 @@ function showPartyQuoteHover(issueId, partyCode, targetElement) {
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
     
+    // Show the modal first but with visibility hidden so we can measure its height
+    modalContent.style.visibility = 'hidden';
+    modal.style.display = 'block';
+    
+    // Get the modal's height after content is set
+    const modalHeight = modalContent.offsetHeight;
+    const modalWidth = modalContent.offsetWidth || 400; // Default or measured width
+    
     // Default position (right of button)
     let left = rect.right + 10;
-    let top = rect.top - 10;
-    
-    // Set max-width based on available space
-    const maxWidth = viewportWidth - left - 20;
-    modalContent.style.maxWidth = `${Math.min(400, maxWidth)}px`;
+    let top = rect.top;
     
     // If not enough space on right, place it on left
-    if (left + 400 > viewportWidth) {
-        left = Math.max(10, rect.left - 400 - 10);
+    if (left + modalWidth > viewportWidth - 20) {
+        left = Math.max(10, rect.left - modalWidth - 10);
     }
     
-    // Check vertical position
-    const modalHeight = 250; // Estimate height
-    if (top + modalHeight > viewportHeight) {
-        top = Math.max(10, viewportHeight - modalHeight - 10);
+    // Check vertical position - if not enough space below, place it above
+    if (top + modalHeight > viewportHeight - 20) {
+        // Try positioning above the element
+        if (rect.top - modalHeight > 10) {
+            top = rect.top - modalHeight;
+        } else {
+            // If not enough space above either, position it in the middle of viewport
+            // with enough space to see the full content
+            top = Math.max(10, viewportHeight - modalHeight - 20);
+        }
     }
     
     // Apply position
     modalContent.style.left = `${left}px`;
     modalContent.style.top = `${top}px`;
     modalContent.style.position = 'fixed';
+    modalContent.style.maxHeight = `${viewportHeight - 40}px`;
+    modalContent.style.overflowY = 'auto'; // Add scrolling for very long content
     
-    // Show the modal
-    modal.style.display = 'block';
+    // Make visible and show the modal
+    modalContent.style.visibility = 'visible';
 }
 
 // Funksjon for å vise parti-sitat (for click mode)
