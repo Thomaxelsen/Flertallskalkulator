@@ -1,8 +1,25 @@
 // issue-selector.js - Funksjonalitet for å velge saker fra Kreftforeningens program
 
+// Vent til dokumentet er helt lastet
+document.addEventListener('DOMContentLoaded', function() {
+    // Vent til issues er globalt tilgjengelig og partier er lastet
+    const checkLoaded = setInterval(function() {
+        if (window.issues && document.querySelectorAll('.party-card').length > 0) {
+            clearInterval(checkLoaded);
+            initializeIssueSelector();
+        }
+    }, 100);
+});
+
+// Initialiser saksvelgeren
+function initializeIssueSelector() {
+    addIssueSelectCSS();
+    createIssueSelector();
+}
+
 // Hent alle unike saksområder fra issues-arrayet
 function getUniqueAreas() {
-    const areas = issues.map(issue => issue.area);
+    const areas = window.issues.map(issue => issue.area);
     return [...new Set(areas)];
 }
 
@@ -30,7 +47,7 @@ function createIssueSelector() {
             
             <select id="issueSelect" class="issue-dropdown">
                 <option value="">Velg en sak...</option>
-                ${issues.map(issue => `<option value="${issue.id}">${issue.name}</option>`).join('')}
+                ${window.issues.map(issue => `<option value="${issue.id}">${issue.name}</option>`).join('')}
             </select>
             
             <div id="issueDetails" class="issue-details">
@@ -80,9 +97,9 @@ function updateIssueDropdown(selectedArea) {
     const issueSelect = document.getElementById('issueSelect');
     
     // Filtrer saker basert på valgt område
-    let filteredIssues = issues;
+    let filteredIssues = window.issues;
     if (selectedArea) {
-        filteredIssues = issues.filter(issue => issue.area === selectedArea);
+        filteredIssues = window.issues.filter(issue => issue.area === selectedArea);
     }
     
     // Oppdater dropdown-innhold
@@ -106,7 +123,7 @@ function handleIssueSelection(issueId) {
     }
     
     // Finn den valgte saken
-    const selectedIssue = issues.find(issue => issue.id == issueId);
+    const selectedIssue = window.issues.find(issue => issue.id == issueId);
     if (!selectedIssue) return;
     
     // Oppdater saksdetaljer
@@ -116,8 +133,12 @@ function handleIssueSelection(issueId) {
     selectPartiesThatAgree(selectedIssue.partiesInAgreement);
     
     // Oppdater resultater og visualisering
-    updateResults();
-    updateVisualization();
+    if (typeof updateResults === 'function') {
+        updateResults();
+    }
+    if (typeof updateVisualization === 'function') {
+        updateVisualization();
+    }
 }
 
 // Oppdater detaljvisningen for saken
@@ -211,146 +232,16 @@ function getPartyClassPrefix(partyShorthand) {
     return partyMap[partyShorthand] || partyShorthand.toLowerCase();
 }
 
-// Legg til CSS-stiler for saksvelgeren
+// CSS-stiler for saksvelgeren legges til via JavaScript for å unngå konflikter
 function addIssueSelectCSS() {
+    // Sjekk om stilene allerede er lagt til
+    if (document.getElementById('issue-selector-styles')) return;
+    
     const style = document.createElement('style');
+    style.id = 'issue-selector-styles';
     style.textContent = `
-        .issue-selector-container {
-            margin: 30px 0;
-        }
-        
-        .issue-selector {
-            background-color: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-        }
-        
-        .issue-filters {
-            margin-bottom: 15px;
-        }
-        
-        .area-filter,
-        .issue-dropdown {
-            width: 100%;
-            padding: 12px 15px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            font-size: 1rem;
-            margin: 10px 0;
-            background-color: white;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            transition: all 0.2s ease;
-        }
-        
-        .area-filter:focus,
-        .issue-dropdown:focus {
-            outline: none;
-            border-color: var(--kf-pink);
-            box-shadow: 0 0 0 2px rgba(230, 60, 140, 0.2);
-        }
-        
-        .issue-details {
-            background-color: #f8f1f8;
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
-            border-left: 4px solid var(--kf-purple);
-            transition: all 0.3s ease;
-        }
-        
-        .issue-name {
-            color: var(--kf-purple);
-            margin-bottom: 5px;
-            font-size: 1.3rem;
-        }
-        
-        .issue-area {
-            color: #555;
-            font-style: italic;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .issue-status {
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-            font-size: 1.1rem;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-        
-        .issue-status.majority {
-            background: linear-gradient(90deg, var(--kf-light-green), var(--kf-green));
-            color: white;
-        }
-        
-        .issue-status.no-majority {
-            background: linear-gradient(90deg, var(--kf-pink), var(--kf-purple));
-            color: white;
-        }
-        
-        .issue-parties {
-            margin-top: 20px;
-        }
-        
-        .issue-parties h4 {
-            color: var(--kf-blue);
-            margin-bottom: 10px;
-        }
-        
-        .issue-parties-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 10px;
-        }
-        
-        .issue-party {
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-weight: 500;
-            font-size: 0.9rem;
-            background-color: #f0f0f0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .no-parties {
-            color: #777;
-            font-style: italic;
-        }
-        
-        @media (max-width: 768px) {
-            .issue-selector {
-                padding: 15px;
-            }
-            
-            .issue-details {
-                padding: 15px;
-            }
-            
-            .issue-name {
-                font-size: 1.2rem;
-            }
-            
-            .issue-status {
-                font-size: 1rem;
-                padding: 12px;
-            }
-        }
+        /* Stilene er allerede lagt til i styles.css */
     `;
     
     document.head.appendChild(style);
 }
-
-// Initialiser saksvelgeren etter at siden er lastet
-document.addEventListener('DOMContentLoaded', function() {
-    // Vent til hovedapplikasjonen er initialisert
-    setTimeout(() => {
-        addIssueSelectCSS();
-        createIssueSelector();
-    }, 500);
-});
