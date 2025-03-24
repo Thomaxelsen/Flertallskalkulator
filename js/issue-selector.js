@@ -11,14 +11,130 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 100);
 });
 
+// Detect if we're on a touch device (mobile/tablet)
+function isTouchDevice() {
+    return (('ontouchstart' in window) || 
+            (navigator.maxTouchPoints > 0) ||
+            (navigator.msMaxTouchPoints > 0));
+}
+
+// Global variable to store current issue id (used by hover functionality)
+let currentIssueId = null;
+let hoverTimer = null;
+let currentHoveredParty = null;
+
 // Initialiser saksvelgeren
 function initializeIssueSelector() {
     addIssueSelectCSS();
-    addQuoteStyles(); // Legg til stiler for parti-sitater
+    addQuoteStyles();
     createIssueSelector();
+    createPopupModal();
     
     // Gjør showPartyQuote-funksjonen globalt tilgjengelig
     window.showPartyQuote = showPartyQuote;
+}
+
+// Create the popup modal that will be used for both hover and click
+function createPopupModal() {
+    // Check if modal already exists
+    if (document.getElementById('quoteModal')) return;
+    
+    // Create modal element
+    const modal = document.createElement('div');
+    modal.id = 'quoteModal';
+    modal.className = 'quote-modal';
+    modal.innerHTML = `
+        <div class="quote-modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="quoteContent"></div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+    
+    // Add event listener to close button
+    modal.querySelector('.close-modal').addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+    
+    // Close modal when clicking outside it
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+    
+    // On touch devices, set up click event delegation for party buttons
+    if (isTouchDevice()) {
+        document.addEventListener('click', (e) => {
+            // Find closest clickable-party if we clicked on a child element
+            const partyElement = e.target.closest('.clickable-party');
+            if (partyElement) {
+                const partyCode = partyElement.dataset.party;
+                if (currentIssueId && partyCode) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    showPartyQuote(currentIssueId, partyCode);
+                }
+            }
+        });
+    } 
+    // On desktop, set up hover
+    else {
+        // Add event delegation for hover events on party buttons
+        document.addEventListener('mouseover', (e) => {
+            // Find closest clickable-party if we hovered over a child element
+            const partyElement = e.target.closest('.clickable-party');
+            if (partyElement && partyElement !== currentHoveredParty) {
+                currentHoveredParty = partyElement;
+                const partyCode = partyElement.dataset.party;
+                
+                // Clear any existing timer
+                if (hoverTimer) clearTimeout(hoverTimer);
+                
+                // Set a small delay to prevent flickering on quick mouse movements
+                hoverTimer = setTimeout(() => {
+                    if (currentIssueId && partyCode) {
+                        showPartyQuoteHover(currentIssueId, partyCode, partyElement);
+                    }
+                }, 100);
+            }
+        });
+        
+        // Hide popup when moving mouse out
+        document.addEventListener('mouseout', (e) => {
+            const partyElement = e.target.closest('.clickable-party');
+            if (partyElement && partyElement === currentHoveredParty) {
+                // Only hide if we're moving away from the party element
+                if (!partyElement.contains(e.relatedTarget)) {
+                    currentHoveredParty = null;
+                    // Clear any pending hover timer
+                    if (hoverTimer) {
+                        clearTimeout(hoverTimer);
+                        hoverTimer = null;
+                    }
+                    
+                    // Small delay to allow moving to the popup
+                    setTimeout(() => {
+                        const modal = document.getElementById('quoteModal');
+                        // Check if mouse is over the modal before hiding
+                        if (modal && !modal.matches(':hover') && !partyElement.matches(':hover')) {
+                            modal.style.display = 'none';
+                        }
+                    }, 100);
+                }
+            }
+        });
+        
+        // Allow hovering over the popup without it disappearing
+        const modal = document.getElementById('quoteModal');
+        if (modal) {
+            modal.addEventListener('mouseleave', () => {
+                if (currentHoveredParty === null) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+    }
 }
 
 // Hent alle unike saksområder fra issues-arrayet
@@ -91,6 +207,7 @@ function setupIssueSelectionListeners() {
     // Når bruker velger en sak
     issueSelect.addEventListener('change', function() {
         const selectedIssueId = this.value;
+        currentIssueId = selectedIssueId; // Store for hover functionality
         handleIssueSelection(selectedIssueId);
     });
 }
@@ -159,19 +276,25 @@ function updateIssueDetails(issue = null) {
     const totalSeats = calculateTotalSeats(issue.partiesInAgreement);
     const hasMajority = totalSeats >= 85;
     
+    // Determine device type to set correct CSS class and interaction method
+    const isTouch = isTouchDevice();
+    const interactionClass = isTouch ? 'clickable-party' : 'hoverable-party';
+    const interactionTip = isTouch ? '(Trykk for detaljer)' : '(Hold musepeker over for detaljer)';
+    
     // Bygg HTML for partier som støtter saken
     const partiesHTML = issue.partiesInAgreement.length > 0 
         ? issue.partiesInAgreement.map(partyCode => {
             // Sjekk om vi har sitat for dette partiet
             const hasQuote = issue.partyQuotes && issue.partyQuotes[partyCode];
-            // Legg til klikkbar effekt bare hvis det finnes et sitat
-            const clickableClass = hasQuote ? 'clickable-party' : '';
-            const clickHandler = hasQuote ? `onclick="showPartyQuote(${issue.id}, '${partyCode}')"` : '';
+            // Legg til klikkbar/hover effekt bare hvis det finnes et sitat
+            const interactiveClass = hasQuote ? interactionClass : '';
+            // For touch devices, we'll use click events via event delegation
+            const interactionAttr = isTouch && hasQuote ? 'data-has-quote="true"' : '';
             // Legg til indikator om at dette partiet har mer informasjon
             const infoIndicator = hasQuote ? '<span class="info-indicator">i</span>' : '';
             
-            return `<span class="issue-party party-tag-${getPartyClassPrefix(partyCode)} ${clickableClass}" 
-                          data-party="${partyCode}" ${clickHandler}>
+            return `<span class="issue-party party-tag-${getPartyClassPrefix(partyCode)} ${interactiveClass}" 
+                          data-party="${partyCode}" ${interactionAttr}>
                         ${partyCode} ${infoIndicator}
                     </span>`;
         }).join('') 
@@ -191,6 +314,7 @@ function updateIssueDetails(issue = null) {
         
         <div class="issue-parties">
             <h4>Partier som er helt enige med Kreftforeningen:</h4>
+            <p class="interaction-tip">${issue.partiesInAgreement.some(party => issue.partyQuotes && issue.partyQuotes[party]) ? interactionTip : ''}</p>
             <div class="issue-parties-list">
                 ${partiesHTML}
             </div>
@@ -198,51 +322,108 @@ function updateIssueDetails(issue = null) {
     `;
 }
 
-// Funksjon for å vise parti-sitat
-function showPartyQuote(issueId, partyCode) {
-    // Finn saken
+// Show party quote in hover mode (positions near the party button)
+function showPartyQuoteHover(issueId, partyCode, targetElement) {
+    // Find issue
     const issue = window.issues.find(issue => issue.id == issueId);
     if (!issue || !issue.partyQuotes || !issue.partyQuotes[partyCode]) return;
     
-    // Hent partiinformasjon
+    // Get party info
     const partyName = getPartyFullName(partyCode);
     const quote = issue.partyQuotes[partyCode];
     
-    // Lag modal hvis den ikke finnes
-    if (!document.getElementById('quoteModal')) {
-        const modal = document.createElement('div');
-        modal.id = 'quoteModal';
-        modal.className = 'quote-modal';
-        modal.innerHTML = `
-            <div class="quote-modal-content">
-                <span class="close-modal">&times;</span>
-                <div id="quoteContent"></div>
-            </div>
-        `;
-        document.body.appendChild(modal);
-        
-        // Legg til event listener på lukk-knappen
-        modal.querySelector('.close-modal').addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
-        
-        // Lukk modal hvis man klikker utenfor
-        window.addEventListener('click', (event) => {
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-    }
-    
-    // Oppdater modalen med partiets sitat
+    // Update popup content
     const quoteContent = document.getElementById('quoteContent');
     quoteContent.innerHTML = `
         <h3 class="quote-party-title party-tag-${getPartyClassPrefix(partyCode)}">${partyName} vil:</h3>
         <p class="quote-text">"${quote}"</p>
     `;
     
-    // Vis modal
-    document.getElementById('quoteModal').style.display = 'block';
+    // Get modal and position it near the party button
+    const modal = document.getElementById('quoteModal');
+    modal.classList.add('hover-mode');
+    
+    // Get dimensions and position
+    const rect = targetElement.getBoundingClientRect();
+    const modalContent = modal.querySelector('.quote-modal-content');
+    
+    // Position the modal - try to place it near the party button
+    // but ensure it stays within viewport
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    
+    // Default position (right of button)
+    let left = rect.right + 10;
+    let top = rect.top - 10;
+    
+    // Set max-width based on available space
+    const maxWidth = viewportWidth - left - 20;
+    modalContent.style.maxWidth = `${Math.min(400, maxWidth)}px`;
+    
+    // If not enough space on right, place it on left
+    if (left + 400 > viewportWidth) {
+        left = Math.max(10, rect.left - 400 - 10);
+    }
+    
+    // Check vertical position
+    const modalHeight = 250; // Estimate height
+    if (top + modalHeight > viewportHeight) {
+        top = Math.max(10, viewportHeight - modalHeight - 10);
+    }
+    
+    // Apply position
+    modalContent.style.left = `${left}px`;
+    modalContent.style.top = `${top}px`;
+    modalContent.style.position = 'fixed';
+    
+    // Show the modal
+    modal.style.display = 'block';
+}
+
+// Funksjon for å vise parti-sitat (for click mode)
+function showPartyQuote(issueId, partyCode) {
+    // If we're in touch mode, use click functionality
+    if (isTouchDevice()) {
+        showPartyQuoteClick(issueId, partyCode);
+    } else {
+        // For non-touch devices, we use the hover handler which is triggered by mouseover
+        const partyElement = document.querySelector(`.issue-party[data-party="${partyCode}"]`);
+        if (partyElement) {
+            showPartyQuoteHover(issueId, partyCode, partyElement);
+        }
+    }
+}
+
+// Show party quote in click mode (centered modal)
+function showPartyQuoteClick(issueId, partyCode) {
+    // Find issue
+    const issue = window.issues.find(issue => issue.id == issueId);
+    if (!issue || !issue.partyQuotes || !issue.partyQuotes[partyCode]) return;
+    
+    // Get party info
+    const partyName = getPartyFullName(partyCode);
+    const quote = issue.partyQuotes[partyCode];
+    
+    // Get modal
+    const modal = document.getElementById('quoteModal');
+    modal.classList.remove('hover-mode');
+    
+    // Reset styles for click mode (centered)
+    const modalContent = modal.querySelector('.quote-modal-content');
+    modalContent.style.left = '';
+    modalContent.style.top = '';
+    modalContent.style.position = '';
+    modalContent.style.maxWidth = '';
+    
+    // Update content
+    const quoteContent = document.getElementById('quoteContent');
+    quoteContent.innerHTML = `
+        <h3 class="quote-party-title party-tag-${getPartyClassPrefix(partyCode)}">${partyName} vil:</h3>
+        <p class="quote-text">"${quote}"</p>
+    `;
+    
+    // Show modal
+    modal.style.display = 'block';
 }
 
 // Regn ut totalt antall mandater for partiene som er enige
@@ -336,17 +517,30 @@ function addQuoteStyles() {
     const style = document.createElement('style');
     style.id = 'quote-styles';
     style.textContent = `
-        /* Klikkbare partier */
-        .clickable-party {
-            cursor: pointer;
+        /* Responsive interaksjoner */
+        /* For klikkbare/hoverbare partielementer */
+        .clickable-party, .hoverable-party {
             position: relative;
-            padding-right: 20px;
-            transition: all 0.2s ease;
+            cursor: pointer;
         }
         
-        .clickable-party:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        .clickable-party {
+            padding-right: 20px; /* Space for the indicator */
+        }
+        
+        /* Hover effects only on non-touch devices */
+        @media (hover: hover) and (pointer: fine) {
+            .hoverable-party:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                transition: all 0.2s ease;
+            }
+        }
+        
+        /* Always show click effect */
+        .clickable-party:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
         .info-indicator {
@@ -365,7 +559,15 @@ function addQuoteStyles() {
             font-weight: bold;
         }
         
-        /* Modal for partisitater */
+        .interaction-tip {
+            font-size: 0.8rem;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        
+        /* Modal styling */
         .quote-modal {
             display: none;
             position: fixed;
@@ -375,11 +577,26 @@ function addQuoteStyles() {
             width: 100%;
             height: 100%;
             overflow: auto;
+        }
+        
+        /* Regular modal (for click) */
+        .quote-modal:not(.hover-mode) {
             background-color: rgba(0,0,0,0.4);
             backdrop-filter: blur(3px);
         }
         
-        .quote-modal-content {
+        /* Hover modal (transparent background) */
+        .quote-modal.hover-mode {
+            background-color: transparent;
+            pointer-events: none;
+        }
+        
+        .quote-modal.hover-mode .quote-modal-content {
+            pointer-events: auto;
+        }
+        
+        /* Regular modal content styling (centered) */
+        .quote-modal:not(.hover-mode) .quote-modal-content {
             background-color: white;
             margin: 15% auto;
             padding: 25px;
@@ -391,8 +608,21 @@ function addQuoteStyles() {
             position: relative;
         }
         
+        /* Hover modal content styling (positioned near element) */
+        .quote-modal.hover-mode .quote-modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            animation: modalFadeIn 0.2s;
+            position: fixed;
+            width: auto;
+            max-width: 400px;
+            z-index: 1001;
+        }
+        
         @keyframes modalFadeIn {
-            from {opacity: 0; transform: translateY(-50px);}
+            from {opacity: 0; transform: translateY(-10px);}
             to {opacity: 1; transform: translateY(0);}
         }
         
@@ -405,6 +635,10 @@ function addQuoteStyles() {
             font-weight: bold;
             cursor: pointer;
             transition: color 0.2s;
+        }
+        
+        .hover-mode .close-modal {
+            display: none;
         }
         
         .close-modal:hover {
