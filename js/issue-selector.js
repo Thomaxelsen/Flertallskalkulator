@@ -30,8 +30,8 @@ function initializeIssueSelector() {
     createIssueSelector();
     createPopupModal();
     
-    // Gjør Quote-funksjonen globalt tilgjengelig
-    window.Quote = Quote;
+    // Gjør showPartyQuote-funksjonen globalt tilgjengelig
+    window.showPartyQuote = showPartyQuote;
 }
 
 // Create the popup modal that will be used for both hover and click
@@ -73,7 +73,7 @@ function createPopupModal() {
                 if (currentIssueId && partyCode) {
                     e.preventDefault();
                     e.stopPropagation();
-                    Quote(currentIssueId, partyCode);
+                    showPartyQuote(currentIssueId, partyCode);
                 }
             }
         });
@@ -148,7 +148,7 @@ function handlePartyHover(e) {
         
         // Set a small delay
         hoverTimer = setTimeout(() => {
-            QuoteHover(currentIssueId, partyCode, partyElement);
+            showPartyQuoteHover(currentIssueId, partyCode, partyElement);
             currentHoveredParty = partyElement;
         }, 100);
     }
