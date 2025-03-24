@@ -6,24 +6,30 @@ const issues = [
     name: "Fleksibel sykepengeordning",
     partiesInAgreement: ["SP", "FrP"],
     partyQuotes: {
-      "SP": "Greie ut mulighetene for at personer med alvorlige diagnoser som er under aktiv behandling, får nødvendig fleksibilitet når det gjelder sykemeldinga si lengde og gradering, samt bedre høve for arbeidsnærvær og økonomisk tryggleik i behandlingsperioden ut over et år. Arbeidsgiver må i denne perioden gjevast fritak for arbeidsgiveravsperioden for sjukepengar."
+      "SP": "Giete ut mulighetene for at personer med alvorlige diagnoser som er under aktiv behandling, får nødvendig fleksibilitet når det gjelder sykemeldinga si lengde og gradering, samt bedre høve for arbeidsnærvær og økonomisk tryggleik i behandlingsperioden ut over et år. Arbeidsgiver må i denne perioden gjevast fritak for arbeidsgiveravsperioden for sjukepengar.",
+      "FrP": "Sikre en god og forutsigbar sykelønnordning for arbeidstakere, og innføre en tidskonto-ordning som sikrer gode muligheter for å stå delvis i arbeid under sykemelding."
     }
   },
   {
     id: 2,
     area: "Arbeidsliv",
     name: "Styrking av kompetansen i NAV",
-    partiesInAgreement: ["R", "AP", "FrP"],
+    partiesInAgreement: ["R", "AP", "FrP", "H"],
     partyQuotes: {
       "AP": "At NAV skal hjelpe flere inn i arbeid. Derfor må NAV styrkes med nye verktøy. De ansatte i NAV må gis mer fleksibilitet, slik at de kan tilpasse virkemiddelbruken til den enkelte.",
-      "R": "a) Gi de ansatte i førstelinjen i NAV tid og tillit til å gjøre jobben sin. b) Stoppe nedleggelsen av NAV-kontorer og omgjøre NAV til en institusjon som gir gode og nære tjenester til dem som trenger det. Tilbakeføre vedtaksmyndighet til Navs lokalkontorer."
+      "R": "a) Gi de ansatte i førstelinjen i NAV tid og tillit til å gjøre jobben sin. b) Stoppe nedleggelsen av NAV-kontorer og omgjøre NAV til en institusjon som gir gode og nære tjenester til dem som trenger det. Tilbakeføre vedtaksmyndighet til Navs lokalkontorer.",
+      "FrP": "Styrke kompetansen i NAV.",
+      "H": "Prioritere bruk av lønnstilskudd og andre arbeidsmarkedstiltak som har beviselig god effekt for å sikre en mer effektiv og målrettet bruk av ressursene."
     }
   },
   {
     id: 3,
     area: "Arbeidsliv",
     name: "Økt bruk av tiltak som Individuell jobbstøtte (IPS) og Arbeid med støtte (AMS)",
-    partiesInAgreement: []
+    partiesInAgreement: [],
+    partyQuotes: {
+      "FrP": "Innføre et fleksibelt lønnstilskudd for å få flere med nedsatt arbeidsevne inn i 33 arbeidslivet."
+    }
   },
   {
     id: 4,
@@ -35,7 +41,8 @@ const issues = [
       "SP": "Utvide omfanget av ordninger med varig lønnstilskudd til bedrifter som ansetter arbeidsseekende via NAV, særlig for grupper med nedsatt arbeidsevne.",
       "SV": "At det skal lønne seg å ansette folk som står utenfor arbeidslivet. Vi vil styrke ordningen som gir lønnstilskudd til bedrifter som ansetter arbeidssøkende via NAV, særlig for grupper med nedsatt arbeidsevne.",
       "MDG": "Sikre funksjonsassistanse og lønnstilskudd i arbeid, arbeidstiltak eller praksis til en rettighetsfestet, også for uføre. Ordningen må kunne samordnes med BPA.",
-      "KrF": "Ha økt bruk av lønnstilskudd og arbeidstrening for å gi flere muligheten til å delta i arbeidslivet."
+      "KrF": "Ha økt bruk av lønnstilskudd og arbeidstrening for å gi flere muligheten til å delta i arbeidslivet.",
+      "H": "Prioritere bruk av lønnstilskudd og andre arbeidsmarkedstiltak som har beviselig god effekt for å sikre en mer effektiv og målrettet bruk av ressursene."
     }
   },
   {
@@ -44,7 +51,9 @@ const issues = [
     name: "Styrke og øke bruken av arbeidsrettet rehabilitering",
     partiesInAgreement: ["SP", "H", "FrP"],
     partyQuotes: {
-      "SP": "Innføre ein eigen opptrappingsplan som sikrar utvikling og finansiering av eit godt 191:1 kommunalt tilrettelagte rehabiliterings- og habiliteringstilbod for alle pasientgrupper."
+      "SP": "Innføre ein eigen opptrappingsplan som sikrar utvikling og finansiering av eit godt 191:1 kommunalt tilrettelagte rehabiliterings- og habiliteringstilbod for alle pasientgrupper.",
+      "H": "Satse mer på arbeidsrettet rehabilitering for å sikre at flere kommer raskere tilbake til arbeidslivet.",
+      "FrP": "At personer som på grunn av sykdom eller skade får nedsatt arbeidsevne, skal sikres rask rehabilitering og nødvendige hjelpetiltak slik at de fortsatt kan delta i arbeidslivet. Rehabilitering og habilitering skal være rettighetsfestet."
     }
   },
   {
@@ -53,7 +62,8 @@ const issues = [
     name: "Utvide mammorgrafiprogrammet",
     partiesInAgreement: ["AP", "H"],
     partyQuotes: {
-      "AP": "Utvide mammografibilddet i tråd med EUs nye retningslinjer."
+      "AP": "Utvide mammografibilddet i tråd med EUs nye retningslinjer.",
+      "H": "Vurdere å utvide mammografiprogrammet i tråd med faglige anbefalinger."
     }
   },
   {
@@ -69,7 +79,8 @@ const issues = [
     partiesInAgreement: ["R", "V", "H"],
     partyQuotes: {
       "R": "Innføre et pilotprosjekt for å prøve ut et nasjonalt screeningprogram for prostatakreft.",
-      "V": "Utrede et nasjonalt screeningprogram for prostatakreft."
+      "V": "Utrede et nasjonalt screeningprogram for prostatakreft.",
+      "H": "Gjennomføre en pilotstudie for screening av prostata."
     }
   },
   {
@@ -86,7 +97,8 @@ const issues = [
     partyQuotes: {
       "AP": "Følge opp ambisjonene i folkehelsestrategien ved å finansiere et nasjonalt røykesluttprogram.",
       "SP": "Tilby gratis legemidler til røykeslutt.",
-      "KrF": "Tilby gratis legemidler til røykeslutt på nasjonalt nivå."
+      "KrF": "Tilby gratis legemidler til røykeslutt på nasjonalt nivå.",
+      "H": "Jobbe for redusert tobakksbruk og innføre et nasjonalt røykesluttprogram."
     }
   },
   {
@@ -149,7 +161,9 @@ const issues = [
     name: "Utrydde livmorhalskreft og HPV-relatert kreft",
     partiesInAgreement: ["AP", "H", "FrP"],
     partyQuotes: {
-      "AP": "Utrydde livmorhalskreft som sykdom i Norge."
+      "AP": "Utrydde livmorhalskreft som sykdom i Norge.",
+      "H": "Innføre flere tiltak som reduserer utvikler HPV-relatert kreft og sykdom.",
+      "FrP": "Tilby en større del av befolkningen vaksine mot HPV-viruset, inkludert gutter og intensivere screeningprogrammet slik at kvinner regelmessig blir innkalt til rutinekontroll."
     }
   },
   {
@@ -178,7 +192,8 @@ const issues = [
     name: "Opprettelse av en helsekatapult",
     partiesInAgreement: ["AP", "H"],
     partyQuotes: {
-      "AP": "Opprette helsekatapult for å gjøre det enklere å gå fra idé til salg i markedet."
+      "AP": "Opprette helsekatapult for å gjøre det enklere å gå fra idé til salg i markedet.",
+      "H": "Opprette en egen Katapult for helseteknologi og helseinnovasjon som kobles opp mot ledende forsknings- og innovasjonsmiljøer."
     }
   },
   {
@@ -188,7 +203,8 @@ const issues = [
     partiesInAgreement: ["AP", "SP", "H"],
     partyQuotes: {
       "AP": "Bruke norske helsedata til å utvikle nye tjenester, behandlinger og medisinske produkter.",
-      "SP": "Sikre tilgang på helsedata på tvers av offentleg og privat sektor som gjer det mogeleg å 193B utvikle best mogelege løysingar, samstundes som personvernet vert ivareteke."
+      "SP": "Sikre tilgang på helsedata på tvers av offentleg og privat sektor som gjer det mogeleg å 193B utvikle best mogelege løysingar, samstundes som personvernet vert ivareteke.",
+      "H": "Gjøre helsenæring til et satsingsområde, gjennom bedre digitalisering av helsedata og biobanker og legge til rette for grundskap."
     }
   },
   {
@@ -197,7 +213,9 @@ const issues = [
     name: "Økt satsing på helsenæring",
     partiesInAgreement: ["AP", "H", "FrP"],
     partyQuotes: {
-      "AP": "Fortsette å løfte helsenæring som eksportsatsing og følge opp utredningen av klyngestrukturen og sørge for at helseklyngene får rammevikår."
+      "AP": "Fortsette å løfte helsenæring som eksportsatsing og følge opp utredningen av klyngestrukturen og sørge for at helseklyngene får rammevikår.",
+      "H": "Ta en ledende rolle internasjonalt for å stimulere og fremme utvikling for å forhindre og bekjempe antibiotikaresistens.",
+      "FrP": "Gjøre Norge til en ledende produsent, utvikler og eksportør av helseteknologi."
     }
   },
   {
@@ -211,21 +229,25 @@ const issues = [
       "SP": "Styrkje forsknings- og utredningsarbeid for å stoppe spredning av antibiotikaresistente bakterier.",
       "MDG": "Ytterligere redusere antibiotikabruken i norsk helsevesen, oppdrettsnæring, og lede an internasjonalt i arbeidet mot antibiotikaresistens.",
       "KrF": "Sørge for at Norge tar lederskap for et sterkere internasjonalt avtalevert rundt pandemibredskap og forebygging av antibiotikaresistens.",
-      "V": "At Norge skal være pådriver for et sterkere internasjonalt avtalevert rundt pandemibredskap og forebygging av antibiotikaresistens."
+      "V": "At Norge skal være pådriver for et sterkere internasjonalt avtalevert rundt pandemibredskap og forebygging av antibiotikaresistens.",
+      "H": "Arbeide aktivt for å sikre mot legemiddelmangel, og styrke og utvide det nordiske samarbeidet om produksjon og lagring av legemidler og smittevernutstyr i Norden. Og prioritere effektiv implementering av EU-direktiver som koordinerer gode, samfunnsnyttige, teknologiske løsninger og sikkerhet.",
+      "FrP": "Økt vaksinasjonsdekning vil styrke folkehelsen, redusere helseforskjeller og bekjempe antibiotikaresistens."
     }
   },
   {
     id: 24,
     area: "Forskning og innovasjon",
     name: "Få opp nasjonal infrastruktur for legemiddelproduksjon",
-    partiesInAgreement: ["R", "SV", "AP", "SP", "MDG", "KrF", "FrP"],
+    partiesInAgreement: ["R", "SV", "AP", "SP", "MDG", "KrF", "FrP", "H"],
     partyQuotes: {
       "AP": "Styrke utviklingen og produksjonen av legemidler i Norge.",
       "R": "Utvikle produksjon av nødvendige legemidler i Norge, og jobbe for endringer i legemiddelindustrien slik at det ikke blir mangel på nødvendige legemidler.",
       "SP": "Etablere statlig produksjon av legemidler (StatMed) og styrke forskningen og eksisterende produksjonsmiljøer i Norge.",
       "SV": "Få opp nasjonal infrastruktur for legemiddelproduksjon.",
       "MDG": "Styrke legemiddelberedskapen og sikre forskning i framtida.",
-      "KrF": "Utrede muligheter for produksjon av kritiske legemidler i Norge, enten for raskt å sette i gang slik produksjon ved krise."
+      "KrF": "Utrede muligheter for produksjon av kritiske legemidler i Norge, enten for raskt å sette i gang slik produksjon ved krise.",
+      "H": "I større grad gjøre Norge selvforsynt med de viktigste legemidlene og etablere nasjonal beredskapsplager.",
+      "FrP": "I større grad gjøre Norge selvforsynt med de viktigste legemidlene og etablere nasjonal beredskapslager."
     }
   },
   {
@@ -237,7 +259,8 @@ const issues = [
       "AP": "Benytte mulighetene som ny teknologi, innovasjon og digitalisering gir oss.",
       "SV": "Etablere brukervennlige digitale oppfølgingstjenester og ta i bruk ulike typer velferdsteknologi.",
       "MDG": "Satse på innovasjon og god bruk av velferdsteknologi for å bedre kvalitet og tilgjengelighet i helsetjenestene.",
-      "KrF": "Forsterke samarbeidet om digitalisering med kommunesektoren, herunder tiltak for riktig og økt bruk av velferdsteknologi."
+      "KrF": "Forsterke samarbeidet om digitalisering med kommunesektoren, herunder tiltak for riktig og økt bruk av velferdsteknologi.",
+      "H": "A) Sørge for målrettet bruk av ny teknologi, digitalisering og kunstig intelligens for å jobbe på smartere måter og ha bedre oppgavefordeling i sykehus B) Sørge for raskere realisering av nytten ved bruk av digitale løsninger og ny teknologi i helse- og omsorgssektoren."
     }
   },
   {
@@ -249,7 +272,9 @@ const issues = [
       "SP": "Øke skattefradraget for gaver til frivillige organisasjoner.",
       "MDG": "Øke skattefradraget for gaver til frivillige organisasjoner.",
       "KrF": "Øke maksgrensen for skattefradrag for gaver til trossamfunn og frivillige organisasjoner til minst 100 000 kroner.",
-      "V": "Gjeninnføre gaveforsterkningsordningen og øke skattefradraget for private givere for å gjøre det mer attraktivt å tiltrekke seg privat kapital til kulturinstitusjoner."
+      "V": "Gjeninnføre gaveforsterkningsordningen og øke skattefradraget for private givere for å gjøre det mer attraktivt å tiltrekke seg privat kapital til kulturinstitusjoner.",
+      "H": "Forbedre rammevilkårene for frivillige organisasjoners lotterier med tillatelse gitt i pengespilloven, og øke fradragsgrensen for gaver fra private givere og næringsliv til frivillige og ideelle organisasjoner.",
+      "FrP": "Øke skattefradraget for gaver til frivillige, samfunnsnyttige og humanitære organisasjoner."
     }
   },
   {
@@ -281,7 +306,9 @@ const issues = [
     name: "Gjeninnføre gaveforsterkningsordning",
     partiesInAgreement: ["V", "H", "FrP"],
     partyQuotes: {
-      "V": "Gjeninnføre gaveforsterkningsordningen og øke skattefradraget for private givere for å gjøre det mer attraktivt å tiltrekke seg privat kapital til kulturinstitusjoner."
+      "V": "Gjeninnføre gaveforsterkningsordningen og øke skattefradraget for private givere for å gjøre det mer attraktivt å tiltrekke seg privat kapital til kulturinstitusjoner.",
+      "H": "Innføre en gaveforsterkningsordning på forskningsområdet.",
+      "FrP": "Gjeninnføre gaveforsterkningsordningen og øke skattefradraget for private givere for å gjøre det mer attraktivt å tiltrekke seg privat kapital til kulturinstitusjoner."
     }
   },
   {
@@ -347,7 +374,8 @@ const issues = [
       "R": "At det skal tas hensyn til helthetlige behov når familier hvor flere er kronisk syke, søker helse- og omsorgstjenester – og.... Forbedre regelverket for pårørendes permisjonsmulighetere i arbeidslivet for å sikre likestilling og bedre mulighetene til å kombinere arbeid og omsorg 2025 og omsorg.",
       "SP": "Forbedre pårørende permisjonsmuligheter i arbeidslivet, og mulige økonomiske 2024 kompensasjonsordninger, for å sikre likestilling og bedre muligheter til å kombinere arbeid 2025 og omsorg.",
       "SV": "Anerkjenne den viktige rollen til pårørende. Vi vil sørge for nasjonale satsar på omsorgstenader og vurdere å innføre å omsregeldning.",
-      "KrF": "Legge til rette for bedre ordninger med omsorgslønn og avlastningstiltak for familiemedlemmer som selv utfører omfattende omsorgsjeneste skal gjøre disse bedre kjent, og utvide pleiepengeordningen til også å gjelde eldre i livets sluttfase."
+      "KrF": "Legge til rette for bedre ordninger med omsorgslønn og avlastningstiltak for familiemedlemmer som selv utfører omfattende omsorgsjeneste skal gjøre disse bedre kjent, og utvide pleiepengeordningen til også å gjelde eldre i livets sluttfase.",
+      "FrP": "At pårørende til alvorlig syke skal ha rett til tidsbegrenset pleiepenger når de pleier sine nærmeste."
     }
   },
   {
@@ -366,7 +394,9 @@ const issues = [
     partiesInAgreement: ["AP", "V", "H", "FrP"],
     partyQuotes: {
       "AP": "Legge til rette for at flere pasienter får delta i kliniske studier i hele landet.",
-      "V": "Kliniske studier er avgjørende for utvikling av nye medisiner, behandlinger og medisinsk teknologi."
+      "V": "Kliniske studier er avgjørende for utvikling av nye medisiner, behandlinger og medisinsk teknologi.",
+      "H": "Gjennomføre flere kliniske studier i Norge.",
+      "FrP": "Styrke medisinsk forskning, sikre rask tilgang til nye legemidler og metoder, og holde egenandeler på et moderat nivå."
     }
   },
   {
@@ -378,17 +408,21 @@ const issues = [
       "AP": "Sikre korte ventetider i vår felles helsetjeneste.",
       "SP": "Styrke finansieringen av sykehusene for å sikre økt pasientbehandling, reduserte ventetider og økt evne til å håndtere oppgavevekst og geografiske forskjeller.",
       "SV": "Bemanningen ved de offentlige sykehusene må styrkes, slik at vi reduserer ventetidene, sikrer raskere behandling og øker helseberedskapen i hele landet.",
-      "KrF": "Ventetidene i spesialisthelsetjenesten må ned."
+      "KrF": "Ventetidene i spesialisthelsetjenesten må ned.",
+      "H": "Redusere ventetidene i helsetjenesten.",
+      "FrP": "For å redusere ventetider ønsker Fremskrittspartiet en utrednings- og behandlingsgarant på 30 dager etter dansk modell."
     }
   },
-  {
+ {
     id: 42,
     area: "Tilgang til behandling",
     name: "Raskere tilgang til nye behandlinger og medisiner",
     partiesInAgreement: ["R", "SP", "H", "FrP"],
     partyQuotes: {
       "R": "At systemet for innføring av nye medisiner/legemidler endres slik at saksbehandlingstiden går ned, og faglige og samfunnsmessige kriterier blir førende, for å gjøre flere medisiner tilgjengelige.",
-      "SP": "Redusere byråkrati og sikre raskere innføring av nye behandlingsmetoder."
+      "SP": "Redusere byråkrati og sikre raskere innføring av nye behandlingsmetoder.",
+      "H": "Sørge for at pasienter får raskere tilgang til nye medisiner. Tilgang til flere kliniske studier og tilstrekkelig tilgang til nødvendige medisiner.",
+      "FrP": "Sikre rask tilgang til nye og effektive legemidler, godkjenne medisiner fra Sverige og Danmark uten unødvendig forsinkelse og fjerne særnorske krav som forsinker medisinsk utvikling i Norge."
     }
   },
   {
@@ -410,7 +444,8 @@ const issues = [
       "AP": "Øke andel av BNP som går til helse for å sikre investeringer som bidrar til effektiv ressursbruk.",
       "SP": "Øke bevilgningene og ha et stekt offentlig helsevesen med like egenandeler.",
       "SV": "Arbeide for å løfte investeringsetterslepet i sykehusene og øke grunnfinansieringen av sykehusene i tråd med kostnadsvekst og investeringsbehov.",
-      "V": "Øke den samlede ressursbruken til helse og omsorg framover."
+      "V": "Øke den samlede ressursbruken til helse og omsorg framover.",
+      "H": "Styrke helsevesenet ved å investere i sykehuskapasitet og teknologi."
     }
   },
   {
