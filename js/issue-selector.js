@@ -14,7 +14,11 @@ document.addEventListener('DOMContentLoaded', function() {
 // Initialiser saksvelgeren
 function initializeIssueSelector() {
     addIssueSelectCSS();
+    addQuoteStyles(); // Legg til stiler for parti-sitater
     createIssueSelector();
+    
+    // Gjør showPartyQuote-funksjonen globalt tilgjengelig
+    window.showPartyQuote = showPartyQuote;
 }
 
 // Hent alle unike saksområder fra issues-arrayet
@@ -155,6 +159,24 @@ function updateIssueDetails(issue = null) {
     const totalSeats = calculateTotalSeats(issue.partiesInAgreement);
     const hasMajority = totalSeats >= 85;
     
+    // Bygg HTML for partier som støtter saken
+    const partiesHTML = issue.partiesInAgreement.length > 0 
+        ? issue.partiesInAgreement.map(partyCode => {
+            // Sjekk om vi har sitat for dette partiet
+            const hasQuote = issue.partyQuotes && issue.partyQuotes[partyCode];
+            // Legg til klikkbar effekt bare hvis det finnes et sitat
+            const clickableClass = hasQuote ? 'clickable-party' : '';
+            const clickHandler = hasQuote ? `onclick="showPartyQuote(${issue.id}, '${partyCode}')"` : '';
+            // Legg til indikator om at dette partiet har mer informasjon
+            const infoIndicator = hasQuote ? '<span class="info-indicator">i</span>' : '';
+            
+            return `<span class="issue-party party-tag-${getPartyClassPrefix(partyCode)} ${clickableClass}" 
+                          data-party="${partyCode}" ${clickHandler}>
+                        ${partyCode} ${infoIndicator}
+                    </span>`;
+        }).join('') 
+        : '<span class="no-parties">Ingen partier er helt enige</span>';
+    
     // Vis saksdetaljer og partiinformasjon
     issueDetails.innerHTML = `
         <h3 class="issue-name">${issue.name}</h3>
@@ -170,13 +192,57 @@ function updateIssueDetails(issue = null) {
         <div class="issue-parties">
             <h4>Partier som er helt enige med Kreftforeningen:</h4>
             <div class="issue-parties-list">
-                ${issue.partiesInAgreement.length > 0 
-                    ? issue.partiesInAgreement.map(partyCode => `<span class="issue-party party-tag-${getPartyClassPrefix(partyCode)}">${partyCode}</span>`).join('') 
-                    : '<span class="no-parties">Ingen partier er helt enige</span>'
-                }
+                ${partiesHTML}
             </div>
         </div>
     `;
+}
+
+// Funksjon for å vise parti-sitat
+function showPartyQuote(issueId, partyCode) {
+    // Finn saken
+    const issue = window.issues.find(issue => issue.id == issueId);
+    if (!issue || !issue.partyQuotes || !issue.partyQuotes[partyCode]) return;
+    
+    // Hent partiinformasjon
+    const partyName = getPartyFullName(partyCode);
+    const quote = issue.partyQuotes[partyCode];
+    
+    // Lag modal hvis den ikke finnes
+    if (!document.getElementById('quoteModal')) {
+        const modal = document.createElement('div');
+        modal.id = 'quoteModal';
+        modal.className = 'quote-modal';
+        modal.innerHTML = `
+            <div class="quote-modal-content">
+                <span class="close-modal">&times;</span>
+                <div id="quoteContent"></div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        
+        // Legg til event listener på lukk-knappen
+        modal.querySelector('.close-modal').addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+        
+        // Lukk modal hvis man klikker utenfor
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    }
+    
+    // Oppdater modalen med partiets sitat
+    const quoteContent = document.getElementById('quoteContent');
+    quoteContent.innerHTML = `
+        <h3 class="quote-party-title party-tag-${getPartyClassPrefix(partyCode)}">${partyName} vil:</h3>
+        <p class="quote-text">"${quote}"</p>
+    `;
+    
+    // Vis modal
+    document.getElementById('quoteModal').style.display = 'block';
 }
 
 // Regn ut totalt antall mandater for partiene som er enige
@@ -231,6 +297,24 @@ function getPartyClassPrefix(partyShorthand) {
     return partyMap[partyShorthand] || partyShorthand.toLowerCase();
 }
 
+// Hjelpefunksjon for å få fullt partinavn
+function getPartyFullName(partyCode) {
+    const partyNames = {
+        'R': 'Rødt',
+        'SV': 'Sosialistisk Venstreparti',
+        'AP': 'Arbeiderpartiet',
+        'SP': 'Senterpartiet',
+        'MDG': 'Miljøpartiet De Grønne',
+        'KrF': 'Kristelig Folkeparti',
+        'V': 'Venstre',
+        'H': 'Høyre',
+        'FrP': 'Fremskrittspartiet',
+        'PF': 'Pasientfokus'
+    };
+    
+    return partyNames[partyCode] || partyCode;
+}
+
 // CSS-stiler for saksvelgeren legges til via JavaScript for å unngå konflikter
 function addIssueSelectCSS() {
     // Sjekk om stilene allerede er lagt til
@@ -240,6 +324,111 @@ function addIssueSelectCSS() {
     style.id = 'issue-selector-styles';
     style.textContent = `
         /* Stilene er allerede lagt til i styles.css */
+    `;
+    
+    document.head.appendChild(style);
+}
+
+// Legg til CSS for sitater-funksjonalitet
+function addQuoteStyles() {
+    if (document.getElementById('quote-styles')) return;
+    
+    const style = document.createElement('style');
+    style.id = 'quote-styles';
+    style.textContent = `
+        /* Klikkbare partier */
+        .clickable-party {
+            cursor: pointer;
+            position: relative;
+            padding-right: 20px;
+            transition: all 0.2s ease;
+        }
+        
+        .clickable-party:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+        
+        .info-indicator {
+            position: absolute;
+            right: 5px;
+            top: 4px;
+            font-size: 10px;
+            width: 14px;
+            height: 14px;
+            line-height: 14px;
+            text-align: center;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.7);
+            color: #555;
+            font-style: italic;
+            font-weight: bold;
+        }
+        
+        /* Modal for partisitater */
+        .quote-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            backdrop-filter: blur(3px);
+        }
+        
+        .quote-modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 25px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.2);
+            animation: modalFadeIn 0.3s;
+            position: relative;
+        }
+        
+        @keyframes modalFadeIn {
+            from {opacity: 0; transform: translateY(-50px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
+        .close-modal {
+            color: #aaa;
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .close-modal:hover {
+            color: #333;
+        }
+        
+        .quote-party-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            padding: 8px 15px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+        
+        .quote-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #333;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-left: 4px solid #ddd;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
     `;
     
     document.head.appendChild(style);
