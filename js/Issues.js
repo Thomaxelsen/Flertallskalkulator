@@ -272,7 +272,5 @@ const issues = [
   }
 ];
 
-// Eksporter datasettet så det kan brukes i andre filer
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { issues };
-}
+// Gjør issues tilgjengelig globalt så andre script kan bruke det
+window.issues = issues;
