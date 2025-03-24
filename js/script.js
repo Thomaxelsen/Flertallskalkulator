@@ -1,22 +1,22 @@
 // JavaScript for flertallskalkulator
 
-        // Required votes for majority
-        const TOTAL_SEATS = 169;
-        const MAJORITY_THRESHOLD = 85;
+// Required votes for majority
+const TOTAL_SEATS = 169;
+const MAJORITY_THRESHOLD = 85;
 
-        // DOM elements
-        const partyGrid = document.getElementById('partyGrid');
-        const progressBar = document.getElementById('progressBar');
-        const votesForLabel = document.getElementById('votesFor');
-        const votesAgainstLabel = document.getElementById('votesAgainst');
-        const totalVotesFor = document.getElementById('totalVotesFor');
-        const totalVotesAgainst = document.getElementById('totalVotesAgainst');
-        const majorityStatus = document.getElementById('majorityStatus');
-        const selectedPartyTags = document.getElementById('selectedPartyTags');
-        const selectAllBtn = document.getElementById('selectAllBtn');
-        const clearAllBtn = document.getElementById('clearAllBtn');
-        const parliamentSeats = document.getElementById('parliamentSeats');
-        const parliamentLegend = document.getElementById('parliamentLegend');
+// DOM elements
+const partyGrid = document.getElementById('partyGrid');
+const progressBar = document.getElementById('progressBar');
+const votesForLabel = document.getElementById('votesFor');
+const votesAgainstLabel = document.getElementById('votesAgainst');
+const totalVotesFor = document.getElementById('totalVotesFor');
+const totalVotesAgainst = document.getElementById('totalVotesAgainst');
+const majorityStatus = document.getElementById('majorityStatus');
+const selectedPartyTags = document.getElementById('selectedPartyTags');
+const selectAllBtn = document.getElementById('selectAllBtn');
+const clearAllBtn = document.getElementById('clearAllBtn');
+const parliamentSeats = document.getElementById('parliamentSeats');
+const parliamentLegend = document.getElementById('parliamentLegend');
 
 // Declare parties as a variable that will be filled with data from the JSON file
 let parties = [];
@@ -90,6 +90,12 @@ function toggleParty(partyCard) {
   partyCard.classList.toggle('selected');
   updateResults();
   updateVisualization();
+  
+  // Clear any selected issue when manually toggling parties
+  const issueSelect = document.getElementById('issueSelect');
+  if (issueSelect) {
+    issueSelect.value = '';
+  }
 }
 
 // Setup event listeners function
@@ -101,6 +107,18 @@ function setupEventListeners() {
     });
     updateResults();
     updateVisualization();
+    
+    // Clear any selected issue when selecting all parties
+    const issueSelect = document.getElementById('issueSelect');
+    if (issueSelect) {
+      issueSelect.value = '';
+      const issueDetails = document.getElementById('issueDetails');
+      if (issueDetails) {
+        issueDetails.innerHTML = `
+          <p class="issue-explainer">Velg en sak fra listen ovenfor for å se hvilke partier som er enige med Kreftforeningens standpunkt.</p>
+        `;
+      }
+    }
   });
 
   // Clear all selections
@@ -110,64 +128,80 @@ function setupEventListeners() {
     });
     updateResults();
     updateVisualization();
+    
+    // Clear any selected issue when clearing parties
+    const issueSelect = document.getElementById('issueSelect');
+    if (issueSelect) {
+      issueSelect.value = '';
+      const issueDetails = document.getElementById('issueDetails');
+      if (issueDetails) {
+        issueDetails.innerHTML = `
+          <p class="issue-explainer">Velg en sak fra listen ovenfor for å se hvilke partier som er enige med Kreftforeningens standpunkt.</p>
+        `;
+      }
+    }
   });
 }
 
-        // Update results based on selections
-        function updateResults() {
-            const selectedParties = Array.from(document.querySelectorAll('.party-card.selected'));
-            const votesFor = selectedParties.reduce((total, party) => total + parseInt(party.dataset.seats), 0);
-            const votesAgainst = TOTAL_SEATS - votesFor;
-            const hasMajority = votesFor >= MAJORITY_THRESHOLD;
-            
-            // Update progress bar
-            const percentage = (votesFor / TOTAL_SEATS) * 100;
-            progressBar.style.width = `${percentage}%`;
-            
-            if (hasMajority) {
-                progressBar.classList.add('majority');
-            } else {
-                progressBar.classList.remove('majority');
-            }
-            
-            // Update vote counters
-            votesForLabel.textContent = votesFor;
-            votesAgainstLabel.textContent = votesAgainst;
-            totalVotesFor.textContent = votesFor;
-            totalVotesAgainst.textContent = votesAgainst;
-            
-            // Update majority status
-            if (hasMajority) {
-                majorityStatus.className = 'result-status has-majority';
-                majorityStatus.textContent = `Flertall oppnådd med ${votesFor} stemmer`;
-            } else {
-                majorityStatus.className = 'result-status no-majority';
-                const votesNeeded = MAJORITY_THRESHOLD - votesFor;
-                majorityStatus.textContent = `Ingen flertall (trenger ${votesNeeded} flere stemmer)`;
-            }
-            
-            // Update selected party tags
-            selectedPartyTags.innerHTML = '';
-            if (selectedParties.length === 0) {
-                const noPartyTag = document.createElement('span');
-                noPartyTag.className = 'party-tag';
-                noPartyTag.textContent = 'Ingen partier valgt';
-                selectedPartyTags.appendChild(noPartyTag);
-            } else {
-                selectedParties.forEach(party => {
-                    const tag = document.createElement('span');
-                    tag.className = `party-tag party-tag-${party.dataset.classPrefix}`;
-                    tag.textContent = `${party.dataset.shorthand} (${party.dataset.seats})`;
-                    selectedPartyTags.appendChild(tag);
-                });
-            }
-        }
+// Update results based on selections
+function updateResults() {
+  const selectedParties = Array.from(document.querySelectorAll('.party-card.selected'));
+  const votesFor = selectedParties.reduce((total, party) => total + parseInt(party.dataset.seats), 0);
+  const votesAgainst = TOTAL_SEATS - votesFor;
+  const hasMajority = votesFor >= MAJORITY_THRESHOLD;
+  
+  // Update progress bar
+  const percentage = (votesFor / TOTAL_SEATS) * 100;
+  progressBar.style.width = `${percentage}%`;
+  
+  if (hasMajority) {
+    progressBar.classList.add('majority');
+  } else {
+    progressBar.classList.remove('majority');
+  }
+  
+  // Update vote counters
+  votesForLabel.textContent = votesFor;
+  votesAgainstLabel.textContent = votesAgainst;
+  totalVotesFor.textContent = votesFor;
+  totalVotesAgainst.textContent = votesAgainst;
+  
+  // Update majority status
+  if (hasMajority) {
+    majorityStatus.className = 'result-status has-majority';
+    majorityStatus.textContent = `Flertall oppnådd med ${votesFor} stemmer`;
+  } else {
+    majorityStatus.className = 'result-status no-majority';
+    const votesNeeded = MAJORITY_THRESHOLD - votesFor;
+    majorityStatus.textContent = `Ingen flertall (trenger ${votesNeeded} flere stemmer)`;
+  }
+  
+  // Update selected party tags
+  selectedPartyTags.innerHTML = '';
+  if (selectedParties.length === 0) {
+    const noPartyTag = document.createElement('span');
+    noPartyTag.className = 'party-tag';
+    noPartyTag.textContent = 'Ingen partier valgt';
+    selectedPartyTags.appendChild(noPartyTag);
+  } else {
+    selectedParties.forEach(party => {
+      const tag = document.createElement('span');
+      tag.className = `party-tag party-tag-${party.dataset.classPrefix}`;
+      tag.textContent = `${party.dataset.shorthand} (${party.dataset.seats})`;
+      selectedPartyTags.appendChild(tag);
+    });
+  }
+}
 
 // Update visualization based on party selection
 function updateVisualization() {
-    const selectedParties = Array.from(document.querySelectorAll('.party-card.selected'));
-    const selectedPartyShorthands = selectedParties.map(party => party.dataset.shorthand);
-    
-    // Update D3 visualization
-    updateD3Visualization(selectedPartyShorthands);
+  const selectedParties = Array.from(document.querySelectorAll('.party-card.selected'));
+  const selectedPartyShorthands = selectedParties.map(party => party.dataset.shorthand);
+  
+  // Update D3 visualization
+  updateD3Visualization(selectedPartyShorthands);
 }
+
+// Eksporter funksjoner som trenger å være tilgjengelige for andre script-filer
+window.updateResults = updateResults;
+window.updateVisualization = updateVisualization;
