@@ -85,6 +85,65 @@ function createPartyCards() {
   });
 }
 
+// Konfetti-funksjon for å lage en spektakulær feiring
+function celebrateWithConfetti() {
+  // Partifargene som brukes i konfettien
+  const colors = [
+    '#ed1b34', // AP
+    '#007ac8', // H
+    '#14773c', // SP
+    '#002e5e', // FrP
+    '#eb2e2d', // SV
+    '#00807b', // V
+    '#da291c', // R
+    '#ffbe00', // KrF
+    '#439539', // MDG
+    '#a04d94'  // PF
+  ];
+
+  // Første eksplosjon - fra bunnen og oppover
+  confetti({
+    particleCount: 150,
+    spread: 100,
+    origin: { y: 0.9 },
+    colors: colors
+  });
+
+  // Andre eksplosjon - fra venstre side
+  setTimeout(() => {
+    confetti({
+      particleCount: 80,
+      angle: 60,
+      spread: 55,
+      origin: { x: 0, y: 0.5 },
+      colors: colors
+    });
+  }, 250);
+
+  // Tredje eksplosjon - fra høyre side
+  setTimeout(() => {
+    confetti({
+      particleCount: 80,
+      angle: 120,
+      spread: 55,
+      origin: { x: 1, y: 0.5 },
+      colors: colors
+    });
+  }, 400);
+
+  // Fjerde eksplosjon - regn av konfetti
+  setTimeout(() => {
+    confetti({
+      particleCount: 100,
+      startVelocity: 30,
+      spread: 360,
+      origin: { x: 0.5, y: 0.3 },
+      colors: colors,
+      ticks: 200
+    });
+  }, 650);
+}
+
 // Toggle party selection
 function toggleParty(partyCard) {
   partyCard.classList.toggle('selected');
@@ -179,12 +238,9 @@ function updateResults() {
     
     // Sjekk om vi gikk fra ikke-flertall til flertall
     if (!majorityStatus.hasAttribute('data-had-majority')) {
-      // Kjør konfetti!
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 }
-      });
+      // Kjør spektakulær konfetti-effekt
+      celebrateWithConfetti();
+      
       // Marker at vi har vist konfetti
       majorityStatus.setAttribute('data-had-majority', 'true');
     }
