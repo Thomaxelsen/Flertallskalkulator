@@ -6,7 +6,7 @@ const issues = [
     name: "Fleksibel sykepengeordning",
     partiesInAgreement: ["SP", "FrP"],
     partyQuotes: {
-      "SP": "Giete ut mulighetene for at personer med alvorlige diagnoser som er under aktiv behandling, får nødvendig fleksibilitet når det gjelder sykemeldinga si lengde og gradering, samt bedre høve for arbeidsnærvær og økonomisk tryggleik i behandlingsperioden ut over et år. Arbeidsgiver må i denne perioden gjevast fritak for arbeidsgiveravsperioden for sjukepengar.",
+      "SP": "Greie ut mulighetene for at personer med alvorlige diagnoser som er under aktiv behandling, får nødvendig fleksibilitet når det gjelder sykemeldinga si lengde og gradering, samt bedre høve for arbeidsnærvær og økonomisk tryggleik i behandlingsperioden ut over et år. Arbeidsgiver må i denne perioden gjevast fritak for arbeidsgiveravsperioden for sjukepengar.",
       "FrP": "Sikre en god og forutsigbar sykelønnordning for arbeidstakere, og innføre en tidskonto-ordning som sikrer gode muligheter for å stå delvis i arbeid under sykemelding."
     }
   },
@@ -22,14 +22,12 @@ const issues = [
       "H": "Prioritere bruk av lønnstilskudd og andre arbeidsmarkedstiltak som har beviselig god effekt for å sikre en mer effektiv og målrettet bruk av ressursene."
     }
   },
-  {
+ {
     id: 3,
     area: "Arbeidsliv",
     name: "Økt bruk av tiltak som Individuell jobbstøtte (IPS) og Arbeid med støtte (AMS)",
     partiesInAgreement: [],
-    partyQuotes: {
-      "FrP": "Innføre et fleksibelt lønnstilskudd for å få flere med nedsatt arbeidsevne inn i 33 arbeidslivet."
-    }
+    partyQuotes: {}
   },
   {
     id: 4,
@@ -42,7 +40,8 @@ const issues = [
       "SV": "At det skal lønne seg å ansette folk som står utenfor arbeidslivet. Vi vil styrke ordningen som gir lønnstilskudd til bedrifter som ansetter arbeidssøkende via NAV, særlig for grupper med nedsatt arbeidsevne.",
       "MDG": "Sikre funksjonsassistanse og lønnstilskudd i arbeid, arbeidstiltak eller praksis til en rettighetsfestet, også for uføre. Ordningen må kunne samordnes med BPA.",
       "KrF": "Ha økt bruk av lønnstilskudd og arbeidstrening for å gi flere muligheten til å delta i arbeidslivet.",
-      "H": "Prioritere bruk av lønnstilskudd og andre arbeidsmarkedstiltak som har beviselig god effekt for å sikre en mer effektiv og målrettet bruk av ressursene."
+      "H": "Prioritere bruk av lønnstilskudd og andre arbeidsmarkedstiltak som har beviselig god effekt for å sikre en mer effektiv og målrettet bruk av ressursene.",
+      "FrP": "Innføre et fleksibelt lønnstilskudd for å få flere med nedsatt arbeidsevne inn i arbeidslivet."
     }
   },
   {
