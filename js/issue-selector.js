@@ -78,63 +78,98 @@ function createPopupModal() {
             }
         });
     } 
-    // On desktop, set up hover
+    // På desktop, sett opp hover
     else {
-        // Add event delegation for hover events on party buttons
-        document.addEventListener('mouseover', (e) => {
-            // Find closest clickable-party if we hovered over a child element
-            const partyElement = e.target.closest('.clickable-party');
-            if (partyElement && partyElement !== currentHoveredParty) {
-                currentHoveredParty = partyElement;
-                const partyCode = partyElement.dataset.party;
-                
-                // Clear any existing timer
-                if (hoverTimer) clearTimeout(hoverTimer);
-                
-                // Set a small delay to prevent flickering on quick mouse movements
-                hoverTimer = setTimeout(() => {
-                    if (currentIssueId && partyCode) {
-                        showPartyQuoteHover(currentIssueId, partyCode, partyElement);
-                    }
-                }, 100);
+        // Legg til debugging
+        console.log("Setting up hover handlers for desktop");
+        
+        // Direkte hover-håndtering for partielementer
+        setupInitialHoverListeners();
+        
+        // Watch for new elements being added after issue selection
+        const observer = new MutationObserver((mutations) => {
+            for (const mutation of mutations) {
+                if (mutation.type === 'childList' && 
+                    mutation.addedNodes.length > 0) {
+                    setupHoverListeners();
+                }
             }
         });
         
-        // Hide popup when moving mouse out
-        document.addEventListener('mouseout', (e) => {
-            const partyElement = e.target.closest('.clickable-party');
-            if (partyElement && partyElement === currentHoveredParty) {
-                // Only hide if we're moving away from the party element
-                if (!partyElement.contains(e.relatedTarget)) {
-                    currentHoveredParty = null;
-                    // Clear any pending hover timer
-                    if (hoverTimer) {
-                        clearTimeout(hoverTimer);
-                        hoverTimer = null;
-                    }
-                    
-                    // Small delay to allow moving to the popup
-                    setTimeout(() => {
-                        const modal = document.getElementById('quoteModal');
-                        // Check if mouse is over the modal before hiding
-                        if (modal && !modal.matches(':hover') && !partyElement.matches(':hover')) {
-                            modal.style.display = 'none';
-                        }
-                    }, 100);
-                }
-            }
+        // Start observing the document for added nodes
+        observer.observe(document.body, { 
+            childList: true, 
+            subtree: true 
         });
         
         // Allow hovering over the popup without it disappearing
         const modal = document.getElementById('quoteModal');
         if (modal) {
             modal.addEventListener('mouseleave', () => {
-                if (currentHoveredParty === null) {
-                    modal.style.display = 'none';
-                }
+                modal.style.display = 'none';
+                currentHoveredParty = null;
             });
         }
     }
+}
+
+// Setup hover listeners when the page first loads
+function setupInitialHoverListeners() {
+    // Add a small delay to ensure DOM is fully loaded
+    setTimeout(setupHoverListeners, 500);
+}
+
+// Setup or refresh all hover listeners
+function setupHoverListeners() {
+    // Find all hoverable party elements
+    const partyElements = document.querySelectorAll('.hoverable-party[data-party]');
+    console.log(`Found ${partyElements.length} hoverable party elements`);
+    
+    partyElements.forEach(element => {
+        // Remove existing listeners first to prevent duplicates
+        element.removeEventListener('mouseenter', handlePartyHover);
+        element.removeEventListener('mouseleave', handlePartyLeave);
+        
+        // Add hover listeners
+        element.addEventListener('mouseenter', handlePartyHover);
+        element.addEventListener('mouseleave', handlePartyLeave);
+    });
+}
+
+// Handle mouseenter on party elements
+function handlePartyHover(e) {
+    const partyElement = e.currentTarget;
+    const partyCode = partyElement.dataset.party;
+    console.log("Mouse enter:", partyCode);
+    
+    if (currentIssueId && partyCode) {
+        // Clear existing timer
+        if (hoverTimer) clearTimeout(hoverTimer);
+        
+        // Set a small delay
+        hoverTimer = setTimeout(() => {
+            showPartyQuoteHover(currentIssueId, partyCode, partyElement);
+            currentHoveredParty = partyElement;
+        }, 100);
+    }
+}
+
+// Handle mouseleave on party elements
+function handlePartyLeave(e) {
+    console.log("Mouse leave");
+    if (hoverTimer) {
+        clearTimeout(hoverTimer);
+        hoverTimer = null;
+    }
+    
+    // Small delay to prevent flickering when moving to modal
+    setTimeout(() => {
+        const modal = document.getElementById('quoteModal');
+        if (modal && !modal.matches(':hover')) {
+            modal.style.display = 'none';
+            currentHoveredParty = null;
+        }
+    }, 100);
 }
 
 // Hent alle unike saksområder fra issues-arrayet
@@ -209,6 +244,9 @@ function setupIssueSelectionListeners() {
         const selectedIssueId = this.value;
         currentIssueId = selectedIssueId; // Store for hover functionality
         handleIssueSelection(selectedIssueId);
+        
+        // Etter at innholdet er oppdatert, sjekk etter hoverable elementer
+        setTimeout(setupHoverListeners, 100);
     });
 }
 
@@ -320,13 +358,33 @@ function updateIssueDetails(issue = null) {
             </div>
         </div>
     `;
+    
+    // Etter at HTML er oppdatert, oppdater hover-lytterne
+    if (!isTouch) {
+        setTimeout(setupHoverListeners, 100);
+    }
 }
 
 // Show party quote in hover mode (positions near the party button)
 function showPartyQuoteHover(issueId, partyCode, targetElement) {
+    console.log(`Showing quote for issue ${issueId}, party ${partyCode}`);
+    
     // Find issue
     const issue = window.issues.find(issue => issue.id == issueId);
-    if (!issue || !issue.partyQuotes || !issue.partyQuotes[partyCode]) return;
+    if (!issue) {
+        console.error("Issue not found:", issueId);
+        return;
+    }
+    
+    if (!issue.partyQuotes) {
+        console.error("No party quotes for issue:", issueId);
+        return;
+    }
+    
+    if (!issue.partyQuotes[partyCode]) {
+        console.error("No quote for party:", partyCode);
+        return;
+    }
     
     // Get party info
     const partyName = getPartyFullName(partyCode);
