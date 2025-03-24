@@ -4,7 +4,10 @@ const issues = [
     id: 1,
     area: "Arbeidsliv",
     name: "Fleksibel sykepengeordning",
-    partiesInAgreement: ["SP", "FrP"]
+    partiesInAgreement: ["SP", "FrP"],
+    partyQuotes: {
+      "SP": "Giete ut mulighetene for at personer med alvorlige diagnoser som er under aktiv behandling, får nødvendig fleksibilitet når det gjelder sykemeldinga si lengde og gradering, samt bedre høve for arbeidsnærvær og økonomisk tryggleik i behandlingsperioden ut over et år. Arbeidsgiver må i denne perioden gjevast fritak for arbeidsgiveravsperioden for sjukepengar."
+    }
   },
   {
     id: 2,
@@ -12,7 +15,8 @@ const issues = [
     name: "Styrking av kompetansen i NAV",
     partiesInAgreement: ["R", "AP", "FrP"],
     partyQuotes: {
-      "AP": "At NAV skal hjelpe flere inn i arbeid. Derfor må NAV styrkes med nye verktøy. De ansatte i NAV må gis mer fleksibilitet, slik at de kan tilpasse virkemiddelbruken til den enkelte."
+      "AP": "At NAV skal hjelpe flere inn i arbeid. Derfor må NAV styrkes med nye verktøy. De ansatte i NAV må gis mer fleksibilitet, slik at de kan tilpasse virkemiddelbruken til den enkelte.",
+      "R": "a) Gi de ansatte i førstelinjen i NAV tid og tillit til å gjøre jobben sin. b) Stoppe nedleggelsen av NAV-kontorer og omgjøre NAV til en institusjon som gir gode og nære tjenester til dem som trenger det. Tilbakeføre vedtaksmyndighet til Navs lokalkontorer."
     }
   },
   {
@@ -27,14 +31,19 @@ const issues = [
     name: "Økt bruk av lønnstilskudd",
     partiesInAgreement: ["SV", "AP", "SP", "MDG", "KrF", "H", "FrP"],
     partyQuotes: {
-      "AP": "Utvide ordningen med varig lønnstilskudd til flere utsatte grupper."
+      "AP": "Utvide ordningen med varig lønnstilskudd til flere utsatte grupper.",
+      "SP": "Utvide omfanget av ordninger med varig lønnstilskudd til bedrifter som ansetter arbeidsseekende via NAV, særlig for grupper med nedsatt arbeidsevne.",
+      "SV": "At det skal lønne seg å ansette folk som står utenfor arbeidslivet. Vi vil styrke ordningen som gir lønnstilskudd til bedrifter som ansetter arbeidssøkende via NAV, særlig for grupper med nedsatt arbeidsevne."
     }
   },
   {
     id: 5,
     area: "Arbeidsliv",
     name: "Styrke og øke bruken av arbeidsrettet rehabilitering",
-    partiesInAgreement: ["SP", "H", "FrP"]
+    partiesInAgreement: ["SP", "H", "FrP"],
+    partyQuotes: {
+      "SP": "Innføre ein eigen opptrappingsplan som sikrar utvikling og finansiering av eit godt 191:1 kommunalt tilrettelagte rehabiliterings- og habiliteringstilbod for alle pasientgrupper."
+    }
   },
   {
     id: 6,
@@ -55,7 +64,10 @@ const issues = [
     id: 8,
     area: "Diagnostikk og tidlig oppdagelse",
     name: "Pilot på prostatakreftscreening",
-    partiesInAgreement: ["R", "V", "H"]
+    partiesInAgreement: ["R", "V", "H"],
+    partyQuotes: {
+      "R": "Innføre et pilotprosjekt for å prøve ut et nasjonalt screeningprogram for prostatakreft."
+    }
   },
   {
     id: 9,
@@ -69,7 +81,8 @@ const issues = [
     name: "Nasjonalt tilbud om røykeslutt og forslag om skattlegging av tobakksnæringen",
     partiesInAgreement: ["AP", "SP", "KrF", "H"],
     partyQuotes: {
-      "AP": "Følge opp ambisjonene i folkehelsestrategien ved å finansiere et nasjonalt røykesluttprogram."
+      "AP": "Følge opp ambisjonene i folkehelsestrategien ved å finansiere et nasjonalt røykesluttprogram.",
+      "SP": "Tilby gratis legemidler til røykeslutt."
     }
   },
   {
@@ -84,14 +97,19 @@ const issues = [
     name: "Restriktiv alkoholpolitikk",
     partiesInAgreement: ["R", "AP", "SP", "KrF"],
     partyQuotes: {
-      "AP": "Føre en restriktiv alkoholpolitikk og opprettholde Vinmonopolets samfunnsrolle."
+      "AP": "Føre en restriktiv alkoholpolitikk og opprettholde Vinmonopolets samfunnsrolle.",
+      "R": "Føre en restriktiv tobakks- og alkoholpolitikk.",
+      "SP": "Ha restriksjonar på alkoholreklame og tilgjengelighet."
     }
   },
   {
     id: 13,
     area: "Folkehelse og forebygging",
     name: "Merke alkohol med informasjon om de helsekonsekvensene alkoholkonsum medfører",
-    partiesInAgreement: ["SP"]
+    partiesInAgreement: ["SP"],
+    partyQuotes: {
+      "SP": "Innføre krav til innholdsmerking av alkoholholdige drikkevarer."
+    }
   },
   {
     id: 14,
@@ -109,7 +127,10 @@ const issues = [
     id: 16,
     area: "Folkehelse og forebygging",
     name: "Avvikle taxfree-ordningen for alkohol, tobakks- og nikotinprodukter",
-    partiesInAgreement: ["R", "MDG", "KrF", "V"]
+    partiesInAgreement: ["R", "MDG", "KrF", "V"],
+    partyQuotes: {
+      "R": "Avvikle taxfree-ordningen. Fram til dette skjer, bør Vinmonopolet overta driften."
+    }
   },
   {
     id: 17,
@@ -130,7 +151,10 @@ const issues = [
     id: 19,
     area: "Folkehelse og forebygging",
     name: "Sunn skatteveksling",
-    partiesInAgreement: ["R", "KrF", "V"]
+    partiesInAgreement: ["R", "KrF", "V"],
+    partyQuotes: {
+      "R": "Bruke avgiftspolitikken for å stimulere til sunne og miljøvennlige valg."
+    }
   },
   {
     id: 20,
@@ -147,7 +171,8 @@ const issues = [
     name: "Økt bruk av helsedata for å forbedre behandling og utvikle helsenæring",
     partiesInAgreement: ["AP", "SP", "H"],
     partyQuotes: {
-      "AP": "Bruke norske helsedata til å utvikle nye tjenester, behandlinger og medisinske produkter."
+      "AP": "Bruke norske helsedata til å utvikle nye tjenester, behandlinger og medisinske produkter.",
+      "SP": "Sikre tilgang på helsedata på tvers av offentleg og privat sektor som gjer det mogeleg å 193B utvikle best mogelege løysingar, samstundes som personvernet vert ivareteke."
     }
   },
   {
@@ -165,7 +190,9 @@ const issues = [
     name: "Politikk for å begrense antibiotikaresistens",
     partiesInAgreement: ["R", "AP", "SP", "MDG", "KrF", "V", "H", "FrP"],
     partyQuotes: {
-      "AP": "At Norge tar lederskap i det globale arbeidet mot antibiotikaresistens."
+      "AP": "At Norge jobber for å styrke utviklingen av vaksiner og diagnostiske verktøy som kan forebygge antibiotikaresistens.",
+      "R": "At Norge jobber for å styrke utviklingen av vaksiner og diagnostiske verktøy som kan forebygge antibiotikaresistens.",
+      "SP": "Styrkje forsknings- og utredningsarbeid for å stoppe spredning av antibiotikaresistente bakterier."
     }
   },
   {
@@ -174,7 +201,10 @@ const issues = [
     name: "Få opp nasjonal infrastruktur for legemiddelproduksjon",
     partiesInAgreement: ["R", "SV", "AP", "SP", "MDG", "KrF", "FrP"],
     partyQuotes: {
-      "AP": "Styrke utviklingen og produksjonen av legemidler i Norge."
+      "AP": "Styrke utviklingen og produksjonen av legemidler i Norge.",
+      "R": "Utvikle produksjon av nødvendige legemidler i Norge, og jobbe for endringer i legemiddelindustrien slik at det ikke blir mangel på nødvendige legemidler.",
+      "SP": "Etablere statlig produksjon av legemidler (StatMed) og styrke forskningen og eksisterende produksjonsmiljøer i Norge.",
+      "SV": "Få opp nasjonal infrastruktur for legemiddelproduksjon."
     }
   },
   {
@@ -183,14 +213,18 @@ const issues = [
     name: "Økt bruk av digital hjemmeoppfølging",
     partiesInAgreement: ["SV", "AP", "MDG", "KrF", "H"],
     partyQuotes: {
-      "AP": "Benytte mulighetene som ny teknologi, innovasjon og digitalisering gir oss."
+      "AP": "Benytte mulighetene som ny teknologi, innovasjon og digitalisering gir oss.",
+      "SV": "Etablere brukervennlige digitale oppfølgingstjenester og ta i bruk ulike typer velferdsteknologi."
     }
   },
   {
     id: 26,
     area: "Frivillig sektor",
     name: "Økt skattefradrag på gaver",
-    partiesInAgreement: ["SP", "MDG", "KrF", "V", "H", "FrP"]
+    partiesInAgreement: ["SP", "MDG", "KrF", "V", "H", "FrP"],
+    partyQuotes: {
+      "SP": "Øke skattefradraget for gaver til frivillige organisasjoner."
+    }
   },
   {
     id: 27,
@@ -198,7 +232,8 @@ const issues = [
     name: "Styrke de spesielle rettsjelpstiltakene",
     partiesInAgreement: ["SV", "AP", "MDG"],
     partyQuotes: {
-      "AP": "Styrke de frivillige rettshjelptiltakene."
+      "AP": "Styrke de frivillige rettshjelptiltakene.",
+      "SV": "Styrke de frivillige rettshjelptiltakene og prioritere at flere får fri rettshjelp."
     }
   },
   {
@@ -207,7 +242,9 @@ const issues = [
     name: "Utvide saksområdet for fri rettshjelp",
     partiesInAgreement: ["SV", "AP", "SP", "V"],
     partyQuotes: {
-      "AP": "Etablere en ny rettshjelpsmodell som sikrer at flere utsatte grupper får rettshjelp, og tilby rettshjelpsveledning til folk over hele landet i nærttjenestesentre."
+      "AP": "Etablere en ny rettshjelpsmodell som sikrer at flere utsatte grupper får rettshjelp, og tilby rettshjelpsveledning til folk over hele landet i nærttjenestesentre.",
+      "SP": "Endre rettshjelpsordningen til å gjelde flere saksområder og prioritere inntektsgrensa 953€ for ordningen.",
+      "SV": "Styrke de frivillige rettshjelptiltakene og prioritere at flere får fri rettshjelp."
     }
   },
   {
@@ -250,7 +287,10 @@ const issues = [
     id: 35,
     area: "Rettigheter",
     name: "Avkortning av sosialhjelp ved økonomisk støtte",
-    partiesInAgreement: ["R"]
+    partiesInAgreement: ["R"],
+    partyQuotes: {
+      "R": "Sikre at sosialhjelpmottakere kan motta økonomisk støtte fra familie eller frivillige organisasjoner uten å være redde for avkortning."
+    }
   },
   {
     id: 36,
@@ -271,7 +311,12 @@ const issues = [
     id: 38,
     area: "Rettigheter",
     name: "Omsorgspenger for pårørende",
-    partiesInAgreement: ["R", "SV", "SP", "KrF", "FrP"]
+    partiesInAgreement: ["R", "SV", "SP", "KrF", "FrP"],
+    partyQuotes: {
+      "R": "At det skal tas hensyn til helthetlige behov når familier hvor flere er kronisk syke, søker helse- og omsorgstjenester – og.... Forbedre regelverket for pårørendes permisjonsmulighetere i arbeidslivet for å sikre likestilling og bedre mulighetene til å kombinere arbeid og omsorg 2025 og omsorg.",
+      "SP": "Forbedre pårørende permisjonsmuligheter i arbeidslivet, og mulige økonomiske 2024 kompensasjonsordninger, for å sikre likestilling og bedre muligheter til å kombinere arbeid 2025 og omsorg.",
+      "SV": "Anerkjenne den viktige rollen til pårørende. Vi vil sørge for nasjonale satsar på omsorgstenader og vurdere å innføre å omsregeldning."
+    }
   },
   {
     id: 39,
@@ -297,14 +342,20 @@ const issues = [
     name: "Kortere ventetider på helsehjelp",
     partiesInAgreement: ["SV", "AP", "SP", "KrF", "H", "FrP"],
     partyQuotes: {
-      "AP": "Sikre korte ventetider i vår felles helsetjeneste."
+      "AP": "Sikre korte ventetider i vår felles helsetjeneste.",
+      "SP": "Styrke finansieringen av sykehusene for å sikre økt pasientbehandling, reduserte ventetider og økt evne til å håndtere oppgavevekst og geografiske forskjeller.",
+      "SV": "Bemanningen ved de offentlige sykehusene må styrkes, slik at vi reduserer ventetidene, sikrer raskere behandling og øker helseberedskapen i hele landet."
     }
   },
   {
     id: 42,
     area: "Tilgang til behandling",
     name: "Raskere tilgang til nye behandlinger og medisiner",
-    partiesInAgreement: ["R", "SP", "H", "FrP"]
+    partiesInAgreement: ["R", "SP", "H", "FrP"],
+    partyQuotes: {
+      "R": "At systemet for innføring av nye medisiner/legemidler endres slik at saksbehandlingstiden går ned, og faglige og samfunnsmessige kriterier blir førende, for å gjøre flere medisiner tilgjengelige.",
+      "SP": "Redusere byråkrati og sikre raskere innføring av nye behandlingsmetoder."
+    }
   },
   {
     id: 43,
@@ -321,7 +372,9 @@ const issues = [
     name: "Øke investeringer innenfor helse",
     partiesInAgreement: ["SV", "AP", "SP", "V", "H"],
     partyQuotes: {
-      "AP": "Øke andel av BNP som går til helse for å sikre investeringer som bidrar til effektiv ressursbruk."
+      "AP": "Øke andel av BNP som går til helse for å sikre investeringer som bidrar til effektiv ressursbruk.",
+      "SP": "Øke bevilgningene og ha et stekt offentlig helsevesen med like egenandeler.",
+      "SV": "Arbeide for å løfte investeringsetterslepet i sykehusene og øke grunnfinansieringen av sykehusene i tråd med kostnadsvekst og investeringsbehov."
     }
   },
   {
