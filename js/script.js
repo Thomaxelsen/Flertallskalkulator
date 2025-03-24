@@ -95,6 +95,12 @@ function toggleParty(partyCard) {
   const issueSelect = document.getElementById('issueSelect');
   if (issueSelect) {
     issueSelect.value = '';
+    const issueDetails = document.getElementById('issueDetails');
+    if (issueDetails) {
+      issueDetails.innerHTML = `
+        <p class="issue-explainer">Velg en sak fra listen ovenfor for å se hvilke partier som er enige med Kreftforeningens standpunkt.</p>
+      `;
+    }
   }
 }
 
