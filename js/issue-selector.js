@@ -2,9 +2,29 @@
 
 // Map over saker som har påvirkningsnotater
 const issueDocuments = {
-  // Legg til flere saker og lenker her etterhvert
-  "36": "https://kreftforeningen.atlassian.net/wiki/spaces/POS/pages/785645577/Pasientreiser"
-  // Format: "sak-id": "lenke-til-notat",
+  // Rettigheter
+  "36": "https://kreftforeningen.atlassian.net/wiki/spaces/POS/pages/785645577/Pasientreiser",
+  "35": "https://kreftforeningen.atlassian.net/wiki/spaces/POS/pages/772571163/Avkortning+av+sosialhjelp+ved+konomisk+st+tte",
+  "34": "https://kreftforeningen.atlassian.net/wiki/spaces/POS/pages/801734657/Pasient+og+brukerrettighetsloven+total+revisjon",
+  
+  // Arbeidsliv
+  "1": "https://kreftforeningen.atlassian.net/wiki/spaces/POS/pages/849707012/Fleksibel+sykepengeordning+ny",
+  
+  // Diagnostikk og tidlig oppdagelse
+  "7": "https://kreftforeningen.atlassian.net/wiki/spaces/POS/pages/772603925/Gentest+til+flere+tidligere+i+forl+pet",
+  
+  // Folkehelse og forebygging
+  "17": "https://kreftforeningen.atlassian.net/wiki/spaces/POS/pages/786104324/Raskere+utryddelse+av+HPV",
+  "14": "https://kreftforeningen.atlassian.net/wiki/spaces/POS/pages/785907717/Strengere+regulering+av+solarium",
+  "10": "https://kreftforeningen.atlassian.net/wiki/spaces/POS/pages/786300939/R+ykeslutt+til+alle+som+trenger+det",
+  
+  // Forskning og innovasjon
+  "20": "https://kreftforeningen.atlassian.net/wiki/spaces/POS/pages/819494913/Opprettelse+av+en+helsekatapult",
+  
+  // Kreftomsorg
+  "30": "https://kreftforeningen.atlassian.net/wiki/spaces/POS/pages/812089354/Pakkeforl+p+hjem",
+  "33": "https://kreftforeningen.atlassian.net/wiki/spaces/POS/pages/803700775/Ern+ringsstrategi+i+alle+sykehus",
+  "32": "https://kreftforeningen.atlassian.net/wiki/spaces/POS/pages/891584514/Spesialisering+i+palliasjon"
 };
 
 // Vent til dokumentet er helt lastet
