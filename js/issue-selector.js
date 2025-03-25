@@ -1,5 +1,12 @@
 // issue-selector.js - Funksjonalitet for å velge saker fra Kreftforeningens program
 
+// Map over saker som har påvirkningsnotater
+const issueDocuments = {
+  // Legg til flere saker og lenker her etterhvert
+  "36": "https://kreftforeningen.atlassian.net/wiki/spaces/POS/pages/785645577/Pasientreiser"
+  // Format: "sak-id": "lenke-til-notat",
+};
+
 // Vent til dokumentet er helt lastet
 document.addEventListener('DOMContentLoaded', function() {
     // Vent til issues er globalt tilgjengelig og partier er lastet
@@ -359,9 +366,34 @@ function updateIssueDetails(issue = null) {
         </div>
     `;
     
-    // Etter at HTML er oppdatert, oppdater hover-lytterne
+// Etter at HTML er oppdatert, oppdater hover-lytterne
     if (!isTouch) {
         setTimeout(setupHoverListeners, 100);
+    }
+    
+    // Sjekk om vi har et påvirkningsnotat for denne saken etter at HTML er satt
+    if (issue && issueDocuments[issue.id]) {
+        // Opprett knapp-elementet
+        const docButton = document.createElement('a');
+        docButton.href = issueDocuments[issue.id];
+        docButton.target = '_blank'; // Åpner i ny fane
+        docButton.className = 'document-link-btn';
+        docButton.textContent = 'Lenke til påvirkningsnotat';
+        
+        // Legg til knappen i DOM
+        // Finn en god container å plassere den i
+        const buttonsContainer = document.createElement('div');
+        buttonsContainer.className = 'issue-buttons';
+        buttonsContainer.appendChild(docButton);
+        
+        // Legg til container etter issue-parties
+        const issueParties = issueDetails.querySelector('.issue-parties');
+        if (issueParties) {
+            issueParties.after(buttonsContainer);
+        } else {
+            // Alternativt legg den til på slutten av issueDetails
+            issueDetails.appendChild(buttonsContainer);
+        }
     }
 }
 
@@ -575,6 +607,29 @@ function addIssueSelectCSS() {
     style.id = 'issue-selector-styles';
     style.textContent = `
         /* Stilene er allerede lagt til i styles.css */
+        
+        /* Stil for dokumentlenke-knappen */
+        .issue-buttons {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .document-link-btn {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #ff5f7c; /* Kreftforeningens rosa farge */
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            text-align: center;
+            transition: background-color 0.2s;
+        }
+
+        .document-link-btn:hover {
+            background-color: #e94867; /* Mørkere versjon for hover */
+        }
     `;
     
     document.head.appendChild(style);
@@ -681,7 +736,7 @@ function addQuoteStyles() {
             position: relative;
         }
         
-        /* Hover modal content styling (positioned near element) */
+      /* Hover modal content styling (positioned near element) */
         .quote-modal.hover-mode .quote-modal-content {
             background-color: white;
             padding: 20px;
