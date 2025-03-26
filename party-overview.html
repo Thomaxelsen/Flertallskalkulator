@@ -32,11 +32,6 @@
             }
         }
         
-        /* Skjul hamburger-knappen når menyen er åpen */
-        body.menu-open .burger-menu {
-            display: none;
-        }
-        
         .burger-bar {
             width: 25px;
             height: 3px;
@@ -45,7 +40,7 @@
             transition: 0.4s;
         }
         
-        /* Menycontainer - kommer fra venstre side */
+        /* Menycontainer - nå kommer fra venstre side */
         .mobile-menu {
             position: fixed;
             left: -250px; /* Starter utenfor skjermen på venstre side */
@@ -57,7 +52,6 @@
             transition: left 0.3s ease; /* Endret fra right til left */
             box-shadow: 2px 0 5px rgba(0,0,0,0.2); /* Endret skyggeside */
             z-index: 999;
-            overflow-y: auto; /* Tillat scrolling om nødvendig */
         }
         
         .mobile-menu.active {
@@ -71,10 +65,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
-            top: 0;
-            background: white;
-            z-index: 2;
         }
         
         .close-button {
@@ -85,11 +75,6 @@
             padding: 0;
             margin: 0;
             line-height: 1;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
         
         .menu-items {
@@ -139,16 +124,16 @@
     <div class="mobile-menu" id="mobileMenu">
         <div class="menu-header">
             <h3>Meny</h3>
-            <button class="close-button" id="closeMenu" onclick="closeMenuFunction()">&times;</button>
+            <button class="close-button" id="closeMenu">&times;</button>
         </div>
         <div class="menu-items">
-            <a href="index.html" onclick="closeMenuFunction()">Flertallskalkulator</a>
-            <a href="party-overview.html" onclick="closeMenuFunction()">Partioversikt</a>
+            <a href="index.html">Flertallskalkulator</a>
+            <a href="party-overview.html">Partioversikt</a>
         </div>
     </div>
     
     <!-- Bakgrunnsoverlay for menyen -->
-    <div class="menu-overlay" id="menuOverlay" onclick="closeMenuFunction()"></div>
+    <div class="menu-overlay" id="menuOverlay"></div>
 
     <div class="container">
         <!-- Header - samme som på hovedsiden -->
@@ -187,44 +172,39 @@
 
     <!-- Inline JavaScript for hamburger-meny -->
     <script>
-        // Global funksjon for å lukke menyen - tilgjengelig for onclick-handlers
-        function closeMenuFunction() {
-            const mobileMenu = document.getElementById('mobileMenu');
-            const menuOverlay = document.getElementById('menuOverlay');
-            
-            if (mobileMenu) mobileMenu.classList.remove('active');
-            if (menuOverlay) menuOverlay.classList.remove('active');
-            document.body.classList.remove('menu-open');
-            document.body.style.overflow = '';
-        }
-        
         // Vent til DOM er fullstendig lastet
         document.addEventListener('DOMContentLoaded', function() {
             // Hent nødvendige elementer
             const burgerMenu = document.getElementById('burgerMenu');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const closeMenu = document.getElementById('closeMenu');
+            const menuOverlay = document.getElementById('menuOverlay');
             
             // Hvis elementene ikke finnes, avbryt
-            if (!burgerMenu) {
+            if (!burgerMenu || !mobileMenu || !closeMenu || !menuOverlay) {
                 console.error("Kunne ikke finne nødvendige menyelementer");
                 return;
             }
             
             // Åpne menyen når burger-knappen klikkes
             burgerMenu.addEventListener('click', function() {
-                const mobileMenu = document.getElementById('mobileMenu');
-                const menuOverlay = document.getElementById('menuOverlay');
-                
-                if (mobileMenu) mobileMenu.classList.add('active');
-                if (menuOverlay) menuOverlay.classList.add('active');
-                document.body.classList.add('menu-open'); // Legg til klasse for å skjule hamburger-ikonet
+                mobileMenu.classList.add('active');
+                menuOverlay.classList.add('active');
                 document.body.style.overflow = 'hidden'; // Hindre scrolling
             });
             
-            // Ekstra nødsikring: Lytt etter Escape-tasten
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    closeMenuFunction();
-                }
+            // Lukk menyen når lukke-knappen klikkes
+            closeMenu.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
+                document.body.style.overflow = ''; // Gjenopprett scrolling
+            });
+            
+            // Lukk menyen når man klikker på overlay
+            menuOverlay.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
+                document.body.style.overflow = ''; // Gjenopprett scrolling
             });
         });
     </script>
