@@ -31,6 +31,11 @@
             }
         }
         
+        /* Skjul hamburger-knappen når menyen er åpen */
+        .menu-open .burger-menu {
+            display: none;
+        }
+        
         .burger-bar {
             width: 25px;
             height: 3px;
@@ -274,6 +279,7 @@
                 mobileMenu.classList.add('active');
                 menuOverlay.classList.add('active');
                 document.body.style.overflow = 'hidden'; // Hindre scrolling
+                document.body.classList.add('menu-open'); // Legg til klasse for å skjule hamburger-ikonet
             });
             
             // Lukk menyen når lukke-knappen klikkes
@@ -281,6 +287,7 @@
                 mobileMenu.classList.remove('active');
                 menuOverlay.classList.remove('active');
                 document.body.style.overflow = ''; // Gjenopprett scrolling
+                document.body.classList.remove('menu-open'); // Fjern klasse for å vise hamburger-ikonet igjen
             });
             
             // Lukk menyen når man klikker på overlay
@@ -288,6 +295,7 @@
                 mobileMenu.classList.remove('active');
                 menuOverlay.classList.remove('active');
                 document.body.style.overflow = ''; // Gjenopprett scrolling
+                document.body.classList.remove('menu-open'); // Fjern klasse for å vise hamburger-ikonet igjen
             });
         });
     </script>
