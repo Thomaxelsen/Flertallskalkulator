@@ -1217,3 +1217,136 @@ footer {
         margin: 10px auto 0;
     }
 }
+/* Hamburger meny styles */
+.hamburger-nav {
+    margin-left: auto;
+    position: relative;
+    z-index: 1000;
+}
+
+.hamburger-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.3s ease;
+}
+
+.hamburger-line {
+    width: 100%;
+    height: 3px;
+    background-color: var(--kf-blue);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.hamburger-button:hover .hamburger-line {
+    background-color: var(--kf-pink);
+}
+
+.nav-menu {
+    position: fixed;
+    top: 0;
+    right: -300px; /* Start off-screen */
+    width: 300px;
+    max-width: 80vw;
+    height: 100vh;
+    background-color: white;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+    transition: right 0.3s ease;
+    z-index: 1001;
+    overflow-y: auto;
+}
+
+.nav-menu.active {
+    right: 0; /* Slide in */
+}
+
+.nav-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.menu-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--kf-blue);
+}
+
+.close-menu {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #666;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.close-menu:hover {
+    color: var(--kf-pink);
+}
+
+.nav-menu-links {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.menu-link {
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.menu-link:hover {
+    background-color: rgba(0, 48, 135, 0.05);
+    color: var(--kf-blue);
+    transform: translateX(5px);
+}
+
+.menu-link.active {
+    background-color: var(--kf-blue);
+    color: white;
+}
+
+/* Prevent scrolling when menu is open */
+body.menu-open {
+    overflow: hidden;
+}
+
+/* Overlay when menu is open */
+body.menu-open::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 999;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none; /* Hide regular nav links on mobile */
+    }
+}
+
+@media (min-width: 769px) {
+    .hamburger-button {
+        display: none; /* Hide hamburger on desktop */
+    }
+}
