@@ -436,618 +436,651 @@ footer {
 }
 
 .section-title {
-    font-size: 1.5rem;
-    color: var(--kf-blue);
-    margin: 0 0 1.5rem;
-    padding-bottom: 0.8rem;
-    border-bottom: 2px solid #eee;
-    position: relative;
-    text-align: center;
+   font-size: 1.5rem;
+   color: var(--kf-blue);
+   margin: 0 0 1.5rem;
+   padding-bottom: 0.8rem;
+   border-bottom: 2px solid #eee;
+   position: relative;
+   text-align: center;
 }
 
 .section-title::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 2px;
-    background: linear-gradient(90deg, var(--kf-pink), var(--kf-purple));
+   content: '';
+   position: absolute;
+   bottom: -2px;
+   left: 50%;
+   transform: translateX(-50%);
+   width: 80px;
+   height: 2px;
+   background: linear-gradient(90deg, var(--kf-pink), var(--kf-purple));
 }
 
 .parliament-legend {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 25px;
-    gap: 10px;
-    font-size: 0.9em;
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   margin-top: 25px;
+   gap: 10px;
+   font-size: 0.9em;
 }
 
 .legend-item {
-    display: flex;
-    align-items: center;
-    margin: 5px 8px;
-    white-space: nowrap;
-    background-color: #f9f9f9;
-    padding: 5px 10px;
-    border-radius: 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
-    transition: all 0.2s ease;
+   display: flex;
+   align-items: center;
+   margin: 5px 8px;
+   white-space: nowrap;
+   background-color: #f9f9f9;
+   padding: 5px 10px;
+   border-radius: 20px;
+   box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+   transition: all 0.2s ease;
 }
 
 .legend-item:hover {
-    transform: scale(1.05);
-    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+   transform: scale(1.05);
+   box-shadow: 0 3px 8px rgba(0,0,0,0.08);
 }
 
 .legend-color {
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    margin-right: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+   width: 15px;
+   height: 15px;
+   border-radius: 50%;
+   margin-right: 8px;
+   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
 /* Two column layout */
 .two-column {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 25px;
-    margin-top: 30px;
+   display: flex;
+   flex-wrap: wrap;
+   gap: 25px;
+   margin-top: 30px;
 }
 
 .column {
-    flex: 1;
-    min-width: 320px;
+   flex: 1;
+   min-width: 320px;
 }
 
 /* Info Panel */
 .info-panel {
-    background-color: white;
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    margin-top: 2rem;
+   background-color: white;
+   border-radius: 12px;
+   padding: 1.5rem;
+   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+   margin-top: 2rem;
 }
 
 .info-panel h3 {
-    color: var(--kf-blue);
-    margin-bottom: 1rem;
-    font-size: 1.2rem;
-    position: relative;
-    padding-bottom: 0.5rem;
+   color: var(--kf-blue);
+   margin-bottom: 1rem;
+   font-size: 1.2rem;
+   position: relative;
+   padding-bottom: 0.5rem;
 }
 
 .info-panel h3::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 40px;
-    height: 2px;
-    background-color: var(--kf-pink);
+   content: '';
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   width: 40px;
+   height: 2px;
+   background-color: var(--kf-pink);
 }
 
 .info-panel p {
-    font-size: 0.95rem;
-    color: #555;
-    line-height: 1.5;
+   font-size: 0.95rem;
+   color: #555;
+   line-height: 1.5;
 }
 
 .info-panel .fact {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 0.75rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid #f0f0f0;
+   display: flex;
+   align-items: flex-start;
+   margin-bottom: 0.75rem;
+   padding-bottom: 0.75rem;
+   border-bottom: 1px solid #f0f0f0;
 }
 
 .info-panel .fact:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
+   border-bottom: none;
+   padding-bottom: 0;
 }
 
 .info-panel .fact-icon {
-    flex-shrink: 0;
-    width: 24px;
-    height: 24px;
-    margin-right: 12px;
-    color: var(--kf-pink);
-    font-size: 1.2rem;
+   flex-shrink: 0;
+   width: 24px;
+   height: 24px;
+   margin-right: 12px;
+   color: var(--kf-pink);
+   font-size: 1.2rem;
 }
 
 .info-panel a {
-    color: var(--kf-blue);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s;
+   color: var(--kf-blue);
+   text-decoration: none;
+   font-weight: 500;
+   transition: color 0.2s;
 }
 
 .info-panel a:hover {
-    color: var(--kf-pink);
-    text-decoration: underline;
+   color: var(--kf-pink);
+   text-decoration: underline;
 }
 
 /* Responsive design */
 @media (max-width: 768px) {
-    /* Forbedre header-layout på mobil */
-    header {
-        flex-direction: column;
-        padding: 1rem;
-        gap: 0.75rem;
-        text-align: center;
-    }
-    
-    .logo-container {
-        margin-bottom: 0.5rem;
-    }
-    
-    .header-text {
-        padding-right: 0;
-        text-align: center;
-    }
-    
-    header h1 {
-        font-size: 1.5rem;
-        text-align: center;
-    }
-    
-    .header-subtitle {
-        font-size: 0.95rem;
-        text-align: center;
-    }
-    
-    /* Forbedre parti-kort på mobil */
-    .party-grid {
-        grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
-        gap: 10px;
-    }
-    
-    .party-card {
-        padding: 12px;
-    }
-    
-    .party-name {
-        font-size: 0.95rem;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-    
-    .party-seats {
-        min-width: 32px;
-        text-align: center;
-    }
-    
-    .result-details {
-        flex-direction: column;
-    }
-    
-    .progress-labels {
-        font-size: 14px;
-    }
-    
-    .action-buttons {
-        flex-direction: column;
-    }
-    
-    .two-column {
-        flex-direction: column;
-    }
-    
-    .logo-image {
-        height: 60px;
-    }
+   /* Forbedre header-layout på mobil */
+   header {
+       flex-direction: column;
+       padding: 1rem;
+       gap: 0.75rem;
+       text-align: center;
+   }
+   
+   .logo-container {
+       margin-bottom: 0.5rem;
+   }
+   
+   .header-text {
+       padding-right: 0;
+       text-align: center;
+   }
+   
+   header h1 {
+       font-size: 1.5rem;
+       text-align: center;
+   }
+   
+   .header-subtitle {
+       font-size: 0.95rem;
+       text-align: center;
+   }
+   
+   /* Forbedre parti-kort på mobil */
+   .party-grid {
+       grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+       gap: 10px;
+   }
+   
+   .party-card {
+       padding: 12px;
+   }
+   
+   .party-name {
+       font-size: 0.95rem;
+       overflow: hidden;
+       text-overflow: ellipsis;
+       white-space: nowrap;
+   }
+   
+   .party-seats {
+       min-width: 32px;
+       text-align: center;
+   }
+   
+   .result-details {
+       flex-direction: column;
+   }
+   
+   .progress-labels {
+       font-size: 14px;
+   }
+   
+   .action-buttons {
+       flex-direction: column;
+   }
+   
+   .two-column {
+       flex-direction: column;
+   }
+   
+   .logo-image {
+       height: 60px;
+   }
 }
 
 /* D3 Parliament styling */
 #d3-parliament svg {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
+   max-width: 100%;
+   height: auto;
+   display: block;
+   margin: 0 auto;
 }
 
 #d3-parliament text {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 10px;
-    pointer-events: none;
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   font-size: 10px;
+   pointer-events: none;
 }
 
 #tooltip {
-    font-weight: bold;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+   font-weight: bold;
+   text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 /* CSS for saksvelger - legg til i slutten av styles.css */
 
 .issue-selector-container {
-    margin: 30px 0;
+   margin: 30px 0;
 }
 
 .issue-selector {
-    background-color: white;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+   background-color: white;
+   padding: 25px;
+   border-radius: 12px;
+   box-shadow: 0 4px 15px rgba(0,0,0,0.06);
 }
 
 .issue-filters {
-    margin-bottom: 15px;
+   margin-bottom: 15px;
 }
 
 .area-filter,
 .issue-dropdown {
-    width: 100%;
-    padding: 12px 15px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    font-size: 1rem;
-    margin: 10px 0;
-    background-color: white;
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    transition: all 0.2s ease;
+   width: 100%;
+   padding: 12px 15px;
+   border-radius: 8px;
+   border: 1px solid var(--border-color);
+   font-size: 1rem;
+   margin: 10px 0;
+   background-color: white;
+   cursor: pointer;
+   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+   transition: all 0.2s ease;
 }
 
 .area-filter:hover,
 .issue-dropdown:hover {
-    border-color: var(--kf-purple);
-    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+   border-color: var(--kf-purple);
+   box-shadow: 0 3px 8px rgba(0,0,0,0.08);
 }
 
 .area-filter:focus,
 .issue-dropdown:focus {
-    outline: none;
-    border-color: var(--kf-pink);
-    box-shadow: 0 0 0 2px rgba(230, 60, 140, 0.2);
+   outline: none;
+   border-color: var(--kf-pink);
+   box-shadow: 0 0 0 2px rgba(230, 60, 140, 0.2);
 }
 
 .issue-details {
-    background-color: #f8f1f8;
-    border-radius: 8px;
-    padding: 20px;
-    margin-top: 20px;
-    border-left: 4px solid var(--kf-purple);
-    transition: all 0.3s ease;
+   background-color: #f8f1f8;
+   border-radius: 8px;
+   padding: 20px;
+   margin-top: 20px;
+   border-left: 4px solid var(--kf-purple);
+   transition: all 0.3s ease;
 }
 
 .issue-details:hover {
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
 
 .issue-name {
-    color: var(--kf-purple);
-    margin-bottom: 5px;
-    font-size: 1.3rem;
+   color: var(--kf-purple);
+   margin-bottom: 5px;
+   font-size: 1.3rem;
 }
 
 .issue-area {
-    color: #555;
-    font-style: italic;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #e0e0e0;
+   color: #555;
+   font-style: italic;
+   margin-bottom: 15px;
+   padding-bottom: 10px;
+   border-bottom: 1px solid #e0e0e0;
 }
 
 .issue-explainer {
-    color: #666;
-    font-style: italic;
-    text-align: center;
+   color: #666;
+   font-style: italic;
+   text-align: center;
 }
 
 .issue-status {
-    padding: 15px;
-    border-radius: 8px;
-    margin: 15px 0;
-    font-size: 1.1rem;
-    text-align: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+   padding: 15px;
+   border-radius: 8px;
+   margin: 15px 0;
+   font-size: 1.1rem;
+   text-align: center;
+   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
 .issue-status.majority {
-    background: linear-gradient(90deg, var(--kf-light-green), var(--kf-green));
-    color: white;
+   background: linear-gradient(90deg, var(--kf-light-green), var(--kf-green));
+   color: white;
 }
 
 .issue-status.no-majority {
-    background: linear-gradient(90deg, var(--kf-pink), var(--kf-purple));
-    color: white;
+   background: linear-gradient(90deg, var(--kf-pink), var(--kf-purple));
+   color: white;
 }
 
 .issue-parties {
-    margin-top: 20px;
+   margin-top: 20px;
 }
 
 .issue-parties h4 {
-    color: var(--kf-blue);
-    margin-bottom: 10px;
+   color: var(--kf-blue);
+   margin-bottom: 10px;
 }
 
 .issue-parties-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 10px;
+   display: flex;
+   flex-wrap: wrap;
+   gap: 8px;
+   margin-top: 10px;
 }
 
 .issue-party {
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-weight: 500;
-    font-size: 0.9rem;
-    background-color: #f0f0f0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease;
+   padding: 5px 10px;
+   border-radius: 20px;
+   font-weight: 500;
+   font-size: 0.9rem;
+   background-color: #f0f0f0;
+   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+   transition: transform 0.2s ease;
 }
 
 .issue-party:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+   transform: translateY(-2px);
+   box-shadow: 0 3px 6px rgba(0,0,0,0.15);
 }
 
 .no-parties {
-    color: #777;
-    font-style: italic;
+   color: #777;
+   font-style: italic;
 }
 
 /* Responsive styles for issue selector */
 @media (max-width: 768px) {
-    .issue-selector {
-        padding: 15px;
-    }
-    
-    .issue-details {
-        padding: 15px;
-    }
-    
-    .issue-name {
-        font-size: 1.2rem;
-    }
-    
-    .issue-status {
-        font-size: 1rem;
-        padding: 12px;
-    }
+   .issue-selector {
+       padding: 15px;
+   }
+   
+   .issue-details {
+       padding: 15px;
+   }
+   
+   .issue-name {
+       font-size: 1.2rem;
+   }
+   
+   .issue-status {
+       font-size: 1rem;
+       padding: 12px;
+   }
 }
 
 /* Hover/click stiler for partier */
 /* For klikkbare/hoverbare partielementer */
 .clickable-party, .hoverable-party {
-    position: relative;
-    cursor: pointer;
+   position: relative;
+   cursor: pointer;
 }
 
 .clickable-party {
-    padding-right: 20px; /* Space for the indicator */
+   padding-right: 20px; /* Space for the indicator */
 }
 
 /* Hover effects only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
-    .hoverable-party:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-        transition: all 0.2s ease;
-    }
+   .hoverable-party:hover {
+       transform: translateY(-3px);
+       box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+       transition: all 0.2s ease;
+   }
 }
 
 /* Always show click effect */
 .clickable-party:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+   transform: translateY(1px);
+   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .info-indicator {
-    position: absolute;
-    right: 5px;
-    top: 4px;
-    font-size: 10px;
-    width: 14px;
-    height: 14px;
-    line-height: 14px;
-    text-align: center;
-    border-radius: 50%;
-    background-color: rgba(255,255,255,0.7);
-    color: #555;
-    font-style: italic;
-    font-weight: bold;
+   position: absolute;
+   right: 5px;
+   top: 4px;
+   font-size: 10px;
+   width: 14px;
+   height: 14px;
+   line-height: 14px;
+   text-align: center;
+   border-radius: 50%;
+   background-color: rgba(255,255,255,0.7);
+   color: #555;
+   font-style: italic;
+   font-weight: bold;
 }
 
 .interaction-tip {
-    font-size: 0.8rem;
-    color: #666;
-    font-style: italic;
-    margin-bottom: 8px;
-    text-align: center;
+   font-size: 0.8rem;
+   color: #666;
+   font-style: italic;
+   margin-bottom: 8px;
+   text-align: center;
 }
 
 /* Modal styling */
 .quote-modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
+   display: none;
+   position: fixed;
+   z-index: 1000;
+   left: 0;
+   top: 0;
+   width: 100%;
+   height: 100%;
+   overflow: auto;
 }
 
 /* Regular modal (for click) */
 .quote-modal:not(.hover-mode) {
-    background-color: rgba(0,0,0,0.4);
-    backdrop-filter: blur(3px);
+   background-color: rgba(0,0,0,0.4);
+   backdrop-filter: blur(3px);
 }
 
 /* Hover modal (transparent background) */
 .quote-modal.hover-mode {
-    background-color: transparent;
-    pointer-events: none;
+   background-color: transparent;
+   pointer-events: none;
 }
 
 .quote-modal.hover-mode .quote-modal-content {
-    pointer-events: auto;
+   pointer-events: auto;
 }
 
 /* Regular modal content styling (centered) */
 .quote-modal:not(.hover-mode) .quote-modal-content {
-    background-color: white;
-    margin: 15% auto;
-    padding: 25px;
-    border-radius: 12px;
-    width: 90%;
-    max-width: 500px;
-    box-shadow: 0 4px 25px rgba(0,0,0,0.2);
-    animation: modalFadeIn 0.3s;
-    position: relative;
+   background-color: white;
+   margin: 15% auto;
+   padding: 25px;
+   border-radius: 12px;
+   width: 90%;
+   max-width: 500px;
+   box-shadow: 0 4px 25px rgba(0,0,0,0.2);
+   animation: modalFadeIn 0.3s;
+   position: relative;
 }
 
 /* Hover modal content styling (positioned near element) */
 .quote-modal.hover-mode .quote-modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-    animation: modalFadeIn 0.2s;
-    position: fixed;
-    width: auto;
-    max-width: 400px;
-    z-index: 1001;
+   background-color: white;
+   padding: 20px;
+   border-radius: 8px;
+   box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+   animation: modalFadeIn 0.2s;
+   position: fixed;
+   width: auto;
+   max-width: 400px;
+   z-index: 1001;
 }
 
 @keyframes modalFadeIn {
-    from {opacity: 0; transform: translateY(-10px);}
-    to {opacity: 1; transform: translateY(0);}
+   from {opacity: 0; transform: translateY(-10px);}
+   to {opacity: 1; transform: translateY(0);}
 }
 
 .close-modal {
-    color: #aaa;
-    position: absolute;
-    right: 15px;
-    top: 10px;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.2s;
+   color: #aaa;
+   position: absolute;
+   right: 15px;
+   top: 10px;
+   font-size: 28px;
+   font-weight: bold;
+   cursor: pointer;
+   transition: color 0.2s;
 }
 
 .hover-mode .close-modal {
-    display: none;
+   display: none;
 }
 
 .close-modal:hover {
-    color: #333;
+   color: #333;
 }
 
 .quote-party-title {
-    font-size: 1.4rem;
-    margin-bottom: 15px;
-    padding: 8px 15px;
-    border-radius: 8px;
-    display: inline-block;
+   font-size: 1.4rem;
+   margin-bottom: 15px;
+   padding: 8px 15px;
+   border-radius: 8px;
+   display: inline-block;
 }
 
 .quote-text {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: #333;
-    padding: 15px;
-    background-color: #f9f9f9;
-    border-left: 4px solid #ddd;
-    margin: 15px 0;
-    border-radius: 4px;
+   font-size: 1.1rem;
+   line-height: 1.6;
+   color: #333;
+   padding: 15px;
+   background-color: #f9f9f9;
+   border-left: 4px solid #ddd;
+   margin: 15px 0;
+   border-radius: 4px;
 }
+
 /* Ekstra mellomrom mellom saksvelger og partivelger */
 #issue-selector-container {
-    margin-bottom: 30px;
+   margin-bottom: 30px;
 }
 
 /* Mer markert overskrift for partivelger-seksjonen */
 .party-section .section-title {
-    margin-top: 0;
-    margin-bottom: 15px;
+   margin-top: 0;
+   margin-bottom: 15px;
 }
 
 /* Gjør beskrivelsen mer integrert i seksjonen */
 .party-section .description {
-    margin-bottom: 20px;
+   margin-bottom: 20px;
 }
+
 /* Partiseksjons-instruksjoner med info-knapp */
 .party-instructions {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    padding: 10px 15px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   margin-bottom: 20px;
+   padding: 10px 15px;
+   background-color: #f8f9fa;
+   border-radius: 8px;
 }
 
 .info-button {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background-color: var(--kf-blue);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-style: italic;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    transition: all 0.2s ease;
+   width: 24px;
+   height: 24px;
+   border-radius: 50%;
+   background-color: var(--kf-blue);
+   color: white;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-style: italic;
+   font-weight: bold;
+   cursor: pointer;
+   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+   transition: all 0.2s ease;
+   position: relative;
 }
 
 .info-button:hover {
-    background-color: var(--kf-purple);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+   background-color: var(--kf-purple);
+   transform: translateY(-2px);
+   box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
 /* Info popup styling */
 .info-popup {
-    display: none;
-    position: fixed;
-    z-index: 1001;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.4);
-    backdrop-filter: blur(3px);
+   display: none;
+   position: fixed;
+   z-index: 1001;
+   left: 0;
+   top: 0;
+   width: 100%;
+   height: 100%;
+   background-color: rgba(0,0,0,0.4);
+   backdrop-filter: blur(3px);
 }
 
 .info-popup-content {
-    background-color: white;
-    margin: 15% auto;
-    padding: 25px;
-    border-radius: 12px;
-    width: 90%;
-    max-width: 500px;
-    box-shadow: 0 4px 25px rgba(0,0,0,0.2);
-    animation: popupFadeIn 0.3s;
-    position: relative;
+   background-color: white;
+   margin: 15% auto;
+   padding: 25px;
+   border-radius: 12px;
+   width: 90%;
+   max-width: 500px;
+   box-shadow: 0 4px 25px rgba(0,0,0,0.2);
+   animation: popupFadeIn 0.3s;
+   position: relative;
 }
 
 .close-popup {
-    color: #aaa;
-    position: absolute;
-    right: 15px;
-    top: 10px;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.2s;
+   color: #aaa;
+   position: absolute;
+   right: 15px;
+   top: 10px;
+   font-size: 28px;
+   font-weight: bold;
+   cursor: pointer;
+   transition: color 0.2s;
 }
 
 .close-popup:hover {
-    color: #333;
+   color: #333;
 }
 
 @keyframes popupFadeIn {
-    from {opacity: 0; transform: translateY(-20px);}
-    to {opacity: 1; transform: translateY(0);}
+   from {opacity: 0; transform: translateY(-20px);}
+   to {opacity: 1; transform: translateY(0);}
+}
+
+/* Info tooltip style (for desktop) */
+.info-tooltip {
+   display: none;
+   position: absolute;
+   background-color: white;
+   padding: 15px;
+   border-radius: 8px;
+   box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+   width: 250px;
+   z-index: 100;
+   font-size: 0.9rem;
+   line-height: 1.4;
+   border-left: 3px solid var(--kf-blue);
+   animation: tooltipFadeIn 0.2s;
+   top: -10px;
+   right: -260px;
+}
+
+@keyframes tooltipFadeIn {
+   from {opacity: 0; transform: translateY(5px);}
+   to {opacity: 1; transform: translateY(0);}
+}
+
+/* Beholder den originale popupen bare for mobile */
+@media (hover: hover) and (pointer: fine) {
+   .info-popup {
+       display: none !important; /* Aldri vis fullskjerm-popup på desktop */
+   }
 }
