@@ -4,6 +4,13 @@
 const TOTAL_SEATS = 169;
 const MAJORITY_THRESHOLD = 85;
 
+// Hjelpefunksjon for å sjekke om enheten har berøringsskjerm
+function isTouchDevice() {
+    return (('ontouchstart' in window) || 
+            (navigator.maxTouchPoints > 0) ||
+            (navigator.msMaxTouchPoints > 0));
+}
+
 // DOM elements
 const partyGrid = document.getElementById('partyGrid');
 const progressBar = document.getElementById('progressBar');
@@ -51,6 +58,9 @@ function initializeApp() {
   
   // Set up event listeners
   setupEventListeners();
+  
+  // Set up info popup functionality
+  setupInfoPopup();
 }
 
 // Create party cards function
@@ -160,6 +170,61 @@ function toggleParty(partyCard) {
         <p class="issue-explainer">Velg en sak fra listen ovenfor for å se hvilke partier som er enige med Kreftforeningens standpunkt.</p>
       `;
     }
+  }
+}
+
+// Setup info popup functionality
+function setupInfoPopup() {
+  const infoButton = document.getElementById('infoButton');
+  const infoPopup = document.getElementById('infoPopup');
+  const closePopup = document.querySelector('.close-popup');
+  
+  if (!infoButton || !infoPopup) return; // Avbryt hvis elementene ikke finnes
+  
+  // Vis popup når knappen klikkes
+  infoButton.addEventListener('click', function() {
+    infoPopup.style.display = 'block';
+  });
+  
+  // Lukk popup når man klikker på X
+  if (closePopup) {
+    closePopup.addEventListener('click', function() {
+      infoPopup.style.display = 'none';
+    });
+  }
+  
+  // Lukk popup når man klikker utenfor innholdet
+  window.addEventListener('click', function(event) {
+    if (event.target === infoPopup) {
+      infoPopup.style.display = 'none';
+    }
+  });
+  
+  // For hover på desktop
+  if (!isTouchDevice()) {
+    let hoverTimer;
+    
+    infoButton.addEventListener('mouseenter', function() {
+      hoverTimer = setTimeout(function() {
+        infoPopup.style.display = 'block';
+      }, 300);
+    });
+    
+    infoButton.addEventListener('mouseleave', function() {
+      clearTimeout(hoverTimer);
+      
+      // Gi litt tid før popup forsvinner (i tilfelle brukeren beveger musen til popup-innholdet)
+      setTimeout(function() {
+        if (!infoPopup.matches(':hover')) {
+          infoPopup.style.display = 'none';
+        }
+      }, 200);
+    });
+    
+    // Hold popup åpen mens musen er over innholdet
+    infoPopup.addEventListener('mouseleave', function() {
+      infoPopup.style.display = 'none';
+    });
   }
 }
 
@@ -281,75 +346,3 @@ function updateVisualization() {
 // Eksporter funksjoner som trenger å være tilgjengelige for andre script-filer
 window.updateResults = updateResults;
 window.updateVisualization = updateVisualization;
-
-// Info Popup Functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const infoButton = document.getElementById('infoButton');
-    const infoPopup = document.getElementById('infoPopup');
-    const closePopup = document.querySelector('.close-popup');
-    
-    // Sjekk om funksjonen for å oppdage touchenheter finnes
-    // Hvis ikke, lag en enkel versjon av den
-    if (typeof isTouchDevice !== 'function') {
-        window.isTouchDevice = function() {
-            return (('ontouchstart' in window) || 
-                  (navigator.maxTouchPoints > 0) ||
-                  (navigator.msMaxTouchPoints > 0));
-        };
-    }
-    
-    // Vis popup når knappen klikkes
-    if (infoButton) {
-        infoButton.addEventListener('click', function() {
-            infoPopup.style.display = 'block';
-        });
-    }
-    
-    // Lukk popup når man klikker på X
-    if (closePopup) {
-        closePopup.addEventListener('click', function() {
-            infoPopup.style.display = 'none';
-        });
-    }
-    
-    // Lukk popup når man klikker utenfor innholdet
-    window.addEventListener('click', function(event) {
-        if (event.target === infoPopup) {
-            infoPopup.style.display = 'none';
-        }
-    });
-    
-    // For touch/hover på desktop
-    if (!isTouchDevice() && infoButton) {
-        let hoverTimer;
-        
-        infoButton.addEventListener('mouseenter', function() {
-            hoverTimer = setTimeout(function() {
-                infoPopup.style.display = 'block';
-            }, 300);
-        });
-        
-        infoButton.addEventListener('mouseleave', function() {
-            clearTimeout(hoverTimer);
-            
-            // Gi litt tid før popup forsvinner (i tilfelle brukeren beveger musen til popup-innholdet)
-            setTimeout(function() {
-                if (!infoPopup.matches(':hover')) {
-                    infoPopup.style.display = 'none';
-                }
-            }, 200);
-        });
-        
-        // Hold popup åpen mens musen er over innholdet
-        infoPopup.addEventListener('mouseleave', function() {
-            infoPopup.style.display = 'none';
-        });
-    }
-});
-        
-        // Hold popup åpen mens musen er over innholdet
-        infoPopup.addEventListener('mouseleave', function() {
-            infoPopup.style.display = 'none';
-        });
-    }
-});
