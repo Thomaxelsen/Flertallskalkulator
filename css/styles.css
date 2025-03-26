@@ -1217,10 +1217,11 @@ footer {
         margin: 10px auto 0;
     }
 }
-/* Hamburger meny styles */
+/* Hamburger meny styles - Oppdatert */
 .hamburger-nav {
-    margin-left: auto;
-    position: relative;
+    position: fixed;
+    top: 20px;
+    right: 20px;
     z-index: 1000;
 }
 
