@@ -177,53 +177,50 @@ function toggleParty(partyCard) {
 function setupInfoPopup() {
   const infoButton = document.getElementById('infoButton');
   const infoPopup = document.getElementById('infoPopup');
+  const infoTooltip = document.getElementById('infoTooltip');
   const closePopup = document.querySelector('.close-popup');
   
-  if (!infoButton || !infoPopup) return; // Avbryt hvis elementene ikke finnes
+  if (!infoButton) return; // Avbryt hvis elementene ikke finnes
   
-  // Vis popup når knappen klikkes
-  infoButton.addEventListener('click', function() {
-    infoPopup.style.display = 'block';
-  });
-  
-  // Lukk popup når man klikker på X
-  if (closePopup) {
-    closePopup.addEventListener('click', function() {
-      infoPopup.style.display = 'none';
+  // For touch-enheter (mobil/nettbrett)
+  if (isTouchDevice()) {
+    // Vis popup når knappen klikkes
+    infoButton.addEventListener('click', function() {
+      if (infoPopup) infoPopup.style.display = 'block';
     });
-  }
-  
-  // Lukk popup når man klikker utenfor innholdet
-  window.addEventListener('click', function(event) {
-    if (event.target === infoPopup) {
-      infoPopup.style.display = 'none';
+    
+    // Lukk popup når man klikker på X
+    if (closePopup) {
+      closePopup.addEventListener('click', function() {
+        infoPopup.style.display = 'none';
+      });
     }
-  });
-  
-  // For hover på desktop
-  if (!isTouchDevice()) {
-    let hoverTimer;
     
-    infoButton.addEventListener('mouseenter', function() {
-      hoverTimer = setTimeout(function() {
-        infoPopup.style.display = 'block';
-      }, 300);
+    // Lukk popup når man klikker utenfor innholdet
+    window.addEventListener('click', function(event) {
+      if (event.target === infoPopup) {
+        infoPopup.style.display = 'none';
+      }
+    });
+  } 
+  // For desktop (ikke touch)
+  else {
+    // For hover på desktop - vis tooltip
+    infoButton.addEventListener('mouseenter', function(e) {
+      if (infoTooltip) {
+        // Posisjoner tooltip til høyre for knappen
+        const buttonRect = infoButton.getBoundingClientRect();
+        infoTooltip.style.top = '0';
+        infoTooltip.style.left = '30px';
+        infoTooltip.style.display = 'block';
+      }
     });
     
+    // Skjul tooltip når vi tar bort musen
     infoButton.addEventListener('mouseleave', function() {
-      clearTimeout(hoverTimer);
-      
-      // Gi litt tid før popup forsvinner (i tilfelle brukeren beveger musen til popup-innholdet)
-      setTimeout(function() {
-        if (!infoPopup.matches(':hover')) {
-          infoPopup.style.display = 'none';
-        }
-      }, 200);
-    });
-    
-    // Hold popup åpen mens musen er over innholdet
-    infoPopup.addEventListener('mouseleave', function() {
-      infoPopup.style.display = 'none';
+      if (infoTooltip) {
+        infoTooltip.style.display = 'none';
+      }
     });
   }
 }
