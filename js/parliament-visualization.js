@@ -119,7 +119,7 @@ function createD3ParliamentVisualization(parties, selectedParties) {
     });
     
     // Update legend with current party data
-    updateLegend(parties);
+    updateLegend(parties, selectedParties);
     
     // Render all seats
     renderSeats(selectedParties);
@@ -167,12 +167,28 @@ function renderSeats(selectedParties) {
             .on("mouseout", function() {
                 d3.select(this).attr("r", seatRadius);
                 d3.select("#tooltip").remove();
+            })
+            .on("click", function() {
+                // Når en sete klikkes, finn tilsvarende partikort og toggle det
+                const partyShorthand = seat.party;
+                togglePartyFromVisualization(partyShorthand);
             });
     });
 }
 
-// Update the legend with current party data
-function updateLegend(parties) {
+// Hjelpefunksjon for å toggle et parti når visualisering klikkes
+function togglePartyFromVisualization(partyShorthand) {
+    // Finn tilsvarende partikort
+    const partyCard = document.querySelector(`.party-card[data-shorthand="${partyShorthand}"]`);
+    
+    if (partyCard && typeof toggleParty === 'function') {
+        // Bruk den eksisterende toggleParty-funksjonen fra script.js
+        toggleParty(partyCard);
+    }
+}
+
+// Update the legend with current party data and make items clickable
+function updateLegend(parties, selectedParties = []) {
     // Clear existing legend
     document.getElementById('parliamentLegend').innerHTML = '';
     
@@ -184,6 +200,18 @@ function updateLegend(parties) {
         const legendItem = document.createElement('div');
         legendItem.className = 'legend-item';
         
+        // Legg til data-attributter for å koble til partikortet
+        legendItem.dataset.shorthand = party.shorthand;
+        legendItem.dataset.seats = party.seats;
+        
+        // Legg til CSS-klasse for valgt tilstand
+        if (selectedParties.includes(party.shorthand)) {
+            legendItem.classList.add('selected');
+        }
+        
+        // Gjør elementet klikkbart
+        legendItem.style.cursor = 'pointer';
+        
         const legendColor = document.createElement('div');
         legendColor.className = 'legend-color';
         legendColor.style.backgroundColor = party.color;
@@ -193,7 +221,34 @@ function updateLegend(parties) {
         
         legendItem.appendChild(legendColor);
         legendItem.appendChild(legendText);
+        
+        // Legg til event listener for klikk
+        legendItem.addEventListener('click', function() {
+            togglePartyFromVisualization(party.shorthand);
+        });
+        
         document.getElementById('parliamentLegend').appendChild(legendItem);
+    });
+    
+    // Oppdater utseendet på legend-elementer basert på valg
+    updateLegendAppearance(selectedParties);
+}
+
+// Hjelpefunksjon for å oppdatere utseende på legend
+function updateLegendAppearance(selectedParties) {
+    // Finn alle legend-elementer
+    const legendItems = document.querySelectorAll('.legend-item');
+    
+    // Oppdater hver legend-item basert på om partiet er valgt
+    legendItems.forEach(item => {
+        const partyShorthand = item.dataset.shorthand;
+        if (selectedParties.includes(partyShorthand)) {
+            item.classList.add('selected');
+            item.style.opacity = '1';
+        } else {
+            item.classList.remove('selected');
+            item.style.opacity = '0.7';
+        }
     });
 }
 
@@ -201,4 +256,7 @@ function updateLegend(parties) {
 function updateD3Visualization(selectedParties) {
     // Re-render all seats with new selection
     renderSeats(selectedParties);
+    
+    // Oppdater også utseendet på legend-elementene
+    updateLegendAppearance(selectedParties);
 }
