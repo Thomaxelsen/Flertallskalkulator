@@ -281,3 +281,57 @@ function updateVisualization() {
 // Eksporter funksjoner som trenger å være tilgjengelige for andre script-filer
 window.updateResults = updateResults;
 window.updateVisualization = updateVisualization;
+// Info Popup Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const infoButton = document.getElementById('infoButton');
+    const infoPopup = document.getElementById('infoPopup');
+    const closePopup = document.querySelector('.close-popup');
+    
+    // Vis popup når knappen klikkes
+    if (infoButton) {
+        infoButton.addEventListener('click', function() {
+            infoPopup.style.display = 'block';
+        });
+    }
+    
+    // Lukk popup når man klikker på X
+    if (closePopup) {
+        closePopup.addEventListener('click', function() {
+            infoPopup.style.display = 'none';
+        });
+    }
+    
+    // Lukk popup når man klikker utenfor innholdet
+    window.addEventListener('click', function(event) {
+        if (event.target === infoPopup) {
+            infoPopup.style.display = 'none';
+        }
+    });
+    
+    // For touch/hover på desktop
+    if (!isTouchDevice() && infoButton) {
+        let hoverTimer;
+        
+        infoButton.addEventListener('mouseenter', function() {
+            hoverTimer = setTimeout(function() {
+                infoPopup.style.display = 'block';
+            }, 300);
+        });
+        
+        infoButton.addEventListener('mouseleave', function() {
+            clearTimeout(hoverTimer);
+            
+            // Gi litt tid før popup forsvinner (i tilfelle brukeren beveger musen til popup-innholdet)
+            setTimeout(function() {
+                if (!infoPopup.matches(':hover')) {
+                    infoPopup.style.display = 'none';
+                }
+            }, 200);
+        });
+        
+        // Hold popup åpen mens musen er over innholdet
+        infoPopup.addEventListener('mouseleave', function() {
+            infoPopup.style.display = 'none';
+        });
+    }
+});
