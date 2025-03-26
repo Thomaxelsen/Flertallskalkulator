@@ -77,17 +77,20 @@ function initializePartyOverview() {
                 <div class="agreement-text">enighet med Kreftforeningens politikk</div>
             </div>
             
-            <h3>Støtter disse sakene:</h3>
-            <ul class="issue-list">
-                ${supportedIssues.map(issue => `
-                    <li class="issue-item">
-                        <strong>${issue.name}</strong>
-                        <div class="issue-area">${issue.area}</div>
-                    </li>
-                `).join('')}
-            </ul>
-            
-            ${supportedIssues.length === 0 ? '<p class="no-issues">Ingen saker med full støtte</p>' : ''}
+            <div class="issues-section">
+                <h3>Støtter disse sakene:</h3>
+                ${supportedIssues.length === 0 ? 
+                    '<p class="no-issues">Ingen saker med full støtte</p>' : 
+                    `<ul class="issue-list">
+                        ${supportedIssues.map(issue => `
+                            <li class="issue-item">
+                                <strong>${issue.name}</strong>
+                                <div class="issue-area">${issue.area}</div>
+                            </li>
+                        `).join('')}
+                    </ul>`
+                }
+            </div>
         `;
         
         // Legg til partiboks i container
