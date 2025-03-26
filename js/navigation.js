@@ -1,23 +1,35 @@
 // navigation.js - Håndterer hamburgermeny og navigasjon
 
-// Kjør ved begge hendelser for å sikre at det fungerer i ulike kontekster
-document.addEventListener('DOMContentLoaded', initializeNavigation);
-window.addEventListener('load', initializeNavigation);
+// Selvutførende funksjon for å garantere initialisering uavhengig av når scriptet laster
+(function() {
+    // Prøv å initialisere med det samme om dokumentet allerede er lastet
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        setTimeout(initializeNavigation, 1);
+    } else {
+        document.addEventListener('DOMContentLoaded', initializeNavigation);
+    }
+    
+    // Backup: Kjør på window.load uansett
+    window.addEventListener('load', initializeNavigation);
+})();
 
 // Flagg for å unngå dobbel initialisering
 let navigationInitialized = false;
 
 function initializeNavigation() {
-    // Unngå dobbel initialisering
-    if (navigationInitialized) return;
-    navigationInitialized = true;
-    
-    // Sjekk om hamburgermenyen allerede finnes
-    if (document.querySelector('.hamburger-nav')) return;
-    
-    // Legg til hamburgermenyen direkte i body istedenfor header
-    createHamburgerMenu();
-    setupEventListeners();
+    // Legg til en liten forsinkelse for å sikre at andre script har fullført rendering
+    setTimeout(function() {
+        // Unngå dobbel initialisering
+        if (navigationInitialized) return;
+        navigationInitialized = true;
+        
+        // Sjekk om hamburgermenyen allerede finnes
+        if (document.querySelector('.hamburger-nav')) return;
+        
+        // Legg til hamburgermenyen direkte i body istedenfor header
+        createHamburgerMenu();
+        setupEventListeners();
+    }, 100);
 }
 
 function createHamburgerMenu() {
