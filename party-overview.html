@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partioversikt - Flertallskalkulator for Stortinget</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/party-overview.css"> <!-- Ny CSS for denne siden -->
+</head>
+<body>
+    <div class="container">
+        <!-- Header - samme som på hovedsiden -->
+        <header>
+            <div class="logo-container">
+                <img src="images/Logo.png" alt="Kreftforeningen logo" class="logo-image">
+            </div>
+            <div class="header-text">
+                <h1>Partioversikt</h1>
+                <div class="header-subtitle">Støtte for Kreftforeningens politikk</div>
+            </div>
+        </header>
+        
+        <!-- Mobilvisning: Rullemeny (vises bare på små skjermer) -->
+        <div class="mobile-party-selector">
+            <label for="party-dropdown">Velg parti:</label>
+            <select id="party-dropdown" class="party-dropdown">
+                <option value="">Velg parti...</option>
+                <!-- Partialternativer fylles inn med JavaScript -->
+            </select>
+        </div>
+        
+        <!-- Hovedinnhold: Partioversikt -->
+        <main class="party-overview-container">
+            <!-- Partibokser fylles inn med JavaScript basert på samme data som hovedsiden -->
+        </main>
+        
+        <!-- Footer -->
+        <footer>
+            Data basert på mandatfordeling etter Stortingsvalget 2021. Til bruk for informasjonsformål.
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/issues.js"></script> <!-- Samme datasett som på hovedsiden -->
+    <script src="js/party-overview.js"></script> <!-- Ny JavaScript for denne siden -->
+</body>
+</html>
