@@ -281,11 +281,22 @@ function updateVisualization() {
 // Eksporter funksjoner som trenger å være tilgjengelige for andre script-filer
 window.updateResults = updateResults;
 window.updateVisualization = updateVisualization;
+
 // Info Popup Functionality
 document.addEventListener('DOMContentLoaded', function() {
     const infoButton = document.getElementById('infoButton');
     const infoPopup = document.getElementById('infoPopup');
     const closePopup = document.querySelector('.close-popup');
+    
+    // Sjekk om funksjonen for å oppdage touchenheter finnes
+    // Hvis ikke, lag en enkel versjon av den
+    if (typeof isTouchDevice !== 'function') {
+        window.isTouchDevice = function() {
+            return (('ontouchstart' in window) || 
+                  (navigator.maxTouchPoints > 0) ||
+                  (navigator.msMaxTouchPoints > 0));
+        };
+    }
     
     // Vis popup når knappen klikkes
     if (infoButton) {
@@ -328,6 +339,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }, 200);
         });
+        
+        // Hold popup åpen mens musen er over innholdet
+        infoPopup.addEventListener('mouseleave', function() {
+            infoPopup.style.display = 'none';
+        });
+    }
+});
         
         // Hold popup åpen mens musen er over innholdet
         infoPopup.addEventListener('mouseleave', function() {
