@@ -1170,3 +1170,15 @@ footer {
 .issue-selector .section-title:first-child {
     display: none;
 }
+/* Stil for valgte legend-elementer */
+.legend-item.selected {
+    background-color: #f0f0f0;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    transform: translateY(-2px);
+}
+
+/* Hover-effekt for legend-elementer */
+.legend-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+}
