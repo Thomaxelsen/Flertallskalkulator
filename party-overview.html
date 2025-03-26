@@ -6,9 +6,134 @@
     <title>Partioversikt - Flertallskalkulator for Stortinget</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/party-overview.css">
-    <link rel="stylesheet" href="css/navigation.css">
+    <!-- Inline CSS for hamburgermenyen -->
+    <style>
+        /* Hamburgermeny styling - uavhengig av andre stiler */
+        .burger-menu {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            cursor: pointer;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: none; /* Skjul på desktop */
+        }
+        
+        @media (max-width: 768px) {
+            .burger-menu {
+                display: block; /* Vis bare på mobil */
+            }
+            
+            .nav-links {
+                display: none; /* Skjul vanlige lenker på mobil */
+            }
+        }
+        
+        .burger-bar {
+            width: 25px;
+            height: 3px;
+            background-color: #003087; /* Kreftforeningens blå */
+            margin: 5px 0;
+            transition: 0.4s;
+        }
+        
+        /* Menycontainer */
+        .mobile-menu {
+            position: fixed;
+            right: -250px;
+            top: 0;
+            width: 250px;
+            height: 100%;
+            background-color: white;
+            transition: right 0.3s ease;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+            z-index: 999;
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        /* Menyinnhold */
+        .menu-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .close-button {
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+            line-height: 1;
+        }
+        
+        .menu-items {
+            padding: 20px;
+        }
+        
+        .menu-items a {
+            display: block;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+        }
+        
+        .menu-items a:hover {
+            background-color: #f0f0f0;
+        }
+        
+        /* Overlay når menyen er åpen */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .menu-overlay.active {
+            display: block;
+        }
+    </style>
 </head>
 <body>
+    <!-- Hamburger meny knapp -->
+    <div class="burger-menu" id="burgerMenu">
+        <div class="burger-bar"></div>
+        <div class="burger-bar"></div>
+        <div class="burger-bar"></div>
+    </div>
+    
+    <!-- Mobil meny -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="menu-header">
+            <h3>Meny</h3>
+            <button class="close-button" id="closeMenu">&times;</button>
+        </div>
+        <div class="menu-items">
+            <a href="index.html">Flertallskalkulator</a>
+            <a href="party-overview.html">Partioversikt</a>
+        </div>
+    </div>
+    
+    <!-- Bakgrunnsoverlay for menyen -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
     <div class="container">
         <!-- Header - samme som på hovedsiden -->
         <header>
@@ -44,8 +169,46 @@
         </footer>
     </div>
 
-    <!-- JavaScript -->
-    <script src="js/debug-navigation.js"></script>
+    <!-- Inline JavaScript for hamburger-meny -->
+    <script>
+        // Vent til DOM er fullstendig lastet
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hent nødvendige elementer
+            const burgerMenu = document.getElementById('burgerMenu');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const closeMenu = document.getElementById('closeMenu');
+            const menuOverlay = document.getElementById('menuOverlay');
+            
+            // Hvis elementene ikke finnes, avbryt
+            if (!burgerMenu || !mobileMenu || !closeMenu || !menuOverlay) {
+                console.error("Kunne ikke finne nødvendige menyelementer");
+                return;
+            }
+            
+            // Åpne menyen når burger-knappen klikkes
+            burgerMenu.addEventListener('click', function() {
+                mobileMenu.classList.add('active');
+                menuOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Hindre scrolling
+            });
+            
+            // Lukk menyen når lukke-knappen klikkes
+            closeMenu.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
+                document.body.style.overflow = ''; // Gjenopprett scrolling
+            });
+            
+            // Lukk menyen når man klikker på overlay
+            menuOverlay.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
+                document.body.style.overflow = ''; // Gjenopprett scrolling
+            });
+        });
+    </script>
+
+    <!-- Andre scripts -->
     <script src="js/issues.js"></script>
     <script src="js/party-overview.js"></script>
 </body>
