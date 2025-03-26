@@ -1099,3 +1099,32 @@ footer {
        display: none !important; /* Aldri vis fullskjerm-popup på desktop */
    }
 }
+/* Juster vertikal posisjonering av seksjonstitler */
+.issue-selector .section-title,
+.result-header {
+    margin-top: 0;
+    margin-bottom: 20px;
+    /* Sikrer samme linjehøyde og tekstutseende på begge sider */
+    font-size: 1.6rem;
+    line-height: 1.2;
+    padding-bottom: 0.8rem;
+}
+
+/* Sørg for at issue-selector-container starter på samme høyde som result-container */
+#issue-selector-container {
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+/* Sørg for at layouten starter øverst i kolonnen */
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Gjør kolonnetoppen lik på begge sider */
+.issue-selector,
+.result-container {
+    margin-top: 0;
+    padding-top: 25px;
+}
