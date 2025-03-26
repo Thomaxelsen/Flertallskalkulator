@@ -1,5 +1,32 @@
 // issue-selector.js - Funksjonalitet for å velge saker fra Kreftforeningens program
 
+// Map over saker som har påvirkningsnotater
+const issueDocuments = {
+  // Rettigheter
+  "36": "https://kreftforeningen.atlassian.net/wiki/spaces/POS/pages/785645577/Pasientreiser",
+  "35": "https://kreftforeningen.atlassian.net/wiki/spaces/POS/pages/772571163/Avkortning+av+sosialhjelp+ved+konomisk+st+tte",
+  "34": "https://kreftforeningen.atlassian.net/wiki/spaces/POS/pages/801734657/Pasient+og+brukerrettighetsloven+total+revisjon",
+  
+  // Arbeidsliv
+  "1": "https://kreftforeningen.atlassian.net/wiki/spaces/POS/pages/849707012/Fleksibel+sykepengeordning+ny",
+  
+  // Diagnostikk og tidlig oppdagelse
+  "7": "https://kreftforeningen.atlassian.net/wiki/spaces/POS/pages/772603925/Gentest+til+flere+tidligere+i+forl+pet",
+  
+  // Folkehelse og forebygging
+  "17": "https://kreftforeningen.atlassian.net/wiki/spaces/POS/pages/786104324/Raskere+utryddelse+av+HPV",
+  "14": "https://kreftforeningen.atlassian.net/wiki/spaces/POS/pages/785907717/Strengere+regulering+av+solarium",
+  "10": "https://kreftforeningen.atlassian.net/wiki/spaces/POS/pages/786300939/R+ykeslutt+til+alle+som+trenger+det",
+  
+  // Forskning og innovasjon
+  "20": "https://kreftforeningen.atlassian.net/wiki/spaces/POS/pages/819494913/Opprettelse+av+en+helsekatapult",
+  
+  // Kreftomsorg
+  "30": "https://kreftforeningen.atlassian.net/wiki/spaces/POS/pages/812089354/Pakkeforl+p+hjem",
+  "33": "https://kreftforeningen.atlassian.net/wiki/spaces/POS/pages/803700775/Ern+ringsstrategi+i+alle+sykehus",
+  "32": "https://kreftforeningen.atlassian.net/wiki/spaces/POS/pages/891584514/Spesialisering+i+palliasjon"
+};
+
 // Vent til dokumentet er helt lastet
 document.addEventListener('DOMContentLoaded', function() {
     // Vent til issues er globalt tilgjengelig og partier er lastet
@@ -359,9 +386,34 @@ function updateIssueDetails(issue = null) {
         </div>
     `;
     
-    // Etter at HTML er oppdatert, oppdater hover-lytterne
+// Etter at HTML er oppdatert, oppdater hover-lytterne
     if (!isTouch) {
         setTimeout(setupHoverListeners, 100);
+    }
+    
+    // Sjekk om vi har et påvirkningsnotat for denne saken etter at HTML er satt
+    if (issue && issueDocuments[issue.id]) {
+        // Opprett knapp-elementet
+        const docButton = document.createElement('a');
+        docButton.href = issueDocuments[issue.id];
+        docButton.target = '_blank'; // Åpner i ny fane
+        docButton.className = 'document-link-btn';
+        docButton.textContent = 'Lenke til påvirkningsnotat';
+        
+        // Legg til knappen i DOM
+        // Finn en god container å plassere den i
+        const buttonsContainer = document.createElement('div');
+        buttonsContainer.className = 'issue-buttons';
+        buttonsContainer.appendChild(docButton);
+        
+        // Legg til container etter issue-parties
+        const issueParties = issueDetails.querySelector('.issue-parties');
+        if (issueParties) {
+            issueParties.after(buttonsContainer);
+        } else {
+            // Alternativt legg den til på slutten av issueDetails
+            issueDetails.appendChild(buttonsContainer);
+        }
     }
 }
 
@@ -575,6 +627,29 @@ function addIssueSelectCSS() {
     style.id = 'issue-selector-styles';
     style.textContent = `
         /* Stilene er allerede lagt til i styles.css */
+        
+        /* Stil for dokumentlenke-knappen */
+        .issue-buttons {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .document-link-btn {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #ff5f7c; /* Kreftforeningens rosa farge */
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            text-align: center;
+            transition: background-color 0.2s;
+        }
+
+        .document-link-btn:hover {
+            background-color: #e94867; /* Mørkere versjon for hover */
+        }
     `;
     
     document.head.appendChild(style);
@@ -681,7 +756,7 @@ function addQuoteStyles() {
             position: relative;
         }
         
-        /* Hover modal content styling (positioned near element) */
+      /* Hover modal content styling (positioned near element) */
         .quote-modal.hover-mode .quote-modal-content {
             background-color: white;
             padding: 20px;

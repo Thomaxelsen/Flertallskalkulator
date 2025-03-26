@@ -106,7 +106,7 @@ const issues = [
     name: "Høyere tobakksavgifter",
     partiesInAgreement: ["KrF"],
     partyQuotes: {
-      "KrF": "Øke avgiftene på alkohol til arbeid med forebygging fra selvmordet, og øke avgiftene på tobakk."
+      "KrF": "Øke avgiftene på alkohol til arbeid med forebygging, og øke avgiftene på tobakk."
     }
   },
   {
@@ -213,7 +213,7 @@ const issues = [
     partiesInAgreement: ["AP", "H", "FrP"],
     partyQuotes: {
       "AP": "Fortsette å løfte helsenæring som eksportsatsing og følge opp utredningen av klyngestrukturen og sørge for at helseklyngene får rammevikår.",
-      "H": "Ta en ledende rolle internasjonalt for å stimulere og fremme utvikling for å forhindre og bekjempe antibiotikaresistens.",
+      "H": "Gjøre helsenæring til et satsingsområde, gjennom bedre utnyttelse av helsedata og biobanker og legge til rett for gründerskap",
       "FrP": "Gjøre Norge til en ledende produsent, utvikler og eksportør av helseteknologi."
     }
   },
@@ -229,7 +229,7 @@ const issues = [
       "MDG": "Ytterligere redusere antibiotikabruken i norsk helsevesen, oppdrettsnæring, og lede an internasjonalt i arbeidet mot antibiotikaresistens.",
       "KrF": "Sørge for at Norge tar lederskap for et sterkere internasjonalt avtalevert rundt pandemibredskap og forebygging av antibiotikaresistens.",
       "V": "At Norge skal være pådriver for et sterkere internasjonalt avtalevert rundt pandemibredskap og forebygging av antibiotikaresistens.",
-      "H": "Arbeide aktivt for å sikre mot legemiddelmangel, og styrke og utvide det nordiske samarbeidet om produksjon og lagring av legemidler og smittevernutstyr i Norden. Og prioritere effektiv implementering av EU-direktiver som koordinerer gode, samfunnsnyttige, teknologiske løsninger og sikkerhet.",
+      "H": "Ta en ledende rolle internasjonalt for å stimulere og fremme utvikling for å forhindre og bekjempe antibiotikaresistens.",
       "FrP": "Økt vaksinasjonsdekning vil styrke folkehelsen, redusere helseforskjeller og bekjempe antibiotikaresistens."
     }
   },
