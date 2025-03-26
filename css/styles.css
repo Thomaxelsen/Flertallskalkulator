@@ -1099,3 +1099,74 @@ footer {
        display: none !important; /* Aldri vis fullskjerm-popup på desktop */
    }
 }
+/* Juster vertikal posisjonering av seksjonstitler */
+.issue-selector .section-title,
+.result-header {
+    margin-top: 0;
+    margin-bottom: 20px;
+    /* Sikrer samme linjehøyde og tekstutseende på begge sider */
+    font-size: 1.6rem;
+    line-height: 1.2;
+    padding-bottom: 0.8rem;
+}
+
+/* Sørg for at issue-selector-container starter på samme høyde som result-container */
+#issue-selector-container {
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+/* Sørg for at layouten starter øverst i kolonnen */
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Gjør kolonnetoppen lik på begge sider */
+.issue-selector,
+.result-container {
+    margin-top: 0;
+    padding-top: 25px;
+}
+/* Gir resultat og issue-selector samme styling */
+.result-header,
+.issue-selector h2 {
+    color: var(--kf-blue);
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    text-align: center;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px solid #eee;
+    position: relative;
+}
+
+.result-header::after,
+.issue-selector h2::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--kf-pink), var(--kf-purple));
+}
+
+/* Justerer startposisjon for boksene */
+.result-container,
+.issue-selector {
+    margin-top: 0;
+    padding-top: 25px;
+}
+
+/* Gir samme høyde til begge kolonner */
+.column:first-child,
+.column:last-child {
+    align-self: flex-start;
+}
+/* Skjul den genererte overskriften i issue-selector */
+.issue-selector .section-title:first-child {
+    display: none;
+}
