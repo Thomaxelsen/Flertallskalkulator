@@ -238,13 +238,13 @@ function createIssueSelector() {
         </div>
     `;
     
-    // Plasser saksvelgeren på siden
-    // Legg den i høyre kolonne etter resultatboksen
-    const resultContainer = document.querySelector('.result-container');
-    
-    if (resultContainer) {
-        resultContainer.parentNode.insertBefore(issueSelectorContainer, resultContainer.nextSibling);
-    }
+   // Plasser saksvelgeren på siden
+// Legg den i venstre kolonne øverst
+const issueContainerPlaceholder = document.getElementById('issue-selector-container');
+
+if (issueContainerPlaceholder) {
+    issueContainerPlaceholder.appendChild(issueSelectorContainer);
+}
     
     // Legg til hendelseslyttere
     setupIssueSelectionListeners();
