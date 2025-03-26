@@ -959,3 +959,18 @@ footer {
     margin: 15px 0;
     border-radius: 4px;
 }
+/* Ekstra mellomrom mellom saksvelger og partivelger */
+#issue-selector-container {
+    margin-bottom: 30px;
+}
+
+/* Mer markert overskrift for partivelger-seksjonen */
+.party-section .section-title {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+/* Gjør beskrivelsen mer integrert i seksjonen */
+.party-section .description {
+    margin-bottom: 20px;
+}
