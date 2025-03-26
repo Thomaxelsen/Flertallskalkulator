@@ -13,6 +13,9 @@
     padding: 20px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.06);
     transition: transform 0.2s, box-shadow 0.2s;
+    height: 450px; /* Fast høyde for alle bokser */
+    display: flex;
+    flex-direction: column;
 }
 
 .party-box:hover {
@@ -26,6 +29,7 @@
     margin-bottom: 15px;
     padding-bottom: 10px;
     border-bottom: 2px solid #eee;
+    flex: 0 0 auto; /* Ikke la headeren krympe */
 }
 
 .party-icon {
@@ -64,6 +68,7 @@
     border-radius: 8px;
     margin-bottom: 15px;
     text-align: center;
+    flex: 0 0 auto; /* Ikke la statistikken krympe */
 }
 
 .agreement-percentage {
@@ -77,10 +82,27 @@
     color: #666;
 }
 
+/* Saker-seksjonen med scrollbar ved behov */
+.issues-section {
+    flex: 1 1 auto; /* La denne delen vokse og krympe */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Skjul overflyt */
+}
+
+.issues-section h3 {
+    margin-bottom: 15px;
+    flex: 0 0 auto; /* Ikke la overskriften krympe */
+    color: var(--kf-blue);
+    font-size: 1.1rem;
+}
+
 .issue-list {
     list-style-type: none;
     padding: 0;
     margin: 0;
+    overflow-y: auto; /* Legg til scrollbar ved behov */
+    flex: 1; /* La listen ta resten av plassen */
 }
 
 .issue-item {
@@ -90,6 +112,50 @@
     border-left: 3px solid var(--kf-green);
     border-radius: 4px;
     font-size: 0.95rem;
+}
+
+.issue-item:hover {
+    background-color: rgba(0, 168, 163, 0.15);
+}
+
+/* Stilisert scrollbar for bedre utseende */
+.issue-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.issue-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.issue-list::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+.issue-list::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+}
+
+.issue-area {
+    font-size: 0.85rem;
+    color: #666;
+    font-style: italic;
+    margin-top: 3px;
+}
+
+/* Tilpass "ingen saker" meldingen */
+.no-issues {
+    text-align: center;
+    padding: 20px;
+    color: #777;
+    font-style: italic;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Mobile view - rullemeny */
