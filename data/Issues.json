@@ -12,6 +12,10 @@
       "FrP": {
         "level": 2,
         "quote": "Sikre en god og forutsigbar sykelønnordning for arbeidstakere, og innføre en tidskonto-ordning som sikrer gode muligheter for å stå delvis i arbeid under sykemelding."
+      },
+      "H": {
+        "level": 1,
+        "quote": "A)åpne for større fleksibilitet for når på dagen arbeidsmarkedstiltak skal gjennomføres, tilpasset den enkelte brukers og bedriftens behov B) Forsterke praktiseringen av at gradering skal være hovedregelen ved mottak av sykelønn."
       }
     }
   },
@@ -28,6 +32,10 @@
       "FrP": {
         "level": 2,
         "quote": "Styrke kompetansen i NAV."
+      },
+      "H": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -42,6 +50,10 @@
         "quote": "At retten til arbeid må gjøres reell. Arbeidslivet må åpnes opp for flere, med ulike grader av funksjonsevner"
       },
       "FrP": {
+        "level": 0,
+        "quote": null
+      },
+      "H": {
         "level": 0,
         "quote": null
       }
@@ -60,6 +72,10 @@
       "FrP": {
         "level": 2,
         "quote": "Innføre et fleksibelt lønnstilskudd for å få flere med nedsatt arbeidsevne inn i arbeidslivet."
+      },
+      "H": {
+        "level": 2,
+        "quote": "Prioritere bruk av lønnstilskudd og andre arbeidsmarkedstiltak som har beviselig god effekt for å sikre en mer effektiv og målrettet bruk av ressursene."
       }
     }
   },
@@ -76,6 +92,10 @@
       "FrP": {
         "level": 2,
         "quote": "At personer som på grunn av sykdom eller skade får nedsatt arbeidsevne, skal sikres rask rehabilitering og nødvendige hjelpetiltak slik at de fortsatt kan delta i arbeidslivet. Rehabilitering og habilitering skal være rettighetsfestet."
+      },
+      "H": {
+        "level": 2,
+        "quote": "Satse mer på arbeidsrettet rehabilitering for å sikre at flere kommer raskere tilbake til arbeidslivet."
       }
     }
   },
@@ -92,6 +112,10 @@
       "FrP": {
         "level": 0,
         "quote": null
+      },
+      "H": {
+        "level": 2,
+        "quote": "Vurdere å utvide mammografiprogrammet i tråd med faglige anbefalinger."
       }
     }
   },
@@ -108,6 +132,10 @@
       "FrP": {
         "level": 1,
         "quote": "gjøre norsk helsevesen proaktivt i bruk av gen- og bioteknologi"
+      },
+      "H": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -124,6 +152,10 @@
       "FrP": {
         "level": 0,
         "quote": null
+      },
+      "H": {
+        "level": 2,
+        "quote": "Gjennomføre en pilotstudie for screening av prostata."
       }
     }
   },
@@ -138,6 +170,10 @@
         "quote": null
       },
       "FrP": {
+        "level": 0,
+        "quote": null
+      },
+      "H": {
         "level": 0,
         "quote": null
       }
@@ -156,6 +192,10 @@
       "FrP": {
         "level": 1,
         "quote": "Vi erkjenner at bruk av tobakk og alkohol kan føre til alvorlige helseproblemer, og er tilhengere av offentlig informasjon."
+      },
+      "H": {
+        "level": 2,
+        "quote": "Jobbe for redusert tobakksbruk og innføre et nasjonalt røykesluttprogram."
       }
     }
   },
@@ -172,6 +212,10 @@
       "FrP": {
         "level": 1,
         "quote": "Harmonisere avgiften på alkohol og tobakk med nivået i våre naboland for å unngå handelslekkasje og smugling"
+      },
+      "H": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -188,6 +232,10 @@
       "FrP": {
         "level": 1,
         "quote": "Harmonisere avgiften på alkohol og tobakk med nivået i våre naboland for å unngå handelslekkasje og smugling"
+      },
+      "H": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -204,6 +252,10 @@
       "FrP": {
         "level": 2,
         "quote": "Vi erkjenner at bruk av tobakk og alkohol kan føre til alvorlige helseproblemer, og er tilhengere av offentlig informasjon."
+      },
+      "H": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -218,6 +270,10 @@
         "quote": null
       },
       "FrP": {
+        "level": 0,
+        "quote": null
+      },
+      "H": {
         "level": 0,
         "quote": null
       }
@@ -236,6 +292,10 @@
       "FrP": {
         "level": 1,
         "quote": "Ikke avgiftsbelegge e-sigaretter som tobakk"
+      },
+      "H": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -252,6 +312,10 @@
       "FrP": {
         "level": 0,
         "quote": null
+      },
+      "H": {
+        "level": 0,
+        "quote": "Opprettholde tax-free-ordningen, og gjeninnføre veksling mellom tobakk og alkohol."
       }
     }
   },
@@ -268,6 +332,10 @@
       "FrP": {
         "level": 1,
         "quote": "Tilby en større del av befolkningen vaksine mot HPV-viruset, inkludert gutter og intensivere screeningprogrammet."
+      },
+      "H": {
+        "level": 2,
+        "quote": "Innføre flere tiltak som raskere utrydder HPV-relatert kreft og sykdom"
       }
     }
   },
@@ -282,6 +350,10 @@
         "quote": null
       },
       "FrP": {
+        "level": 0,
+        "quote": null
+      },
+      "H": {
         "level": 0,
         "quote": null
       }
@@ -300,6 +372,10 @@
       "FrP": {
         "level": 0,
         "quote": null
+      },
+      "H": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -316,6 +392,10 @@
       "FrP": {
         "level": 2,
         "quote": "Norge skal bli en ledende produsent, utvikler og eksportør av helseteknologi"
+      },
+      "H": {
+        "level": 2,
+        "quote": "Opprette en egen Katapult for helseteknologi og helseinnovasjon som kobles opp mot ledende forsknings- og innovasjonsmiljøer."
       }
     }
   },
@@ -332,6 +412,10 @@
       "FrP": {
         "level": 2,
         "quote": "Gjøre Norge til en ledende produsent, utvikler og eksportør av helseteknologi."
+      },
+      "H": {
+        "level": 2,
+        "quote": "Gjøre helsenæring til et satsingsområde, gjennom bedre digitalisering av helsedata og biobanker og legge til rette for gründerskap."
       }
     }
   },
@@ -348,6 +432,10 @@
       "FrP": {
         "level": 2,
         "quote": "Gjøre Norge til en ledende produsent, utvikler og eksportør av helseteknologi."
+      },
+      "H": {
+        "level": 2,
+        "quote": "Gjøre helsenæring til et satsingsområde, gjennom bedre utnyttelse av helsedata og biobanker og legge til rette for gründerskap."
       }
     }
   },
@@ -364,6 +452,10 @@
       "FrP": {
         "level": 1,
         "quote": "Økt vaksinasjonsdekning vil styrke folkehelsen, redusere helseforskjeller og bekjempe antibiotikaresistens."
+      },
+      "H": {
+        "level": 2,
+        "quote": "Ta en ledende rolle internasjonalt for å stimulere og fremme utvikling for å forhindre og bekjempe antibiotikaresistens."
       }
     }
   },
@@ -380,6 +472,10 @@
       "FrP": {
         "level": 2,
         "quote": "I større grad gjøre Norge selvforsynt med de viktigste legemidlene og etablere nasjonalt beredskapslager"
+      },
+      "H": {
+        "level": 2,
+        "quote": "Arbeide aktivt for å sikre mot legemiddelmangel, og styrke og utvide det nordiske samarbeidet om produksjon og lagring av legemidler."
       }
     }
   },
@@ -396,6 +492,10 @@
       "FrP": {
         "level": 2,
         "quote": "Øke bruken av velferdsteknologi"
+      },
+      "H": {
+        "level": 2,
+        "quote": "A) Sørge for målrettet bruk av ny teknologi, digitalisering og kunstig intelligens for å jobbe på smartere måter og ha bedre oppgavefordeling i sykehus. B) Sørge for raskere realisering av nytten ved bruk av digitale løsninger og ny teknologi i helse- og omsorgssektoren."
       }
     }
   },
@@ -412,6 +512,10 @@
       "FrP": {
         "level": 2,
         "quote": "Øke skattefradraget for gaver til frivillige, samfunnsnyttige og humanitære organisasjoner."
+      },
+      "H": {
+        "level": 1,
+        "quote": "Forbedre rammevilkårene for frivillige organisasjoners lotterier med tillatelse gitt i pengespilloven, og øke fradragsgrensen for gaver fra private givere og næringsliv til frivillige og ideelle organisasjoner."
       }
     }
   },
@@ -426,6 +530,10 @@
         "quote": null
       },
       "FrP": {
+        "level": 0,
+        "quote": null
+      },
+      "H": {
         "level": 0,
         "quote": null
       }
@@ -444,6 +552,10 @@
       "FrP": {
         "level": 0,
         "quote": null
+      },
+      "H": {
+        "level": 1,
+        "quote": "Sikre gode ordninger for fri rettshjelp."
       }
     }
   },
@@ -460,6 +572,10 @@
       "FrP": {
         "level": 2,
         "quote": "Gjeninnføre gaveforsterkningsordningen og øke skattefradraget for private givere for å gjøre det mer attraktivt å tiltrekke seg privat kapital."
+      },
+      "H": {
+        "level": 2,
+        "quote": "Innføre en gaveforsterkningsordning på forskningsområdet."
       }
     }
   },
@@ -474,6 +590,10 @@
         "quote": null
       },
       "FrP": {
+        "level": 0,
+        "quote": null
+      },
+      "H": {
         "level": 0,
         "quote": null
       }
@@ -492,6 +612,10 @@
       "FrP": {
         "level": 0,
         "quote": null
+      },
+      "H": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -508,6 +632,10 @@
       "FrP": {
         "level": 0,
         "quote": null
+      },
+      "H": {
+        "level": 1,
+        "quote": "Sikre god palliativ pleie og lindrende omsorg til mennesker i livets sluttfase og sikre bruk av hospicefilosofi, som handler om å skape livskvalitet i livets siste fase."
       }
     }
   },
@@ -524,6 +652,10 @@
       "FrP": {
         "level": 2,
         "quote": "Bekjempe underernæring og få flere kjøkken tilbake på sykehjem"
+      },
+      "H": {
+        "level": 1,
+        "quote": "Styrke det systematiske ernæringsarbeidet for eldre og utsatte grupper."
       }
     }
   },
@@ -540,6 +672,10 @@
       "FrP": {
         "level": 1,
         "quote": "Det er behov for å forenkle pasientrettigheter og styrke tilbudet om behandlingsreiser til utlandet."
+      },
+      "H": {
+        "level": 1,
+        "quote": "Gjøre det enklere for pasienter og pårørende å forstå sine rettigheter og utøve medvirkning og innflytelse."
       }
     }
   },
@@ -554,6 +690,10 @@
         "quote": "Sikre at sosialhjelpsmottakere kan motta gaver fra venner, slektninger og frivillige organisasjoner uten å være redde for avkortning."
       },
       "FrP": {
+        "level": 0,
+        "quote": null
+      },
+      "H": {
         "level": 0,
         "quote": null
       }
@@ -572,6 +712,10 @@
       "FrP": {
         "level": 0,
         "quote": null
+      },
+      "H": {
+        "level": 1,
+        "quote": "Bruke teknologiske løsninger og desentralisering av egnede helsetjenester slik at antall pasientreiser går ned og tjenestene likevel oppleves som bedre."
       }
     }
   },
@@ -588,6 +732,10 @@
       "FrP": {
         "level": 0,
         "quote": null
+      },
+      "H": {
+        "level": 1,
+        "quote": "Sørge for at det jobbes systematisk for å bedre pasientsikkerheten i helsetjenesten."
       }
     }
   },
@@ -604,6 +752,10 @@
       "FrP": {
         "level": 2,
         "quote": "At pårørende til alvorlig syke skal ha rett til tidsbegrenset pleiepenger når de pleier sine nærmeste."
+      },
+      "H": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -618,6 +770,10 @@
         "quote": null
       },
       "FrP": {
+        "level": 0,
+        "quote": null
+      },
+      "H": {
         "level": 0,
         "quote": null
       }
@@ -636,6 +792,10 @@
       "FrP": {
         "level": 2,
         "quote": "Styrke medisinsk forskning, sikre rask tilgang til nye legemidler og metoder, og holde egenandeler på et moderat nivå."
+      },
+      "H": {
+        "level": 2,
+        "quote": "Gjennomføre flere kliniske studier i Norge."
       }
     }
   },
@@ -652,6 +812,10 @@
       "FrP": {
         "level": 2,
         "quote": "For å redusere ventetider ønsker Fremskrittspartiet en utrednings- og behandlingsgarant på 30 dager etter dato for henvisning fra primærhelsetjenesten."
+      },
+      "H": {
+        "level": 2,
+        "quote": "Redusere ventetidene i helsetjenesten."
       }
     }
   },
@@ -668,6 +832,10 @@
       "FrP": {
         "level": 2,
         "quote": "Sikre rask tilgang til nye og effektive legemidler, godkjenne medisiner fra Sverige og Danmark uten unødvendig forsinkelse og fjerne særnorske krav."
+      },
+      "H": {
+        "level": 2,
+        "quote": "Sørge for at pasienter får raskere tilgang til nye medisiner. Tilgang til flere kliniske studier og tilstrekkelig tilgang til nødvendige medisiner."
       }
     }
   },
@@ -684,6 +852,10 @@
       "FrP": {
         "level": 0,
         "quote": null
+      },
+      "H": {
+        "level": 1,
+        "quote": "Helseberedskapen må forbedres for å verne om befolkningens liv og helse, og sørge for medisinsk behandling og pleie og omsorg til berørte personer i alle situasjoner. Avklarte ansvarsforhold, tydelige varslings- og rapporteringsrutiner og god samhandling mellom aktørene ved kriser er spesielt viktig."
       }
     }
   },
@@ -700,6 +872,10 @@
       "FrP": {
         "level": 2,
         "quote": "Etablere en nasjonal sykehusplan for inverstinger i nye sykehusbygg"
+      },
+      "H": {
+        "level": 2,
+        "quote": "Høyre vil styrke helsevesenet ved å investere i sykehuskapasitet og teknologi."
       }
     }
   },
@@ -714,6 +890,10 @@
         "quote": null
       },
       "FrP": {
+        "level": 0,
+        "quote": null
+      },
+      "H": {
         "level": 0,
         "quote": null
       }
