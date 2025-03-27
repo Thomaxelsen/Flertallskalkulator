@@ -3,7 +3,7 @@ const issues = [];
 
 // Funksjon for å laste inn issues-data
 function loadIssuesData() {
-    fetch('issues.json')
+    fetch('data/issues.json')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
