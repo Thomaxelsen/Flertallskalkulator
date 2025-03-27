@@ -13,7 +13,8 @@
     padding: 20px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.06);
     transition: transform 0.2s, box-shadow 0.2s;
-    height: 450px; /* Fast høyde for alle bokser */
+    height: auto; /* Endret fra fast høyde til auto */
+    min-height: 500px; /* Satt en minimumshøyde i stedet */
     display: flex;
     flex-direction: column;
 }
