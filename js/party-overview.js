@@ -1,13 +1,12 @@
-// party-overview.js - Genererer partioversikt basert på issues.js data
+// party-overview.js - 
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Vent til issues-objektet er lastet
-    const checkLoaded = setInterval(function() {
-        if (window.issues) {
-            clearInterval(checkLoaded);
-            initializePartyOverview();
-        }
-    }, 100);
+    // Lytt etter issues-data
+    if (window.issues && window.issues.length > 0) {
+        initializePartyOverview(); // Issues allerede lastet
+    } else {
+        document.addEventListener('issuesDataLoaded', initializePartyOverview);
+    }
 });
 
 function initializePartyOverview() {
