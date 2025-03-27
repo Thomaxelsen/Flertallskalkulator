@@ -118,11 +118,11 @@
         "quote": "Hjelpe dem som står utenfor arbeidslivet også når ledigheten er lav. Virkemidlene til NAV har bedre effekt i perioder der etterspørselen etter arbeidskraft er høy."
       },
       "MDG": {
-        "level": 2,
+        "level": 1,
         "quote": "Jobbe mer helhetlig med langsiktig oppfølging av funksjonshindrede og kronikere, bl.a. universell utforming og lønnstilskudd som rettighetsfestes. Ordningen må også kunne samordnes med BPA."
       },
       "SP": {
-        "level": 2,
+        "level": 1,
         "quote": "Gjere avtala om inkluderande arbeidsliv meir forpliktande for alle partar og sikre at fleire med nedsatt arbeidsevne får arbeid."
       },
       "SV": {
@@ -714,7 +714,7 @@
         "quote": null
       },
       "FrP": {
-        "level": 1,
+        "level": 2,
         "quote": "Tilby en større del av befolkningen vaksine mot HPV-viruset, inkludert gutter og intensivere screeningprogrammet."
       },
       "H": {
@@ -978,7 +978,7 @@
         "quote": "At Norge jobber for å styrke utviklingen av vaksiner og diagnostiske verktøy som kan forebygge antibiotikaresistens."
       },
       "FrP": {
-        "level": 1,
+        "level": 2,
         "quote": "Økt vaksinasjonsdekning vil styrke folkehelsen, redusere helseforskjeller og bekjempe antibiotikaresistens."
       },
       "H": {
@@ -1114,7 +1114,7 @@
         "quote": "Øke skattefradraget for gaver til frivillige, samfunnsnyttige og humanitære organisasjoner."
       },
       "H": {
-        "level": 1,
+        "level": 2,
         "quote": "Forbedre rammevilkårene for frivillige organisasjoners lotterier med tillatelse gitt i pengespilloven, og øke fradragsgrensen for gaver fra private givere og næringsliv til frivillige og ideelle organisasjoner."
       },
       "V": {
@@ -1394,11 +1394,11 @@
         "quote": null
       },
       "MDG": {
-        "level": 2,
+        "level": 1,
         "quote": "Vesentlig styrke kompetansen på smertelindring og terminal omsorg, også hjemmebasert."
       },
       "SP": {
-        "level": 2,
+        "level": 1,
         "quote": "Styrke omsorgstilbodet ved livet sin ende og betre tilbodet om palliativ pleie."
       },
       "SV": {
@@ -1526,7 +1526,7 @@
         "quote": null
       },
       "MDG": {
-        "level": 2,
+        "level": 1,
         "quote": "Innføre en mer tillitsbasert sosialstøtte, som en garantert minsteinntekt uten krav om avkortning ved gaver."
       },
       "SP": {
@@ -1710,7 +1710,7 @@
         "quote": null
       },
       "SV": {
-        "level": 2,
+        "level": 1,
         "quote": "Sikre studenter rett til inntektssikring på nivå med dagpenger."
       }
     }
@@ -1878,7 +1878,7 @@
         "quote": "Sikre fullverdig norsk deltakelse i EU-samarbeidet om helseberedskap"
       },
       "MDG": {
-        "level": 1,
+        "level": 2,
         "quote": "Styrke helseberedskapen og samhandlingen, blant annet ved å involvere kommunene bedre i beredskapsråd."
       },
       "SP": {
