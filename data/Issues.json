@@ -28,6 +28,10 @@
       "A": {
         "level": 1,
         "quote": "Bedre sykefraværsoppfølgingen, blant annet gjennom økt etterlevelse av pliktene i regelverket for både arbeidsgiver og arbeidstaker, sykemelder og NAV, og gjøre dialogen lettere med nye digitale løsninger"
+      },
+      "MDG": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -60,6 +64,10 @@
       "A": {
         "level": 2,
         "quote": "At NAV skal hjelpe flere inn i arbeid. Derfor må NAV styrkes med nye verktøy. De ansatte i NAV må gis mer fleksibilitet, slik at de kan tilpasse virkemiddelbruken til den enkelte."
+      },
+      "MDG": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -92,6 +100,10 @@
       "A": {
         "level": 1,
         "quote": "Hjelpe dem som står utenfor arbeidslivet også når ledigheten er lav. Virkemidlene til NAV har bedre effekt i perioder der etterspørselen etter arbeidskraft er høy."
+      },
+      "MDG": {
+        "level": 2,
+        "quote": "Jobbe mer helhetlig med langsiktig oppfølging av funksjonshindrede og kronikere, bl.a. universell utforming og lønnstilskudd som rettighetsfestes. Ordningen må også kunne samordnes med BPA."
       }
     }
   },
@@ -124,6 +136,10 @@
       "A": {
         "level": 2,
         "quote": "Utvide ordningen med varig lønnstilskudd til flere utsatte grupper."
+      },
+      "MDG": {
+        "level": 2,
+        "quote": "Sikre funksjonsassistanse og lønnstilskudd i arbeid og praksis som en rettighetsfestet ordning."
       }
     }
   },
@@ -156,6 +172,10 @@
       "A": {
         "level": 0,
         "quote": null
+      },
+      "MDG": {
+        "level": 2,
+        "quote": "Sikre alle tilgang til rehabilitering i etterkant av sykdom og skade, slik at man raskt kan komme tilbake i jobb eller utdanning."
       }
     }
   },
@@ -188,6 +208,10 @@
       "A": {
         "level": 2,
         "quote": "Utvide mammografibilddet i tråd med EUs nye retningslinjer."
+      },
+      "MDG": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -218,6 +242,10 @@
         "quote": "opprettholde forbudet mot gentesting av barns arveanlegg, og sikre alle retten til å ikke vite om arvelige egenskaper og sykdom"
       },
       "A": {
+        "level": 0,
+        "quote": null
+      },
+      "MDG": {
         "level": 0,
         "quote": null
       }
@@ -252,6 +280,10 @@
       "A": {
         "level": 0,
         "quote": null
+      },
+      "MDG": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -282,6 +314,10 @@
         "quote": null
       },
       "A": {
+        "level": 0,
+        "quote": null
+      },
+      "MDG": {
         "level": 0,
         "quote": null
       }
@@ -316,6 +352,10 @@
       "A": {
         "level": 2,
         "quote": "Følge opp ambisjonene i folkehelsestrategien ved å finansiere et nasjonalt røykesluttprogram."
+      },
+      "MDG": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -346,6 +386,10 @@
         "quote": "Øke avgiftene på alkohol til anbefalingene fra særavgiftsutvalget, og øke avgiftene på tobakk."
       },
       "A": {
+        "level": 0,
+        "quote": null
+      },
+      "MDG": {
         "level": 0,
         "quote": null
       }
@@ -380,6 +424,10 @@
       "A": {
         "level": 2,
         "quote": "Føre en restriktiv alkoholpolitikk og opprettholde Vinmonopolets samfunnsrolle"
+      },
+      "MDG": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -410,6 +458,10 @@
         "quote": null
       },
       "A": {
+        "level": 0,
+        "quote": null
+      },
+      "MDG": {
         "level": 0,
         "quote": null
       }
@@ -444,6 +496,10 @@
       "A": {
         "level": 0,
         "quote": null
+      },
+      "MDG": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -476,6 +532,10 @@
       "A": {
         "level": 1,
         "quote": "Beskytte barn og unge bedre mot helseskadelige produkter og tjenester, særlig nikotin, rusmidler og usunn mat og drikke."
+      },
+      "MDG": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -508,6 +568,10 @@
       "A": {
         "level": 0,
         "quote": null
+      },
+      "MDG": {
+        "level": 2,
+        "quote": "Avvikle ordningen med taxfree-handel på flyplasser og redusere kvoten til et minimum."
       }
     }
   },
@@ -540,6 +604,10 @@
       "A": {
         "level": 2,
         "quote": "Utrydde livmorhalskreft som sykdom i Norge."
+      },
+      "MDG": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -572,6 +640,10 @@
       "A": {
         "level": 1,
         "quote": "Beskytte barn og unge bedre mot helseskadelige produkter og tjenester, særlig nikotin, rusmidler og usunn mat og drikke."
+      },
+      "MDG": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -602,6 +674,10 @@
         "quote": "Ha en sunn skatteveksling, slik at sunne matvarer blir billigere og usunne dyrere."
       },
       "A": {
+        "level": 0,
+        "quote": null
+      },
+      "MDG": {
         "level": 0,
         "quote": null
       }
@@ -636,6 +712,10 @@
       "A": {
         "level": 2,
         "quote": "Opprette helsekatapult for å gjøre det enklere å gå fra ide til salg i markedet"
+      },
+      "MDG": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -668,6 +748,10 @@
       "A": {
         "level": 2,
         "quote": "Bruke norske helsedata til å utvikle nye tjenester, behandlinger og medisinske produkter"
+      },
+      "MDG": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -700,6 +784,10 @@
       "A": {
         "level": 2,
         "quote": "Fortsette å løfte helsenæring som eksportsatsing og følge opp utredningen av klyngestrukturen og sørge for at helseklyngene får rammevilkår."
+      },
+      "MDG": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -732,6 +820,10 @@
       "A": {
         "level": 2,
         "quote": "At Norge tar lederskap i det globale arbeidet mot antibiotikaresistens"
+      },
+      "MDG": {
+        "level": 2,
+        "quote": "Ytterligere redusere antibiotikabruken i norsk matproduksjon og lede an internasjonalt i arbeidet mot antibiotikaresistens."
       }
     }
   },
@@ -764,6 +856,10 @@
       "A": {
         "level": 2,
         "quote": "Styrke utviklingen og produksjonen av legemidler i Norge"
+      },
+      "MDG": {
+        "level": 2,
+        "quote": "Sikre god legemiddelberedskap og øke norsk selvforsyning av viktige legemidler."
       }
     }
   },
@@ -796,6 +892,10 @@
       "A": {
         "level": 2,
         "quote": "Benytte mulighetene som ny teknologi, innovasjon og digitalisering gir oss."
+      },
+      "MDG": {
+        "level": 2,
+        "quote": "Satse på innovasjon og velferdsteknologi for å bedre kvalitet og tilgjengelighet i helsetjenestene."
       }
     }
   },
@@ -828,6 +928,10 @@
       "A": {
         "level": 0,
         "quote": null
+      },
+      "MDG": {
+        "level": 2,
+        "quote": "Øke skattefradraget for gaver til frivillige organisasjoner."
       }
     }
   },
@@ -860,6 +964,10 @@
       "A": {
         "level": 2,
         "quote": "Styrke de frivillige rettshjelpstilbudene"
+      },
+      "MDG": {
+        "level": 2,
+        "quote": "Styrke ordningen med fri rettshjelp og støtte frivillige organisasjoner som yter fri rettshjelp."
       }
     }
   },
@@ -892,6 +1000,10 @@
       "A": {
         "level": 2,
         "quote": "Etablere en ny rettshjelpsmodell som sikrer at flere utsatte grupper får rettshjelp, og tilby rettshjelpsveiledning til folk over hele landet i nærtjenestesentre"
+      },
+      "MDG": {
+        "level": 2,
+        "quote": "Styrke arbeidet mot seksuell trakassering og inkludere slike saker i ordningen med fri rettshjelp."
       }
     }
   },
@@ -922,6 +1034,10 @@
         "quote": "Utvikle ordninger som gjør det mer attraktivt for private å understøtte kunst- og kulturlivet, som for eksempel gaveforsterkningsordningen."
       },
       "A": {
+        "level": 0,
+        "quote": null
+      },
+      "MDG": {
         "level": 0,
         "quote": null
       }
@@ -956,6 +1072,10 @@
       "A": {
         "level": 0,
         "quote": null
+      },
+      "MDG": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -986,6 +1106,10 @@
         "quote": null
       },
       "A": {
+        "level": 0,
+        "quote": null
+      },
+      "MDG": {
         "level": 0,
         "quote": null
       }
@@ -1020,6 +1144,10 @@
       "A": {
         "level": 0,
         "quote": null
+      },
+      "MDG": {
+        "level": 2,
+        "quote": "Vesentlig styrke kompetansen på smertelindring og terminal omsorg, også hjemmebasert."
       }
     }
   },
@@ -1052,6 +1180,10 @@
       "A": {
         "level": 0,
         "quote": null
+      },
+      "MDG": {
+        "level": 2,
+        "quote": "Sørge for at alle i det offentliges omsorg får servert smakfull, næringsrik og bærekraftig mat i tråd med kostholdsrådene."
       }
     }
   },
@@ -1084,6 +1216,10 @@
       "A": {
         "level": 1,
         "quote": "Revurdere fordelingen av ansvar og oppgaver mellom primær- og spesialisthelsetjenesten for å gi pasienter et kvalitativt bedre tilbud og bedre arbeidsforhold for fagfolk. Det innebærer å utrede juridiske, organisatoriske og økonomiske virkemidler for å gi pasienter én felles helsetjeneste."
+      },
+      "MDG": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -1116,6 +1252,10 @@
       "A": {
         "level": 0,
         "quote": null
+      },
+      "MDG": {
+        "level": 2,
+        "quote": "Innføre en mer tillitsbasert sosialstøtte, som en garantert minsteinntekt uten krav om avkortning ved gaver."
       }
     }
   },
@@ -1148,6 +1288,10 @@
       "A": {
         "level": 2,
         "quote": "Gjennomgå ordningene til Pasientreiser for å sikre at ikke pasienter og pårørende får unødvendig lang, belastende og kostbar reisevei."
+      },
+      "MDG": {
+        "level": 1,
+        "quote": "Videreføre støtte til FOT-ruter og sikre pasientreiser i distriktene, men uten at turisme spiser av tilbudet."
       }
     }
   },
@@ -1178,6 +1322,10 @@
         "quote": null
       },
       "A": {
+        "level": 0,
+        "quote": null
+      },
+      "MDG": {
         "level": 0,
         "quote": null
       }
@@ -1212,6 +1360,10 @@
       "A": {
         "level": 1,
         "quote": "Arbeiderpartiet vil gjøre hverdagen som pårørende bedre ved å øke bruken av pårørendeavtaler, mer avlastning, mer opplæring og bedre støtte for de pårørende. Innføre en prøveordning med korttidspermisjon for pårørende, etter modell for omsorgspenger for barn under 12 år."
+      },
+      "MDG": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -1244,6 +1396,10 @@
       "A": {
         "level": 2,
         "quote": "Sikre gode sammarbeids- og samordningsløsninger mellom helsetjenestene, utdanningsektoren, og NAV, for å støtte mennesker som står utenfor jobb og utdanning tilbake i meningsfull aktivitet."
+      },
+      "MDG": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -1276,6 +1432,10 @@
       "A": {
         "level": 2,
         "quote": "Legge til rette for at flere pasienter får delta i kliniske studier i hele landet"
+      },
+      "MDG": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -1308,6 +1468,10 @@
       "A": {
         "level": 2,
         "quote": "Sikre korte ventetider i vår felles helsetjeneste."
+      },
+      "MDG": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -1338,6 +1502,10 @@
         "quote": null
       },
       "A": {
+        "level": 0,
+        "quote": null
+      },
+      "MDG": {
         "level": 0,
         "quote": null
       }
@@ -1372,6 +1540,10 @@
       "A": {
         "level": 2,
         "quote": "Sikre fullverdig norsk deltakelse i EU-samarbeidet om helseberedskap"
+      },
+      "MDG": {
+        "level": 1,
+        "quote": "Styrke helseberedskapen og samhandlingen, blant annet ved å involvere kommunene bedre i beredskapsråd."
       }
     }
   },
@@ -1404,6 +1576,10 @@
       "A": {
         "level": 2,
         "quote": "Øke andel av BNP som går til helse for å sikre investeringer som bidrar til effektiv ressursbruk."
+      },
+      "MDG": {
+        "level": 1,
+        "quote": "Sikre at sykehusene får dekket de reelle kostnadene og at helsetjenesten styrkes."
       }
     }
   },
@@ -1434,6 +1610,10 @@
         "quote": null
       },
       "A": {
+        "level": 0,
+        "quote": null
+      },
+      "MDG": {
         "level": 0,
         "quote": null
       }
