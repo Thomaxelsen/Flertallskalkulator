@@ -8,6 +8,10 @@
       "R": {
         "level": 0,
         "quote": null
+      },
+      "FrP": {
+        "level": 2,
+        "quote": "Sikre en god og forutsigbar sykelønnordning for arbeidstakere, og innføre en tidskonto-ordning som sikrer gode muligheter for å stå delvis i arbeid under sykemelding."
       }
     }
   },
@@ -20,6 +24,10 @@
       "R": {
         "level": 2,
         "quote": "a) Gi de ansatte i førstelinjen i NAV tid og tillit til å gjøre jobben sin. b) Stoppe nedleggelsen av NAV-kontorer og omgjøre NAV til en institusjon som gir gode og nære tjenester til dem som trenger det. Tilbakeføre vedtaksmyndighet til Navs lokalkontorer."
+      },
+      "FrP": {
+        "level": 2,
+        "quote": "Styrke kompetansen i NAV."
       }
     }
   },
@@ -32,6 +40,10 @@
       "R": {
         "level": 1,
         "quote": "At retten til arbeid må gjøres reell. Arbeidslivet må åpnes opp for flere, med ulike grader av funksjonsevner"
+      },
+      "FrP": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -44,6 +56,10 @@
       "R": {
         "level": 0,
         "quote": null
+      },
+      "FrP": {
+        "level": 2,
+        "quote": "Innføre et fleksibelt lønnstilskudd for å få flere med nedsatt arbeidsevne inn i arbeidslivet."
       }
     }
   },
@@ -56,6 +72,10 @@
       "R": {
         "level": 1,
         "quote": "Bygge ut og styrke habilitering- og rehabiliteringsinstitusjoner, slik at kronisk syke personer utsatt for ulykker og personer med sammensatte diagnoser ikke blir kasteballer mellom sykehus og kommunale helse- og omsorgstjenester."
+      },
+      "FrP": {
+        "level": 2,
+        "quote": "At personer som på grunn av sykdom eller skade får nedsatt arbeidsevne, skal sikres rask rehabilitering og nødvendige hjelpetiltak slik at de fortsatt kan delta i arbeidslivet. Rehabilitering og habilitering skal være rettighetsfestet."
       }
     }
   },
@@ -66,6 +86,10 @@
     "description": "Utvide mammorgrafiprogrammet",
     "partyStances": {
       "R": {
+        "level": 0,
+        "quote": null
+      },
+      "FrP": {
         "level": 0,
         "quote": null
       }
@@ -80,6 +104,10 @@
       "R": {
         "level": 0,
         "quote": null
+      },
+      "FrP": {
+        "level": 1,
+        "quote": "gjøre norsk helsevesen proaktivt i bruk av gen- og bioteknologi"
       }
     }
   },
@@ -92,6 +120,10 @@
       "R": {
         "level": 2,
         "quote": "Innføre et pilotprosjekt for å prøve ut et nasjonalt screeningprogram for prostatakreft."
+      },
+      "FrP": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -102,6 +134,10 @@
     "description": "Innføre lungekreftscreening",
     "partyStances": {
       "R": {
+        "level": 0,
+        "quote": null
+      },
+      "FrP": {
         "level": 0,
         "quote": null
       }
@@ -116,6 +152,10 @@
       "R": {
         "level": 0,
         "quote": null
+      },
+      "FrP": {
+        "level": 1,
+        "quote": "Vi erkjenner at bruk av tobakk og alkohol kan føre til alvorlige helseproblemer, og er tilhengere av offentlig informasjon."
       }
     }
   },
@@ -128,6 +168,10 @@
       "R": {
         "level": 0,
         "quote": null
+      },
+      "FrP": {
+        "level": 1,
+        "quote": "Harmonisere avgiften på alkohol og tobakk med nivået i våre naboland for å unngå handelslekkasje og smugling"
       }
     }
   },
@@ -140,6 +184,10 @@
       "R": {
         "level": 2,
         "quote": "Føre en restriktiv tobakks- og alkoholpolitikk."
+      },
+      "FrP": {
+        "level": 1,
+        "quote": "Harmonisere avgiften på alkohol og tobakk med nivået i våre naboland for å unngå handelslekkasje og smugling"
       }
     }
   },
@@ -152,6 +200,10 @@
       "R": {
         "level": 0,
         "quote": null
+      },
+      "FrP": {
+        "level": 2,
+        "quote": "Vi erkjenner at bruk av tobakk og alkohol kan føre til alvorlige helseproblemer, og er tilhengere av offentlig informasjon."
       }
     }
   },
@@ -162,6 +214,10 @@
     "description": "Strengere regulering av solarium",
     "partyStances": {
       "R": {
+        "level": 0,
+        "quote": null
+      },
+      "FrP": {
         "level": 0,
         "quote": null
       }
@@ -176,6 +232,10 @@
       "R": {
         "level": 0,
         "quote": null
+      },
+      "FrP": {
+        "level": 1,
+        "quote": "Ikke avgiftsbelegge e-sigaretter som tobakk"
       }
     }
   },
@@ -188,6 +248,10 @@
       "R": {
         "level": 2,
         "quote": "Avvikle taxfree-ordningen. Fram til dette skjer, bør Vinmonopolet overta driften."
+      },
+      "FrP": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -200,6 +264,10 @@
       "R": {
         "level": 0,
         "quote": null
+      },
+      "FrP": {
+        "level": 1,
+        "quote": "Tilby en større del av befolkningen vaksine mot HPV-viruset, inkludert gutter og intensivere screeningprogrammet."
       }
     }
   },
@@ -210,6 +278,10 @@
     "description": "Forbud mot markedsføring for usunn mat og drikke",
     "partyStances": {
       "R": {
+        "level": 0,
+        "quote": null
+      },
+      "FrP": {
         "level": 0,
         "quote": null
       }
@@ -224,6 +296,10 @@
       "R": {
         "level": 2,
         "quote": "Bruke avgiftspolitikken for å stimulere til sunne og miljøvennlige valg."
+      },
+      "FrP": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -236,6 +312,10 @@
       "R": {
         "level": 0,
         "quote": null
+      },
+      "FrP": {
+        "level": 2,
+        "quote": "Norge skal bli en ledende produsent, utvikler og eksportør av helseteknologi"
       }
     }
   },
@@ -248,6 +328,10 @@
       "R": {
         "level": 0,
         "quote": null
+      },
+      "FrP": {
+        "level": 2,
+        "quote": "Gjøre Norge til en ledende produsent, utvikler og eksportør av helseteknologi."
       }
     }
   },
@@ -260,6 +344,10 @@
       "R": {
         "level": 0,
         "quote": null
+      },
+      "FrP": {
+        "level": 2,
+        "quote": "Gjøre Norge til en ledende produsent, utvikler og eksportør av helseteknologi."
       }
     }
   },
@@ -272,6 +360,10 @@
       "R": {
         "level": 2,
         "quote": "At Norge jobber for å styrke utviklingen av vaksiner og diagnostiske verktøy som kan forebygge antibiotikaresistens."
+      },
+      "FrP": {
+        "level": 1,
+        "quote": "Økt vaksinasjonsdekning vil styrke folkehelsen, redusere helseforskjeller og bekjempe antibiotikaresistens."
       }
     }
   },
@@ -284,6 +376,10 @@
       "R": {
         "level": 2,
         "quote": "Utvikle produksjon av nødvendige legemidler i Norge, og jobbe for endringer i legemiddelindustrien slik at det ikke blir mangel på nødvendige legemidler."
+      },
+      "FrP": {
+        "level": 2,
+        "quote": "I større grad gjøre Norge selvforsynt med de viktigste legemidlene og etablere nasjonalt beredskapslager"
       }
     }
   },
@@ -296,6 +392,10 @@
       "R": {
         "level": 0,
         "quote": null
+      },
+      "FrP": {
+        "level": 2,
+        "quote": "Øke bruken av velferdsteknologi"
       }
     }
   },
@@ -308,6 +408,10 @@
       "R": {
         "level": 0,
         "quote": null
+      },
+      "FrP": {
+        "level": 2,
+        "quote": "Øke skattefradraget for gaver til frivillige, samfunnsnyttige og humanitære organisasjoner."
       }
     }
   },
@@ -318,6 +422,10 @@
     "description": "Styrke de spesielle rettsjelpstiltakene",
     "partyStances": {
       "R": {
+        "level": 0,
+        "quote": null
+      },
+      "FrP": {
         "level": 0,
         "quote": null
       }
@@ -332,6 +440,10 @@
       "R": {
         "level": 1,
         "quote": "Sikre asylsøkere fri rettshjelp, rettssikker asylsaksbehandling og en reell klagemulighet."
+      },
+      "FrP": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -344,6 +456,10 @@
       "R": {
         "level": 0,
         "quote": null
+      },
+      "FrP": {
+        "level": 2,
+        "quote": "Gjeninnføre gaveforsterkningsordningen og øke skattefradraget for private givere for å gjøre det mer attraktivt å tiltrekke seg privat kapital."
       }
     }
   },
@@ -354,6 +470,10 @@
     "description": "Satsing på pakkeforløp hjem for kreftpasienter",
     "partyStances": {
       "R": {
+        "level": 0,
+        "quote": null
+      },
+      "FrP": {
         "level": 0,
         "quote": null
       }
@@ -368,6 +488,10 @@
       "R": {
         "level": 0,
         "quote": null
+      },
+      "FrP": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -378,6 +502,10 @@
     "description": "Spesialisering innen palliasjon",
     "partyStances": {
       "R": {
+        "level": 0,
+        "quote": null
+      },
+      "FrP": {
         "level": 0,
         "quote": null
       }
@@ -392,6 +520,10 @@
       "R": {
         "level": 0,
         "quote": null
+      },
+      "FrP": {
+        "level": 2,
+        "quote": "Bekjempe underernæring og få flere kjøkken tilbake på sykehjem"
       }
     }
   },
@@ -404,6 +536,10 @@
       "R": {
         "level": 0,
         "quote": null
+      },
+      "FrP": {
+        "level": 1,
+        "quote": "Det er behov for å forenkle pasientrettigheter og styrke tilbudet om behandlingsreiser til utlandet."
       }
     }
   },
@@ -416,6 +552,10 @@
       "R": {
         "level": 2,
         "quote": "Sikre at sosialhjelpsmottakere kan motta gaver fra venner, slektninger og frivillige organisasjoner uten å være redde for avkortning."
+      },
+      "FrP": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -428,6 +568,10 @@
       "R": {
         "level": 1,
         "quote": "Sikre pasienter mulighet til kvalifisert pasienttransport, særlig i distrikt med lang vei til sykehus."
+      },
+      "FrP": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -438,6 +582,10 @@
     "description": "Kreftpasienters mulighet for erstatning etter pasientskader",
     "partyStances": {
       "R": {
+        "level": 0,
+        "quote": null
+      },
+      "FrP": {
         "level": 0,
         "quote": null
       }
@@ -452,6 +600,10 @@
       "R": {
         "level": 2,
         "quote": "At det skal tas hensyn til helhetlige behov når familier hvor flere er kronisk syke, søker om helse- og omsorgstjenester ....og..... Forbedre regelverket for pårørendes permisjonsmuligheter i arbeidslivet for å sikre likestilling og bedre mulighetene til å kombinere arbeid og omsorg."
+      },
+      "FrP": {
+        "level": 2,
+        "quote": "At pårørende til alvorlig syke skal ha rett til tidsbegrenset pleiepenger når de pleier sine nærmeste."
       }
     }
   },
@@ -462,6 +614,10 @@
     "description": "Studenter må få tilgang til arbeidsavklaringspenger",
     "partyStances": {
       "R": {
+        "level": 0,
+        "quote": null
+      },
+      "FrP": {
         "level": 0,
         "quote": null
       }
@@ -476,6 +632,10 @@
       "R": {
         "level": 0,
         "quote": null
+      },
+      "FrP": {
+        "level": 2,
+        "quote": "Styrke medisinsk forskning, sikre rask tilgang til nye legemidler og metoder, og holde egenandeler på et moderat nivå."
       }
     }
   },
@@ -488,6 +648,10 @@
       "R": {
         "level": 0,
         "quote": null
+      },
+      "FrP": {
+        "level": 2,
+        "quote": "For å redusere ventetider ønsker Fremskrittspartiet en utrednings- og behandlingsgarant på 30 dager etter dato for henvisning fra primærhelsetjenesten."
       }
     }
   },
@@ -500,6 +664,10 @@
       "R": {
         "level": 2,
         "quote": "At Systemet for innføring av nye medisiner/legemidler endres slik at saksbehandlingstiden går ned, og faglige og samfunnsmessige kriterier blir førende, for å gjøre flere medisiner tilgjengelige."
+      },
+      "FrP": {
+        "level": 2,
+        "quote": "Sikre rask tilgang til nye og effektive legemidler, godkjenne medisiner fra Sverige og Danmark uten unødvendig forsinkelse og fjerne særnorske krav."
       }
     }
   },
@@ -510,6 +678,10 @@
     "description": "Satsing på norsk helseberedskap",
     "partyStances": {
       "R": {
+        "level": 0,
+        "quote": null
+      },
+      "FrP": {
         "level": 0,
         "quote": null
       }
@@ -524,6 +696,10 @@
       "R": {
         "level": 0,
         "quote": null
+      },
+      "FrP": {
+        "level": 2,
+        "quote": "Etablere en nasjonal sykehusplan for inverstinger i nye sykehusbygg"
       }
     }
   },
@@ -534,6 +710,10 @@
     "description": "Langtidsplan for helsetjenesten",
     "partyStances": {
       "R": {
+        "level": 0,
+        "quote": null
+      },
+      "FrP": {
         "level": 0,
         "quote": null
       }
