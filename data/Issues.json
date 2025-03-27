@@ -1,0 +1,542 @@
+[
+  {
+    "id": 1,
+    "area": "Arbeidsliv",
+    "name": "Fleksibel sykepengeordning",
+    "description": "Fleksibel sykepengeordning for kreftpasienter",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 2,
+    "area": "Arbeidsliv",
+    "name": "Styrking av kompetansen i NAV",
+    "description": "Styrking av kompetansen i NAV",
+    "partyStances": {
+      "R": {
+        "level": 2,
+        "quote": "a) Gi de ansatte i førstelinjen i NAV tid og tillit til å gjøre jobben sin. b) Stoppe nedleggelsen av NAV-kontorer og omgjøre NAV til en institusjon som gir gode og nære tjenester til dem som trenger det. Tilbakeføre vedtaksmyndighet til Navs lokalkontorer."
+      }
+    }
+  },
+  {
+    "id": 3,
+    "area": "Arbeidsliv",
+    "name": "Økt bruk av tiltak som Individuell jobbstøtte (IPS) og Arbeid med støtte (AMS)",
+    "description": "Økt bruk av tiltak som Individuell jobbstøtte (IPS) og Arbeid med støtte (AMS)",
+    "partyStances": {
+      "R": {
+        "level": 1,
+        "quote": "At retten til arbeid må gjøres reell. Arbeidslivet må åpnes opp for flere, med ulike grader av funksjonsevner"
+      }
+    }
+  },
+  {
+    "id": 4,
+    "area": "Arbeidsliv",
+    "name": "Økt bruk av lønnstilskudd",
+    "description": "Økt bruk av lønnstilskudd",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 5,
+    "area": "Arbeidsliv",
+    "name": "Styrke og øke bruken av arbeidsrettet rehabilitering",
+    "description": "Styrke og øke bruken av arbeidsrettet rehabilitering",
+    "partyStances": {
+      "R": {
+        "level": 1,
+        "quote": "Bygge ut og styrke habilitering- og rehabiliteringsinstitusjoner, slik at kronisk syke personer utsatt for ulykker og personer med sammensatte diagnoser ikke blir kasteballer mellom sykehus og kommunale helse- og omsorgstjenester."
+      }
+    }
+  },
+  {
+    "id": 6,
+    "area": "Diagnostikk og tidlig oppdagelse",
+    "name": "Utvide mammorgrafiprogrammet",
+    "description": "Utvide mammorgrafiprogrammet",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 7,
+    "area": "Diagnostikk og tidlig oppdagelse",
+    "name": "Gentest til flere tidligere i forløpet",
+    "description": "Gentest til flere tidligere i forløpet",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 8,
+    "area": "Diagnostikk og tidlig oppdagelse",
+    "name": "Pilot på prostatakreftscreening",
+    "description": "Pilot på prostatakreftscreening",
+    "partyStances": {
+      "R": {
+        "level": 2,
+        "quote": "Innføre et pilotprosjekt for å prøve ut et nasjonalt screeningprogram for prostatakreft."
+      }
+    }
+  },
+  {
+    "id": 9,
+    "area": "Diagnostikk og tidlig oppdagelse",
+    "name": "Innføre lungekreftscreening",
+    "description": "Innføre lungekreftscreening",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 10,
+    "area": "Folkehelse og forebygging",
+    "name": "Nasjonalt tilbud om røykeslutt og forslag om skattlegging av tobakksnæringen",
+    "description": "Nasjonalt tilbud om røykeslutt og forslag om skattlegging av tobakksnæringen",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 11,
+    "area": "Folkehelse og forebygging",
+    "name": "Høyere tobakksavgifter",
+    "description": "Høyere tobakksavgifter",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 12,
+    "area": "Folkehelse og forebygging",
+    "name": "Restriktiv alkoholpolitikk",
+    "description": "Restriktiv alkoholpolitikk",
+    "partyStances": {
+      "R": {
+        "level": 2,
+        "quote": "Føre en restriktiv tobakks- og alkoholpolitikk."
+      }
+    }
+  },
+  {
+    "id": 13,
+    "area": "Folkehelse og forebygging",
+    "name": "Merke alkohol med informasjon om de helsekonsekvensene alkoholkonsum medfører",
+    "description": "Merke alkohol med informasjon om de helsekonsekvensene alkoholkonsum medfører",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 14,
+    "area": "Folkehelse og forebygging",
+    "name": "Strengere regulering av solarium",
+    "description": "Strengere regulering av solarium",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 15,
+    "area": "Folkehelse og forebygging",
+    "name": "Stanse endringer i tobakksskadeloven (innføring av EUs tobakksdirektiv) som vil tillate salg av e-sigaretter",
+    "description": "Stanse endringer i tobakksskadeloven (innføring av EUs tobakksdirektiv) som vil tillate salg av e-sigaretter",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 16,
+    "area": "Folkehelse og forebygging",
+    "name": "Avvikle taxfree-ordningen for alkohol, tobakks- og nikotinprodukter",
+    "description": "Avvikle taxfree-ordningen for alkohol, tobakks- og nikotinprodukter",
+    "partyStances": {
+      "R": {
+        "level": 2,
+        "quote": "Avvikle taxfree-ordningen. Fram til dette skjer, bør Vinmonopolet overta driften."
+      }
+    }
+  },
+  {
+    "id": 17,
+    "area": "Folkehelse og forebygging",
+    "name": "Utrydde livmorhalskreft og HPV-relatert kreft",
+    "description": "Utrydde livmorhalskreft og HPV-relatert kreft",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 18,
+    "area": "Folkehelse og forebygging",
+    "name": "Forbud mot markedsføring for usunn mat og drikke",
+    "description": "Forbud mot markedsføring for usunn mat og drikke",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 19,
+    "area": "Folkehelse og forebygging",
+    "name": "Sunn skatteveksling",
+    "description": "Sunn skatteveksling",
+    "partyStances": {
+      "R": {
+        "level": 2,
+        "quote": "Bruke avgiftspolitikken for å stimulere til sunne og miljøvennlige valg."
+      }
+    }
+  },
+  {
+    "id": 20,
+    "area": "Forskning og innovasjon",
+    "name": "Opprettelse av en helsekatapult",
+    "description": "Opprettelse av en helsekatapult",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 21,
+    "area": "Forskning og innovasjon",
+    "name": "Økt bruk av helsedata for å forbedre behandling og utvikle helsenæring",
+    "description": "Økt bruk av helsedata for å forbedre behandling og utvikle helsenæring",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 22,
+    "area": "Forskning og innovasjon",
+    "name": "Økt satsing på helsenæring",
+    "description": "Økt satsing på helsenæring",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 23,
+    "area": "Forskning og innovasjon",
+    "name": "Politikk for å begrense antibiotikaresistens",
+    "description": "Politikk for å begrense antibiotikaresistens",
+    "partyStances": {
+      "R": {
+        "level": 2,
+        "quote": "At Norge jobber for å styrke utviklingen av vaksiner og diagnostiske verktøy som kan forebygge antibiotikaresistens."
+      }
+    }
+  },
+  {
+    "id": 24,
+    "area": "Forskning og innovasjon",
+    "name": "Få opp nasjonal infrastruktur for legemiddelproduksjon",
+    "description": "Få opp nasjonal infrastruktur for legemiddelproduksjon",
+    "partyStances": {
+      "R": {
+        "level": 2,
+        "quote": "Utvikle produksjon av nødvendige legemidler i Norge, og jobbe for endringer i legemiddelindustrien slik at det ikke blir mangel på nødvendige legemidler."
+      }
+    }
+  },
+  {
+    "id": 25,
+    "area": "Forskning og innovasjon",
+    "name": "Økt bruk av digital hjemmeoppfølging",
+    "description": "Økt bruk av digital hjemmeoppfølging",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 26,
+    "area": "Frivillig sektor",
+    "name": "Økt skattefradrag på gaver",
+    "description": "Økt skattefradrag på gaver",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 27,
+    "area": "Frivillig sektor",
+    "name": "Styrke de spesielle rettsjelpstiltakene",
+    "description": "Styrke de spesielle rettsjelpstiltakene",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 28,
+    "area": "Frivillig sektor",
+    "name": "Utvide saksområdet for fri rettshjelp",
+    "description": "Utvide saksområdet for fri rettshjelp",
+    "partyStances": {
+      "R": {
+        "level": 1,
+        "quote": "Sikre asylsøkere fri rettshjelp, rettssikker asylsaksbehandling og en reell klagemulighet."
+      }
+    }
+  },
+  {
+    "id": 29,
+    "area": "Frivillig sektor",
+    "name": "Gjeninnføre gaveforsterkningsordning",
+    "description": "Gjeninnføre gaveforsterkningsordning",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 30,
+    "area": "Kreftomsorg",
+    "name": "Satsing på pakkeforløp hjem for kreftpasienter",
+    "description": "Satsing på pakkeforløp hjem for kreftpasienter",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 31,
+    "area": "Kreftomsorg",
+    "name": "Kreftkoordinator i alle kommuner",
+    "description": "Kreftkoordinator i alle kommuner",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 32,
+    "area": "Kreftomsorg",
+    "name": "Spesialisering innen palliasjon",
+    "description": "Spesialisering innen palliasjon",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 33,
+    "area": "Kreftomsorg",
+    "name": "Ernæringsstrategi i alle sykehus",
+    "description": "Ernæringsstrategi i alle sykehus",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 34,
+    "area": "Rettigheter",
+    "name": "Totalrevisjon av pasient- og brukerrettighetsloven",
+    "description": "Totalrevisjon av pasient- og brukerrettighetsloven",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 35,
+    "area": "Rettigheter",
+    "name": "Avkortning av sosialhjelp ved økonomisk støtte",
+    "description": "Avkortning av sosialhjelp ved økonomisk støtte",
+    "partyStances": {
+      "R": {
+        "level": 2,
+        "quote": "Sikre at sosialhjelpsmottakere kan motta gaver fra venner, slektninger og frivillige organisasjoner uten å være redde for avkortning."
+      }
+    }
+  },
+  {
+    "id": 36,
+    "area": "Rettigheter",
+    "name": "En gjennomgang og bedring av ordningen for pasientreiser",
+    "description": "En gjennomgang og bedring av ordningen for pasientreiser",
+    "partyStances": {
+      "R": {
+        "level": 1,
+        "quote": "Sikre pasienter mulighet til kvalifisert pasienttransport, særlig i distrikt med lang vei til sykehus."
+      }
+    }
+  },
+  {
+    "id": 37,
+    "area": "Rettigheter",
+    "name": "Kreftpasienters mulighet for erstatning etter pasientskader",
+    "description": "Kreftpasienters mulighet for erstatning etter pasientskader",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 38,
+    "area": "Rettigheter",
+    "name": "Omsorgspenger for pårørende",
+    "description": "Omsorgspenger for pårørende",
+    "partyStances": {
+      "R": {
+        "level": 2,
+        "quote": "At det skal tas hensyn til helhetlige behov når familier hvor flere er kronisk syke, søker om helse- og omsorgstjenester ....og..... Forbedre regelverket for pårørendes permisjonsmuligheter i arbeidslivet for å sikre likestilling og bedre mulighetene til å kombinere arbeid og omsorg."
+      }
+    }
+  },
+  {
+    "id": 39,
+    "area": "Rettigheter",
+    "name": "Studenter må få tilgang til arbeidsavklaringspenger",
+    "description": "Studenter må få tilgang til arbeidsavklaringspenger",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 40,
+    "area": "Tilgang til behandling",
+    "name": "Satsing på flere kliniske studier",
+    "description": "Satsing på flere kliniske studier",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 41,
+    "area": "Tilgang til behandling",
+    "name": "Kortere ventetider på helsehjelp",
+    "description": "Kortere ventetider på helsehjelp",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 42,
+    "area": "Tilgang til behandling",
+    "name": "Raskere tilgang til nye behandlinger og medisiner",
+    "description": "Raskere tilgang til nye behandlinger og medisiner",
+    "partyStances": {
+      "R": {
+        "level": 2,
+        "quote": "At Systemet for innføring av nye medisiner/legemidler endres slik at saksbehandlingstiden går ned, og faglige og samfunnsmessige kriterier blir førende, for å gjøre flere medisiner tilgjengelige."
+      }
+    }
+  },
+  {
+    "id": 43,
+    "area": "Tilgang til behandling",
+    "name": "Satsing på norsk helseberedskap",
+    "description": "Satsing på norsk helseberedskap",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 44,
+    "area": "Økt investeringer i helse",
+    "name": "Øke investeringer innenfor helse",
+    "description": "Øke investeringer innenfor helse",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 45,
+    "area": "Økt investeringer i helse",
+    "name": "Langtidsplan for helsetjenesten",
+    "description": "Langtidsplan for helsetjenesten",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  }
+]
