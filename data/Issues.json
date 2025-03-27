@@ -24,6 +24,10 @@
       "KrF": {
         "level": 1,
         "quote": "Følge opp Sysselsettingsutvalgets anbefalinger om en omlegging av sykepengeordningen, slik at arbeidsgiverne motiveres til å få langtidssykmeldte tilbake til arbeid og arbeidstakerne kan bruke gradert sykmelding."
+      },
+      "A": {
+        "level": 1,
+        "quote": "Bedre sykefraværsoppfølgingen, blant annet gjennom økt etterlevelse av pliktene i regelverket for både arbeidsgiver og arbeidstaker, sykemelder og NAV, og gjøre dialogen lettere med nye digitale løsninger"
       }
     }
   },
@@ -52,6 +56,10 @@
       "KrF": {
         "level": 0,
         "quote": null
+      },
+      "A": {
+        "level": 2,
+        "quote": "At NAV skal hjelpe flere inn i arbeid. Derfor må NAV styrkes med nye verktøy. De ansatte i NAV må gis mer fleksibilitet, slik at de kan tilpasse virkemiddelbruken til den enkelte."
       }
     }
   },
@@ -80,6 +88,10 @@
       "KrF": {
         "level": 0,
         "quote": null
+      },
+      "A": {
+        "level": 1,
+        "quote": "Hjelpe dem som står utenfor arbeidslivet også når ledigheten er lav. Virkemidlene til NAV har bedre effekt i perioder der etterspørselen etter arbeidskraft er høy."
       }
     }
   },
@@ -108,6 +120,10 @@
       "KrF": {
         "level": 2,
         "quote": "Ha økt bruk av lønnstilskudd og arbeidstrening for å gi flere muligheten til å delta i arbeidslivet."
+      },
+      "A": {
+        "level": 2,
+        "quote": "Utvide ordningen med varig lønnstilskudd til flere utsatte grupper."
       }
     }
   },
@@ -136,6 +152,10 @@
       "KrF": {
         "level": 1,
         "quote": "Ha et bedre samarbeid mellom helsetjenestene og arbeidsmarkedstiltakene, slik at flere får riktig tilrettelegging til tiltak som arbeid og utdanning, som er viktig for å mestre livet."
+      },
+      "A": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -164,6 +184,10 @@
       "KrF": {
         "level": 0,
         "quote": null
+      },
+      "A": {
+        "level": 2,
+        "quote": "Utvide mammografibilddet i tråd med EUs nye retningslinjer."
       }
     }
   },
@@ -192,6 +216,10 @@
       "KrF": {
         "level": 0,
         "quote": "opprettholde forbudet mot gentesting av barns arveanlegg, og sikre alle retten til å ikke vite om arvelige egenskaper og sykdom"
+      },
+      "A": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -218,6 +246,10 @@
         "quote": "Utrede et nasjonalt screeningprogram for prostatakreft."
       },
       "KrF": {
+        "level": 0,
+        "quote": null
+      },
+      "A": {
         "level": 0,
         "quote": null
       }
@@ -248,6 +280,10 @@
       "KrF": {
         "level": 0,
         "quote": null
+      },
+      "A": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -276,6 +312,10 @@
       "KrF": {
         "level": 2,
         "quote": "Tilby gratis legemidler til røykeslutt på nasjonalt nivå."
+      },
+      "A": {
+        "level": 2,
+        "quote": "Følge opp ambisjonene i folkehelsestrategien ved å finansiere et nasjonalt røykesluttprogram."
       }
     }
   },
@@ -290,7 +330,7 @@
         "quote": null
       },
       "FrP": {
-        "level": 1,
+        "level": 0,
         "quote": "Harmonisere avgiften på alkohol og tobakk med nivået i våre naboland for å unngå handelslekkasje og smugling"
       },
       "H": {
@@ -304,6 +344,10 @@
       "KrF": {
         "level": 2,
         "quote": "Øke avgiftene på alkohol til anbefalingene fra særavgiftsutvalget, og øke avgiftene på tobakk."
+      },
+      "A": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -318,7 +362,7 @@
         "quote": "Føre en restriktiv tobakks- og alkoholpolitikk."
       },
       "FrP": {
-        "level": 1,
+        "level": 0,
         "quote": "Harmonisere avgiften på alkohol og tobakk med nivået i våre naboland for å unngå handelslekkasje og smugling"
       },
       "H": {
@@ -332,6 +376,10 @@
       "KrF": {
         "level": 2,
         "quote": "Føre en restriktiv, solidarisk og trygghetsskapende alkoholpolitikk ved å styrke et bevilgnings- og kontrollsystem som begrenser tilgjengelighet, reduseren den alminnelige skjenketiden fra 03:00 til 02:00"
+      },
+      "A": {
+        "level": 2,
+        "quote": "Føre en restriktiv alkoholpolitikk og opprettholde Vinmonopolets samfunnsrolle"
       }
     }
   },
@@ -346,7 +394,7 @@
         "quote": null
       },
       "FrP": {
-        "level": 2,
+        "level": 1,
         "quote": "Vi erkjenner at bruk av tobakk og alkohol kan føre til alvorlige helseproblemer, og er tilhengere av offentlig informasjon."
       },
       "H": {
@@ -358,6 +406,10 @@
         "quote": null
       },
       "KrF": {
+        "level": 0,
+        "quote": null
+      },
+      "A": {
         "level": 0,
         "quote": null
       }
@@ -388,6 +440,10 @@
       "KrF": {
         "level": 0,
         "quote": null
+      },
+      "A": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -402,7 +458,7 @@
         "quote": null
       },
       "FrP": {
-        "level": 1,
+        "level": 0,
         "quote": "Ikke avgiftsbelegge e-sigaretter som tobakk"
       },
       "H": {
@@ -416,6 +472,10 @@
       "KrF": {
         "level": 0,
         "quote": null
+      },
+      "A": {
+        "level": 1,
+        "quote": "Beskytte barn og unge bedre mot helseskadelige produkter og tjenester, særlig nikotin, rusmidler og usunn mat og drikke."
       }
     }
   },
@@ -444,6 +504,10 @@
       "KrF": {
         "level": 2,
         "quote": "Avvikle taxfree-ordningen."
+      },
+      "A": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -472,6 +536,10 @@
       "KrF": {
         "level": 0,
         "quote": null
+      },
+      "A": {
+        "level": 2,
+        "quote": "Utrydde livmorhalskreft som sykdom i Norge."
       }
     }
   },
@@ -500,6 +568,10 @@
       "KrF": {
         "level": 0,
         "quote": null
+      },
+      "A": {
+        "level": 1,
+        "quote": "Beskytte barn og unge bedre mot helseskadelige produkter og tjenester, særlig nikotin, rusmidler og usunn mat og drikke."
       }
     }
   },
@@ -528,6 +600,10 @@
       "KrF": {
         "level": 2,
         "quote": "Ha en sunn skatteveksling, slik at sunne matvarer blir billigere og usunne dyrere."
+      },
+      "A": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -556,6 +632,10 @@
       "KrF": {
         "level": 0,
         "quote": null
+      },
+      "A": {
+        "level": 2,
+        "quote": "Opprette helsekatapult for å gjøre det enklere å gå fra ide til salg i markedet"
       }
     }
   },
@@ -584,6 +664,10 @@
       "KrF": {
         "level": 0,
         "quote": null
+      },
+      "A": {
+        "level": 2,
+        "quote": "Bruke norske helsedata til å utvikle nye tjenester, behandlinger og medisinske produkter"
       }
     }
   },
@@ -612,6 +696,10 @@
       "KrF": {
         "level": 0,
         "quote": null
+      },
+      "A": {
+        "level": 2,
+        "quote": "Fortsette å løfte helsenæring som eksportsatsing og følge opp utredningen av klyngestrukturen og sørge for at helseklyngene får rammevilkår."
       }
     }
   },
@@ -640,6 +728,10 @@
       "KrF": {
         "level": 2,
         "quote": "Sørge for at Norge tar lederskap i det internasjonale arbeidet mot antibiotikaresistens."
+      },
+      "A": {
+        "level": 2,
+        "quote": "At Norge tar lederskap i det globale arbeidet mot antibiotikaresistens"
       }
     }
   },
@@ -668,6 +760,10 @@
       "KrF": {
         "level": 2,
         "quote": "Utrede muligheter for produksjon av kritiske legemidler i Norge, eller for raskt å sette i gang slik produksjon ved krise."
+      },
+      "A": {
+        "level": 2,
+        "quote": "Styrke utviklingen og produksjonen av legemidler i Norge"
       }
     }
   },
@@ -696,6 +792,10 @@
       "KrF": {
         "level": 2,
         "quote": "Forsterke samarbeidet om digitalisering med kommunesektoren, herunder tiltak for riktig og økt bruk av velferdsteknologi"
+      },
+      "A": {
+        "level": 2,
+        "quote": "Benytte mulighetene som ny teknologi, innovasjon og digitalisering gir oss."
       }
     }
   },
@@ -724,6 +824,10 @@
       "KrF": {
         "level": 2,
         "quote": "Øke maksgrensen for skattefradrag for gaver til trossamfunn og frivillige organisasjoner til minst 100.000 kroner."
+      },
+      "A": {
+        "level": 0,
+        "quote": null
       }
     }
   },
@@ -752,512 +856,587 @@
       "KrF": {
         "level": 0,
         "quote": null
+      },
+      "A": {
+        "level": 2,
+        "quote": "Styrke de frivillige rettshjelpstilbudene"
       }
     }
   },
   {
- {
-   "id": 28,
-   "area": "Frivillig sektor",
-   "name": "Utvide saksområdet for fri rettshjelp",
-   "description": "Utvide saksområdet for fri rettshjelp",
-   "partyStances": {
-     "R": {
-       "level": 1,
-       "quote": "Sikre asylsøkere fri rettshjelp, rettssikker asylsaksbehandling og en reell klagemulighet."
-     },
-     "FrP": {
-       "level": 0,
-       "quote": null
-     },
-     "H": {
-       "level": 1,
-       "quote": "Sikre gode ordninger for fri rettshjelp."
-     },
-     "V": {
-       "level": 2,
-       "quote": "Øke inntektsgrensen for fri rettshjelp, slik at også de med lav inntekt sikres tilgang på rettspleie."
-     },
-     "KrF": {
-       "level": 2,
-       "quote": "At barn og foreldre skal ha rett til fri rettshjelp fra sak blir opprettet. Barna sin mening skal bli hørt, og barn skal ha rett til å uttale seg i saker som omhandler dem."
-     }
-   }
- },
- {
-   "id": 29,
-   "area": "Frivillig sektor",
-   "name": "Gjeninnføre gaveforsterkningsordning",
-   "description": "Gjeninnføre gaveforsterkningsordning",
-   "partyStances": {
-     "R": {
-       "level": 0,
-       "quote": null
-     },
-     "FrP": {
-       "level": 2,
-       "quote": "Gjeninnføre gaveforsterkningsordningen og øke skattefradraget for private givere for å gjøre det mer attraktivt å tiltrekke seg privat kapital."
-     },
-     "H": {
-       "level": 2,
-       "quote": "Innføre en gaveforsterkningsordning på forskningsområdet."
-     },
-     "V": {
-       "level": 2,
-       "quote": "Gjeninnføre gaveforsterkningsordningen og øke skattefradraget for private givere for å gjøre det mer attraktivt å tiltrekke seg privat kapital til kulturinstitusjoner."
-     },
-     "KrF": {
-       "level": 2,
-       "quote": "Utvikle ordninger som gjør det mer attraktivt for private å understøtte kunst- og kulturlivet, som for eksempel gaveforsterkningsordningen."
-     }
-   }
- },
- {
-   "id": 30,
-   "area": "Kreftomsorg",
-   "name": "Satsing på pakkeforløp hjem for kreftpasienter",
-   "description": "Satsing på pakkeforløp hjem for kreftpasienter",
-   "partyStances": {
-     "R": {
-       "level": 0,
-       "quote": null
-     },
-     "FrP": {
-       "level": 0,
-       "quote": null
-     },
-     "H": {
-       "level": 0,
-       "quote": null
-     },
-     "V": {
-       "level": 0,
-       "quote": null
-     },
-     "KrF": {
-       "level": 1,
-       "quote": "Styrke ettervernet for de som overlever kreft."
-     }
-   }
- },
- {
-   "id": 31,
-   "area": "Kreftomsorg",
-   "name": "Kreftkoordinator i alle kommuner",
-   "description": "Kreftkoordinator i alle kommuner",
-   "partyStances": {
-     "R": {
-       "level": 0,
-       "quote": null
-     },
-     "FrP": {
-       "level": 0,
-       "quote": null
-     },
-     "H": {
-       "level": 0,
-       "quote": null
-     },
-     "V": {
-       "level": 0,
-       "quote": null
-     },
-     "KrF": {
-       "level": 0,
-       "quote": null
-     }
-   }
- },
- {
-   "id": 32,
-   "area": "Kreftomsorg",
-   "name": "Spesialisering innen palliasjon",
-   "description": "Spesialisering innen palliasjon",
-   "partyStances": {
-     "R": {
-       "level": 0,
-       "quote": null
-     },
-     "FrP": {
-       "level": 0,
-       "quote": null
-     },
-     "H": {
-       "level": 1,
-       "quote": "Sikre god palliativ pleie og lindrende omsorg til mennesker i livets sluttfase og sikre bruk av hospicefilosofi, som handler om å skape livskvalitet i livets siste fase."
-     },
-     "V": {
-       "level": 1,
-       "quote": "Styrke palliativ behandling"
-     },
-     "KrF": {
-       "level": 1,
-       "quote": "Bygge ut og styrke tilbudet om palliativ behandling til alle som har behov for det."
-     }
-   }
- },
- {
-   "id": 33,
-   "area": "Kreftomsorg",
-   "name": "Ernæringsstrategi i alle sykehus",
-   "description": "Ernæringsstrategi i alle sykehus",
-   "partyStances": {
-     "R": {
-       "level": 0,
-       "quote": null
-     },
-     "FrP": {
-       "level": 2,
-       "quote": "Bekjempe underernæring og få flere kjøkken tilbake på sykehjem"
-     },
-     "H": {
-       "level": 1,
-       "quote": "Styrke det systematiske ernæringsarbeidet for eldre og utsatte grupper."
-     },
-     "V": {
-       "level": 0,
-       "quote": null
-     },
-     "KrF": {
-       "level": 1,
-       "quote": "Styrke det systematiske ernæringsarbeidet og sikre at mat, måltid og ernæring er en del av alt forebyggende, behandlende og rehabiliterende arbeid."
-     }
-   }
- },
- {
-   "id": 34,
-   "area": "Rettigheter",
-   "name": "Totalrevisjon av pasient- og brukerrettighetsloven",
-   "description": "Totalrevisjon av pasient- og brukerrettighetsloven",
-   "partyStances": {
-     "R": {
-       "level": 0,
-       "quote": null
-     },
-     "FrP": {
-       "level": 1,
-       "quote": "Det er behov for å forenkle pasientrettigheter og styrke tilbudet om behandlingsreiser til utlandet."
-     },
-     "H": {
-       "level": 1,
-       "quote": "Gjøre det enklere for pasienter og pårørende å forstå sine rettigheter og utøve medvirkning og innflytelse."
-     },
-     "V": {
-       "level": 0,
-       "quote": null
-     },
-     "KrF": {
-       "level": 0,
-       "quote": null
-     }
-   }
- },
- {
-   "id": 35,
-   "area": "Rettigheter",
-   "name": "Avkortning av sosialhjelp ved økonomisk støtte",
-   "description": "Avkortning av sosialhjelp ved økonomisk støtte",
-   "partyStances": {
-     "R": {
-       "level": 2,
-       "quote": "Sikre at sosialhjelpsmottakere kan motta gaver fra venner, slektninger og frivillige organisasjoner uten å være redde for avkortning."
-     },
-     "FrP": {
-       "level": 0,
-       "quote": null
-     },
-     "H": {
-       "level": 0,
-       "quote": null
-     },
-     "V": {
-       "level": 0,
-       "quote": null
-     },
-     "KrF": {
-       "level": 0,
-       "quote": null
-     }
-   }
- },
- {
-   "id": 36,
-   "area": "Rettigheter",
-   "name": "En gjennomgang og bedring av ordningen for pasientreiser",
-   "description": "En gjennomgang og bedring av ordningen for pasientreiser",
-   "partyStances": {
-     "R": {
-       "level": 1,
-       "quote": "Sikre pasienter mulighet til kvalifisert pasienttransport, særlig i distrikt med lang vei til sykehus."
-     },
-     "FrP": {
-       "level": 0,
-       "quote": null
-     },
-     "H": {
-       "level": 1,
-       "quote": "Bruke teknologiske løsninger og desentralisering av egnede helsetjenester slik at antall pasientreiser går ned og tjenestene likevel oppleves som bedre."
-     },
-     "V": {
-       "level": 0,
-       "quote": null
-     },
-     "KrF": {
-       "level": 0,
-       "quote": null
-     }
-   }
- },
- {
-   "id": 37,
-   "area": "Rettigheter",
-   "name": "Kreftpasienters mulighet for erstatning etter pasientskader",
-   "description": "Kreftpasienters mulighet for erstatning etter pasientskader",
-   "partyStances": {
-     "R": {
-       "level": 0,
-       "quote": null
-     },
-     "FrP": {
-       "level": 0,
-       "quote": null
-     },
-     "H": {
-       "level": 1,
-       "quote": "Sørge for at det jobbes systematisk for å bedre pasientsikkerheten i helsetjenesten."
-     },
-     "V": {
-       "level": 0,
-       "quote": null
-     },
-     "KrF": {
-       "level": 0,
-       "quote": null
-     }
-   }
- },
- {
-   "id": 38,
-   "area": "Rettigheter",
-   "name": "Omsorgspenger for pårørende",
-   "description": "Omsorgspenger for pårørende",
-   "partyStances": {
-     "R": {
-       "level": 2,
-       "quote": "At det skal tas hensyn til helhetlige behov når familier hvor flere er kronisk syke, søker om helse- og omsorgstjenester ....og..... Forbedre regelverket for pårørendes permisjonsmuligheter i arbeidslivet for å sikre likestilling og bedre mulighetene til å kombinere arbeid og omsorg."
-     },
-     "FrP": {
-       "level": 2,
-       "quote": "At pårørende til alvorlig syke skal ha rett til tidsbegrenset pleiepenger når de pleier sine nærmeste."
-     },
-     "H": {
-       "level": 0,
-       "quote": null
-     },
-     "V": {
-       "level": 1,
-       "quote": "Mange familier kan ha store omsorgsoppgaver som pårørende. Vi må tenke nytt og gi rom for å prøve ut nye modeller som gjør det lettere for pårørende å stå i omsorgsoppgaver for sine nærmeste over tid."
-     },
-     "KrF": {
-       "level": 2,
-       "quote": "Legge til rette for bedre ordninger med omsorgslønn og avlastningstiltak for familiemedlemmer som selv utfører omfattende omsorgstjeneste samt gjøre disse bedre kjent, og utvide pleiepengeordningen til også å gjelde eldre i livets sluttfase."
-     }
-   }
- },
- {
-   "id": 39,
-   "area": "Rettigheter",
-   "name": "Studenter må få tilgang til arbeidsavklaringspenger",
-   "description": "Studenter må få tilgang til arbeidsavklaringspenger",
-   "partyStances": {
-     "R": {
-       "level": 0,
-       "quote": null
-     },
-     "FrP": {
-       "level": 0,
-       "quote": null
-     },
-     "H": {
-       "level": 0,
-       "quote": null
-     },
-     "V": {
-       "level": 1,
-       "quote": "Gi studenter flere sosiale rettigheter og økt studiestøtte til foreldre"
-     },
-     "KrF": {
-       "level": 1,
-       "quote": "Sikre økt tilgang på skreddersydde tjenester, slik at systemet tilpasses den enkelte og ikke motsatt. Slå sammen all oppfølging/ytelser for unge under 30 år til en felles ytelse med mål om arbeid, kvalifisering og utdanning som erstatter dagpenger, arbeidsavklaringspenger, uføretrygd, tiltakspenger, sosialhjelp og kvalifiseringsprogram."
-     }
-   }
- },
- {
-   "id": 40,
-   "area": "Tilgang til behandling",
-   "name": "Satsing på flere kliniske studier",
-   "description": "Satsing på flere kliniske studier",
-   "partyStances": {
-     "R": {
-       "level": 0,
-       "quote": null
-     },
-     "FrP": {
-       "level": 2,
-       "quote": "Styrke medisinsk forskning, sikre rask tilgang til nye legemidler og metoder, og holde egenandeler på et moderat nivå."
-     },
-     "H": {
-       "level": 2,
-       "quote": "Gjennomføre flere kliniske studier i Norge."
-     },
-     "V": {
-       "level": 2,
-       "quote": "Kliniske studier er avgjørende for utvikling av nye medisiner, behandlinger og medisinsk teknologi."
-     },
-     "KrF": {
-       "level": 0,
-       "quote": null
-     }
-   }
- },
- {
-   "id": 41,
-   "area": "Tilgang til behandling",
-   "name": "Kortere ventetider på helsehjelp",
-   "description": "Kortere ventetider på helsehjelp",
-   "partyStances": {
-     "R": {
-       "level": 0,
-       "quote": null
-     },
-     "FrP": {
-       "level": 2,
-       "quote": "For å redusere ventetider ønsker Fremskrittspartiet en utrednings- og behandlingsgarant på 30 dager etter dato for henvisning fra primærhelsetjenesten."
-     },
-     "H": {
-       "level": 2,
-       "quote": "Redusere ventetidene i helsetjenesten."
-     },
-     "V": {
-       "level": 0,
-       "quote": null
-     },
-     "KrF": {
-       "level": 2,
-       "quote": "Ventetidene i spesialisthelsetjenesten må ned"
-     }
-   }
- },
- {
-   "id": 42,
-   "area": "Tilgang til behandling",
-   "name": "Raskere tilgang til nye behandlinger og medisiner",
-   "description": "Raskere tilgang til nye behandlinger og medisiner",
-   "partyStances": {
-     "R": {
-       "level": 2,
-       "quote": "At Systemet for innføring av nye medisiner/legemidler endres slik at saksbehandlingstiden går ned, og faglige og samfunnsmessige kriterier blir førende, for å gjøre flere medisiner tilgjengelige."
-     },
-     "FrP": {
-       "level": 2,
-       "quote": "Sikre rask tilgang til nye og effektive legemidler, godkjenne medisiner fra Sverige og Danmark uten unødvendig forsinkelse og fjerne særnorske krav."
-     },
-     "H": {
-       "level": 2,
-       "quote": "Sørge for at pasienter får raskere tilgang til nye medisiner. Tilgang til flere kliniske studier og tilstrekkelig tilgang til nødvendige medisiner."
-     },
-     "V": {
-       "level": 1,
-       "quote": "Endre bioteknologiloven så den i større grad gjør det mulig å ta nye behandlingsmetoder og teknologier i bruk til pasientenes beste."
-     },
-     "KrF": {
-       "level": 0,
-       "quote": null
-     }
-   }
- },
- {
-   "id": 43,
-   "area": "Tilgang til behandling",
-   "name": "Satsing på norsk helseberedskap",
-   "description": "Satsing på norsk helseberedskap",
-   "partyStances": {
-     "R": {
-       "level": 0,
-       "quote": null
-     },
-     "FrP": {
-       "level": 0,
-       "quote": null
-     },
-     "H": {
-       "level": 1,
-       "quote": "Helseberedskapen må forbedres for å verne om befolkningens liv og helse, og sørge for medisinsk behandling og pleie og omsorg til berørte personer i alle situasjoner. Avklarte ansvarsforhold, tydelige varslings- og rapporteringsrutiner og god samhandling mellom aktørene ved kriser er spesielt viktig."
-     },
-     "V": {
-       "level": 0,
-       "quote": null
-     },
-     "KrF": {
-       "level": 0,
-       "quote": null
-     }
-   }
- },
- {
-   "id": 44,
-   "area": "Økt investeringer i helse",
-   "name": "Øke investeringer innenfor helse",
-   "description": "Øke investeringer innenfor helse",
-   "partyStances": {
-     "R": {
-       "level": 0,
-       "quote": null
-     },
-     "FrP": {
-       "level": 2,
-       "quote": "Etablere en nasjonal sykehusplan for inverstinger i nye sykehusbygg"
-     },
-     "H": {
-       "level": 2,
-       "quote": "Høyre vil styrke helsevesenet ved å investere i sykehuskapasitet og teknologi."
-     },
-     "V": {
-       "level": 2,
-       "quote": "Øke den samlede ressursbruken til helse og omsorg framover."
-     },
-     "KrF": {
-       "level": 0,
-       "quote": null
-     }
-   }
- },
- {
-   "id": 45,
-   "area": "Økt investeringer i helse",
-   "name": "Langtidsplan for helsetjenesten",
-   "description": "Langtidsplan for helsetjenesten",
-   "partyStances": {
-     "R": {
-       "level": 0,
-       "quote": null
-     },
-     "FrP": {
-       "level": 0,
-       "quote": null
-     },
-     "H": {
-       "level": 0,
-       "quote": null
-     },
-     "V": {
-       "level": 0,
-       "quote": null
-     },
-     "KrF": {
-       "level": 0,
-       "quote": null
-     }
-   }
- }
+    "id": 28,
+    "area": "Frivillig sektor",
+    "name": "Utvide saksområdet for fri rettshjelp",
+    "description": "Utvide saksområdet for fri rettshjelp",
+    "partyStances": {
+      "R": {
+        "level": 1,
+        "quote": "Sikre asylsøkere fri rettshjelp, rettssikker asylsaksbehandling og en reell klagemulighet."
+      },
+      "FrP": {
+        "level": 0,
+        "quote": null
+      },
+      "H": {
+        "level": 1,
+        "quote": "Sikre gode ordninger for fri rettshjelp."
+      },
+      "V": {
+        "level": 2,
+        "quote": "Øke inntektsgrensen for fri rettshjelp, slik at også de med lav inntekt sikres tilgang på rettspleie."
+      },
+      "KrF": {
+        "level": 2,
+        "quote": "At barn og foreldre skal ha rett til fri rettshjelp fra sak blir opprettet. Barna sin mening skal bli hørt, og barn skal ha rett til å uttale seg i saker som omhandler dem."
+      },
+      "A": {
+        "level": 2,
+        "quote": "Etablere en ny rettshjelpsmodell som sikrer at flere utsatte grupper får rettshjelp, og tilby rettshjelpsveiledning til folk over hele landet i nærtjenestesentre"
+      }
+    }
+  },
+  {
+    "id": 29,
+    "area": "Frivillig sektor",
+    "name": "Gjeninnføre gaveforsterkningsordning",
+    "description": "Gjeninnføre gaveforsterkningsordning",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      },
+      "FrP": {
+        "level": 2,
+        "quote": "Gjeninnføre gaveforsterkningsordningen og øke skattefradraget for private givere for å gjøre det mer attraktivt å tiltrekke seg privat kapital."
+      },
+      "H": {
+        "level": 2,
+        "quote": "Innføre en gaveforsterkningsordning på forskningsområdet."
+      },
+      "V": {
+        "level": 2,
+        "quote": "Gjeninnføre gaveforsterkningsordningen og øke skattefradraget for private givere for å gjøre det mer attraktivt å tiltrekke seg privat kapital til kulturinstitusjoner."
+      },
+      "KrF": {
+        "level": 2,
+        "quote": "Utvikle ordninger som gjør det mer attraktivt for private å understøtte kunst- og kulturlivet, som for eksempel gaveforsterkningsordningen."
+      },
+      "A": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 30,
+    "area": "Kreftomsorg",
+    "name": "Satsing på pakkeforløp hjem for kreftpasienter",
+    "description": "Satsing på pakkeforløp hjem for kreftpasienter",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      },
+      "FrP": {
+        "level": 0,
+        "quote": null
+      },
+      "H": {
+        "level": 0,
+        "quote": null
+      },
+      "V": {
+        "level": 0,
+        "quote": null
+      },
+      "KrF": {
+        "level": 1,
+        "quote": "Styrke ettervernet for de som overlever kreft."
+      },
+      "A": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 31,
+    "area": "Kreftomsorg",
+    "name": "Kreftkoordinator i alle kommuner",
+    "description": "Kreftkoordinator i alle kommuner",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      },
+      "FrP": {
+        "level": 0,
+        "quote": null
+      },
+      "H": {
+        "level": 0,
+        "quote": null
+      },
+      "V": {
+        "level": 0,
+        "quote": null
+      },
+      "KrF": {
+        "level": 0,
+        "quote": null
+      },
+      "A": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 32,
+    "area": "Kreftomsorg",
+    "name": "Spesialisering innen palliasjon",
+    "description": "Spesialisering innen palliasjon",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      },
+      "FrP": {
+        "level": 0,
+        "quote": null
+      },
+      "H": {
+        "level": 1,
+        "quote": "Sikre god palliativ pleie og lindrende omsorg til mennesker i livets sluttfase og sikre bruk av hospicefilosofi, som handler om å skape livskvalitet i livets siste fase."
+      },
+      "V": {
+        "level": 1,
+        "quote": "Styrke palliativ behandling"
+      },
+      "KrF": {
+        "level": 1,
+        "quote": "Bygge ut og styrke tilbudet om palliativ behandling til alle som har behov for det."
+      },
+      "A": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 33,
+    "area": "Kreftomsorg",
+    "name": "Ernæringsstrategi i alle sykehus",
+    "description": "Ernæringsstrategi i alle sykehus",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      },
+      "FrP": {
+        "level": 2,
+        "quote": "Bekjempe underernæring og få flere kjøkken tilbake på sykehjem"
+      },
+      "H": {
+        "level": 1,
+        "quote": "Styrke det systematiske ernæringsarbeidet for eldre og utsatte grupper."
+      },
+      "V": {
+        "level": 0,
+        "quote": null
+      },
+      "KrF": {
+        "level": 1,
+        "quote": "Styrke det systematiske ernæringsarbeidet og sikre at mat, måltid og ernæring er en del av alt forebyggende, behandlende og rehabiliterende arbeid."
+      },
+      "A": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 34,
+    "area": "Rettigheter",
+    "name": "Totalrevisjon av pasient- og brukerrettighetsloven",
+    "description": "Totalrevisjon av pasient- og brukerrettighetsloven",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      },
+      "FrP": {
+        "level": 1,
+        "quote": "Det er behov for å forenkle pasientrettigheter og styrke tilbudet om behandlingsreiser til utlandet."
+      },
+      "H": {
+        "level": 1,
+        "quote": "Gjøre det enklere for pasienter og pårørende å forstå sine rettigheter og utøve medvirkning og innflytelse."
+      },
+      "V": {
+        "level": 0,
+        "quote": null
+      },
+      "KrF": {
+        "level": 0,
+        "quote": null
+      },
+      "A": {
+        "level": 1,
+        "quote": "Revurdere fordelingen av ansvar og oppgaver mellom primær- og spesialisthelsetjenesten for å gi pasienter et kvalitativt bedre tilbud og bedre arbeidsforhold for fagfolk. Det innebærer å utrede juridiske, organisatoriske og økonomiske virkemidler for å gi pasienter én felles helsetjeneste."
+      }
+    }
+  },
+  {
+    "id": 35,
+    "area": "Rettigheter",
+    "name": "Avkortning av sosialhjelp ved økonomisk støtte",
+    "description": "Avkortning av sosialhjelp ved økonomisk støtte",
+    "partyStances": {
+      "R": {
+        "level": 2,
+        "quote": "Sikre at sosialhjelpsmottakere kan motta gaver fra venner, slektninger og frivillige organisasjoner uten å være redde for avkortning."
+      },
+      "FrP": {
+        "level": 0,
+        "quote": null
+      },
+      "H": {
+        "level": 0,
+        "quote": null
+      },
+      "V": {
+        "level": 0,
+        "quote": null
+      },
+      "KrF": {
+        "level": 0,
+        "quote": null
+      },
+      "A": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 36,
+    "area": "Rettigheter",
+    "name": "En gjennomgang og bedring av ordningen for pasientreiser",
+    "description": "En gjennomgang og bedring av ordningen for pasientreiser",
+    "partyStances": {
+      "R": {
+        "level": 1,
+        "quote": "Sikre pasienter mulighet til kvalifisert pasienttransport, særlig i distrikt med lang vei til sykehus."
+      },
+      "FrP": {
+        "level": 0,
+        "quote": null
+      },
+      "H": {
+        "level": 1,
+        "quote": "Bruke teknologiske løsninger og desentralisering av egnede helsetjenester slik at antall pasientreiser går ned og tjenestene likevel oppleves som bedre."
+      },
+      "V": {
+        "level": 0,
+        "quote": null
+      },
+      "KrF": {
+        "level": 0,
+        "quote": null
+      },
+      "A": {
+        "level": 2,
+        "quote": "Gjennomgå ordningene til Pasientreiser for å sikre at ikke pasienter og pårørende får unødvendig lang, belastende og kostbar reisevei."
+      }
+    }
+  },
+  {
+    "id": 37,
+    "area": "Rettigheter",
+    "name": "Kreftpasienters mulighet for erstatning etter pasientskader",
+    "description": "Kreftpasienters mulighet for erstatning etter pasientskader",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      },
+      "FrP": {
+        "level": 0,
+        "quote": null
+      },
+      "H": {
+        "level": 1,
+        "quote": "Sørge for at det jobbes systematisk for å bedre pasientsikkerheten i helsetjenesten."
+      },
+      "V": {
+        "level": 0,
+        "quote": null
+      },
+      "KrF": {
+        "level": 0,
+        "quote": null
+      },
+      "A": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 38,
+    "area": "Rettigheter",
+    "name": "Omsorgspenger for pårørende",
+    "description": "Omsorgspenger for pårørende",
+    "partyStances": {
+      "R": {
+        "level": 2,
+        "quote": "At det skal tas hensyn til helhetlige behov når familier hvor flere er kronisk syke, søker om helse- og omsorgstjenester ....og..... Forbedre regelverket for pårørendes permisjonsmuligheter i arbeidslivet for å sikre likestilling og bedre mulighetene til å kombinere arbeid og omsorg."
+      },
+      "FrP": {
+        "level": 2,
+        "quote": "At pårørende til alvorlig syke skal ha rett til tidsbegrenset pleiepenger når de pleier sine nærmeste."
+      },
+      "H": {
+        "level": 0,
+        "quote": null
+      },
+      "V": {
+        "level": 1,
+        "quote": "Mange familier kan ha store omsorgsoppgaver som pårørende. Vi må tenke nytt og gi rom for å prøve ut nye modeller som gjør det lettere for pårørende å stå i omsorgsoppgaver for sine nærmeste over tid."
+      },
+      "KrF": {
+        "level": 2,
+        "quote": "Legge til rette for bedre ordninger med omsorgslønn og avlastningstiltak for familiemedlemmer som selv utfører omfattende omsorgstjeneste samt gjøre disse bedre kjent, og utvide pleiepengeordningen til også å gjelde eldre i livets sluttfase."
+      },
+      "A": {
+        "level": 1,
+        "quote": "Arbeiderpartiet vil gjøre hverdagen som pårørende bedre ved å øke bruken av pårørendeavtaler, mer avlastning, mer opplæring og bedre støtte for de pårørende. Innføre en prøveordning med korttidspermisjon for pårørende, etter modell for omsorgspenger for barn under 12 år."
+      }
+    }
+  },
+  {
+    "id": 39,
+    "area": "Rettigheter",
+    "name": "Studenter må få tilgang til arbeidsavklaringspenger",
+    "description": "Studenter må få tilgang til arbeidsavklaringspenger",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      },
+      "FrP": {
+        "level": 0,
+        "quote": null
+      },
+      "H": {
+        "level": 0,
+        "quote": null
+      },
+      "V": {
+        "level": 1,
+        "quote": "Gi studenter flere sosiale rettigheter og økt studiestøtte til foreldre"
+      },
+      "KrF": {
+        "level": 1,
+        "quote": "Sikre økt tilgang på skreddersydde tjenester, slik at systemet tilpasses den enkelte og ikke motsatt. Slå sammen all oppfølging/ytelser for unge under 30 år til en felles ytelse med mål om arbeid, kvalifisering og utdanning som erstatter dagpenger, arbeidsavklaringspenger, uføretrygd, tiltakspenger, sosialhjelp og kvalifiseringsprogram."
+      },
+      "A": {
+        "level": 2,
+        "quote": "Sikre gode sammarbeids- og samordningsløsninger mellom helsetjenestene, utdanningsektoren, og NAV, for å støtte mennesker som står utenfor jobb og utdanning tilbake i meningsfull aktivitet."
+      }
+    }
+  },
+  {
+    "id": 40,
+    "area": "Tilgang til behandling",
+    "name": "Satsing på flere kliniske studier",
+    "description": "Satsing på flere kliniske studier",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      },
+      "FrP": {
+        "level": 2,
+        "quote": "Styrke medisinsk forskning, sikre rask tilgang til nye legemidler og metoder, og holde egenandeler på et moderat nivå."
+      },
+      "H": {
+        "level": 2,
+        "quote": "Gjennomføre flere kliniske studier i Norge."
+      },
+      "V": {
+        "level": 2,
+        "quote": "Kliniske studier er avgjørende for utvikling av nye medisiner, behandlinger og medisinsk teknologi."
+      },
+      "KrF": {
+        "level": 0,
+        "quote": null
+      },
+      "A": {
+        "level": 2,
+        "quote": "Legge til rette for at flere pasienter får delta i kliniske studier i hele landet"
+      }
+    }
+  },
+  {
+    "id": 41,
+    "area": "Tilgang til behandling",
+    "name": "Kortere ventetider på helsehjelp",
+    "description": "Kortere ventetider på helsehjelp",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      },
+      "FrP": {
+        "level": 2,
+        "quote": "For å redusere ventetider ønsker Fremskrittspartiet en utrednings- og behandlingsgarant på 30 dager etter dato for henvisning fra primærhelsetjenesten."
+      },
+      "H": {
+        "level": 2,
+        "quote": "Redusere ventetidene i helsetjenesten."
+      },
+      "V": {
+        "level": 0,
+        "quote": null
+      },
+      "KrF": {
+        "level": 2,
+        "quote": "Ventetidene i spesialisthelsetjenesten må ned"
+      },
+      "A": {
+        "level": 2,
+        "quote": "Sikre korte ventetider i vår felles helsetjeneste."
+      }
+    }
+  },
+  {
+    "id": 42,
+    "area": "Tilgang til behandling",
+    "name": "Raskere tilgang til nye behandlinger og medisiner",
+    "description": "Raskere tilgang til nye behandlinger og medisiner",
+    "partyStances": {
+      "R": {
+        "level": 2,
+        "quote": "At Systemet for innføring av nye medisiner/legemidler endres slik at saksbehandlingstiden går ned, og faglige og samfunnsmessige kriterier blir førende, for å gjøre flere medisiner tilgjengelige."
+      },
+      "FrP": {
+        "level": 2,
+        "quote": "Sikre rask tilgang til nye og effektive legemidler, godkjenne medisiner fra Sverige og Danmark uten unødvendig forsinkelse og fjerne særnorske krav."
+      },
+      "H": {
+        "level": 2,
+        "quote": "Sørge for at pasienter får raskere tilgang til nye medisiner. Tilgang til flere kliniske studier og tilstrekkelig tilgang til nødvendige medisiner."
+      },
+      "V": {
+        "level": 1,
+        "quote": "Endre bioteknologiloven så den i større grad gjør det mulig å ta nye behandlingsmetoder og teknologier i bruk til pasientenes beste."
+      },
+      "KrF": {
+        "level": 0,
+        "quote": null
+      },
+      "A": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  },
+  {
+    "id": 43,
+    "area": "Tilgang til behandling",
+    "name": "Satsing på norsk helseberedskap",
+    "description": "Satsing på norsk helseberedskap",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      },
+      "FrP": {
+        "level": 0,
+        "quote": null
+      },
+      "H": {
+        "level": 1,
+        "quote": "Helseberedskapen må forbedres for å verne om befolkningens liv og helse, og sørge for medisinsk behandling og pleie og omsorg til berørte personer i alle situasjoner. Avklarte ansvarsforhold, tydelige varslings- og rapporteringsrutiner og god samhandling mellom aktørene ved kriser er spesielt viktig."
+      },
+      "V": {
+        "level": 0,
+        "quote": null
+      },
+      "KrF": {
+        "level": 0,
+        "quote": null
+      },
+      "A": {
+        "level": 2,
+        "quote": "Sikre fullverdig norsk deltakelse i EU-samarbeidet om helseberedskap"
+      }
+    }
+  },
+  {
+    "id": 44,
+    "area": "Økt investeringer i helse",
+    "name": "Øke investeringer innenfor helse",
+    "description": "Øke investeringer innenfor helse",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      },
+      "FrP": {
+        "level": 2,
+        "quote": "Etablere en nasjonal sykehusplan for inverstinger i nye sykehusbygg"
+      },
+      "H": {
+        "level": 2,
+        "quote": "Høyre vil styrke helsevesenet ved å investere i sykehuskapasitet og teknologi."
+      },
+      "V": {
+        "level": 2,
+        "quote": "Øke den samlede ressursbruken til helse og omsorg framover."
+      },
+      "KrF": {
+        "level": 0,
+        "quote": null
+      },
+      "A": {
+        "level": 2,
+        "quote": "Øke andel av BNP som går til helse for å sikre investeringer som bidrar til effektiv ressursbruk."
+      }
+    }
+  },
+  {
+    "id": 45,
+    "area": "Økt investeringer i helse",
+    "name": "Langtidsplan for helsetjenesten",
+    "description": "Langtidsplan for helsetjenesten",
+    "partyStances": {
+      "R": {
+        "level": 0,
+        "quote": null
+      },
+      "FrP": {
+        "level": 0,
+        "quote": null
+      },
+      "H": {
+        "level": 0,
+        "quote": null
+      },
+      "V": {
+        "level": 0,
+        "quote": null
+      },
+      "KrF": {
+        "level": 0,
+        "quote": null
+      },
+      "A": {
+        "level": 0,
+        "quote": null
+      }
+    }
+  }
 ]
