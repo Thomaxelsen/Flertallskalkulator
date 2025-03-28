@@ -18,7 +18,7 @@ const parties = [
     { name: "Venstre", shorthand: "V", seats: 8, position: 7, color: "#00807b", classPrefix: "v" },
     { name: "Høyre", shorthand: "H", seats: 36, position: 8, color: "#007ac8", classPrefix: "h" },
     { name: "Fremskrittspartiet", shorthand: "FrP", seats: 21, position: 9, color: "#002e5e", classPrefix: "frp" },
-    { name: "Pasientfokus", shorthand: "PF", seats: 1, position: 10, color: "#a04d94", classPrefix: "pf" }
+
 ];
 
 // Global variabel for å holde data
