@@ -279,11 +279,11 @@ function generateMatrix(areaFilter, viewMode) {
             const scoreRatio = totalPoints / maxPossiblePoints;
             
             if (scoreRatio >= 0.6) { // Høy enighet (60%+ av maksimum)
-                sumCell.style.backgroundColor = 'rgba(40, 167, 69, 0.2)'; // Grønn
+                sumCell.style.backgroundColor = 'rgba(0, 168, 163, 0.2)'; // Grønn
             } else if (scoreRatio >= 0.3) { // Middels enighet (30-60% av maksimum)
-                sumCell.style.backgroundColor = 'rgba(255, 193, 7, 0.2)'; // Gul
+                sumCell.style.backgroundColor = 'rgba(255, 190, 44, 0.2)'; // Gul
             } else { // Lav enighet (mindre enn 30% av maksimum)
-                sumCell.style.backgroundColor = 'rgba(220, 53, 69, 0.2)'; // Rød
+                sumCell.style.backgroundColor = 'rgba(230, 60, 140, 0.2)'; // Rosa
             }
             
             row.appendChild(sumCell);
@@ -300,6 +300,9 @@ function generateMatrix(areaFilter, viewMode) {
         tooltip.className = 'matrix-tooltip';
         document.body.appendChild(tooltip);
     }
+    
+    // Oppdater cellestiler for avrundede hjørner
+    setTimeout(updateCellStyles, 100);
 }
 
 // Funksjon for å vise tooltip med detaljer
@@ -335,7 +338,7 @@ function showTooltip(element, issue, partyCode, level) {
     // Bygg tooltip-innhold
     let tooltipContent = `
         <h3>${issue.name}</h3>
-        <p><strong style="color: ${partyColor}">${partyName}</strong> er <strong class="${levelClass}" style="padding: 2px 6px; border-radius: 4px;">${levelText}</strong> med Kreftforeningen i denne saken.</p>
+        <p><strong style="color: ${partyColor}">${partyName}</strong> er <strong class="${levelClass}" style="padding: 2px 6px; border-radius: 12px;">${levelText}</strong> med Kreftforeningen i denne saken.</p>
     `;
     
     // Legg til sitat hvis det finnes
@@ -362,9 +365,6 @@ function showTooltip(element, issue, partyCode, level) {
     tooltip.style.top = top + 'px';
     tooltip.style.display = 'block';
     
-    // Legg til animation class
-    tooltip.classList.add('fade-in');
-    
     // Legg til event listener for å lukke tooltip
     document.addEventListener('click', closeTooltip);
 }
@@ -376,4 +376,21 @@ function closeTooltip(event) {
         tooltip.style.display = 'none';
     }
     document.removeEventListener('click', closeTooltip);
+}
+
+// Funksjon for å oppdatere cellestyling til avrundede hjørner
+function updateCellStyles() {
+    // Finn alle celler og gi dem avrundede hjørner
+    const cells = document.querySelectorAll('.cell');
+    cells.forEach(cell => {
+        cell.style.borderRadius = '20px';
+        cell.style.margin = '2px';
+    });
+    
+    // Også oppdater tooltip level-indikatorene
+    const levelIndicators = document.querySelectorAll('.matrix-tooltip .level-0, .matrix-tooltip .level-1, .matrix-tooltip .level-2');
+    levelIndicators.forEach(indicator => {
+        indicator.style.borderRadius = '12px';
+        indicator.style.display = 'inline-block';
+    });
 }
