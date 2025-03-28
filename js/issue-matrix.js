@@ -193,24 +193,27 @@ function generateMatrix(areaFilter, viewMode) {
     issueHeader.style.minWidth = "300px";
     headerRow.appendChild(issueHeader);
     
-    // Legg til kolonner for hvert parti - gjør dem mer subtile
-    parties.forEach(party => {
-        const partyHeader = document.createElement('th');
-        partyHeader.className = 'party-col';
-        partyHeader.textContent = party.shorthand;
-        partyHeader.title = party.name;
-        
-        // Bruk mykere farge for partioverskriftene (70% opasitet)
-        const rgbColor = hexToRgb(party.color);
-        partyHeader.style.backgroundColor = `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, 0.7)`;
-        
-        partyHeader.style.color = '#fff';
-        partyHeader.style.padding = "15px";
-        partyHeader.style.textAlign = "center";
-        partyHeader.style.minWidth = "80px"; // Økt bredde
-        partyHeader.style.maxWidth = "80px"; // Fast maksbredde
-        headerRow.appendChild(partyHeader);
-    });
+    // Legg til kolonner for hvert parti - gjør dem mer subtile og avrundede
+parties.forEach(party => {
+    const partyHeader = document.createElement('th');
+    partyHeader.className = 'party-col';
+    partyHeader.textContent = party.shorthand;
+    partyHeader.title = party.name;
+    
+    // Bruk mykere farge og mer opasitet for å matche flertallskalkulatoren
+    const rgbColor = hexToRgb(party.color);
+    partyHeader.style.backgroundColor = `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, 0.6)`;
+    
+    // Gjør hjørnene mer avrundet
+    partyHeader.style.borderRadius = "12px";
+    partyHeader.style.margin = "0 2px";
+    partyHeader.style.color = '#fff';
+    partyHeader.style.padding = "15px";
+    partyHeader.style.textAlign = "center";
+    partyHeader.style.minWidth = "80px";
+    partyHeader.style.maxWidth = "80px";
+    headerRow.appendChild(partyHeader);
+});
     
     // Legg til SUM-kolonne
     const sumHeader = document.createElement('th');
