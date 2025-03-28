@@ -1,100 +1,528 @@
-/* Oppdaterte CSS-stiler for issue-matrix.css */
+// issue-matrix.js - Håndterer visualisering av saksmatrisen
 
-/* Grunnleggende tabell-styling */
-.matrix-table {
-    border-collapse: collapse;
-    width: 100%;
-    min-width: 800px;
-    font-size: 0.95rem;
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM lastet i issue-matrix.js");
+    
+    // Laster inn data direkte
+    loadMatrixData();
+});
+
+// Party data
+const parties = [
+    { name: "Rødt", shorthand: "R", seats: 8, position: 1, color: "#da291c", classPrefix: "r" },
+    { name: "Sosialistisk Venstreparti", shorthand: "SV", seats: 13, position: 2, color: "#eb2e2d", classPrefix: "sv" },
+    { name: "Arbeiderpartiet", shorthand: "AP", seats: 48, position: 3, color: "#ed1b34", classPrefix: "ap" },
+    { name: "Senterpartiet", shorthand: "SP", seats: 28, position: 4, color: "#14773c", classPrefix: "sp" },
+    { name: "Miljøpartiet De Grønne", shorthand: "MDG", seats: 3, position: 5, color: "#439539", classPrefix: "mdg" },
+    { name: "Kristelig Folkeparti", shorthand: "KrF", seats: 3, position: 6, color: "#ffbe00", classPrefix: "krf" },
+    { name: "Venstre", shorthand: "V", seats: 8, position: 7, color: "#00807b", classPrefix: "v" },
+    { name: "Høyre", shorthand: "H", seats: 36, position: 8, color: "#007ac8", classPrefix: "h" },
+    { name: "Fremskrittspartiet", shorthand: "FrP", seats: 21, position: 9, color: "#002e5e", classPrefix: "frp" }
+];
+
+// Farger for enighetsgrad som matcher partiboksene
+const agreementColors = {
+    0: {
+        background: "rgba(230, 60, 140, 0.15)",
+        color: "#e63c8c",
+        border: "#e63c8c"
+    },
+    1: {
+        background: "rgba(255, 190, 44, 0.15)",
+        color: "#ffbe2c",
+        border: "#ffbe2c"
+    },
+    2: {
+        background: "rgba(0, 168, 163, 0.15)",
+        color: "#00a8a3",
+        border: "#00a8a3"
+    }
+};
+
+// Global variabel for å holde data
+let matrixIssues = [];
+
+// Last data direkte fra issues.json
+function loadMatrixData() {
+    console.log("Laster matrixdata direkte fra issues.json");
+    document.querySelector('.matrix-loader').textContent = 'Laster inn data...';
+    
+    fetch('data/issues.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok: ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Data lastet fra issues.json:", data.length, "saker");
+            matrixIssues = data;
+            initializeMatrix();
+        })
+        .catch(error => {
+            console.error("Feil ved henting av data:", error);
+            document.querySelector('.matrix-loader').textContent = 
+                'Kunne ikke laste data: ' + error.message + '. Vennligst oppdater siden.';
+        });
 }
 
-.matrix-table th, 
-.matrix-table td {
-    border: 1px solid #ddd;
-    padding: 12px;
-    text-align: center;
+// Hovedfunksjon for å initalisere matrisen
+function initializeMatrix() {
+    console.log("Initialiserer matrix med", matrixIssues.length, "saker");
+    
+    // Sjekk at dataene faktisk er lastet
+    if (!matrixIssues || matrixIssues.length === 0) {
+        console.error("Ingen issues-data funnet!");
+        document.querySelector('.matrix-loader').textContent = 'Ingen data funnet. Vennligst oppdater siden.';
+        return;
+    }
+    
+    // Debugg: Sjekk strukturen til issues-dataene
+    console.log("First issue:", matrixIssues[0]);
+    if (matrixIssues[0].partyStances) {
+        console.log("partyStances for første issue:", matrixIssues[0].partyStances);
+        // Sjekk flere partistanser for å se om de inneholder level-verdier
+        for (const partyCode in matrixIssues[0].partyStances) {
+            console.log(`Parti: ${partyCode}, level: ${matrixIssues[0].partyStances[partyCode].level}`);
+        }
+    }
+    
+    // Fjern lasteindikatoren
+    document.querySelector('.matrix-loader').style.display = 'none';
+    
+    // Hent unike områder
+    const areas = getUniqueAreas();
+    populateAreaFilter(areas);
+    
+    // Generer matrisen
+    generateMatrix('all', 'heatmap');
+    
+    // Sett opp event listeners
+    setupFilterListeners();
 }
 
-.matrix-table th {
-    background-color: #f8f8f8;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    font-weight: 600;
+// Hent unike saksområder fra issues-arrayet
+function getUniqueAreas() {
+    const areas = matrixIssues.map(issue => issue.area);
+    return [...new Set(areas)];
 }
 
-.matrix-table th.issue-col {
-    text-align: left;
-    min-width: 250px;
-    max-width: 400px;
-    background-color: #f0f0f0;
-    position: sticky;
-    left: 0;
-    z-index: 11;
+// Fyll area-filter med unike saksområder
+function populateAreaFilter(areas) {
+    const areaFilter = document.getElementById('area-filter');
+    
+    areas.forEach(area => {
+        const option = document.createElement('option');
+        option.value = area;
+        option.textContent = area;
+        areaFilter.appendChild(option);
+    });
 }
 
-/* Styling for områdeoverskrifter - forbedret synlighet */
-.matrix-table .area-header {
-    background-color: #003087; /* Kreftforeningens blå */
-    height: 50px; /* Garantert høyde */
-    position: relative; /* For å posisjonere teksten */
-    border-top: 2px solid #fff; /* Hvit linje mellom områdene */
-    border-bottom: 2px solid #fff;
+// Sett opp lyttere for filtrering
+function setupFilterListeners() {
+    const areaFilter = document.getElementById('area-filter');
+    const viewMode = document.getElementById('view-mode');
+    
+    areaFilter.addEventListener('change', function() {
+        generateMatrix(this.value, viewMode.value);
+    });
+    
+    viewMode.addEventListener('change', function() {
+        generateMatrix(areaFilter.value, this.value);
+    });
 }
 
-.matrix-table .area-header td {
-    color: white !important;
-    font-weight: 600;
-    text-align: center;
-    font-size: 1.2rem;
-    vertical-align: middle;
-    padding: 15px;
-    position: relative;
-    z-index: 5; /* Over bakgrunnen */
-    text-shadow: 0 0 2px rgba(0,0,0,0.5); /* Tekstskygge for bedre lesbarhet */
+// Generer matrisen basert på filtrering
+function generateMatrix(areaFilter, viewMode) {
+    console.log("Genererer matrise med", matrixIssues.length, "saker, filter:", areaFilter, "visning:", viewMode);
+    
+    const matrixContainer = document.getElementById('matrix-visualization');
+    matrixContainer.innerHTML = '';
+    
+    // Opprett container for matrisen
+    const matrixWrapper = document.createElement('div');
+    matrixWrapper.className = 'matrix-container';
+    matrixWrapper.style.overflowX = 'auto';
+    matrixContainer.appendChild(matrixWrapper);
+    
+    // Filtrer saker basert på valgt område
+    let filteredIssues = matrixIssues;
+    if (areaFilter !== 'all') {
+        filteredIssues = matrixIssues.filter(issue => issue.area === areaFilter);
+    }
+    
+    console.log("Filtrerte saker:", filteredIssues.length);
+    
+    // Sorter saker etter område og deretter etter navn
+    filteredIssues.sort((a, b) => {
+        if (a.area !== b.area) return a.area.localeCompare(b.area);
+        return a.name.localeCompare(b.name);
+    });
+    
+    // Lag tabellen
+    const table = document.createElement('table');
+    table.className = 'matrix-table';
+    table.style.borderCollapse = "separate";
+    table.style.borderSpacing = "0px";
+    table.style.width = "100%";
+    
+    // Lag tabellhodet med parti-kolonner
+    const thead = document.createElement('thead');
+    thead.style.position = "sticky";
+    thead.style.top = "0";
+    thead.style.zIndex = "10";
+    thead.style.backgroundColor = "white";
+    
+    const headerRow = document.createElement('tr');
+    
+    // Første kolonne for saknavn
+    const issueHeader = document.createElement('th');
+    issueHeader.className = 'issue-col';
+    issueHeader.textContent = 'Sak';
+    issueHeader.style.textAlign = "left";
+    issueHeader.style.padding = "10px";
+    issueHeader.style.position = "sticky";
+    issueHeader.style.left = "0";
+    issueHeader.style.backgroundColor = "white";
+    issueHeader.style.zIndex = "11";
+    issueHeader.style.minWidth = "300px";
+    headerRow.appendChild(issueHeader);
+    
+    // Legg til kolonner for hvert parti
+    parties.forEach(party => {
+        const partyHeader = document.createElement('th');
+        partyHeader.className = 'party-col';
+        partyHeader.textContent = party.shorthand;
+        partyHeader.title = party.name;
+        partyHeader.style.backgroundColor = party.color;
+        partyHeader.style.color = '#fff';
+        partyHeader.style.padding = "10px";
+        partyHeader.style.textAlign = "center";
+        partyHeader.style.minWidth = "40px";
+        partyHeader.style.maxWidth = "60px";
+        headerRow.appendChild(partyHeader);
+    });
+    
+    // Legg til SUM-kolonne
+    const sumHeader = document.createElement('th');
+    sumHeader.className = 'party-col';
+    sumHeader.textContent = 'SUM';
+    sumHeader.title = 'Sum av poeng fra alle partier';
+    sumHeader.style.padding = "10px";
+    sumHeader.style.textAlign = "center";
+    sumHeader.style.backgroundColor = "#f5f5f5";
+    headerRow.appendChild(sumHeader);
+    
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+    
+    // Lag tabellkroppen
+    const tbody = document.createElement('tbody');
+    
+    // Gruppe issues etter område - bruk samme sortering som i excelark
+    const areaOrder = [
+        "Arbeidsliv",
+        "Diagnostikk og tidlig oppdagelse",
+        "Folkehelse og forebygging",
+        "Forskning og innovasjon",
+        "Frivillig sektor",
+        "Kreftomsorg",
+        "Rettigheter",
+        "Tilgang til behandling",
+        "Økt investeringer i helse"
+    ];
+    
+    // Gruppe issues etter område
+    const issuesByArea = {};
+    filteredIssues.forEach(issue => {
+        if (!issuesByArea[issue.area]) {
+            issuesByArea[issue.area] = [];
+        }
+        issuesByArea[issue.area].push(issue);
+    });
+    
+    // Gå gjennom områdene i riktig rekkefølge
+    areaOrder.forEach(area => {
+        // Hopp over hvis det ikke er noen saker i dette området eller hvis filtrert
+        if (!issuesByArea[area] || issuesByArea[area].length === 0) return;
+        
+        // Lag områdeoverskrift - forbedret for bedre synlighet
+        const areaRow = document.createElement('tr');
+        areaRow.className = 'area-header';
+        areaRow.style.backgroundColor = "#003087";
+        
+        const areaCell = document.createElement('td');
+        areaCell.colSpan = parties.length + 2; // +2 for issue-col og SUM
+        areaCell.textContent = area;
+        areaCell.style.backgroundColor = "#003087";
+        areaCell.style.color = "white";
+        areaCell.style.fontWeight = "bold";
+        areaCell.style.padding = "12px";
+        areaCell.style.textAlign = "center";
+        areaCell.style.fontSize = "1.2rem";
+        
+        // Legg til ekstra attributter for styling og tilgjengelighet
+        areaCell.setAttribute('role', 'heading');
+        areaCell.setAttribute('aria-level', '2');
+        
+        areaRow.appendChild(areaCell);
+        tbody.appendChild(areaRow);
+        
+        // Gå gjennom hver sak i dette området
+        issuesByArea[area].forEach(issue => {
+            const row = document.createElement('tr');
+            row.style.height = "50px"; // Fast høyde for å holde radene konsistente
+            
+            // Annenhver rad styling
+            if (tbody.children.length % 2 === 0) {
+                row.style.backgroundColor = "#f8f9fa";
+            }
+            
+            // Celle for saknavn
+            const issueCell = document.createElement('td');
+            issueCell.className = 'issue-col';
+            issueCell.textContent = issue.name;
+            issueCell.title = issue.name;
+            issueCell.style.textAlign = "left";
+            issueCell.style.padding = "10px 15px";
+            issueCell.style.position = "sticky";
+            issueCell.style.left = "0";
+            issueCell.style.backgroundColor = row.style.backgroundColor || "white";
+            issueCell.style.borderBottom = "1px solid #f0f0f0";
+            row.appendChild(issueCell);
+            
+            // Hold styr på total poengsum for alle partier i denne saken
+            let totalPoints = 0;
+            
+            // Lag en celle for hvert parti
+            parties.forEach(party => {
+                const cellContainer = document.createElement('td');
+                cellContainer.style.textAlign = "center";
+                cellContainer.style.verticalAlign = "middle";
+                cellContainer.style.borderBottom = "1px solid #f0f0f0";
+                cellContainer.style.padding = "6px";
+                
+                // Hent enighetsgrad hvis den finnes
+                let agreementLevel = 0;
+                if (issue.partyStances && issue.partyStances[party.shorthand]) {
+                    agreementLevel = issue.partyStances[party.shorthand].level;
+                }
+                
+                // Opprett oval boks
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                
+                // Sett fargeklasse basert på enighetsgrad
+                const colors = agreementColors[agreementLevel];
+                
+                // Sett styling for oval boks
+                cell.style.backgroundColor = colors.background;
+                cell.style.color = colors.color;
+                cell.style.border = `1px solid ${colors.border}`;
+                cell.style.borderRadius = "20px";
+                cell.style.padding = "5px 0";
+                cell.style.minWidth = "35px"; // Gjør bredere for tall
+                cell.style.height = "25px";
+                cell.style.lineHeight = "25px";
+                cell.style.display = "inline-block";
+                cell.style.fontWeight = "bold";
+                cell.style.fontSize = "0.9rem";
+                cell.style.cursor = "pointer";
+                cell.style.textAlign = "center";
+                
+                // Sett innholdet basert på visningsmodus
+                if (viewMode === 'numbers' || viewMode === 'heatmap') {
+                    cell.textContent = agreementLevel;
+                }
+                
+                // Legg til tooltip-data
+                cell.dataset.party = party.shorthand;
+                cell.dataset.issue = issue.id;
+                cell.dataset.level = agreementLevel;
+                
+                // Event listener for å vise tooltip
+                cell.addEventListener('click', function() {
+                    showTooltip(this, issue, party.shorthand, agreementLevel);
+                });
+                
+                cellContainer.appendChild(cell);
+                row.appendChild(cellContainer);
+                
+                // Legg til poengene fra dette partiet til totalen
+                totalPoints += agreementLevel;
+            });
+            
+            // Legg til SUM-celle med oval styling
+            const sumCellContainer = document.createElement('td');
+            sumCellContainer.style.textAlign = "center";
+            sumCellContainer.style.verticalAlign = "middle";
+            sumCellContainer.style.borderBottom = "1px solid #f0f0f0";
+            sumCellContainer.style.backgroundColor = "#f5f5f5";
+            
+            const sumCell = document.createElement('div');
+            sumCell.textContent = totalPoints;
+            sumCell.style.fontWeight = 'bold';
+            sumCell.style.borderRadius = '20px';
+            sumCell.style.display = 'inline-block';
+            sumCell.style.padding = '5px 0';
+            sumCell.style.minWidth = '35px';
+            sumCell.style.height = '25px';
+            sumCell.style.lineHeight = '25px';
+            sumCell.style.textAlign = 'center';
+            
+            // Fargekode basert på total poengsum (maksimum mulig er parties.length * 2)
+            const maxPossiblePoints = parties.length * 2;
+            const scoreRatio = totalPoints / maxPossiblePoints;
+            
+            if (scoreRatio >= 0.6) { // Høy enighet (60%+ av maksimum)
+                sumCell.style.backgroundColor = 'rgba(0, 168, 163, 0.15)';
+                sumCell.style.color = '#00a8a3';
+                sumCell.style.border = '1px solid #00a8a3';
+            } else if (scoreRatio >= 0.3) { // Middels enighet (30-60% av maksimum)
+                sumCell.style.backgroundColor = 'rgba(255, 190, 44, 0.15)';
+                sumCell.style.color = '#ffbe2c';
+                sumCell.style.border = '1px solid #ffbe2c';
+            } else { // Lav enighet (mindre enn 30% av maksimum)
+                sumCell.style.backgroundColor = 'rgba(230, 60, 140, 0.15)';
+                sumCell.style.color = '#e63c8c';
+                sumCell.style.border = '1px solid #e63c8c';
+            }
+            
+            sumCellContainer.appendChild(sumCell);
+            row.appendChild(sumCellContainer);
+            tbody.appendChild(row);
+        });
+    });
+    
+    table.appendChild(tbody);
+    matrixWrapper.appendChild(table);
+    
+    // Lag tooltip-container hvis den ikke finnes
+    if (!document.querySelector('.matrix-tooltip')) {
+        const tooltip = document.createElement('div');
+        tooltip.className = 'matrix-tooltip';
+        tooltip.style.display = 'none';
+        tooltip.style.position = 'absolute';
+        tooltip.style.zIndex = '1000';
+        tooltip.style.backgroundColor = 'white';
+        tooltip.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
+        tooltip.style.borderRadius = '12px';
+        tooltip.style.padding = '20px';
+        tooltip.style.maxWidth = '350px';
+        document.body.appendChild(tooltip);
+    }
+    
+    // Oppdater legend for å matche celle-stilen
+    updateLegendStyles();
 }
 
-/* Hover-effekt for områdeoverskrifter */
-.matrix-table .area-header:hover {
-    background-color: #002266; /* Mørkere blå ved hover */
+// Funksjon for å oppdatere legendens stiler
+function updateLegendStyles() {
+    const legendItems = document.querySelectorAll('.legend-item');
+    
+    legendItems.forEach(item => {
+        // Finn level fra klassen til .legend-color innenfor dette elementet
+        const colorElement = item.querySelector('.legend-color');
+        if (!colorElement) return;
+        
+        const level = colorElement.classList.contains('level-0') ? 0 : 
+                     colorElement.classList.contains('level-1') ? 1 : 2;
+        
+        const colors = agreementColors[level];
+        
+        // Stil legendeelementet
+        item.style.borderRadius = '20px';
+        item.style.padding = '5px 15px';
+        item.style.backgroundColor = colors.background;
+        item.style.border = `1px solid ${colors.border}`;
+        item.style.color = colors.color;
+        
+        // Stil fargeelementet
+        colorElement.style.display = 'inline-block';
+        colorElement.style.width = '20px';
+        colorElement.style.height = '20px';
+        colorElement.style.borderRadius = '10px';
+        colorElement.style.marginRight = '8px';
+        colorElement.style.backgroundColor = colors.background;
+        colorElement.style.border = `1px solid ${colors.border}`;
+        
+        // Stil tekstelementet
+        const textElement = item.querySelector('.legend-text');
+        if (textElement) {
+            textElement.style.color = colors.color;
+            textElement.style.fontWeight = 'bold';
+        }
+    });
 }
 
-/* Stilsett for cellene */
-.matrix-table .cell {
-    width: 60px;
-    height: 40px;
-    transition: transform 0.2s;
-    cursor: pointer;
+// Funksjon for å vise tooltip med detaljer
+function showTooltip(element, issue, partyCode, level) {
+    const tooltip = document.querySelector('.matrix-tooltip');
+    const rect = element.getBoundingClientRect();
+    
+    // Finn partinavn og farge
+    const party = parties.find(p => p.shorthand === partyCode);
+    const partyName = party ? party.name : partyCode;
+    const partyColor = party ? party.color : '#333';
+    
+    // Finn eventuelt sitat
+    let quote = '';
+    if (issue.partyStances && issue.partyStances[partyCode] && issue.partyStances[partyCode].quote) {
+        quote = issue.partyStances[partyCode].quote;
+    }
+    
+    // Sett enighetsgrad-tekst
+    let levelText = '';
+    let colors = agreementColors[level];
+    
+    if (level === 2) {
+        levelText = 'Helt enig';
+    } else if (level === 1) {
+        levelText = 'Delvis enig';
+    } else {
+        levelText = 'Ikke enig / ingen standpunkt';
+    }
+    
+    // Bygg tooltip-innhold
+    let tooltipContent = `
+        <h3 style="margin-top: 0; color: #003087; border-bottom: 1px solid #eee; padding-bottom: 10px;">${issue.name}</h3>
+        <p><strong style="color: ${partyColor}">${partyName}</strong> er <strong style="display: inline-block; padding: 3px 10px; border-radius: 15px; background-color: ${colors.background}; color: ${colors.color}; border: 1px solid ${colors.border};">${levelText}</strong> med Kreftforeningen i denne saken.</p>
+    `;
+    
+    // Legg til sitat hvis det finnes
+    if (quote) {
+        tooltipContent += `<div style="background-color: #f9f9f9; padding: 12px; margin-top: 15px; border-left: 3px solid #6e2b62; border-radius: 8px; font-style: italic;">"${quote}"</div>`;
+    } else {
+        tooltipContent += `<p style="font-style: italic; color: #777;">Ingen utdypende informasjon tilgjengelig.</p>`;
+    }
+    
+    tooltip.innerHTML = tooltipContent;
+    
+    // Posisjonere tooltip
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const tooltipHeight = 200; // Estimert høyde
+    
+    let top = rect.top + scrollTop - tooltipHeight - 20;
+    
+    // Hvis tooltip går over toppen av vinduet, vis den under elementet i stedet
+    if (top < scrollTop) {
+        top = rect.bottom + scrollTop + 10;
+    }
+    
+    tooltip.style.left = (rect.left + rect.width / 2 - 175) + 'px'; // Sentrert
+    tooltip.style.top = top + 'px';
+    tooltip.style.display = 'block';
+    
+    // Legg til event listener for å lukke tooltip
+    document.addEventListener('click', closeTooltip);
 }
 
-.matrix-table .cell:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    z-index: 20;
-    position: relative;
-}
-
-/* Fargekoding for enighetsgrad */
-.matrix-table .level-2 {
-    background-color: rgba(40, 167, 69, 0.7);
-    color: white;
-}
-
-.matrix-table .level-1 {
-    background-color: rgba(255, 193, 7, 0.7);
-    color: #333;
-}
-
-.matrix-table .level-0 {
-    background-color: rgba(220, 53, 69, 0.7);
-    color: white;
-}
-
-/* Sikre synlighet ved hover */
-.matrix-table tr:hover {
-    background-color: rgba(240, 244, 250, 0.8);
-}
-
-.matrix-table .area-header:hover td {
-    color: white !important;
+// Funksjon for å lukke tooltip
+function closeTooltip(event) {
+    const tooltip = document.querySelector('.matrix-tooltip');
+    if (tooltip) {
+        tooltip.style.display = 'none';
+    }
+    document.removeEventListener('click', closeTooltip);
 }
