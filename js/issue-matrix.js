@@ -173,6 +173,19 @@ function generateMatrix(areaFilter, viewMode) {
     // Lag tabellkroppen
     const tbody = document.createElement('tbody');
     
+    // Gruppe issues etter område - bruk samme sortering som i excelark
+    const areaOrder = [
+        "Arbeidsliv",
+        "Diagnostikk og tidlig oppdagelse",
+        "Folkehelse og forebygging",
+        "Forskning og innovasjon",
+        "Frivillig sektor",
+        "Kreftomsorg",
+        "Rettigheter",
+        "Tilgang til behandling",
+        "Økt investeringer i helse"
+    ];
+    
     // Gruppe issues etter område
     const issuesByArea = {};
     filteredIssues.forEach(issue => {
@@ -182,15 +195,21 @@ function generateMatrix(areaFilter, viewMode) {
         issuesByArea[issue.area].push(issue);
     });
     
-    // Gå gjennom hvert område og lag egne seksjoner
-    Object.keys(issuesByArea).sort().forEach(area => {
+    // Gå gjennom områdene i riktig rekkefølge
+    areaOrder.forEach(area => {
+        // Hopp over hvis det ikke er noen saker i dette området eller hvis filtrert
+        if (!issuesByArea[area]) return;
+        
         // Lag områdeoverskrift
         const areaRow = document.createElement('tr');
         areaRow.className = 'area-header';
+        
+        // Opprett cellen som egen TD og legg den til i TR
         const areaCell = document.createElement('td');
         areaCell.colSpan = parties.length + 2; // +2 for issue-col og SUM
         areaCell.textContent = area;
         areaRow.appendChild(areaCell);
+        
         tbody.appendChild(areaRow);
         
         // Gå gjennom hver sak i dette området
