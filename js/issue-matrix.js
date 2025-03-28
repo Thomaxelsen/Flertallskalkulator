@@ -1,11 +1,26 @@
 // issue-matrix.js - Håndterer visualisering av saksmatrisen
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Lytt etter issues-data
+    console.log("DOM lastet i issue-matrix.js");
+    
+    // Sjekk om issues-data er lastet
     if (window.issues && window.issues.length > 0) {
-        initializeMatrix(); // Issues allerede lastet
+        console.log("Issues allerede lastet, starter initialisering");
+        initializeMatrix();
     } else {
-        document.addEventListener('issuesDataLoaded', initializeMatrix);
+        console.log("Venter på issues-data...");
+        document.addEventListener('issuesDataLoaded', function() {
+            console.log("Mottok issuesDataLoaded event, starter initialisering");
+            initializeMatrix();
+        });
+        
+        // Ekstra sikkerhet: prøv igjen etter litt tid hvis events ikke fungerer
+        setTimeout(function() {
+            if (window.issues && window.issues.length > 0 && !document.querySelector('.matrix-table')) {
+                console.log("Timeout: Issues data finnes, men matrise ikke generert. Starter initialisering.");
+                initializeMatrix();
+            }
+        }, 1000);
     }
 });
 
@@ -25,6 +40,30 @@ const parties = [
 
 // Hovedfunksjon for å initalisere matrisen
 function initializeMatrix() {
+    console.log("Initialiserer matrix med", window.issues ? window.issues.length : 0, "saker");
+    
+    // Sjekk at dataene faktisk er lastet
+    if (!window.issues || window.issues.length === 0) {
+        console.error("Ingen issues-data funnet!");
+        document.querySelector('.matrix-loader').textContent = 'Kunne ikke laste data. Vennligst oppdater siden.';
+        
+        // Forsøk å laste data direkte som en siste utvei
+        if (typeof loadIssuesData === 'function') {
+            console.log("Forsøker å laste issues data direkte");
+            loadIssuesData();
+            
+            // Prøv igjen om litt
+            setTimeout(initializeMatrix, 1000);
+        }
+        return;
+    }
+    
+    // Debugg: Sjekk strukturen til issues-dataene
+    console.log("First issue:", window.issues[0]);
+    if (window.issues[0].partyStances) {
+        console.log("partyStances for første issue:", window.issues[0].partyStances);
+    }
+    
     // Fjern lasteindikatoren
     document.querySelector('.matrix-loader').style.display = 'none';
     
@@ -73,6 +112,8 @@ function setupFilterListeners() {
 
 // Generer matrisen basert på filtrering
 function generateMatrix(areaFilter, viewMode) {
+    console.log("Genererer matrise med", window.issues.length, "saker, filter:", areaFilter, "visning:", viewMode);
+    
     const matrixContainer = document.getElementById('matrix-visualization');
     matrixContainer.innerHTML = '';
     
@@ -81,6 +122,8 @@ function generateMatrix(areaFilter, viewMode) {
     if (areaFilter !== 'all') {
         filteredIssues = window.issues.filter(issue => issue.area === areaFilter);
     }
+    
+    console.log("Filtrerte saker:", filteredIssues.length);
     
     // Sorter saker etter område og deretter etter navn
     filteredIssues.sort((a, b) => {
@@ -160,6 +203,9 @@ function generateMatrix(areaFilter, viewMode) {
             // Hold styr på antall partier som er helt enige
             let totalAgreement = 0;
             
+            // Debug
+            console.log(`Behandler sak [${issue.id}] ${issue.name}, partyStances:`, issue.partyStances ? 'exists' : 'missing');
+            
             // Lag en celle for hvert parti
             parties.forEach(party => {
                 const cell = document.createElement('td');
@@ -169,6 +215,7 @@ function generateMatrix(areaFilter, viewMode) {
                 let agreementLevel = 0;
                 if (issue.partyStances && issue.partyStances[party.shorthand]) {
                     agreementLevel = issue.partyStances[party.shorthand].level;
+                    console.log(`Sak ${issue.id}, parti ${party.shorthand}, enighet: ${agreementLevel}`);
                 }
                 
                 // Sett celleinnhold basert på visningsmodus
@@ -285,9 +332,9 @@ function showTooltip(element, issue, partyCode, level) {
 
 // Funksjon for å lukke tooltip
 function closeTooltip(event) {
-    const tooltip = document.querySelector('.matrix-tooltip');
-    if (tooltip) {
-        tooltip.style.display = 'none';
-    }
-    document.removeEventListener('click', closeTooltip);
+   const tooltip = document.querySelector('.matrix-tooltip');
+   if (tooltip) {
+       tooltip.style.display = 'none';
+   }
+   document.removeEventListener('click', closeTooltip);
 }
