@@ -1,32 +1,30 @@
-/* Oppdaterte CSS-stiler for issue-matrix.css med avrundede former og dusere farger */
+/* Oppdaterte CSS-stiler for issue-matrix.css med eksakt samme stil som partiboksene */
 
 /* Container for hele matrisen */
 .matrix-container {
-    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-    border-radius: 16px;
-    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    border-radius: 12px;
+    overflow: auto;
     background: white;
     margin: 20px 0;
-    padding: 10px;
+    padding: 5px;
 }
 
 /* Grunnleggende tabell-styling */
 .matrix-table {
     border-collapse: separate;
-    border-spacing: 0;
+    border-spacing: 5px;
     width: 100%;
     min-width: 800px;
     font-size: 0.95rem;
-    box-shadow: 0 0 15px rgba(0,0,0,0.03);
-    overflow: hidden;
 }
 
 .matrix-table th, 
 .matrix-table td {
-    border: 1px solid rgba(0,0,0,0.03);
-    padding: 14px;
+    padding: 8px;
     text-align: center;
     position: relative;
+    border: none;
 }
 
 .matrix-table th {
@@ -35,7 +33,6 @@
     top: 0;
     z-index: 10;
     font-weight: 600;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
 .matrix-table th.issue-col {
@@ -46,13 +43,12 @@
     position: sticky;
     left: 0;
     z-index: 11;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.03);
 }
 
-/* Styling for områdeoverskrifter - blå banner med avrundede hjørner */
+/* Styling for områdeoverskrifter */
 .matrix-table .area-header {
     background: #003087;
-    height: 54px;
+    height: 50px;
     position: relative;
     border: none;
 }
@@ -66,67 +62,51 @@
     padding: 15px;
     position: relative;
     z-index: 5;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
     border: none;
 }
 
-/* Hover-effekt for områdeoverskrifter */
-.matrix-table .area-header:hover {
-    background: #002870;
-    transition: background 0.3s ease;
-}
-
-/* Stilsett for cellene med avrundede hjørner */
+/* Stilsett for cellene som eksakt matcher partiboksene */
 .matrix-table .cell {
-    width: 60px;
-    height: 42px;
-    transition: all 0.3s;
+    min-width: 40px;
+    height: 28px;
+    transition: all 0.2s;
     cursor: pointer;
-    border-radius: 20px;
-    margin: 2px;
+    border-radius: 25px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid;
 }
 
 .matrix-table .cell:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    z-index: 20;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
 }
 
-/* Fargekoding for enighetsgrad med dusere farger inspirert av flertallskalkulatoren */
+/* Fargekoding for enighetsgrad - matcher nøyaktig partiboksene */
 .matrix-table .level-2 {
-    background-color: rgba(0, 168, 163, 0.7); /* Dusere grønn */
-    color: white;
-    border-radius: 20px;
+    background-color: rgba(0, 168, 163, 0.15);
+    color: #00a8a3;
+    border-color: #00a8a3;
 }
 
 .matrix-table .level-1 {
-    background-color: rgba(255, 190, 44, 0.7); /* Dusere gul */
-    color: #333;
-    border-radius: 20px;
+    background-color: rgba(255, 190, 44, 0.15);
+    color: #ffbe2c;
+    border-color: #ffbe2c;
 }
 
 .matrix-table .level-0 {
-    background-color: rgba(230, 60, 140, 0.7); /* Dusere rosa */
-    color: white;
-    border-radius: 20px;
+    background-color: rgba(230, 60, 140, 0.15);
+    color: #e63c8c;
+    border-color: #e63c8c;
 }
 
 /* Sikre synlighet ved hover */
 .matrix-table tr:hover {
     background-color: rgba(240, 244, 250, 0.9);
-}
-
-.matrix-table tr:hover .cell:not(:hover) {
-    opacity: 0.95;
-}
-
-.matrix-table .area-header:hover td {
-    color: white !important;
-}
-
-/* Styling for radene */
-.matrix-table tr:nth-child(even):not(.area-header) {
-    background-color: rgba(0,0,0,0.01);
 }
 
 /* Styling for issue-navn */
@@ -138,16 +118,15 @@
 /* SUM kolonne styling */
 .matrix-table td:last-child {
     font-weight: bold;
-    background-color: rgba(0,48,135,0.04);
 }
 
-/* Tooltip styling med avrundede hjørner */
+/* Tooltip styling */
 .matrix-tooltip {
     display: none;
     position: absolute;
     width: 350px;
     background: white;
-    border-radius: 20px;
+    border-radius: 12px;
     box-shadow: 0 8px 25px rgba(0,0,0,0.1);
     padding: 20px;
     z-index: 1000;
@@ -177,7 +156,7 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Filter styling med avrundede hjørner */
+/* Filter styling */
 .matrix-filters {
     display: flex;
     flex-wrap: wrap;
@@ -185,7 +164,7 @@
     margin: 20px 0;
     background: white;
     padding: 20px;
-    border-radius: 20px;
+    border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
@@ -204,10 +183,9 @@
 .filter-group select {
     width: 100%;
     padding: 12px;
-    border-radius: 20px;
+    border-radius: 25px;
     border: 1px solid #ddd;
     background-color: white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     transition: all 0.2s;
 }
 
@@ -223,7 +201,7 @@
     color: #666;
 }
 
-/* Legend styling med avrundede former */
+/* Legend styling som matcher nøyaktig partiboksene */
 .legend-container {
     display: flex;
     flex-wrap: wrap;
@@ -232,7 +210,7 @@
     margin: 25px 0;
     padding: 20px;
     background: white;
-    border-radius: 20px;
+    border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
@@ -240,59 +218,40 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 10px 15px;
-    background-color: #f9f9f9;
+    padding: 8px 15px;
     border-radius: 25px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     transition: transform 0.2s ease;
 }
 
-.legend-item:hover {
-    transform: translateY(-2px);
-}
-
-.legend-color {
-    width: 25px;
-    height: 25px;
-    border-radius: 25px;
-}
-
 .legend-color.level-2 {
-    background-color: rgba(0, 168, 163, 0.7); /* Dusere grønn */
+    background-color: rgba(0, 168, 163, 0.15);
+    border: 1px solid #00a8a3;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
 }
 
 .legend-color.level-1 {
-    background-color: rgba(255, 190, 44, 0.7); /* Dusere gul */
+    background-color: rgba(255, 190, 44, 0.15);
+    border: 1px solid #ffbe2c;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
 }
 
 .legend-color.level-0 {
-    background-color: rgba(230, 60, 140, 0.7); /* Dusere rosa */
+    background-color: rgba(230, 60, 140, 0.15);
+    border: 1px solid #e63c8c;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
 }
 
 .legend-text {
     font-weight: 500;
     color: #444;
-}
-
-/* Forbedre introduksjonsboksen */
-.introduction {
-    background: white;
-    border-radius: 20px;
-    padding: 25px;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    text-align: center;
-}
-
-.introduction h2 {
-    color: #003087;
-    margin-bottom: 15px;
-    font-size: 1.8rem;
-}
-
-.introduction p {
-    color: #555;
-    max-width: 800px;
-    margin: 0 auto;
-    line-height: 1.6;
 }
