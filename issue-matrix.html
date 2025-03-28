@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flertallskalkulator for Stortinget</title>
+    <title>Saksmatrise - Partienes standpunkt</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/issue-matrix.css">
     <!-- Inline CSS for hamburgermenyen -->
     <style>
         /* Hamburgermeny styling - uavhengig av andre stiler */
@@ -137,121 +138,72 @@
     <div class="menu-overlay" id="menuOverlay"></div>
 
     <div class="container">
+        <!-- Header -->
         <header>
             <div class="logo-container">
-                <img src="images/Logo.png" alt="Kreftforeningen logo" class="logo-image">
+                <img src="images/Logo.png" alt="Kreftforeningens logo" class="logo-image">
             </div>
             <div class="header-text">
-                <h1>Flertallskalkulator for Stortinget</h1>
-                <div class="header-subtitle">Visualisering av stemmefordeling</div>
+                <h1>Saksmatrise</h1>
+                <div class="header-subtitle">Oversikt over partienes standpunkt til saker fra Kreftforeningens program</div>
             </div>
             <div class="nav-links">
+                <a href="index.html" class="nav-link">Flertallskalkulator</a>
                 <a href="party-overview.html" class="nav-link">Partioversikt</a>
                 <a href="majority-coalitions.html" class="nav-link">Flertallskoalisjoner</a>
-                <a href="issue-matrix.html" class="nav-link">Saksmatrise</a>
             </div>
         </header>
         
-        <div class="two-column">
-            <div class="column">
-                <!-- Issue-selector flyttet til toppen av venstre kolonne -->
-               <div class="result-container">
-                    <h2 class="result-header">Velg sak fra Kreftforeningens program</h2>
-                    <div id="issue-selector-container">
-                        <!-- Her vil saksvelgeren bli lagt til dynamisk med JavaScript -->
-                    </div>
-                </div>
-                
-                <!-- Partivelger flyttet til bunnen av venstre kolonne -->
-                <div class="party-section">
-                    <h2 class="section-title">Velg partier for flertall</h2>
-                    
-                    <div class="party-instructions">
-                        <p>Velg partiene som stemmer <strong class="highlight">for</strong> forslaget</p>
-                        <div class="info-button" id="infoButton">i
-                            <div class="info-tooltip" id="infoTooltip">
-                                <strong>Om flertall på Stortinget:</strong>
-                                <p>Stortinget har totalt 169 representanter. Et forslag trenger minst 85 stemmer for å få flertall.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Behold denne for mobile enheter -->
-                    <div class="info-popup" id="infoPopup">
-                        <div class="info-popup-content">
-                            <span class="close-popup">&times;</span>
-                            <h4>Om flertall på Stortinget</h4>
-                            <p>Stortinget har totalt 169 representanter. Et forslag trenger minst 85 stemmer for å få flertall.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="party-grid" id="partyGrid">
-                        <!-- Party cards will be added here by JavaScript -->
-                    </div>
-                    
-                    <div class="action-buttons">
-                        <button class="btn-primary" id="selectAllBtn">Velg alle</button>
-                        <button class="btn-secondary" id="clearAllBtn">Fjern alle</button>
-                    </div>
-                </div>
+        <!-- Introduksjon -->
+        <div class="introduction">
+            <h2>Matrise over partienes støtte til Kreftforeningens saker</h2>
+            <p>Denne visualiseringen viser hvordan de ulike partiene stiller seg til ulike saker i Kreftforeningens program.
+            Fargekodene indikerer nivå av støtte: grønt for full enighet, gult for delvis enighet, og rødt for ingen støtte.</p>
+        </div>
+        
+        <!-- Filtreringsvalg -->
+        <div class="filter-container">
+            <div class="filter-group">
+                <label for="area-filter">Filtrer etter saksområde:</label>
+                <select id="area-filter" class="filter-dropdown">
+                    <option value="all">Alle saksområder</option>
+                    <!-- Saksområder legges til med JavaScript -->
+                </select>
             </div>
             
-            <div class="column">
-                <div class="result-container">
-                    <h2 class="result-header">Resultat</h2>
-                    
-                    <div class="progress-container">
-                        <div class="progress-bar" id="progressBar"></div>
-                        <div class="progress-labels">
-                            <span id="votesFor">0</span>
-                            <span id="votesAgainst">169</span>
-                        </div>
-                    </div>
-                    
-                    <div class="result-details">
-                        <div class="result-box required-votes">
-                            <div class="result-value">85</div>
-                            <div class="result-label">Stemmer nødvendig for flertall</div>
-                        </div>
-                        
-                        <div class="result-box votes-for">
-                            <div class="result-value" id="totalVotesFor">0</div>
-                            <div class="result-label">Stemmer for</div>
-                        </div>
-                        
-                        <div class="result-box votes-against">
-                            <div class="result-value" id="totalVotesAgainst">169</div>
-                            <div class="result-label">Stemmer mot</div>
-                        </div>
-                    </div>
-                    
-                    <div class="result-status no-majority" id="majorityStatus">
-                        Ingen flertall (trenger 85 stemmer minst)
-                    </div>
-                    
-                    <div class="selected-parties">
-                        <h3 class="selected-parties-title">Partier som stemmer for:</h3>
-                        <div id="selectedPartyTags"></div>
-                    </div>
-                </div>
-                
-                <!-- Blokkvisualisering flyttet til bunnen av høyre kolonne -->
-                <div class="section-divider"></div>
-                
-                <div class="parliament-visualization">
-                    <h2 class="section-title">Blokkvisualisering av Stortinget</h2>
-                    
-                    <div id="d3-parliament" class="parliament-container">
-                        <!-- D3 visualization will be placed here -->
-                    </div>
-                    
-                    <div class="parliament-legend" id="parliamentLegend">
-                        <!-- Legend will be generated by JavaScript -->
-                    </div>
-                </div>
+            <div class="filter-group">
+                <label for="view-mode">Visningsalternativ:</label>
+                <select id="view-mode" class="filter-dropdown">
+                    <option value="heatmap">Matrise (farger)</option>
+                    <option value="numbers">Matrise (tall)</option>
+                </select>
             </div>
         </div>
         
+        <!-- Matrise-container -->
+        <div class="matrix-container">
+            <div class="matrix-loader">Laster inn data...</div>
+            <!-- Matrix will be rendered here by JavaScript -->
+            <div id="matrix-visualization"></div>
+        </div>
+        
+        <!-- Forklaring av fargekoder -->
+        <div class="legend-container">
+            <div class="legend-item">
+                <div class="legend-color level-2"></div>
+                <div class="legend-text">Full enighet (nivå 2)</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color level-1"></div>
+                <div class="legend-text">Delvis enighet (nivå 1)</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color level-0"></div>
+                <div class="legend-text">Ingen støtte (nivå 0)</div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
         <footer>
             Data basert på mandatfordeling etter Stortingsvalget 2021. Til bruk for informasjonsformål.
         </footer>
@@ -296,12 +248,8 @@
         });
     </script>
 
-    <!-- Andre scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="js/issues.js"></script>
-    <script src="js/parliament-visualization.js"></script>
-    <script src="js/script.js"></script>
-    <script src="js/issue-selector.js"></script>
+    <!-- Scripts -->
+   <script src="js/issue-matrix.js"></script>
+    <script>
 </body>
 </html>
