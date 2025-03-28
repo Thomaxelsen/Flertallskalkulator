@@ -103,6 +103,14 @@ function initializeMatrix() {
     
     // Sett opp event listeners
     setupFilterListeners();
+    
+    // Legg til en event listener for å håndtere vindusstørrelsesendringer
+    window.addEventListener('resize', function() {
+        // Regenerer matrisen med gjeldende filtre når vindusstørrelsen endres
+        const areaFilter = document.getElementById('area-filter').value;
+        const viewMode = document.getElementById('view-mode').value;
+        generateMatrix(areaFilter, viewMode);
+    });
 }
 
 // Hent unike saksområder fra issues-arrayet
@@ -186,34 +194,39 @@ function generateMatrix(areaFilter, viewMode) {
     issueHeader.textContent = 'Sak';
     issueHeader.style.textAlign = "left";
     issueHeader.style.padding = "15px";
-    issueHeader.style.position = "sticky";
-    issueHeader.style.left = "0";
+    
+    // Sjekk skjermstørrelse og bruk sticky bare på større skjermer
+    if (window.innerWidth > 768) {
+        issueHeader.style.position = "sticky";
+        issueHeader.style.left = "0";
+    }
+    
     issueHeader.style.backgroundColor = "white";
     issueHeader.style.zIndex = "11";
-    issueHeader.style.minWidth = "300px";
+    issueHeader.style.minWidth = window.innerWidth > 768 ? "300px" : "150px"; // Mindre bredde på mobil
     headerRow.appendChild(issueHeader);
     
     // Legg til kolonner for hvert parti - gjør dem mer subtile og avrundede
-parties.forEach(party => {
-    const partyHeader = document.createElement('th');
-    partyHeader.className = 'party-col';
-    partyHeader.textContent = party.shorthand;
-    partyHeader.title = party.name;
-    
-    // Bruk mykere farge og mer opasitet for å matche flertallskalkulatoren
-    const rgbColor = hexToRgb(party.color);
-    partyHeader.style.backgroundColor = `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, 0.6)`;
-    
-    // Gjør hjørnene mer avrundet
-    partyHeader.style.borderRadius = "12px";
-    partyHeader.style.margin = "0 2px";
-    partyHeader.style.color = '#fff';
-    partyHeader.style.padding = "15px";
-    partyHeader.style.textAlign = "center";
-    partyHeader.style.minWidth = "80px";
-    partyHeader.style.maxWidth = "80px";
-    headerRow.appendChild(partyHeader);
-});
+    parties.forEach(party => {
+        const partyHeader = document.createElement('th');
+        partyHeader.className = 'party-col';
+        partyHeader.textContent = party.shorthand;
+        partyHeader.title = party.name;
+        
+        // Bruk mykere farge og mer opasitet for å matche flertallskalkulatoren
+        const rgbColor = hexToRgb(party.color);
+        partyHeader.style.backgroundColor = `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, 0.6)`;
+        
+        // Gjør hjørnene mer avrundet
+        partyHeader.style.borderRadius = "12px";
+        partyHeader.style.margin = "0 2px";
+        partyHeader.style.color = '#fff';
+        partyHeader.style.padding = "15px";
+        partyHeader.style.textAlign = "center";
+        partyHeader.style.minWidth = "80px";
+        partyHeader.style.maxWidth = "80px";
+        headerRow.appendChild(partyHeader);
+    });
     
     // Legg til SUM-kolonne
     const sumHeader = document.createElement('th');
@@ -298,8 +311,13 @@ parties.forEach(party => {
             issueCell.title = issue.name;
             issueCell.style.textAlign = "left";
             issueCell.style.padding = "10px 15px";
-            issueCell.style.position = "sticky";
-            issueCell.style.left = "0";
+            
+            // Sjekk skjermstørrelse og bruk sticky bare på større skjermer
+            if (window.innerWidth > 768) {
+                issueCell.style.position = "sticky";
+                issueCell.style.left = "0";
+            }
+            
             issueCell.style.backgroundColor = row.style.backgroundColor || "white";
             issueCell.style.borderBottom = "1px solid #f0f0f0";
             row.appendChild(issueCell);
@@ -329,7 +347,7 @@ parties.forEach(party => {
                 // Sett fargeklasse basert på enighetsgrad
                 const colors = agreementColors[agreementLevel];
                 
-                // Sett styling for oval boks - mer som partiboksene i flertallskalkulatoren
+               // Sett styling for oval boks - mer som partiboksene i flertallskalkulatoren
                 cell.style.backgroundColor = colors.background;
                 cell.style.color = colors.color;
                 cell.style.border = `1px solid ${colors.border}`;
