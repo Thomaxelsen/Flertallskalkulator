@@ -80,21 +80,42 @@ function createHamburgerMenu() {
     hamburgerNav.className = 'hamburger-nav';
     hamburgerNav.id = 'hamburgerNav';
     
-    // Sett HTML-innhold
-    hamburgerNav.innerHTML = `
+    // Sett HTML-innhold for hamburger-knappen
+    const hamburgerButtonHTML = `
         <button class="hamburger-button" id="hamburgerButton" aria-label="Meny">
             <span class="hamburger-line"></span>
             <span class="hamburger-line"></span>
             <span class="hamburger-line"></span>
         </button>
+    `;
+    
+    // Opprett meny-innhold basert på navigationConfig
+    let menuLinksHTML = '';
+    
+    // Sjekk om navigationConfig er tilgjengelig
+    if (window.navigationConfig && window.navigationConfig.navLinks) {
+        window.navigationConfig.navLinks.forEach(link => {
+            menuLinksHTML += `<a href="${link.href}" class="menu-link">${link.title}</a>`;
+        });
+    } else {
+        // Fallback til standardlenker hvis konfigurasjon mangler
+        menuLinksHTML = `
+            <a href="index.html" class="menu-link">Flertallskalkulator</a>
+            <a href="party-overview.html" class="menu-link">Partioversikt</a>
+            <a href="majority-coalitions.html" class="menu-link">Flertallskoalisjoner</a>
+        `;
+    }
+    
+    // Sett HTML-innhold for hele menyen
+    hamburgerNav.innerHTML = `
+        ${hamburgerButtonHTML}
         <div class="nav-menu" id="navMenu">
             <div class="nav-menu-header">
                 <span class="menu-title">Meny</span>
                 <button class="close-menu" id="closeMenu">&times;</button>
             </div>
             <nav class="nav-menu-links">
-                <a href="index.html" class="menu-link">Flertallskalkulator</a>
-                <a href="party-overview.html" class="menu-link">Partioversikt</a>
+                ${menuLinksHTML}
             </nav>
         </div>
     `;
@@ -109,6 +130,35 @@ function createHamburgerMenu() {
         console.log("Container ikke funnet, legger til i body");
         // Fallback: Legg til i body
         document.body.appendChild(hamburgerNav);
+    }
+    
+    // Oppdater også desktop-navigasjonen
+    updateDesktopNavigation();
+}
+
+// Ny funksjon for å oppdatere desktop-navigasjonen
+function updateDesktopNavigation() {
+    const desktopNav = document.querySelector('.nav-links');
+    if (!desktopNav) return;  // Hvis desktop-navigasjon ikke finnes
+    
+    // Tøm eksisterende navigasjon
+    desktopNav.innerHTML = '';
+    
+    // Legg til lenker fra konfigurasjon
+    if (window.navigationConfig && window.navigationConfig.navLinks) {
+        // Hopp over første lenke (vanligvis den aktive siden)
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        
+        window.navigationConfig.navLinks.forEach(link => {
+            // Hvis lenken ikke er til gjeldende side, legg den til
+            if (link.href !== currentPage) {
+                const navLink = document.createElement('a');
+                navLink.href = link.href;
+                navLink.className = 'nav-link';
+                navLink.textContent = link.title;
+                desktopNav.appendChild(navLink);
+            }
+        });
     }
 }
 
@@ -216,5 +266,6 @@ function highlightCurrentPage() {
 window.navigationModule = {
     initialize: initializeNavigation,
     createMenu: createHamburgerMenu,
-    setupEvents: setupEventListeners
+    setupEvents: setupEventListeners,
+    updateDesktopNav: updateDesktopNavigation
 };
