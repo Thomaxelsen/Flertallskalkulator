@@ -94,6 +94,11 @@
             background-color: #f0f0f0;
         }
         
+        .menu-items a.active {
+            background-color: #003087;
+            color: white;
+        }
+        
         /* Overlay når menyen er åpen */
         .menu-overlay {
             position: fixed;
@@ -125,11 +130,8 @@
             <h3>Meny</h3>
             <button class="close-button" id="closeMenu">&times;</button>
         </div>
-        <div class="menu-items">
-            <a href="index.html">Flertallskalkulator</a>
-            <a href="party-overview.html">Partioversikt</a>
-            <a href="majority-coalitions.html">Flertallskoalisjoner</a>
-            <a href="issue-matrix.html">Saksmatrise</a>
+        <div class="menu-items" id="mobileMenuItems">
+            <!-- Fylles dynamisk med JavaScript -->
         </div>
     </div>
     
@@ -146,9 +148,7 @@
                 <div class="header-subtitle">Visualisering av stemmefordeling</div>
             </div>
             <div class="nav-links">
-                <a href="party-overview.html" class="nav-link">Partioversikt</a>
-                <a href="majority-coalitions.html" class="nav-link">Flertallskoalisjoner</a>
-                <a href="issue-matrix.html" class="nav-link">Saksmatrise</a>
+                <!-- Fylles dynamisk av JavaScript -->
             </div>
         </header>
         
@@ -257,46 +257,9 @@
         </footer>
     </div>
 
-    <!-- Inline JavaScript for hamburger-meny -->
-    <script>
-        // Vent til DOM er fullstendig lastet
-        document.addEventListener('DOMContentLoaded', function() {
-            // Hent nødvendige elementer
-            const burgerMenu = document.getElementById('burgerMenu');
-            const mobileMenu = document.getElementById('mobileMenu');
-            const closeMenu = document.getElementById('closeMenu');
-            const menuOverlay = document.getElementById('menuOverlay');
-            
-            // Hvis elementene ikke finnes, avbryt
-            if (!burgerMenu || !mobileMenu || !closeMenu || !menuOverlay) {
-                console.error("Kunne ikke finne nødvendige menyelementer");
-                return;
-            }
-            
-            // Åpne menyen når burger-knappen klikkes
-            burgerMenu.addEventListener('click', function() {
-                mobileMenu.classList.add('active');
-                menuOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden'; // Hindre scrolling
-            });
-            
-            // Lukk menyen når lukke-knappen klikkes
-            closeMenu.addEventListener('click', function() {
-                mobileMenu.classList.remove('active');
-                menuOverlay.classList.remove('active');
-                document.body.style.overflow = ''; // Gjenopprett scrolling
-            });
-            
-            // Lukk menyen når man klikker på overlay
-            menuOverlay.addEventListener('click', function() {
-                mobileMenu.classList.remove('active');
-                menuOverlay.classList.remove('active');
-                document.body.style.overflow = ''; // Gjenopprett scrolling
-            });
-        });
-    </script>
-
-    <!-- Andre scripts -->
+    <!-- Scripts -->
+    <script src="js/navigationConfig.js"></script>
+    <script src="js/navigation.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="js/issues.js"></script>
