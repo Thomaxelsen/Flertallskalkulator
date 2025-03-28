@@ -38,7 +38,13 @@ fetch('data/parties.json')
   })
   .then(data => {
     parties = data;
-    initializeApp();
+    
+    // Vent på at issues-data er lastet før initialisering
+    if (window.issues && window.issues.length > 0) {
+      initializeApp(); // Data allerede lastet
+    } else {
+      document.addEventListener('issuesDataLoaded', initializeApp);
+    }
   })
   .catch(error => {
     console.error('Error loading party data:', error);
