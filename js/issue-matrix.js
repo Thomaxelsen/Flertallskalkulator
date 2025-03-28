@@ -323,19 +323,21 @@ function generateMatrix(areaFilter, viewMode) {
                 cell.style.color = colors.color;
                 cell.style.border = `1px solid ${colors.border}`;
                 cell.style.borderRadius = "20px";
-                cell.style.padding = "5px 0";
                 cell.style.width = "70px"; // Nesten full bredde
                 cell.style.height = "35px"; // Høyere
-                cell.style.lineHeight = "35px"; // Sentrert tekst
-                cell.style.display = "inline-block";
+                cell.style.display = "flex"; // Bruk flex for vertikal sentrering
+                cell.style.alignItems = "center"; // Vertikal sentrering
+                cell.style.justifyContent = "center"; // Horisontal sentrering
                 cell.style.fontWeight = "bold";
                 cell.style.fontSize = "1rem"; // Større tekst
                 cell.style.cursor = "pointer";
-                cell.style.textAlign = "center";
                 
                 // Sett innholdet basert på visningsmodus
-                if (viewMode === 'numbers' || viewMode === 'heatmap') {
+                if (viewMode === 'numbers') {
                     cell.textContent = agreementLevel;
+                } else {
+                    // Ved heatmap/farge-visning, ikke vis tall
+                    cell.innerHTML = '&nbsp;'; // Usynlig mellomrom for konsistent høyde
                 }
                 
                 // Legg til tooltip-data
@@ -367,12 +369,11 @@ function generateMatrix(areaFilter, viewMode) {
             sumCell.textContent = totalPoints;
             sumCell.style.fontWeight = 'bold';
             sumCell.style.borderRadius = '20px';
-            sumCell.style.display = 'inline-block';
-            sumCell.style.padding = '5px 0';
             sumCell.style.width = '70px'; // Matcher celler
             sumCell.style.height = '35px'; // Matcher celler
-            sumCell.style.lineHeight = '35px'; // Sentrert tekst
-            sumCell.style.textAlign = 'center';
+            sumCell.style.display = 'flex'; // Bruk flex for vertikal sentrering
+            sumCell.style.alignItems = 'center'; // Vertikal sentrering
+            sumCell.style.justifyContent = 'center'; // Horisontal sentrering
             sumCell.style.fontSize = '1rem'; // Større tekst
             
             // Fargekode basert på total poengsum (maksimum mulig er parties.length * 2)
