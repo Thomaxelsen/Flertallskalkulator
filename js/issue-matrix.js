@@ -3,25 +3,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log("DOM lastet i issue-matrix.js");
     
-    // Sjekk om issues-data er lastet
-    if (window.issues && window.issues.length > 0) {
-        console.log("Issues allerede lastet, starter initialisering");
-        initializeMatrix();
-    } else {
-        console.log("Venter på issues-data...");
-        document.addEventListener('issuesDataLoaded', function() {
-            console.log("Mottok issuesDataLoaded event, starter initialisering");
-            initializeMatrix();
-        });
-        
-        // Ekstra sikkerhet: prøv igjen etter litt tid hvis events ikke fungerer
-        setTimeout(function() {
-            if (window.issues && window.issues.length > 0 && !document.querySelector('.matrix-table')) {
-                console.log("Timeout: Issues data finnes, men matrise ikke generert. Starter initialisering.");
-                initializeMatrix();
-            }
-        }, 1000);
-    }
+    // Laster inn data direkte
+    loadMatrixData();
 });
 
 // Party data
@@ -38,30 +21,52 @@ const parties = [
     { name: "Pasientfokus", shorthand: "PF", seats: 1, position: 10, color: "#a04d94", classPrefix: "pf" }
 ];
 
+// Global variabel for å holde data
+let matrixIssues = [];
+
+// Last data direkte fra issues.json
+function loadMatrixData() {
+    console.log("Laster matrixdata direkte fra issues.json");
+    document.querySelector('.matrix-loader').textContent = 'Laster inn data...';
+    
+    fetch('data/issues.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok: ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Data lastet fra issues.json:", data.length, "saker");
+            matrixIssues = data;
+            initializeMatrix();
+        })
+        .catch(error => {
+            console.error("Feil ved henting av data:", error);
+            document.querySelector('.matrix-loader').textContent = 
+                'Kunne ikke laste data: ' + error.message + '. Vennligst oppdater siden.';
+        });
+}
+
 // Hovedfunksjon for å initalisere matrisen
 function initializeMatrix() {
-    console.log("Initialiserer matrix med", window.issues ? window.issues.length : 0, "saker");
+    console.log("Initialiserer matrix med", matrixIssues.length, "saker");
     
     // Sjekk at dataene faktisk er lastet
-    if (!window.issues || window.issues.length === 0) {
+    if (!matrixIssues || matrixIssues.length === 0) {
         console.error("Ingen issues-data funnet!");
-        document.querySelector('.matrix-loader').textContent = 'Kunne ikke laste data. Vennligst oppdater siden.';
-        
-        // Forsøk å laste data direkte som en siste utvei
-        if (typeof loadIssuesData === 'function') {
-            console.log("Forsøker å laste issues data direkte");
-            loadIssuesData();
-            
-            // Prøv igjen om litt
-            setTimeout(initializeMatrix, 1000);
-        }
+        document.querySelector('.matrix-loader').textContent = 'Ingen data funnet. Vennligst oppdater siden.';
         return;
     }
     
     // Debugg: Sjekk strukturen til issues-dataene
-    console.log("First issue:", window.issues[0]);
-    if (window.issues[0].partyStances) {
-        console.log("partyStances for første issue:", window.issues[0].partyStances);
+    console.log("First issue:", matrixIssues[0]);
+    if (matrixIssues[0].partyStances) {
+        console.log("partyStances for første issue:", matrixIssues[0].partyStances);
+        // Sjekk flere partistanser for å se om de inneholder level-verdier
+        for (const partyCode in matrixIssues[0].partyStances) {
+            console.log(`Parti: ${partyCode}, level: ${matrixIssues[0].partyStances[partyCode].level}`);
+        }
     }
     
     // Fjern lasteindikatoren
@@ -80,7 +85,7 @@ function initializeMatrix() {
 
 // Hent unike saksområder fra issues-arrayet
 function getUniqueAreas() {
-    const areas = window.issues.map(issue => issue.area);
+    const areas = matrixIssues.map(issue => issue.area);
     return [...new Set(areas)];
 }
 
@@ -112,15 +117,15 @@ function setupFilterListeners() {
 
 // Generer matrisen basert på filtrering
 function generateMatrix(areaFilter, viewMode) {
-    console.log("Genererer matrise med", window.issues.length, "saker, filter:", areaFilter, "visning:", viewMode);
+    console.log("Genererer matrise med", matrixIssues.length, "saker, filter:", areaFilter, "visning:", viewMode);
     
     const matrixContainer = document.getElementById('matrix-visualization');
     matrixContainer.innerHTML = '';
     
     // Filtrer saker basert på valgt område
-    let filteredIssues = window.issues;
+    let filteredIssues = matrixIssues;
     if (areaFilter !== 'all') {
-        filteredIssues = window.issues.filter(issue => issue.area === areaFilter);
+        filteredIssues = matrixIssues.filter(issue => issue.area === areaFilter);
     }
     
     console.log("Filtrerte saker:", filteredIssues.length);
@@ -332,9 +337,9 @@ function showTooltip(element, issue, partyCode, level) {
 
 // Funksjon for å lukke tooltip
 function closeTooltip(event) {
-   const tooltip = document.querySelector('.matrix-tooltip');
-   if (tooltip) {
-       tooltip.style.display = 'none';
-   }
-   document.removeEventListener('click', closeTooltip);
+    const tooltip = document.querySelector('.matrix-tooltip');
+    if (tooltip) {
+        tooltip.style.display = 'none';
+    }
+    document.removeEventListener('click', closeTooltip);
 }
