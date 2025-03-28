@@ -162,6 +162,8 @@ function generateMatrix(areaFilter, viewMode) {
     // Lag tabellen
     const table = document.createElement('table');
     table.className = 'matrix-table';
+    table.style.borderCollapse = "separate";
+    table.style.borderSpacing = "8px";
     
     // Lag tabellhodet med parti-kolonner
     const thead = document.createElement('thead');
@@ -171,6 +173,8 @@ function generateMatrix(areaFilter, viewMode) {
     const issueHeader = document.createElement('th');
     issueHeader.className = 'issue-col';
     issueHeader.textContent = 'Sak';
+    issueHeader.style.textAlign = "left";
+    issueHeader.style.padding = "10px";
     headerRow.appendChild(issueHeader);
     
     // Legg til kolonner for hvert parti
@@ -181,6 +185,9 @@ function generateMatrix(areaFilter, viewMode) {
         partyHeader.title = party.name;
         partyHeader.style.backgroundColor = party.color;
         partyHeader.style.color = '#fff';
+        partyHeader.style.padding = "10px";
+        partyHeader.style.textAlign = "center";
+        partyHeader.style.width = "50px"; // Fast bredde for alle kolonner
         headerRow.appendChild(partyHeader);
     });
     
@@ -189,6 +196,8 @@ function generateMatrix(areaFilter, viewMode) {
     sumHeader.className = 'party-col';
     sumHeader.textContent = 'SUM';
     sumHeader.title = 'Sum av poeng fra alle partier';
+    sumHeader.style.padding = "10px";
+    sumHeader.style.textAlign = "center";
     headerRow.appendChild(sumHeader);
     
     thead.appendChild(headerRow);
@@ -231,6 +240,11 @@ function generateMatrix(areaFilter, viewMode) {
         const areaCell = document.createElement('td');
         areaCell.colSpan = parties.length + 2; // +2 for issue-col og SUM
         areaCell.textContent = area;
+        areaCell.style.backgroundColor = "#003087";
+        areaCell.style.color = "white";
+        areaCell.style.fontWeight = "bold";
+        areaCell.style.padding = "12px";
+        areaCell.style.textAlign = "center";
         
         // Legg til ekstra attributter for styling og tilgjengelighet
         areaCell.setAttribute('role', 'heading');
@@ -248,6 +262,8 @@ function generateMatrix(areaFilter, viewMode) {
             issueCell.className = 'issue-col';
             issueCell.textContent = issue.name;
             issueCell.title = issue.name;
+            issueCell.style.textAlign = "left";
+            issueCell.style.padding = "10px";
             row.appendChild(issueCell);
             
             // Hold styr på total poengsum for alle partier i denne saken
@@ -255,7 +271,11 @@ function generateMatrix(areaFilter, viewMode) {
             
             // Lag en celle for hvert parti
             parties.forEach(party => {
-                const cell = document.createElement('td');
+                const cellContainer = document.createElement('td');
+                cellContainer.style.textAlign = "center";
+                cellContainer.style.width = "50px"; // Fast bredde for alle kolonner
+                
+                const cell = document.createElement('div');
                 cell.className = 'cell';
                 
                 // Hent enighetsgrad hvis den finnes
@@ -276,7 +296,14 @@ function generateMatrix(areaFilter, viewMode) {
                 const colors = agreementColors[agreementLevel];
                 cell.style.backgroundColor = colors.background;
                 cell.style.color = colors.color;
-                cell.style.borderColor = colors.border;
+                cell.style.border = `1px solid ${colors.border}`;
+                cell.style.borderRadius = "20px";
+                cell.style.padding = "2px 10px";
+                cell.style.display = "inline-block";
+                cell.style.minWidth = "18px";
+                cell.style.fontSize = "0.9rem";
+                cell.style.fontWeight = "bold";
+                cell.style.cursor = "pointer";
                 
                 // Legg til tooltip-data
                 cell.dataset.party = party.shorthand;
@@ -288,20 +315,24 @@ function generateMatrix(areaFilter, viewMode) {
                     showTooltip(this, issue, party.shorthand, agreementLevel);
                 });
                 
-                row.appendChild(cell);
+                cellContainer.appendChild(cell);
+                row.appendChild(cellContainer);
                 
                 // Legg til poengene fra dette partiet til totalen
                 totalPoints += agreementLevel;
             });
             
             // Legg til SUM-celle med oval styling
-            const sumCell = document.createElement('td');
+            const sumCellContainer = document.createElement('td');
+            sumCellContainer.style.textAlign = "center";
+            
+            const sumCell = document.createElement('div');
             sumCell.textContent = totalPoints;
             sumCell.style.fontWeight = 'bold';
             sumCell.style.borderRadius = '20px';
             sumCell.style.display = 'inline-block';
-            sumCell.style.minWidth = '30px';
-            sumCell.style.padding = '5px 10px';
+            sumCell.style.padding = '2px 10px';
+            sumCell.style.minWidth = '18px';
             
             // Fargekode basert på total poengsum (maksimum mulig er parties.length * 2)
             const maxPossiblePoints = parties.length * 2;
@@ -321,9 +352,8 @@ function generateMatrix(areaFilter, viewMode) {
                 sumCell.style.border = '1px solid #e63c8c';
             }
             
-            const sumCellWrapper = document.createElement('td');
-            sumCellWrapper.appendChild(sumCell);
-            row.appendChild(sumCellWrapper);
+            sumCellContainer.appendChild(sumCell);
+            row.appendChild(sumCellContainer);
             tbody.appendChild(row);
         });
     });
@@ -335,6 +365,14 @@ function generateMatrix(areaFilter, viewMode) {
     if (!document.querySelector('.matrix-tooltip')) {
         const tooltip = document.createElement('div');
         tooltip.className = 'matrix-tooltip';
+        tooltip.style.display = 'none';
+        tooltip.style.position = 'absolute';
+        tooltip.style.zIndex = '1000';
+        tooltip.style.backgroundColor = 'white';
+        tooltip.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
+        tooltip.style.borderRadius = '12px';
+        tooltip.style.padding = '20px';
+        tooltip.style.maxWidth = '350px';
         document.body.appendChild(tooltip);
     }
     
@@ -352,6 +390,12 @@ function updateLegendStyles() {
         const colors = agreementColors[level];
         item.style.backgroundColor = colors.background;
         item.style.borderColor = colors.border;
+        item.style.width = '24px';
+        item.style.height = '24px';
+        item.style.borderRadius = '12px';
+        item.style.display = 'inline-block';
+        item.style.marginRight = '8px';
+        item.style.border = `1px solid ${colors.border}`;
     });
 }
 
@@ -385,13 +429,13 @@ function showTooltip(element, issue, partyCode, level) {
     
     // Bygg tooltip-innhold
     let tooltipContent = `
-        <h3>${issue.name}</h3>
+        <h3 style="margin-top: 0; color: #003087; border-bottom: 1px solid #eee; padding-bottom: 10px;">${issue.name}</h3>
         <p><strong style="color: ${partyColor}">${partyName}</strong> er <strong style="display: inline-block; padding: 3px 10px; border-radius: 15px; background-color: ${colors.background}; color: ${colors.color}; border: 1px solid ${colors.border};">${levelText}</strong> med Kreftforeningen i denne saken.</p>
     `;
     
     // Legg til sitat hvis det finnes
     if (quote) {
-        tooltipContent += `<div class="quote">"${quote}"</div>`;
+        tooltipContent += `<div style="background-color: #f9f9f9; padding: 12px; margin-top: 15px; border-left: 3px solid #6e2b62; border-radius: 8px; font-style: italic;">"${quote}"</div>`;
     } else {
         tooltipContent += `<p style="font-style: italic; color: #777;">Ingen utdypende informasjon tilgjengelig.</p>`;
     }
