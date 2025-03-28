@@ -183,7 +183,7 @@ function generateMatrix(areaFilter, viewMode) {
     });
     
     // Gå gjennom hvert område og lag egne seksjoner
-    Object.keys(issuesByArea).forEach(area => {
+    Object.keys(issuesByArea).sort().forEach(area => {
         // Lag områdeoverskrift
         const areaRow = document.createElement('tr');
         areaRow.className = 'area-header';
@@ -204,11 +204,8 @@ function generateMatrix(areaFilter, viewMode) {
             issueCell.title = issue.name;
             row.appendChild(issueCell);
             
-            // Hold styr på total poengsum for raden
+            // Hold styr på total poengsum for alle partier i denne saken
             let totalPoints = 0;
-            
-            // Debug
-            console.log(`Behandler sak [${issue.id}] ${issue.name}, partyStances:`, issue.partyStances ? 'exists' : 'missing');
             
             // Lag en celle for hvert parti
             parties.forEach(party => {
@@ -219,7 +216,6 @@ function generateMatrix(areaFilter, viewMode) {
                 let agreementLevel = 0;
                 if (issue.partyStances && issue.partyStances[party.shorthand]) {
                     agreementLevel = issue.partyStances[party.shorthand].level;
-                    console.log(`Sak ${issue.id}, parti ${party.shorthand}, enighet: ${agreementLevel}`);
                 }
                 
                 // Sett celleinnhold basert på visningsmodus
@@ -242,11 +238,14 @@ function generateMatrix(areaFilter, viewMode) {
                 
                 row.appendChild(cell);
                 
-                // Legg til poeng for denne cellen til totalen
+                // Legg til poengene fra dette partiet til totalen
                 totalPoints += agreementLevel;
             });
             
-            // Legg til SUM-celle med total poengsum
+            // Debug: Sjekk at summen blir riktig
+            console.log(`Sak "${issue.name}": Total poengsum = ${totalPoints}`);
+            
+            // Legg til SUM-celle
             const sumCell = document.createElement('td');
             sumCell.textContent = totalPoints;
             sumCell.style.fontWeight = 'bold';
@@ -256,15 +255,14 @@ function generateMatrix(areaFilter, viewMode) {
             const scoreRatio = totalPoints / maxPossiblePoints;
             
             if (scoreRatio >= 0.6) { // Høy enighet (60%+ av maksimum)
-                sumCell.style.backgroundColor = 'rgba(40, 167, 69, 0.2)';
+                sumCell.style.backgroundColor = 'rgba(40, 167, 69, 0.2)'; // Grønn
             } else if (scoreRatio >= 0.3) { // Middels enighet (30-60% av maksimum)
-                sumCell.style.backgroundColor = 'rgba(255, 193, 7, 0.2)';
+                sumCell.style.backgroundColor = 'rgba(255, 193, 7, 0.2)'; // Gul
             } else { // Lav enighet (mindre enn 30% av maksimum)
-                sumCell.style.backgroundColor = 'rgba(220, 53, 69, 0.2)';
+                sumCell.style.backgroundColor = 'rgba(220, 53, 69, 0.2)'; // Rød
             }
             
             row.appendChild(sumCell);
-            
             tbody.appendChild(row);
         });
     });
@@ -272,7 +270,7 @@ function generateMatrix(areaFilter, viewMode) {
     table.appendChild(tbody);
     matrixContainer.appendChild(table);
     
-    // Lag tooltip-container
+    // Lag tooltip-container hvis den ikke finnes
     if (!document.querySelector('.matrix-tooltip')) {
         const tooltip = document.createElement('div');
         tooltip.className = 'matrix-tooltip';
