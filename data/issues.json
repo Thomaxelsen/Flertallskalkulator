@@ -846,8 +846,8 @@
         "quote": null
       },
       "FrP": {
-        "level": 2,
-        "quote": "Norge skal bli en ledende produsent, utvikler og eksportør av helseteknologi"
+        "level": 0,
+        "quote": null
       },
       "H": {
         "level": 2,
@@ -890,7 +890,7 @@
         "quote": null
       },
       "FrP": {
-        "level": 2,
+        "level": 1,
         "quote": "Gjøre Norge til en ledende produsent, utvikler og eksportør av helseteknologi."
       },
       "H": {
@@ -1026,7 +1026,7 @@
         "quote": "I større grad gjøre Norge selvforsynt med de viktigste legemidlene og etablere nasjonalt beredskapslager"
       },
       "H": {
-        "level": 2,
+        "level": 1,
         "quote": "Arbeide aktivt for å sikre mot legemiddelmangel, og styrke og utvide det nordiske samarbeidet om produksjon og lagring av legemidler."
       },
       "V": {
@@ -1210,7 +1210,7 @@
         "quote": "Øke inntektsgrensen for fri rettshjelp, slik at også de med lav inntekt sikres tilgang på rettspleie."
       },
       "KrF": {
-        "level": 2,
+        "level": 1,
         "quote": "At barn og foreldre skal ha rett til fri rettshjelp fra sak blir opprettet. Barna sin mening skal bli hørt, og barn skal ha rett til å uttale seg i saker som omhandler dem."
       },
       "AP": {
@@ -1218,7 +1218,7 @@
         "quote": "Etablere en ny rettshjelpsmodell som sikrer at flere utsatte grupper får rettshjelp, og tilby rettshjelpsveiledning til folk over hele landet i nærtjenestesentre"
       },
       "MDG": {
-        "level": 2,
+        "level": 1,
         "quote": "Styrke arbeidet mot seksuell trakassering og inkludere slike saker i ordningen med fri rettshjelp."
       },
       "SP": {
@@ -1254,7 +1254,7 @@
         "quote": "Gjeninnføre gaveforsterkningsordningen og øke skattefradraget for private givere for å gjøre det mer attraktivt å tiltrekke seg privat kapital til kulturinstitusjoner."
       },
       "KrF": {
-        "level": 2,
+        "level": 1,
         "quote": "Utvikle ordninger som gjør det mer attraktivt for private å understøtte kunst- og kulturlivet, som for eksempel gaveforsterkningsordningen."
       },
       "AP": {
@@ -1418,7 +1418,7 @@
         "quote": null
       },
       "FrP": {
-        "level": 2,
+        "level": 1,
         "quote": "Bekjempe underernæring og få flere kjøkken tilbake på sykehjem"
       },
       "H": {
@@ -1438,11 +1438,11 @@
         "quote": null
       },
       "MDG": {
-        "level": 2,
+        "level": 1,
         "quote": "Sørge for at alle i det offentliges omsorg får servert smakfull, næringsrik og bærekraftig mat i tråd med kostholdsrådene."
       },
       "SP": {
-        "level": 2,
+        "level": 1,
         "quote": "Bidra til at eldre på institusjon og heimebuande får god og tilstrekkeleg ernæring, gjerne laga lokalt og basert på lokale ressursar."
       },
       "SV": {
@@ -1518,8 +1518,8 @@
         "quote": null
       },
       "KrF": {
-        "level": 0,
-        "quote": null
+        "level": 1,
+        "quote": "Sikre økt tilgang på skreddersydde tjenester, slik at systemet tilpasses den enkelte og ikke motsatt. Slå sammen all oppfølging/ytelser for unge under 30 år til en felles ytelse med mål om arbeid, kvalifisering og utdanning som erstatter dagpenger, arbeidsavklaringspenger,uføretrygd, tiltakspenger, sosialhjelp og kvalifiseringsprogram."
       },
       "AP": {
         "level": 0,
@@ -1902,7 +1902,7 @@
         "quote": null
       },
       "FrP": {
-        "level": 2,
+        "level": 1,
         "quote": "Etablere en nasjonal sykehusplan for inverstinger i nye sykehusbygg"
       },
       "H": {
