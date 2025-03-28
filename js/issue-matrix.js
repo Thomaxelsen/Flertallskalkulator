@@ -20,24 +20,27 @@ const parties = [
     { name: "Fremskrittspartiet", shorthand: "FrP", seats: 21, position: 9, color: "#002e5e", classPrefix: "frp" }
 ];
 
-// Farger for enighetsgrad som matcher partiboksene
+// Mykere farger for enighetsgrad som matcher flertallskalkulatoren
 const agreementColors = {
     0: {
-        background: "rgba(230, 60, 140, 0.15)",
+        background: "rgba(230, 60, 140, 0.1)",
         color: "#e63c8c",
         border: "#e63c8c"
     },
     1: {
-        background: "rgba(255, 190, 44, 0.15)",
+        background: "rgba(255, 190, 44, 0.1)",
         color: "#ffbe2c",
         border: "#ffbe2c"
     },
     2: {
-        background: "rgba(0, 168, 163, 0.15)",
+        background: "rgba(0, 168, 163, 0.1)",
         color: "#00a8a3",
         border: "#00a8a3"
     }
 };
+
+// Header gradient farger for å matche flertallskalkulatoren
+const headerGradient = "linear-gradient(90deg, #6e2b62, #003087)";
 
 // Global variabel for å holde data
 let matrixIssues = [];
@@ -189,13 +192,17 @@ function generateMatrix(areaFilter, viewMode) {
     issueHeader.style.minWidth = "300px";
     headerRow.appendChild(issueHeader);
     
-    // Legg til kolonner for hvert parti
+    // Legg til kolonner for hvert parti - gjør dem mer subtile
     parties.forEach(party => {
         const partyHeader = document.createElement('th');
         partyHeader.className = 'party-col';
         partyHeader.textContent = party.shorthand;
         partyHeader.title = party.name;
-        partyHeader.style.backgroundColor = party.color;
+        
+        // Bruk mykere farge for partioverskriftene (70% opasitet)
+        const rgbColor = hexToRgb(party.color);
+        partyHeader.style.backgroundColor = `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, 0.7)`;
+        
         partyHeader.style.color = '#fff';
         partyHeader.style.padding = "15px";
         partyHeader.style.textAlign = "center";
@@ -248,20 +255,20 @@ function generateMatrix(areaFilter, viewMode) {
         // Hopp over hvis det ikke er noen saker i dette området eller hvis filtrert
         if (!issuesByArea[area] || issuesByArea[area].length === 0) return;
         
-        // Lag områdeoverskrift - forbedret for bedre synlighet
+        // Lag områdeoverskrift med gradient som matcher flertallskalkulatoren
         const areaRow = document.createElement('tr');
         areaRow.className = 'area-header';
-        areaRow.style.backgroundColor = "#003087";
         
         const areaCell = document.createElement('td');
         areaCell.colSpan = parties.length + 2; // +2 for issue-col og SUM
         areaCell.textContent = area;
-        areaCell.style.backgroundColor = "#003087";
+        areaCell.style.background = headerGradient; // Bruk den definerte gradient
         areaCell.style.color = "white";
         areaCell.style.fontWeight = "bold";
         areaCell.style.padding = "12px";
         areaCell.style.textAlign = "center";
         areaCell.style.fontSize = "1.2rem";
+        areaCell.style.borderRadius = "0"; // Fjern avrunding
         
         // Legg til ekstra attributter for styling og tilgjengelighet
         areaCell.setAttribute('role', 'heading');
@@ -311,20 +318,20 @@ function generateMatrix(areaFilter, viewMode) {
                     agreementLevel = issue.partyStances[party.shorthand].level;
                 }
                 
-                // Opprett oval boks
+                // Opprett oval boks som ligner på partiboksene i flertallskalkulatoren
                 const cell = document.createElement('div');
                 cell.className = 'cell';
                 
                 // Sett fargeklasse basert på enighetsgrad
                 const colors = agreementColors[agreementLevel];
                 
-                // Sett styling for oval boks - MYE STØRRE
+                // Sett styling for oval boks - mer som partiboksene i flertallskalkulatoren
                 cell.style.backgroundColor = colors.background;
                 cell.style.color = colors.color;
                 cell.style.border = `1px solid ${colors.border}`;
-                cell.style.borderRadius = "20px";
+                cell.style.borderRadius = "24px"; // Mer avrundet
                 cell.style.width = "70px"; // Nesten full bredde
-                cell.style.height = "35px"; // Høyere
+                cell.style.height = "36px"; // Høyere
                 cell.style.display = "flex"; // Bruk flex for vertikal sentrering
                 cell.style.alignItems = "center"; // Vertikal sentrering
                 cell.style.justifyContent = "center"; // Horisontal sentrering
@@ -368,9 +375,9 @@ function generateMatrix(areaFilter, viewMode) {
             const sumCell = document.createElement('div');
             sumCell.textContent = totalPoints;
             sumCell.style.fontWeight = 'bold';
-            sumCell.style.borderRadius = '20px';
+            sumCell.style.borderRadius = '24px'; // Mer avrundet
             sumCell.style.width = '70px'; // Matcher celler
-            sumCell.style.height = '35px'; // Matcher celler
+            sumCell.style.height = '36px'; // Matcher celler
             sumCell.style.display = 'flex'; // Bruk flex for vertikal sentrering
             sumCell.style.alignItems = 'center'; // Vertikal sentrering
             sumCell.style.justifyContent = 'center'; // Horisontal sentrering
@@ -381,15 +388,15 @@ function generateMatrix(areaFilter, viewMode) {
             const scoreRatio = totalPoints / maxPossiblePoints;
             
             if (scoreRatio >= 0.6) { // Høy enighet (60%+ av maksimum)
-                sumCell.style.backgroundColor = 'rgba(0, 168, 163, 0.15)';
+                sumCell.style.backgroundColor = 'rgba(0, 168, 163, 0.1)'; // Mykere
                 sumCell.style.color = '#00a8a3';
                 sumCell.style.border = '1px solid #00a8a3';
             } else if (scoreRatio >= 0.3) { // Middels enighet (30-60% av maksimum)
-                sumCell.style.backgroundColor = 'rgba(255, 190, 44, 0.15)';
+                sumCell.style.backgroundColor = 'rgba(255, 190, 44, 0.1)'; // Mykere
                 sumCell.style.color = '#ffbe2c';
                 sumCell.style.border = '1px solid #ffbe2c';
             } else { // Lav enighet (mindre enn 30% av maksimum)
-                sumCell.style.backgroundColor = 'rgba(230, 60, 140, 0.15)';
+                sumCell.style.backgroundColor = 'rgba(230, 60, 140, 0.1)'; // Mykere
                 sumCell.style.color = '#e63c8c';
                 sumCell.style.border = '1px solid #e63c8c';
             }
@@ -422,6 +429,19 @@ function generateMatrix(areaFilter, viewMode) {
     updateLegendStyles();
 }
 
+// Funksjon for å konvertere hex farge til RGB
+function hexToRgb(hex) {
+    // Fjern # hvis det finnes
+    hex = hex.replace('#', '');
+    
+    // Parse til RGB
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+    
+    return { r, g, b };
+}
+
 // Funksjon for å oppdatere legendens stiler
 function updateLegendStyles() {
     const legendItems = document.querySelectorAll('.legend-item');
@@ -437,7 +457,7 @@ function updateLegendStyles() {
         const colors = agreementColors[level];
         
         // Stil legendeelementet
-        item.style.borderRadius = '20px';
+        item.style.borderRadius = '24px'; // Mer avrundet
         item.style.padding = '8px 20px'; // Større padding
         item.style.backgroundColor = colors.background;
         item.style.border = `1px solid ${colors.border}`;
@@ -494,8 +514,8 @@ function showTooltip(element, issue, partyCode, level) {
     
     // Bygg tooltip-innhold
     let tooltipContent = `
-        <h3 style="margin-top: 0; color: #003087; border-bottom: 1px solid #eee; padding-bottom: 10px;">${issue.name}</h3>
-        <p><strong style="color: ${partyColor}">${partyName}</strong> er <strong style="display: inline-block; padding: 3px 10px; border-radius: 15px; background-color: ${colors.background}; color: ${colors.color}; border: 1px solid ${colors.border};">${levelText}</strong> med Kreftforeningen i denne saken.</p>
+        <h3 style="margin-top: 0; color: #6e2b62; border-bottom: 1px solid #eee; padding-bottom: 10px;">${issue.name}</h3>
+        <p><strong style="color: ${partyColor}">${partyName}</strong> er <strong style="display: inline-block; padding: 3px 10px; border-radius: 24px; background-color: ${colors.background}; color: ${colors.color}; border: 1px solid ${colors.border};">${levelText}</strong> med Kreftforeningen i denne saken.</p>
     `;
     
     // Legg til sitat hvis det finnes
