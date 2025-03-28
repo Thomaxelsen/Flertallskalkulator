@@ -115,6 +115,8 @@ function setupFilterListeners() {
 }
 
 // Generer matrisen basert på filtrering
+// Oppdatert generateMatrix-funksjon med forbedret områdeoverskrift-generering
+
 function generateMatrix(areaFilter, viewMode) {
     console.log("Genererer matrise med", matrixIssues.length, "saker, filter:", areaFilter, "visning:", viewMode);
     
@@ -198,18 +200,21 @@ function generateMatrix(areaFilter, viewMode) {
     // Gå gjennom områdene i riktig rekkefølge
     areaOrder.forEach(area => {
         // Hopp over hvis det ikke er noen saker i dette området eller hvis filtrert
-        if (!issuesByArea[area]) return;
+        if (!issuesByArea[area] || issuesByArea[area].length === 0) return;
         
-        // Lag områdeoverskrift
+        // Lag områdeoverskrift - forbedret for bedre synlighet
         const areaRow = document.createElement('tr');
         areaRow.className = 'area-header';
         
-        // Opprett cellen som egen TD og legg den til i TR
         const areaCell = document.createElement('td');
         areaCell.colSpan = parties.length + 2; // +2 for issue-col og SUM
         areaCell.textContent = area;
-        areaRow.appendChild(areaCell);
         
+        // Legg til ekstra attributter for styling og tilgjengelighet
+        areaCell.setAttribute('role', 'heading');
+        areaCell.setAttribute('aria-level', '2');
+        
+        areaRow.appendChild(areaCell);
         tbody.appendChild(areaRow);
         
         // Gå gjennom hver sak i dette området
