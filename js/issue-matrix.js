@@ -20,6 +20,25 @@ const parties = [
     { name: "Fremskrittspartiet", shorthand: "FrP", seats: 21, position: 9, color: "#002e5e", classPrefix: "frp" }
 ];
 
+// Farger for enighetsgrad som matcher partiboksene
+const agreementColors = {
+    0: {
+        background: "rgba(230, 60, 140, 0.15)",
+        color: "#e63c8c",
+        border: "#e63c8c"
+    },
+    1: {
+        background: "rgba(255, 190, 44, 0.15)",
+        color: "#ffbe2c",
+        border: "#ffbe2c"
+    },
+    2: {
+        background: "rgba(0, 168, 163, 0.15)",
+        color: "#00a8a3",
+        border: "#00a8a3"
+    }
+};
+
 // Global variabel for å holde data
 let matrixIssues = [];
 
@@ -253,6 +272,12 @@ function generateMatrix(areaFilter, viewMode) {
                 // Sett fargeklasse basert på enighetsgrad
                 cell.classList.add(`level-${agreementLevel}`);
                 
+                // Sett CSS-egenskaper direkte for å matche partiboksene
+                const colors = agreementColors[agreementLevel];
+                cell.style.backgroundColor = colors.background;
+                cell.style.color = colors.color;
+                cell.style.borderColor = colors.border;
+                
                 // Legg til tooltip-data
                 cell.dataset.party = party.shorthand;
                 cell.dataset.issue = issue.id;
@@ -269,24 +294,36 @@ function generateMatrix(areaFilter, viewMode) {
                 totalPoints += agreementLevel;
             });
             
-            // Legg til SUM-celle
+            // Legg til SUM-celle med oval styling
             const sumCell = document.createElement('td');
             sumCell.textContent = totalPoints;
             sumCell.style.fontWeight = 'bold';
+            sumCell.style.borderRadius = '20px';
+            sumCell.style.display = 'inline-block';
+            sumCell.style.minWidth = '30px';
+            sumCell.style.padding = '5px 10px';
             
             // Fargekode basert på total poengsum (maksimum mulig er parties.length * 2)
             const maxPossiblePoints = parties.length * 2;
             const scoreRatio = totalPoints / maxPossiblePoints;
             
             if (scoreRatio >= 0.6) { // Høy enighet (60%+ av maksimum)
-                sumCell.style.backgroundColor = 'rgba(0, 168, 163, 0.2)'; // Grønn
+                sumCell.style.backgroundColor = 'rgba(0, 168, 163, 0.15)';
+                sumCell.style.color = '#00a8a3';
+                sumCell.style.border = '1px solid #00a8a3';
             } else if (scoreRatio >= 0.3) { // Middels enighet (30-60% av maksimum)
-                sumCell.style.backgroundColor = 'rgba(255, 190, 44, 0.2)'; // Gul
+                sumCell.style.backgroundColor = 'rgba(255, 190, 44, 0.15)';
+                sumCell.style.color = '#ffbe2c';
+                sumCell.style.border = '1px solid #ffbe2c';
             } else { // Lav enighet (mindre enn 30% av maksimum)
-                sumCell.style.backgroundColor = 'rgba(230, 60, 140, 0.2)'; // Rosa
+                sumCell.style.backgroundColor = 'rgba(230, 60, 140, 0.15)';
+                sumCell.style.color = '#e63c8c';
+                sumCell.style.border = '1px solid #e63c8c';
             }
             
-            row.appendChild(sumCell);
+            const sumCellWrapper = document.createElement('td');
+            sumCellWrapper.appendChild(sumCell);
+            row.appendChild(sumCellWrapper);
             tbody.appendChild(row);
         });
     });
@@ -301,8 +338,21 @@ function generateMatrix(areaFilter, viewMode) {
         document.body.appendChild(tooltip);
     }
     
-    // Oppdater cellestiler for avrundede hjørner
-    setTimeout(updateCellStyles, 100);
+    // Oppdater legend for å matche celle-stilen
+    updateLegendStyles();
+}
+
+// Funksjon for å oppdatere legendens stiler
+function updateLegendStyles() {
+    const legendItems = document.querySelectorAll('.legend-color');
+    legendItems.forEach(item => {
+        const level = item.classList.contains('level-0') ? 0 : 
+                     item.classList.contains('level-1') ? 1 : 2;
+        
+        const colors = agreementColors[level];
+        item.style.backgroundColor = colors.background;
+        item.style.borderColor = colors.border;
+    });
 }
 
 // Funksjon for å vise tooltip med detaljer
@@ -323,22 +373,20 @@ function showTooltip(element, issue, partyCode, level) {
     
     // Sett enighetsgrad-tekst
     let levelText = '';
-    let levelClass = '';
+    let colors = agreementColors[level];
+    
     if (level === 2) {
         levelText = 'Helt enig';
-        levelClass = 'level-2';
     } else if (level === 1) {
         levelText = 'Delvis enig';
-        levelClass = 'level-1';
     } else {
         levelText = 'Ikke enig / ingen standpunkt';
-        levelClass = 'level-0';
     }
     
     // Bygg tooltip-innhold
     let tooltipContent = `
         <h3>${issue.name}</h3>
-        <p><strong style="color: ${partyColor}">${partyName}</strong> er <strong class="${levelClass}" style="padding: 2px 6px; border-radius: 12px;">${levelText}</strong> med Kreftforeningen i denne saken.</p>
+        <p><strong style="color: ${partyColor}">${partyName}</strong> er <strong style="display: inline-block; padding: 3px 10px; border-radius: 15px; background-color: ${colors.background}; color: ${colors.color}; border: 1px solid ${colors.border};">${levelText}</strong> med Kreftforeningen i denne saken.</p>
     `;
     
     // Legg til sitat hvis det finnes
@@ -376,21 +424,4 @@ function closeTooltip(event) {
         tooltip.style.display = 'none';
     }
     document.removeEventListener('click', closeTooltip);
-}
-
-// Funksjon for å oppdatere cellestyling til avrundede hjørner
-function updateCellStyles() {
-    // Finn alle celler og gi dem avrundede hjørner
-    const cells = document.querySelectorAll('.cell');
-    cells.forEach(cell => {
-        cell.style.borderRadius = '20px';
-        cell.style.margin = '2px';
-    });
-    
-    // Også oppdater tooltip level-indikatorene
-    const levelIndicators = document.querySelectorAll('.matrix-tooltip .level-0, .matrix-tooltip .level-1, .matrix-tooltip .level-2');
-    levelIndicators.forEach(indicator => {
-        indicator.style.borderRadius = '12px';
-        indicator.style.display = 'inline-block';
-    });
 }
