@@ -846,8 +846,8 @@
         "quote": null
       },
       "FrP": {
-        "level": 2,
-        "quote": "Norge skal bli en ledende produsent, utvikler og eksportør av helseteknologi"
+        "level": 0,
+        "quote": null
       },
       "H": {
         "level": 2,
@@ -890,7 +890,7 @@
         "quote": null
       },
       "FrP": {
-        "level": 2,
+        "level": 1,
         "quote": "Gjøre Norge til en ledende produsent, utvikler og eksportør av helseteknologi."
       },
       "H": {
@@ -1418,7 +1418,7 @@
         "quote": null
       },
       "FrP": {
-        "level": 2,
+        "level": 1,
         "quote": "Bekjempe underernæring og få flere kjøkken tilbake på sykehjem"
       },
       "H": {
