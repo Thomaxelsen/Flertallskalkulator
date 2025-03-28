@@ -17,8 +17,7 @@ const parties = [
     { name: "Kristelig Folkeparti", shorthand: "KrF", seats: 3, position: 6, color: "#ffbe00", classPrefix: "krf" },
     { name: "Venstre", shorthand: "V", seats: 8, position: 7, color: "#00807b", classPrefix: "v" },
     { name: "Høyre", shorthand: "H", seats: 36, position: 8, color: "#007ac8", classPrefix: "h" },
-    { name: "Fremskrittspartiet", shorthand: "FrP", seats: 21, position: 9, color: "#002e5e", classPrefix: "frp" },
-
+    { name: "Fremskrittspartiet", shorthand: "FrP", seats: 21, position: 9, color: "#002e5e", classPrefix: "frp" }
 ];
 
 // Global variabel for å holde data
@@ -165,7 +164,7 @@ function generateMatrix(areaFilter, viewMode) {
     const sumHeader = document.createElement('th');
     sumHeader.className = 'party-col';
     sumHeader.textContent = 'SUM';
-    sumHeader.title = 'Totalt antall partier som er helt enige';
+    sumHeader.title = 'Sum av poeng fra alle partier';
     headerRow.appendChild(sumHeader);
     
     thead.appendChild(headerRow);
@@ -205,8 +204,8 @@ function generateMatrix(areaFilter, viewMode) {
             issueCell.title = issue.name;
             row.appendChild(issueCell);
             
-            // Hold styr på antall partier som er helt enige
-            let totalAgreement = 0;
+            // Hold styr på total poengsum for raden
+            let totalPoints = 0;
             
             // Debug
             console.log(`Behandler sak [${issue.id}] ${issue.name}, partyStances:`, issue.partyStances ? 'exists' : 'missing');
@@ -243,24 +242,27 @@ function generateMatrix(areaFilter, viewMode) {
                 
                 row.appendChild(cell);
                 
-                // Oppdater total hvis helt enig (nivå 2)
-                if (agreementLevel === 2) {
-                    totalAgreement++;
-                }
+                // Legg til poeng for denne cellen til totalen
+                totalPoints += agreementLevel;
             });
             
-            // Legg til SUM-celle
+            // Legg til SUM-celle med total poengsum
             const sumCell = document.createElement('td');
-            sumCell.textContent = totalAgreement;
+            sumCell.textContent = totalPoints;
             sumCell.style.fontWeight = 'bold';
-            // Vurdere flertall
-            if (totalAgreement >= 5) { // Med 5+ partier er det god sjanse for flertall
+            
+            // Fargekode basert på total poengsum (maksimum mulig er parties.length * 2)
+            const maxPossiblePoints = parties.length * 2;
+            const scoreRatio = totalPoints / maxPossiblePoints;
+            
+            if (scoreRatio >= 0.6) { // Høy enighet (60%+ av maksimum)
                 sumCell.style.backgroundColor = 'rgba(40, 167, 69, 0.2)';
-            } else if (totalAgreement >= 3) { // 3-4 partier kan være delvis flertall
+            } else if (scoreRatio >= 0.3) { // Middels enighet (30-60% av maksimum)
                 sumCell.style.backgroundColor = 'rgba(255, 193, 7, 0.2)';
-            } else { // 0-2 partier er sannsynligvis ikke flertall
+            } else { // Lav enighet (mindre enn 30% av maksimum)
                 sumCell.style.backgroundColor = 'rgba(220, 53, 69, 0.2)';
             }
+            
             row.appendChild(sumCell);
             
             tbody.appendChild(row);
