@@ -39,8 +39,9 @@ const agreementColors = {
     }
 };
 
-// Header gradient farger for å matche flertallskalkulatoren
-const headerGradient = "linear-gradient(90deg, #6e2b62, #003087)";
+// Kreftforeningens farge for overskrifter basert på nettsiden
+const headerBackground = "#6e2b62"; // Kreftforeningens mørk lilla
+const headerGradient = "linear-gradient(90deg, #6e2b62, #6e2b62)"; // Ensfarget versjon
 
 // Global variabel for å holde data
 let matrixIssues = [];
@@ -255,14 +256,14 @@ function generateMatrix(areaFilter, viewMode) {
         // Hopp over hvis det ikke er noen saker i dette området eller hvis filtrert
         if (!issuesByArea[area] || issuesByArea[area].length === 0) return;
         
-        // Lag områdeoverskrift med gradient som matcher flertallskalkulatoren
+        // Lag områdeoverskrift med Kreftforeningens lilla overskriftsfarge
         const areaRow = document.createElement('tr');
         areaRow.className = 'area-header';
         
         const areaCell = document.createElement('td');
         areaCell.colSpan = parties.length + 2; // +2 for issue-col og SUM
         areaCell.textContent = area;
-        areaCell.style.background = headerGradient; // Bruk den definerte gradient
+        areaCell.style.background = headerBackground; // Bruk Kreftforeningens lilla
         areaCell.style.color = "white";
         areaCell.style.fontWeight = "bold";
         areaCell.style.padding = "12px";
