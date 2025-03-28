@@ -249,19 +249,7 @@
     </script>
 
     <!-- Scripts -->
-    <script src="js/issues.js"></script>
+   <script src="js/issue-matrix.js"></script>
     <script>
-        // Sjekk at issues.js faktisk laster dataene
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log("DOM lastet, venter på issues data");
-            if (typeof loadIssuesData === 'function') {
-                console.log("Laster issues data");
-                loadIssuesData();
-            } else {
-                console.error("loadIssuesData funksjonen ikke funnet!");
-            }
-        });
-    </script>
-    <script src="js/issue-matrix.js"></script>
 </body>
 </html>
