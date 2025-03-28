@@ -40,7 +40,7 @@ const agreementColors = {
 };
 
 // Kreftforeningens farge for overskrifter basert på nettsiden
-const headerBackground = "#003087"; // Kreftforeningens mørkeblå
+const headerBackground = "#b3d7f0"; // Dusere lyseblå
 const headerGradient = "linear-gradient(90deg, #6e2b62, #6e2b62)"; // Ensfarget versjon
 
 // Global variabel for å holde data
