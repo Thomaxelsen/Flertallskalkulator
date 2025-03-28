@@ -6,8 +6,139 @@
     <title>Saksmatrise - Partienes standpunkt</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/issue-matrix.css">
+    <!-- Inline CSS for hamburgermenyen -->
+    <style>
+        /* Hamburgermeny styling - uavhengig av andre stiler */
+        .burger-menu {
+            position: fixed;
+            top: 20px;
+            left: 20px; /* Flyttet til venstre side */
+            z-index: 1000;
+            cursor: pointer;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: none; /* Skjul på desktop */
+        }
+        
+        @media (max-width: 768px) {
+            .burger-menu {
+                display: block; /* Vis bare på mobil */
+            }
+            
+            .nav-links {
+                display: none; /* Skjul vanlige lenker på mobil */
+            }
+        }
+        
+        .burger-bar {
+            width: 25px;
+            height: 3px;
+            background-color: #003087; /* Kreftforeningens blå */
+            margin: 5px 0;
+            transition: 0.4s;
+        }
+        
+        /* Menycontainer - nå kommer fra venstre side */
+        .mobile-menu {
+            position: fixed;
+            left: -250px; /* Starter utenfor skjermen på venstre side */
+            top: 0;
+            width: 250px;
+            max-width: 80vw;
+            height: 100%;
+            background-color: white;
+            transition: left 0.3s ease; /* Endret fra right til left */
+            box-shadow: 2px 0 5px rgba(0,0,0,0.2); /* Endret skyggeside */
+            z-index: 999;
+        }
+        
+        .mobile-menu.active {
+            left: 0; /* Kommer inn fra venstre side */
+        }
+        
+        /* Menyinnhold */
+        .menu-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .close-button {
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+            line-height: 1;
+        }
+        
+        .menu-items {
+            padding: 20px;
+        }
+        
+        .menu-items a {
+            display: block;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+        }
+        
+        .menu-items a:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .menu-items a.active {
+            background-color: #003087;
+            color: white;
+        }
+        
+        /* Overlay når menyen er åpen */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .menu-overlay.active {
+            display: block;
+        }
+    </style>
 </head>
 <body>
+    <!-- Hamburger meny knapp -->
+    <div class="burger-menu" id="burgerMenu">
+        <div class="burger-bar"></div>
+        <div class="burger-bar"></div>
+        <div class="burger-bar"></div>
+    </div>
+    
+    <!-- Mobil meny -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="menu-header">
+            <h3>Meny</h3>
+            <button class="close-button" id="closeMenu">&times;</button>
+        </div>
+        <div class="menu-items" id="mobileMenuItems">
+            <!-- Fylles dynamisk med JavaScript -->
+        </div>
+    </div>
+    
+    <!-- Bakgrunnsoverlay for menyen -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
     <div class="container">
         <!-- Header -->
         <header>
@@ -19,7 +150,7 @@
                 <div class="header-subtitle">Oversikt over partienes standpunkt til saker fra Kreftforeningens program</div>
             </div>
             <div class="nav-links">
-                <!-- Navigasjonslenker legges til automatisk av navigation.js -->
+                <!-- Fylles dynamisk av JavaScript -->
             </div>
         </header>
         
