@@ -1,152 +1,49 @@
-// navigation.js - Håndterer hamburgermeny og navigasjon
-
-// Legg til debugging på global nivå
-console.log("Navigation.js lastet");
+// navigation.js - Håndterer hovednavigasjon og hamburgermeny for alle sider
+// Versjon 2.0 - Robust mobilmeny
 
 // Flagg for å unngå dobbel initialisering
 let navigationInitialized = false;
 
-// Kjør initialisering umiddelbart
-(function() {
-    console.log("IIFE utføres");
-    
-    // Forsøker å initialisere umiddelbart
-    tryInitialize();
-    
-    // Setter opp event listeners på flere nivåer for backup
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log("DOMContentLoaded utløst");
-        tryInitialize();
-    });
-    
-    window.addEventListener('load', function() {
-        console.log("Window load utløst");
-        tryInitialize();
-        
-        // Ekstra forsinkelse på 500ms som siste utvei
-        setTimeout(tryInitialize, 500);
-    });
-    
-    // Ekstra sikkerhetstimer
-    setTimeout(tryInitialize, 1000);
-})();
-
-// Funksjon som forsøker å initialisere nav
-function tryInitialize() {
-    if (navigationInitialized) {
-        console.log("Navigation allerede initialisert, hopper over");
-        return;
-    }
-    
-    console.log("Forsøker å initialisere navigasjon");
+// Kjør initialisering når siden lastes
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM lastet - initialiserer navigasjon");
     initializeNavigation();
-}
+});
 
-// Hovedinitialisering
+// Hovedfunksjon for å initialisere navigasjon
 function initializeNavigation() {
-    console.log("initializeNavigation kjører");
-    
     // Unngå dobbel initialisering
     if (navigationInitialized) {
-        console.log("Allerede initialisert, returnerer");
+        console.log("Navigasjon allerede initialisert, hopper over");
         return;
     }
     
-    // Sjekk om hamburgermenyen allerede finnes
-    if (document.querySelector('.hamburger-nav')) {
-        console.log("Hamburgermeny eksisterer allerede");
-        navigationInitialized = true;
-        // Oppdater bare event listeners for eksisterende meny
-        setupEventListeners();
-        return;
-    }
+    console.log("Initialiserer navigasjon");
     
     // Marker at vi har initialisert
     navigationInitialized = true;
-    console.log("Setter navigationInitialized = true");
     
-    console.log("Oppretter hamburgermeny");
-    // Opprett hamburgermenyen
-    createHamburgerMenu();
-    
-    console.log("Setter opp event listeners");
-    // Sett opp event listeners
-    setupEventListeners();
-}
-
-function createHamburgerMenu() {
-    // Opprett en container for hamburgermenyen
-    const hamburgerNav = document.createElement('div');
-    hamburgerNav.className = 'hamburger-nav';
-    hamburgerNav.id = 'hamburgerNav';
-    
-    // Sett HTML-innhold for hamburger-knappen
-    const hamburgerButtonHTML = `
-        <button class="hamburger-button" id="hamburgerButton" aria-label="Meny">
-            <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
-        </button>
-    `;
-    
-    // Opprett meny-innhold basert på navigationConfig
-    let menuLinksHTML = '';
-    
-    // Sjekk om navigationConfig er tilgjengelig
-    if (window.navigationConfig && window.navigationConfig.navLinks) {
-        window.navigationConfig.navLinks.forEach(link => {
-            menuLinksHTML += `<a href="${link.href}" class="menu-link">${link.title}</a>`;
-        });
-    } else {
-        // Fallback til standardlenker hvis konfigurasjon mangler
-        menuLinksHTML = `
-            <a href="index.html" class="menu-link">Flertallskalkulator</a>
-            <a href="party-overview.html" class="menu-link">Partioversikt</a>
-            <a href="majority-coalitions.html" class="menu-link">Flertallskoalisjoner</a>
-        `;
-    }
-    
-    // Sett HTML-innhold for hele menyen
-    hamburgerNav.innerHTML = `
-        ${hamburgerButtonHTML}
-        <div class="nav-menu" id="navMenu">
-            <div class="nav-menu-header">
-                <span class="menu-title">Meny</span>
-                <button class="close-menu" id="closeMenu">&times;</button>
-            </div>
-            <nav class="nav-menu-links">
-                ${menuLinksHTML}
-            </nav>
-        </div>
-    `;
-    
-    // Legg til i siden
-    const container = document.querySelector('.container');
-    if (container) {
-        console.log("Container funnet, legger til hamburgermeny");
-        // Legg til som første barn innenfor container
-        container.insertBefore(hamburgerNav, container.firstChild);
-    } else {
-        console.log("Container ikke funnet, legger til i body");
-        // Fallback: Legg til i body
-        document.body.appendChild(hamburgerNav);
-    }
-    
-    // Oppdater også desktop-navigasjonen
+    // Generer desktop-navigasjon
     updateDesktopNavigation();
+    
+    // Opprett mobilmeny
+    createMobileMenu();
 }
 
-// Ny funksjon for å oppdatere desktop-navigasjonen
+// Funksjon for å oppdatere desktop-navigasjonen
 function updateDesktopNavigation() {
     const desktopNav = document.querySelector('.nav-links');
-    if (!desktopNav) return;  // Hvis desktop-navigasjon ikke finnes
+    if (!desktopNav) {
+        console.warn("Desktop nav element ikke funnet");
+        return;
+    }
     
     // Tøm eksisterende navigasjon
     desktopNav.innerHTML = '';
     
     // Legg til lenker fra konfigurasjon
     if (window.navigationConfig && window.navigationConfig.navLinks) {
-        // Hopp over første lenke (vanligvis den aktive siden)
+        // Finn gjeldende side
         const currentPage = window.location.pathname.split('/').pop() || 'index.html';
         
         window.navigationConfig.navLinks.forEach(link => {
@@ -159,113 +56,312 @@ function updateDesktopNavigation() {
                 desktopNav.appendChild(navLink);
             }
         });
+    } else {
+        console.warn("Navigasjonskonfigurasjon ikke funnet");
     }
 }
 
-// Funksjon for å sette opp event listeners
-function setupEventListeners() {
-    console.log("setupEventListeners kjører");
+// Funksjon for å opprette mobilmeny
+function createMobileMenu() {
+    console.log("Oppretter mobilmeny");
     
-    // Hent nødvendige elementer
-    const hamburgerButton = document.getElementById('hamburgerButton');
-    const closeMenuButton = document.getElementById('closeMenu');
-    const navMenu = document.getElementById('navMenu');
-    
-    if (!hamburgerButton) {
-        console.error("Hamburger-knapp ikke funnet");
+    // Sjekk om menyen allerede finnes
+    if (document.getElementById('mobileMenuContainer')) {
+        console.warn("Mobilmeny finnes allerede");
+        return;
     }
     
-    if (!closeMenuButton) {
-        console.error("Lukkeknapp ikke funnet");
+    // 1. Opprett HTML-struktur for mobilmeny
+    const menuContainer = document.createElement('div');
+    menuContainer.id = 'mobileMenuContainer';
+    
+    // Hamburger-knapp
+    const burgerButton = document.createElement('button');
+    burgerButton.id = 'burgerButton';
+    burgerButton.className = 'burger-button';
+    burgerButton.setAttribute('aria-label', 'Åpne meny');
+    burgerButton.innerHTML = `
+        <span class="burger-line"></span>
+        <span class="burger-line"></span>
+        <span class="burger-line"></span>
+    `;
+    
+    // Meny-container
+    const mobileMenu = document.createElement('div');
+    mobileMenu.id = 'mobileMenu';
+    mobileMenu.className = 'mobile-menu';
+    
+    // Meny-header
+    const menuHeader = document.createElement('div');
+    menuHeader.className = 'menu-header';
+    menuHeader.innerHTML = `
+        <h3>Meny</h3>
+        <button id="closeMenu" class="close-button" aria-label="Lukk meny">&times;</button>
+    `;
+    
+    // Menylenker
+    const menuItems = document.createElement('div');
+    menuItems.className = 'menu-items';
+    
+    // Legg til navigasjonslenker
+    if (window.navigationConfig && window.navigationConfig.navLinks) {
+        window.navigationConfig.navLinks.forEach(link => {
+            const menuLink = document.createElement('a');
+            menuLink.href = link.href;
+            menuLink.textContent = link.title;
+            
+            // Marker aktiv side
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            if (link.href === currentPage) {
+                menuLink.className = 'active';
+            }
+            
+            menuItems.appendChild(menuLink);
+        });
+    } else {
+        // Fallback hvis konfigurasjon mangler
+        menuItems.innerHTML = `
+            <a href="index.html">Flertallskalkulator</a>
+            <a href="party-overview.html">Partioversikt</a>
+            <a href="majority-coalitions.html">Flertallskoalisjoner</a>
+        `;
     }
     
-    if (!navMenu) {
-        console.error("Nav-meny ikke funnet");
+    // Overlay for mørk bakgrunn når menyen er åpen
+    const overlay = document.createElement('div');
+    overlay.id = 'menuOverlay';
+    overlay.className = 'menu-overlay';
+    
+    // Sett sammen menystrukturen
+    mobileMenu.appendChild(menuHeader);
+    mobileMenu.appendChild(menuItems);
+    
+    menuContainer.appendChild(burgerButton);
+    menuContainer.appendChild(mobileMenu);
+    menuContainer.appendChild(overlay);
+    
+    // Legg til i DOM
+    document.body.appendChild(menuContainer);
+    
+    // 2. Legg til CSS-stilene direkte (for å sikre at de er der)
+    addMenuStyles();
+    
+    // 3. Legg til event listeners
+    setupMobileMenuEvents();
+}
+
+// Funksjon for å legge til nødvendige CSS-stiler
+function addMenuStyles() {
+    // Sjekk om stilene allerede finnes
+    if (document.getElementById('mobileMenuStyles')) {
+        return;
     }
     
-    if (!hamburgerButton || !closeMenuButton || !navMenu) {
+    const styleElement = document.createElement('style');
+    styleElement.id = 'mobileMenuStyles';
+    styleElement.textContent = `
+        /* Mobilmeny-stiler */
+        #burgerButton {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1001;
+            background-color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            cursor: pointer;
+            display: none;
+        }
+        
+        .burger-line {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #003087;
+            margin: 5px 0;
+            border-radius: 3px;
+        }
+        
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 280px;
+            height: 100%;
+            background-color: white;
+            z-index: 1000;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            transition: left 0.3s ease;
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.active {
+            left: 0;
+        }
+        
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .menu-header h3 {
+            margin: 0;
+            color: #003087;
+        }
+        
+        .close-button {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #666;
+            cursor: pointer;
+        }
+        
+        .menu-items {
+            padding: 20px;
+        }
+        
+        .menu-items a {
+            display: block;
+            padding: 15px;
+            margin-bottom: 10px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+        }
+        
+        .menu-items a:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .menu-items a.active {
+            background-color: #003087;
+            color: white;
+        }
+        
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+        }
+        
+        .menu-overlay.active {
+            display: block;
+        }
+        
+        body.menu-open {
+            overflow: hidden;
+        }
+        
+        /* Vis bare på mobil */
+        @media (max-width: 768px) {
+            #burgerButton {
+                display: block;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    `;
+    
+    document.head.appendChild(styleElement);
+}
+
+// Funksjon for å sette opp event listeners for mobilmenyen
+function setupMobileMenuEvents() {
+    console.log("Setter opp event listeners for mobilmeny");
+    
+    const burgerButton = document.getElementById('burgerButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const closeButton = document.getElementById('closeMenu');
+    const overlay = document.getElementById('menuOverlay');
+    
+    if (!burgerButton || !mobileMenu || !closeButton || !overlay) {
         console.error("Kunne ikke finne nødvendige menyelementer");
         return;
     }
     
-    // Fjern eventuelle eksisterende event listeners
-    // (Dette er umulig direkte i JavaScript, men vi kan erstatte elementene)
-    const newHamburgerButton = hamburgerButton.cloneNode(true);
-    hamburgerButton.parentNode.replaceChild(newHamburgerButton, hamburgerButton);
-    
-    const newCloseButton = closeMenuButton.cloneNode(true);
-    closeMenuButton.parentNode.replaceChild(newCloseButton, closeMenuButton);
-    
-    // Oppdater referansene
-    const updatedHamburgerButton = document.getElementById('hamburgerButton');
-    const updatedCloseButton = document.getElementById('closeMenu');
-    
-    // Toggle meny når hamburgerknappen klikkes
-    updatedHamburgerButton.addEventListener('click', function(e) {
-        console.log("Hamburgerknapp klikket");
+    // Åpne menyen
+    burgerButton.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        navMenu.classList.toggle('active');
-        document.body.classList.toggle('menu-open'); // Hindrer scrolling når menyen er åpen
+        openMobileMenu();
     });
     
-    // Legg til inline onclick handler som backup
-    updatedHamburgerButton.setAttribute('onclick', "document.getElementById('navMenu').classList.toggle('active'); document.body.classList.toggle('menu-open'); return false;");
+    // Direkte onclick som fallback
+    burgerButton.onclick = function() {
+        openMobileMenu();
+        return false;
+    };
     
-    // Lukk meny når lukkeknappen klikkes
-    updatedCloseButton.addEventListener('click', function(e) {
-        console.log("Lukkeknapp klikket");
+    // Lukk menyen (via knapp)
+    closeButton.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        navMenu.classList.remove('active');
+        closeMobileMenu();
+    });
+    
+    // Direkte onclick som fallback
+    closeButton.onclick = function() {
+        closeMobileMenu();
+        return false;
+    };
+    
+    // Lukk menyen (via overlay)
+    overlay.addEventListener('click', function() {
+        closeMobileMenu();
+    });
+    
+    // Lukk meny hvis vinduet blir resizet til desktop-størrelse
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768 && mobileMenu.classList.contains('active')) {
+            closeMobileMenu();
+        }
+    });
+}
+
+// Hjelpefunksjon for å åpne mobilmenyen
+function openMobileMenu() {
+    console.log("Åpner mobilmeny");
+    const mobileMenu = document.getElementById('mobileMenu');
+    const overlay = document.getElementById('menuOverlay');
+    
+    if (mobileMenu && overlay) {
+        mobileMenu.classList.add('active');
+        overlay.classList.add('active');
+        document.body.classList.add('menu-open');
+    }
+}
+
+// Hjelpefunksjon for å lukke mobilmenyen
+function closeMobileMenu() {
+    console.log("Lukker mobilmeny");
+    const mobileMenu = document.getElementById('mobileMenu');
+    const overlay = document.getElementById('menuOverlay');
+    
+    if (mobileMenu && overlay) {
+        mobileMenu.classList.remove('active');
+        overlay.classList.remove('active');
         document.body.classList.remove('menu-open');
-    });
-    
-    // Inline onclick handler som backup
-    updatedCloseButton.setAttribute('onclick', "document.getElementById('navMenu').classList.remove('active'); document.body.classList.remove('menu-open'); return false;");
-    
-    // Lukk menyen når man klikker utenfor
-    document.addEventListener('click', function(event) {
-        // Sjekk om klikket er utenfor menyen og hamburgerknappen
-        if (navMenu.classList.contains('active') && 
-            !navMenu.contains(event.target) && 
-            !document.getElementById('hamburgerButton').contains(event.target)) {
-            console.log("Klikk utenfor menyen oppdaget");
-            navMenu.classList.remove('active');
-            document.body.classList.remove('menu-open');
-        }
-    });
-    
-    // Marker aktiv side i menyen
-    highlightCurrentPage();
+    }
 }
 
-// Funksjon for å markere aktiv side i menyen
-function highlightCurrentPage() {
-    // Finn nåværende side ved å sjekke URL
-    const currentPage = window.location.pathname.split('/').pop();
-    console.log("Nåværende side:", currentPage);
-    
-    // Finn alle navigasjonslenker
-    const menuLinks = document.querySelectorAll('.menu-link');
-    
-    // Gå gjennom alle lenker og marker den aktive
-    menuLinks.forEach(link => {
-        const linkPage = link.getAttribute('href');
-        
-        if (currentPage === linkPage || 
-            (currentPage === '' && linkPage === 'index.html') ||
-            (currentPage === '/' && linkPage === 'index.html')) {
-            link.classList.add('active');
-            console.log("Markerte aktiv lenke:", linkPage);
-        }
-    });
-}
-
-// Eksporter funksjoner i tilfelle de trengs av andre moduler
+// Eksporter funksjoner for bruk i andre moduler
 window.navigationModule = {
     initialize: initializeNavigation,
-    createMenu: createHamburgerMenu,
-    setupEvents: setupEventListeners,
-    updateDesktopNav: updateDesktopNavigation
+    updateDesktopNav: updateDesktopNavigation,
+    openMobileMenu: openMobileMenu,
+    closeMobileMenu: closeMobileMenu
 };
