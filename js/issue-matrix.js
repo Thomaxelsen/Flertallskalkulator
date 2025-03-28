@@ -115,13 +115,16 @@ function setupFilterListeners() {
 }
 
 // Generer matrisen basert på filtrering
-// Oppdatert generateMatrix-funksjon med forbedret områdeoverskrift-generering
-
 function generateMatrix(areaFilter, viewMode) {
     console.log("Genererer matrise med", matrixIssues.length, "saker, filter:", areaFilter, "visning:", viewMode);
     
     const matrixContainer = document.getElementById('matrix-visualization');
     matrixContainer.innerHTML = '';
+    
+    // Opprett container for matrisen
+    const matrixWrapper = document.createElement('div');
+    matrixWrapper.className = 'matrix-container';
+    matrixContainer.appendChild(matrixWrapper);
     
     // Filtrer saker basert på valgt område
     let filteredIssues = matrixIssues;
@@ -266,9 +269,6 @@ function generateMatrix(areaFilter, viewMode) {
                 totalPoints += agreementLevel;
             });
             
-            // Debug: Sjekk at summen blir riktig
-            console.log(`Sak "${issue.name}": Total poengsum = ${totalPoints}`);
-            
             // Legg til SUM-celle
             const sumCell = document.createElement('td');
             sumCell.textContent = totalPoints;
@@ -292,7 +292,7 @@ function generateMatrix(areaFilter, viewMode) {
     });
     
     table.appendChild(tbody);
-    matrixContainer.appendChild(table);
+    matrixWrapper.appendChild(table);
     
     // Lag tooltip-container hvis den ikke finnes
     if (!document.querySelector('.matrix-tooltip')) {
@@ -307,9 +307,10 @@ function showTooltip(element, issue, partyCode, level) {
     const tooltip = document.querySelector('.matrix-tooltip');
     const rect = element.getBoundingClientRect();
     
-    // Finn partinavn
+    // Finn partinavn og farge
     const party = parties.find(p => p.shorthand === partyCode);
     const partyName = party ? party.name : partyCode;
+    const partyColor = party ? party.color : '#333';
     
     // Finn eventuelt sitat
     let quote = '';
@@ -319,23 +320,29 @@ function showTooltip(element, issue, partyCode, level) {
     
     // Sett enighetsgrad-tekst
     let levelText = '';
+    let levelClass = '';
     if (level === 2) {
         levelText = 'Helt enig';
+        levelClass = 'level-2';
     } else if (level === 1) {
         levelText = 'Delvis enig';
+        levelClass = 'level-1';
     } else {
         levelText = 'Ikke enig / ingen standpunkt';
+        levelClass = 'level-0';
     }
     
     // Bygg tooltip-innhold
     let tooltipContent = `
         <h3>${issue.name}</h3>
-        <p><strong>${partyName}</strong> er <strong>${levelText}</strong> med Kreftforeningen i denne saken.</p>
+        <p><strong style="color: ${partyColor}">${partyName}</strong> er <strong class="${levelClass}" style="padding: 2px 6px; border-radius: 4px;">${levelText}</strong> med Kreftforeningen i denne saken.</p>
     `;
     
     // Legg til sitat hvis det finnes
     if (quote) {
         tooltipContent += `<div class="quote">"${quote}"</div>`;
+    } else {
+        tooltipContent += `<p style="font-style: italic; color: #777;">Ingen utdypende informasjon tilgjengelig.</p>`;
     }
     
     tooltip.innerHTML = tooltipContent;
@@ -354,6 +361,9 @@ function showTooltip(element, issue, partyCode, level) {
     tooltip.style.left = (rect.left + rect.width / 2 - 175) + 'px'; // Sentrert
     tooltip.style.top = top + 'px';
     tooltip.style.display = 'block';
+    
+    // Legg til animation class
+    tooltip.classList.add('fade-in');
     
     // Legg til event listener for å lukke tooltip
     document.addEventListener('click', closeTooltip);
