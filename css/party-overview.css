@@ -13,7 +13,8 @@
     padding: 20px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.06);
     transition: transform 0.2s, box-shadow 0.2s;
-    height: 450px; /* Fast høyde for alle bokser */
+    height: auto; /* Endret fra fast høyde til auto */
+    min-height: 500px; /* Satt en minimumshøyde i stedet */
     display: flex;
     flex-direction: column;
 }
@@ -203,4 +204,114 @@
     .party-box.active {
         display: block;
     }
+}
+/* Stilsett for enighetsvisning */
+.agreement-bars {
+    margin-top: 15px;
+}
+
+.bar-container {
+    margin-bottom: 8px;
+}
+
+.bar-container .label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    margin-bottom: 3px;
+}
+
+.bar {
+    height: 8px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    border-radius: 4px;
+}
+
+.bar-fill.agree {
+    background-color: #28a745; /* Grønn for full enighet */
+}
+
+.bar-fill.partial {
+    background-color: #ffc107; /* Gul for delvis enighet */
+}
+
+.bar-fill.disagree {
+    background-color: #dc3545; /* Rød for uenighet */
+}
+
+/* Fanevisning for sakslister */
+.issues-tabs {
+    display: flex;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #eee;
+}
+
+.tab-button {
+    flex: 1;
+    padding: 8px 5px;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: #555;
+    text-align: center;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tab-button:hover {
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.tab-button.active {
+    border-bottom-color: var(--kf-blue);
+    color: var(--kf-blue);
+    font-weight: 600;
+}
+
+.tab-content {
+    display: none;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Stilsett for sakslistene basert på enighet */
+.agree-list .issue-item {
+    background-color: rgba(40, 167, 69, 0.1);
+    border-left: 3px solid #28a745;
+}
+
+.partial-list .issue-item {
+    background-color: rgba(255, 193, 7, 0.1);
+    border-left: 3px solid #ffc107;
+}
+
+.disagree-list .issue-item {
+    background-color: rgba(220, 53, 69, 0.1);
+    border-left: 3px solid #dc3545;
+}
+
+/* Sitater */
+.issue-quote {
+    font-style: italic;
+    margin-top: 5px;
+    font-size: 0.9rem;
+    color: #555;
+    padding: 5px 10px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 4px;
 }

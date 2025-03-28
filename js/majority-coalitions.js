@@ -2,13 +2,12 @@
 // Script for å vise flertallskoalisjoner for Kreftforeningens politikk
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Vent til issues-objektet er lastet
-    const checkLoaded = setInterval(function() {
-        if (window.issues) {
-            clearInterval(checkLoaded);
-            initializeCoalitions();
-        }
-    }, 100);
+    // Lytt etter issues-data
+    if (window.issues && window.issues.length > 0) {
+        initializeCoalitions(); // Issues allerede lastet
+    } else {
+        document.addEventListener('issuesDataLoaded', initializeCoalitions);
+    }
 });
 
 // Koalisjonsdata - vil fylles under initialisering

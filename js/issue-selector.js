@@ -27,15 +27,26 @@ const issueDocuments = {
   "32": "https://kreftforeningen.atlassian.net/wiki/spaces/POS/pages/891584514/Spesialisering+i+palliasjon"
 };
 
-// Vent til dokumentet er helt lastet
 document.addEventListener('DOMContentLoaded', function() {
-    // Vent til issues er globalt tilgjengelig og partier er lastet
-    const checkLoaded = setInterval(function() {
-        if (window.issues && document.querySelectorAll('.party-card').length > 0) {
-            clearInterval(checkLoaded);
-            initializeIssueSelector();
-        }
-    }, 100);
+    // Sjekk om issues allerede er lastet
+    if (window.issues && window.issues.length > 0 && document.querySelectorAll('.party-card').length > 0) {
+        initializeIssueSelector();
+    } else {
+        // Vent på at issues-data og party-cards er lastet
+        const checkPartyCards = function() {
+            if (document.querySelectorAll('.party-card').length > 0) {
+                initializeIssueSelector();
+            } else {
+                // Sjekk igjen om 100ms
+                setTimeout(checkPartyCards, 100);
+            }
+        };
+        
+        // Lytt etter at issues er lastet
+        document.addEventListener('issuesDataLoaded', function() {
+            checkPartyCards();
+        });
+    }
 });
 
 // Detect if we're on a touch device (mobile/tablet)
