@@ -963,109 +963,129 @@ footer {
 .matrix-table th, .matrix-table td { padding: 10px 12px; border-bottom: 1px solid #eee; text-align: center; vertical-align: middle; white-space: nowrap; }
 .matrix-table td { border-right: 1px solid #eee; }
 .matrix-table th:last-child, .matrix-table td:last-child { border-right: none; }
-.matrix-table thead th { background-color: #f8f9fa; position: sticky; top: 0; z-index: 10; font-weight: 600; white-space: normal; border-top: 1px solid #eee; border-bottom: 2px solid #ddd; padding: 15px 12px; /* Økt padding i header */ }
+.matrix-table thead th { background-color: #f8f9fa; position: sticky; top: 0; z-index: 10; font-weight: 600; white-space: normal; border-top: 1px solid #eee; border-bottom: 2px solid #ddd; padding: 15px 12px; }
 
-/* === NYTT: Styling for Parti-header-kolonner === */
+/* Styling for Parti-header-kolonner */
 .matrix-table thead th.party-col {
-    padding: 10px 5px; /* Juster padding for bedre plass */
-    min-width: 70px; /* Litt mindre */
+    padding: 10px 5px;
+    min-width: 70px;
     max-width: 70px;
     border-radius: 12px;
     color: white;
-    border-left: 1px solid rgba(255,255,255,0.2); /* Skillelinjer */
+    border-left: 1px solid rgba(255,255,255,0.2);
     border-right: 1px solid rgba(255,255,255,0.2);
     /* Bakgrunnsfarge settes av JS med hexToRgb */
 }
 .matrix-table thead th.party-col:first-of-type { border-left: none; }
-.matrix-table thead th.party-col:last-of-type { border-right: none; } /* Gjelder SUM før korrigering */
+.matrix-table thead th.party-col:last-of-type { border-right: none; }
 /* Spesifikk SUM-header stil */
 .matrix-table thead th.party-col[title="Sum av poeng"] {
     background-color: #e9ecef;
     color: #555;
     border-left: 1px solid #ddd;
-    border-radius: 0 12px 12px 0; /* Kun avrunding på høyre side */
+    border-radius: 0 12px 12px 0;
 }
-/* === SLUTT: Styling for Parti-header === */
 
 
 .matrix-table th.issue-col, .matrix-table td.issue-col { text-align: left; position: sticky; left: 0; background-color: white; z-index: 1; min-width: 250px; white-space: normal; border-right: 2px solid #ddd; }
-.matrix-table thead th.issue-col { z-index: 11; background-color: #f8f9fa; border-radius: 12px 0 0 12px; /* Avrunding venstre */ }
+.matrix-table thead th.issue-col { z-index: 11; background-color: #f8f9fa; border-radius: 12px 0 0 12px; }
 
-/* === NYTT/KORRIGERT: Annenhver rad KUN for saksrader === */
+/* Annenhver rad KUN for saksrader */
 .matrix-table tbody tr:not(.area-header):nth-child(even) td {
-     background-color: #f8f9fa; /* Lys farge for partallsrader */
+     background-color: #f8f9fa;
 }
-/* Behold hvit for oddetallsrader (standard) */
 .matrix-table tbody tr:not(.area-header):nth-child(odd) td {
      background-color: white;
 }
 /* Override for sticky issue-kolonne */
 .matrix-table tbody tr:not(.area-header):nth-child(even) td.issue-col {
-    background-color: #f8f9fa; /* Samme som resten av raden */
+    background-color: #f8f9fa;
 }
 .matrix-table tbody tr:not(.area-header):nth-child(odd) td.issue-col {
-    background-color: white; /* Samme som resten av raden */
+    background-color: white;
 }
 
-/* === NYTT/KORRIGERT: Hover-effekt KUN for saksrader === */
+/* === FJERN HOVER-EFFEKT PÅ RAD === */
+/* Fjern disse linjene eller kommenter dem ut:
 .matrix-table tbody tr:not(.area-header):hover td {
-    background-color: #e9ecef; /* Lys grå hover for saksrader */
+    background-color: #e9ecef;
 }
-/* Override for sticky issue-kolonne ved hover */
 .matrix-table tbody tr:not(.area-header):hover td.issue-col {
     background-color: #e9ecef;
 }
-/* === SLUTT: Korrigering av annenhver rad og hover === */
-
+*/
 
 /* Korrigert stil for Area Header */
 .matrix-table tr.area-header td {
-    background-color: #b3d7f0; /* Lyseblå */
-    color: #003087; /* Mørk blå tekst */
+    background-color: #b3d7f0;
+    color: #003087;
     font-weight: bold;
     font-size: 1.1rem;
     text-align: center;
     position: sticky;
-    /* top: Verdi settes dynamisk eller justeres manuelt basert på thead høyde */
     z-index: 5;
     border-top: 2px solid #9ac0e0;
     border-bottom: 1px solid #9ac0e0;
     border-left: none;
     border-right: none;
+    /* Sørger for at thead vises over area-header hvis scrolling skjer */
+    top: 60px; /* Juster denne verdien basert på faktisk høyde av thead */
 }
-/* === NYTT: Hover-regel for Area Header for å BEHOLDE fargen === */
+/* Hover-regel for Area Header for å BEHOLDE fargen */
 .matrix-table tr.area-header:hover td {
     background-color: #a8cbe8; /* Litt mørkere lyseblå på hover */
     color: #002569;
 }
-/* === SLUTT: Hover-regel Area Header === */
 
 
-.cell { display: inline-flex; align-items: center; justify-content: center; width: 70px; height: 36px; border-radius: 24px; font-weight: bold; font-size: 1rem; cursor: default; border: 1px solid transparent; box-sizing: border-box; transition: transform 0.1s ease-in-out, background-color 0.2s; position: relative; }
+.cell { display: inline-flex; align-items: center; justify-content: center; width: 70px; height: 36px; border-radius: 24px; font-weight: bold; font-size: 1rem; cursor: default; border: 1px solid transparent; box-sizing: border-box; transition: transform 0.1s ease-in-out, background-color 0.2s, box-shadow 0.2s; position: relative; }
 .cell.has-quote { cursor: pointer; }
 .cell:active { transform: scale(0.95); }
 /* Farger settes av JS */
 
-/* Info-indikator for matrise-celler */
+/* === NY HOVER-EFFEKT KUN PÅ INTERAKTIVE CELLER === */
+.cell.has-quote:hover {
+    /* Gjør rammen litt tykkere og mer synlig */
+    border-width: 2px;
+    /* Legg til en diskret skygge for å løfte elementet */
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    /* Gjør bakgrunnen litt mørkere (kan justeres) */
+    /* filter: brightness(95%); */ /* Alternativ til å endre farge i JS */
+    transform: translateY(-1px); /* Liten løfteeffekt */
+}
+/* === SLUTT HOVER-EFFEKT CELLER === */
+
+
+/* === NY STIL FOR INFO-INDIKATOR === */
 .matrix-table .cell.has-quote .info-indicator {
     position: absolute;
-    right: -5px;
-    top: -5px;
+    right: 1px;  /* Tettere på kanten */
+    top: 1px;    /* Tettere på kanten */
     font-size: 9px;
-    width: 13px;
-    height: 13px;
-    line-height: 13px;
+    width: 14px; /* Litt større */
+    height: 14px;
+    line-height: 14px;
     text-align: center;
     border-radius: 50%;
-    background-color: rgba(0, 48, 135, 0.8);
-    color: white;
-    font-style: normal;
-    font-weight: bold;
-    border: 1px solid white;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    /* Bruker semi-transparent hvit for bedre lesbarhet på ulike bakgrunner */
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #555; /* Mørk grå tekst */
+    font-style: italic; /* Kursiv 'i' */
+    font-weight: 600;
+    border: 1px solid rgba(0, 0, 0, 0.1); /* Tynn, mørk kant */
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
     pointer-events: none;
     z-index: 1;
+    transition: background-color 0.2s, color 0.2s;
 }
+/* Litt tydeligere indikator når man holder over cellen */
+.matrix-table .cell.has-quote:hover .info-indicator {
+    background-color: white;
+    color: var(--kf-blue);
+    border-color: rgba(0, 48, 135, 0.3);
+}
+/* === SLUTT STIL INFO-INDIKATOR === */
+
 
 .sum-cell-content { display: inline-flex; align-items: center; justify-content: center; width: 70px; height: 36px; border-radius: 24px; font-weight: bold; font-size: 1rem; border: 1px solid transparent; box-sizing: border-box; cursor: default; }
 /* Farger settes av JS */
@@ -1082,15 +1102,15 @@ footer {
     /* ... (alle tidligere mobile regler beholdes) ... */
 
     /* Justeringer spesifikt for matrix på mobil */
-    .matrix-table thead th { padding: 10px 6px; } /* Mindre padding i header */
-    .matrix-table thead th.party-col { min-width: 45px; max-width: 45px; border-radius: 8px; font-size: 0.8rem; } /* Smalere parti-kolonner */
+    .matrix-table thead th { padding: 10px 6px; }
+    .matrix-table thead th.party-col { min-width: 45px; max-width: 45px; border-radius: 8px; font-size: 0.8rem; }
     .matrix-table thead th.issue-col { min-width: 100px; border-radius: 8px 0 0 8px; }
     .matrix-table thead th.party-col[title="Sum av poeng"] { border-radius: 0 8px 8px 0; }
     .matrix-table th.issue-col, .matrix-table td.issue-col { min-width: 100px; font-size: 0.8rem; }
     .matrix-table th, .matrix-table td { padding: 8px 4px; font-size: 0.75rem; }
     .cell, .sum-cell-content { width: 35px; height: 24px; font-size: 0.7rem; border-radius: 12px; }
-    .matrix-table tr.area-header td { font-size: 0.9rem; padding: 8px; }
-    .matrix-table .cell.has-quote .info-indicator { width: 10px; height: 10px; line-height: 10px; font-size: 7px; right: -3px; top: -3px; }
+    .matrix-table tr.area-header td { font-size: 0.9rem; padding: 8px; top: 50px; /* Juster evt. sticky top for mobil */ }
+    .matrix-table .cell.has-quote .info-indicator { width: 10px; height: 10px; line-height: 10px; font-size: 7px; right: -2px; top: -2px; } /* Juster posisjon for mobil */
 }
 
 /* Kun Desktop (Større enn 1024px) */
