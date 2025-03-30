@@ -1,129 +1,138 @@
-// navigation.js - Forenklet og robust mobilmeny
+// navigation.js - Sentralisert logikk for desktop og mobil navigasjon
+
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("DOM fully loaded");
-    
+    console.log("Navigation JS: DOM loaded.");
+
+    // Sjekk om konfigurasjonen er lastet
+    if (typeof window.navigationConfig === 'undefined' || !window.navigationConfig.navLinks) {
+        console.error("Navigation JS: navigationConfig not found or is invalid.");
+        return; // Avslutt hvis konfigurasjonen mangler
+    }
+
     // Fyller desktop navigasjon
     populateDesktopNav();
-    
+
     // Fyller mobilmeny
     populateMobileMenu();
-    
-    // Setter opp menyhendelser
+
+    // Setter opp menyhendelser (åpne/lukke)
     setupMenuEvents();
 });
 
-// Fyller desktop navigasjon
+/**
+ * Fyller navigasjonsområdet for desktop-visning.
+ * Ekskluderer lenken til den gjeldende siden.
+ */
 function populateDesktopNav() {
-    const desktopNav = document.querySelector('.nav-links');
-    if (!desktopNav) return;
-    
-    // Tøm eksisterende navigasjon
-    desktopNav.innerHTML = '';
-    
-    // Finn gjeldende side
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    
-    // Legg til lenker fra konfigurasjon
-    if (window.navigationConfig && window.navigationConfig.navLinks) {
-        window.navigationConfig.navLinks.forEach(link => {
-            // Hvis lenken ikke er til gjeldende side, legg den til
-            if (link.href !== currentPage) {
-                const navLink = document.createElement('a');
-                navLink.href = link.href;
-                navLink.className = 'nav-link';
-                navLink.textContent = link.title;
-                desktopNav.appendChild(navLink);
-            }
-        });
-    }
-}
+    const desktopNav = document.querySelector('.nav-links'); // Bruker klasse for desktop nav container
 
-// Fyller mobilmeny
-function populateMobileMenu() {
-    const mobileMenuItems = document.getElementById('mobileMenuItems');
-    if (!mobileMenuItems) return;
-    
-    // Tøm eksisterende navigasjon
-    mobileMenuItems.innerHTML = '';
-    
-    // Finn gjeldende side
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    
-    // Legg til lenker fra konfigurasjon
-    if (window.navigationConfig && window.navigationConfig.navLinks) {
-        window.navigationConfig.navLinks.forEach(link => {
-            const menuLink = document.createElement('a');
-            menuLink.href = link.href;
-            menuLink.textContent = link.title;
-            
-            // Marker aktiv side
-            if (link.href === currentPage) {
-                menuLink.className = 'active';
-            }
-            
-            mobileMenuItems.appendChild(menuLink);
-        });
-    }
-}
-
-// Setter opp menyhendelser
-function setupMenuEvents() {
-    const burgerMenu = document.getElementById('burgerMenu');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const closeMenu = document.getElementById('closeMenu');
-    const menuOverlay = document.getElementById('menuOverlay');
-    
-    // Hvis disse elementene mangler, avbryt
-    if (!burgerMenu || !mobileMenu || !closeMenu || !menuOverlay) {
-        console.error("Needed menu elements not found");
+    // Avslutt hvis container ikke finnes på denne siden
+    if (!desktopNav) {
+        console.log("Navigation JS: Desktop nav container (.nav-links) not found on this page.");
         return;
     }
-    
-    // Åpne menyen når burgeren klikkes
-    burgerMenu.addEventListener('click', function() {
-        console.log("Burger clicked");
-        mobileMenu.classList.add('active');
+
+    // Tøm eksisterende navigasjon
+    desktopNav.innerHTML = '';
+
+    // Finn gjeldende filnavn for å ekskludere lenken
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    console.log("Navigation JS: Current page for desktop nav exclusion:", currentPage);
+
+    // Legg til lenker fra konfigurasjon
+    window.navigationConfig.navLinks.forEach(link => {
+        // Hvis lenken IKKE peker til den aktive siden
+        if (link.href !== currentPage) {
+            const navLink = document.createElement('a');
+            navLink.href = link.href;
+            navLink.className = 'nav-link'; // Bruker klasse fra styles.css
+            navLink.textContent = link.title;
+            desktopNav.appendChild(navLink);
+        } else {
+             console.log("Navigation JS: Skipping desktop link for current page:", link.href);
+        }
+    });
+    console.log("Navigation JS: Desktop nav populated.");
+}
+
+/**
+ * Fyller innholdet i mobilmenyen.
+ * Markerer lenken til den gjeldende siden som aktiv.
+ */
+function populateMobileMenu() {
+    const mobileMenuItemsContainer = document.getElementById('mobileMenuItems');
+
+    // Avslutt hvis container ikke finnes (skal finnes pga. Steg 1 i forrige svar)
+    if (!mobileMenuItemsContainer) {
+        console.error("Navigation JS: Mobile menu item container (#mobileMenuItems) not found!");
+        return;
+    }
+
+    // Tøm eksisterende navigasjon
+    mobileMenuItemsContainer.innerHTML = '';
+
+    // Finn gjeldende filnavn for å markere aktiv lenke
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    console.log("Navigation JS: Current page for mobile menu active state:", currentPage);
+
+    // Legg til lenker fra konfigurasjon
+    window.navigationConfig.navLinks.forEach(link => {
+        const menuLink = document.createElement('a');
+        menuLink.href = link.href;
+        // Klassen settes i styles.css, ikke her
+        menuLink.textContent = link.title;
+
+        // Marker aktiv side
+        if (link.href === currentPage) {
+            menuLink.classList.add('active'); // Legg til 'active' klasse for styling
+             console.log("Navigation JS: Marking mobile link as active:", link.href);
+        }
+
+        mobileMenuItemsContainer.appendChild(menuLink);
+    });
+     console.log("Navigation JS: Mobile menu populated.");
+}
+
+/**
+ * Setter opp hendelseslyttere for å åpne og lukke mobilmenyen.
+ */
+function setupMenuEvents() {
+    const burgerMenuButton = document.getElementById('burgerMenu');
+    const mobileMenuContainer = document.getElementById('mobileMenu');
+    const closeMenuButton = document.getElementById('closeMenu');
+    const menuOverlay = document.getElementById('menuOverlay');
+
+    // Dobbeltsjekk at alle elementene finnes
+    if (!burgerMenuButton || !mobileMenuContainer || !closeMenuButton || !menuOverlay) {
+        console.error("Navigation JS: One or more menu control elements not found. IDs needed: burgerMenu, mobileMenu, closeMenu, menuOverlay");
+        return; // Avslutt hvis et element mangler
+    }
+    console.log("Navigation JS: All menu elements found, setting up events.");
+
+    // Funksjon for å åpne menyen
+    function openMenu() {
+        console.log("Navigation JS: Opening menu.");
+        mobileMenuContainer.classList.add('active');
         menuOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    });
-    
-    // Legg til onclick som backup
-    burgerMenu.onclick = function() {
-        mobileMenu.classList.add('active');
-        menuOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        return true;
-    };
-    
-    // Lukk menyen når lukkeknappen klikkes
-    closeMenu.addEventListener('click', function() {
-        console.log("Close button clicked");
-        mobileMenu.classList.remove('active');
+        document.body.classList.add('menu-open'); // Legg til klasse på body
+    }
+
+    // Funksjon for å lukke menyen
+    function closeMenu() {
+        console.log("Navigation JS: Closing menu.");
+        mobileMenuContainer.classList.remove('active');
         menuOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-    });
-    
-    // Legg til onclick som backup
-    closeMenu.onclick = function() {
-        mobileMenu.classList.remove('active');
-        menuOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-        return true;
-    };
-    
-    // Lukk menyen når overlay klikkes
-    menuOverlay.addEventListener('click', function() {
-        console.log("Overlay clicked");
-        mobileMenu.classList.remove('active');
-        menuOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-    });
-    
-    // Legg til onclick som backup
-    menuOverlay.onclick = function() {
-        mobileMenu.classList.remove('active');
-        menuOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-        return true;
-    };
+        document.body.classList.remove('menu-open'); // Fjern klasse fra body
+    }
+
+    // Legg til hendelseslytter for burger-knappen
+    burgerMenuButton.addEventListener('click', openMenu);
+
+    // Legg til hendelseslytter for lukkeknappen
+    closeMenuButton.addEventListener('click', closeMenu);
+
+    // Legg til hendelseslytter for overlay-klikking
+    menuOverlay.addEventListener('click', closeMenu);
+
+    console.log("Navigation JS: Menu events set up successfully.");
 }
