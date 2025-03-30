@@ -447,8 +447,7 @@ function generateMatrix(areaFilter, viewMode) {
         document.body.appendChild(tooltip);
     }
     
-    // Oppdater legend for å matche celle-stilen
-    updateLegendStyles();
+
 }
 
 // Funksjon for å konvertere hex farge til RGB
