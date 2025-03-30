@@ -886,7 +886,14 @@ footer {
 .mobile-menu { position: fixed; left: calc(-1 * var(--menu-width)); top: 0; width: var(--menu-width); max-width: 80vw; height: 100%; background-color: white; transition: left 0.3s ease; box-shadow: 2px 0 5px rgba(0,0,0,0.2); z-index: 999; display: none; /* Vises via media query */ }
 .mobile-menu.active { left: 0; }
 
-.menu-header { padding: 20px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+/* Mobil meny header */
+.menu-header {
+    padding: 20px; /* Denne linjen endres IKKE */
+    border-bottom: 1px solid var(--border-color); /* Denne linjen endres IKKE */
+    display: flex; /* Denne linjen endres IKKE */
+    justify-content: space-between; /* Denne linjen endres IKKE */
+    align-items: center; /* Denne linjen endres IKKE */
+    padding-left: 50px; /* <<< LEGG TIL DENNE LINJEN >>> */}
 .menu-header h3 { margin: 0; color: var(--kf-blue); }
 .close-button { font-size: 24px; cursor: pointer; background: none; border: none; padding: 0; margin: 0; line-height: 1; color: #666; }
 .close-button:hover { color: var(--kf-pink); }
