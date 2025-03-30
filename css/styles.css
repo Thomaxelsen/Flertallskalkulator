@@ -858,7 +858,7 @@ footer {
 .quote-text {
    font-size: 1rem; line-height: 1.5; color: #333; padding: 12px; background-color: #f8f9fa; border-left: 3px solid var(--kf-purple); margin: 10px 0 0 0; border-radius: 4px; font-style: italic;
 }
-/* === NYTT: Stil for "Ingen sitat"-tekst === */
+/* Stil for "Ingen sitat"-tekst */
 .no-quote-text {
     font-style: italic;
     color: #777;
@@ -919,12 +919,11 @@ footer {
 .filter-group label { display: block; margin-bottom: 8px; font-weight: 500; color: #444; }
 /* .filter-dropdown er definert over */
 
-/* === NYTT: Styling for popup toggle i matrix === */
+/* Styling for popup toggle i matrix */
 .toggle-group {
     display: flex;
     align-items: center; /* Sentrerer checkbox og tekst vertikalt */
-    /* Juster padding-top for å linjere bedre med dropdowns */
-    padding-top: 25px;
+    padding-top: 25px; /* Juster for å linjere med dropdown-label */
     flex-basis: 100%; /* Kan ta full bredde hvis den havner på egen linje */
     min-width: 200px; /* Mindre minimumsbredde */
 }
@@ -947,7 +946,6 @@ footer {
 .toggle-label input[type="checkbox"] {
     margin-right: 8px;
     cursor: pointer;
-    /* Litt større og mer synlig checkbox */
     width: 16px;
     height: 16px;
     accent-color: var(--kf-blue); /* Bruk temafarge */
@@ -956,7 +954,6 @@ footer {
 .toggle-label span {
     font-size: 0.95rem;
 }
-/* === SLUTT: Styling for popup toggle === */
 
 .legend-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin: 25px 0; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
 /* .legend-item, .legend-color, .legend-text er definert over */
@@ -974,14 +971,31 @@ footer {
 .matrix-table thead th.issue-col { z-index: 11; background-color: #f8f9fa; }
 .matrix-table tbody tr:nth-child(even) td:not(.issue-col) { background-color: #fdfdff; }
 .matrix-table tbody tr:hover td:not(.issue-col) { background-color: #f1f5f8; }
-.matrix-table tr.area-header td { background-color: var(--kf-blue); color: white; font-weight: bold; font-size: 1.1rem; text-align: center; position: sticky; /* top: 50px; */ /* Juster etter behov, avhenger av header høyde */ z-index: 5; border: 1px solid var(--kf-blue); }
+
+/* === KORRIGERT STIL FOR AREA HEADER === */
+.matrix-table tr.area-header td {
+    background-color: #b3d7f0; /* <<< ENDRET TILBAKE TIL LYSEBLÅ */
+    color: #003087; /* <<< MØRKERE TEKST FOR KONTRAST */
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-align: center;
+    position: sticky;
+    /* top: 50px; */ /* La den følge thead */
+    z-index: 5;
+    border-top: 2px solid #9ac0e0;    /* Litt mørkere kant over */
+    border-bottom: 1px solid #9ac0e0; /* Litt mørkere kant under */
+    border-left: none; /* Fjern eventuell venstre/høyre kant */
+    border-right: none;
+}
+/* === SLUTT KORRIGERING === */
+
 
 .cell { display: inline-flex; align-items: center; justify-content: center; width: 70px; height: 36px; border-radius: 24px; font-weight: bold; font-size: 1rem; cursor: default; /* Standard er ikke klikkbar */ border: 1px solid transparent; box-sizing: border-box; transition: transform 0.1s ease-in-out; position: relative; /* For indikator */ }
 .cell.has-quote { cursor: pointer; } /* Gjør kun de med sitat klikkbare */
 .cell:active { transform: scale(0.95); } /* Klikk-effekt */
 /* Farger flyttet til JS */
 
-/* === NYTT: Info-indikator for matrise-celler === */
+/* Info-indikator for matrise-celler */
 .matrix-table .cell.has-quote .info-indicator {
     position: absolute;
     right: -5px; /* Juster posisjon */
@@ -1001,8 +1015,6 @@ footer {
     pointer-events: none; /* Ikke la indikatoren fange klikk */
     z-index: 1; /* Sørg for at den er over cellens innhold */
 }
-/* === SLUTT: Info-indikator === */
-
 
 .sum-cell-content { display: inline-flex; align-items: center; justify-content: center; width: 70px; height: 36px; border-radius: 24px; font-weight: bold; font-size: 1rem; border: 1px solid transparent; box-sizing: border-box; cursor: default; }
 /* Farger flyttet til JS */
