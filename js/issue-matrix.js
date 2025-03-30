@@ -1,13 +1,206 @@
 // issue-matrix.js - Håndterer visualisering av saksmatrisen
 
+// --- START: Popup-logikk (inspirert av issue-selector.js) ---
+
+// Detect if we're on a touch device (mobile/tablet)
+function isTouchDevice() {
+    try { // Inkluderer try-catch for eldre nettlesere
+        return (('ontouchstart' in window) ||
+                (navigator.maxTouchPoints > 0) ||
+                (navigator.msMaxTouchPoints > 0));
+    } catch (e) {
+        return false; // Anta ikke-touch hvis sjekken feiler
+    }
+}
+
+// Global variables for popup logic within this script
+let hoverTimerMatrix = null;
+let currentHoveredCell = null;
+
+// Create the popup modal (if it doesn't exist from another script)
+function createPopupModalMatrix() {
+    if (document.getElementById('quoteModalMatrix')) return; // Unikt ID for matrisen
+
+    const modal = document.createElement('div');
+    modal.id = 'quoteModalMatrix';
+    // Bruker eksisterende CSS-klasser, men med unikt ID
+    modal.className = 'quote-modal'; // Klassen 'quote-modal' definerer generell modal-styling
+    modal.innerHTML = `
+        <div class="quote-modal-content">
+            <span class="close-modal">×</span>
+            <div id="quoteContentMatrix"></div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+
+    // Add event listener to close button (for click/touch mode)
+    modal.querySelector('.close-modal').addEventListener('click', (e) => {
+        e.stopPropagation(); // Hindre at klikket propagerer til window listener under
+        modal.style.display = 'none';
+    });
+
+    // Close modal when clicking outside its content area
+    modal.addEventListener('click', (event) => {
+        // Lukk kun hvis man klikker på selve overlayet (modal), ikke innholdet
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    // Allow hovering over the popup itself without it disappearing (for desktop hover mode)
+    const modalContent = modal.querySelector('.quote-modal-content');
+    if (modalContent && !isTouchDevice()) {
+         modalContent.addEventListener('mouseenter', () => {
+            // Når musen går inn i popupen, ikke lukk den
+            if (hoverTimerMatrix) clearTimeout(hoverTimerMatrix); // Stopp eventuell lukketime
+         });
+         modalContent.addEventListener('mouseleave', () => {
+            // Når musen forlater popupen, lukk den
+            modal.style.display = 'none';
+            currentHoveredCell = null;
+         });
+    }
+}
+
+// Add CSS for quotes/modal (if not already added by another script)
+// Dette sikrer at stilene er tilgjengelige selv om brukeren går direkte til matrix-siden
+function addQuoteStylesMatrix() {
+    if (document.getElementById('quote-styles-matrix')) return; // Sjekk om stil-elementet allerede finnes
+
+    const style = document.createElement('style');
+    style.id = 'quote-styles-matrix';
+    // Bruker samme CSS-regler som i issue-selector.js addQuoteStyles
+    // Limt inn her for å sikre at de finnes
+    style.textContent = `
+        /* Modal styling (kopiert fra issue-selector.js addQuoteStyles for redundans) */
+        .quote-modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; }
+        .quote-modal:not(.hover-mode) { background-color: rgba(0,0,0,0.4); backdrop-filter: blur(3px); }
+        .quote-modal.hover-mode { background-color: transparent; pointer-events: none; }
+        .quote-modal.hover-mode .quote-modal-content { pointer-events: auto; }
+        .quote-modal:not(.hover-mode) .quote-modal-content { background-color: white; margin: 10% auto; padding: 25px; border-radius: 12px; width: 90%; max-width: 500px; box-shadow: 0 4px 25px rgba(0,0,0,0.2); animation: modalFadeIn 0.3s; position: relative; }
+        .quote-modal.hover-mode .quote-modal-content { background-color: white; padding: 15px 20px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.15); animation: modalFadeIn 0.2s; position: fixed; width: auto; max-width: 350px; z-index: 1001; }
+        @keyframes modalFadeIn { from {opacity: 0; transform: translateY(-10px);} to {opacity: 1; transform: translateY(0);} }
+        .close-modal { color: #aaa; position: absolute; right: 15px; top: 10px; font-size: 28px; font-weight: bold; cursor: pointer; transition: color 0.2s; }
+        .hover-mode .close-modal { display: none; }
+        .close-modal:hover { color: #333; }
+        .quote-party-title { font-size: 1.2rem; margin-bottom: 10px; padding: 5px 12px; border-radius: 6px; display: inline-block; color: white; font-weight: 600; }
+        /* Bakgrunnsfarger for modal-tittel (kopiert) */
+        .quote-party-title.party-tag-ap { background-color: #ed1b34; } .quote-party-title.party-tag-h { background-color: #007ac8; }
+        .quote-party-title.party-tag-sp { background-color: #14773c; } .quote-party-title.party-tag-frp { background-color: #002e5e; }
+        .quote-party-title.party-tag-sv { background-color: #eb2e2d; } .quote-party-title.party-tag-v { background-color: #00807b; }
+        .quote-party-title.party-tag-r { background-color: #da291c; } .quote-party-title.party-tag-krf { background-color: #ffbe00; color: #333; }
+        .quote-party-title.party-tag-mdg { background-color: #439539; } .quote-party-title.party-tag-pf { background-color: #a04d94; }
+        .quote-text { font-size: 1rem; line-height: 1.5; color: #333; padding: 12px; background-color: #f8f9fa; border-left: 3px solid var(--kf-purple); margin: 10px 0 0 0; border-radius: 4px; font-style: italic; }
+        .no-quote-text { font-style: italic; color: #777; } /* Stil for melding om manglende sitat */
+    `;
+    document.head.appendChild(style);
+}
+
+// Hjelpefunksjon for å få fullt partinavn
+function getPartyFullNameMatrix(partyCode) {
+    const party = parties.find(p => p.shorthand === partyCode);
+    return party ? party.name : partyCode;
+}
+
+// Hjelpefunksjon for å hente classPrefix
+function getPartyClassPrefixMatrix(partyShorthand) {
+    const party = parties.find(p => p.shorthand === partyShorthand);
+    return party ? party.classPrefix : partyShorthand.toLowerCase();
+}
+
+// Funksjon for å vise sitat (tilpasset for matrisen)
+// targetElement er cellen som ble klikket/hoveret over
+function showPartyQuoteMatrix(issue, partyCode, level, quote, targetElement) {
+    const modal = document.getElementById('quoteModalMatrix');
+    if (!modal) {
+        console.error("Modal #quoteModalMatrix ikke funnet.");
+        return;
+    }
+
+    const partyName = getPartyFullNameMatrix(partyCode);
+    const partyClassPrefix = getPartyClassPrefixMatrix(partyCode);
+    const colors = agreementColors[level]; // Bruker farger definert i issue-matrix.js
+
+    // Bestem enighetsnivå-tekst
+    let levelText = '';
+    if (level === 2) levelText = 'Helt enig';
+    else if (level === 1) levelText = 'Delvis enig';
+    else levelText = 'Ingen støtte / ingen standpunkt';
+
+    // Bygg innhold
+    const quoteContentEl = document.getElementById('quoteContentMatrix');
+    if (!quoteContentEl) {
+        console.error("Innholdselement #quoteContentMatrix ikke funnet.");
+        return;
+    }
+    quoteContentEl.innerHTML = `
+        <h3 class="quote-party-title party-tag-${partyClassPrefix}">${partyName}</h3>
+        <p style="margin-bottom: 5px;"><strong>Sak:</strong> ${issue.name}</p>
+        <p style="margin-bottom: 15px;"><strong>Standpunkt:</strong> <strong style="display: inline-block; padding: 3px 8px; border-radius: 12px; background-color: ${colors.background}; color: ${colors.color}; border: 1px solid ${colors.border}; font-size: 0.9em;">${levelText}</strong></p>
+        ${quote
+            ? `<p class="quote-text">"${quote}"</p>`
+            : '<p class="no-quote-text">Ingen utdypende begrunnelse tilgjengelig.</p>'
+        }
+    `;
+
+    // Posisjoner og vis modal
+    const modalContent = modal.querySelector('.quote-modal-content');
+    modal.style.display = 'block';
+
+    if (isTouchDevice()) {
+        // Sentrert for touch
+        modal.classList.remove('hover-mode');
+        modalContent.style.left = '';
+        modalContent.style.top = '';
+        modalContent.style.position = '';
+        modalContent.style.maxWidth = '';
+    } else {
+        // Posisjonert for hover
+        modal.classList.add('hover-mode');
+        const rect = targetElement.getBoundingClientRect();
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+
+        // Vis midlertidig for å måle
+        modalContent.style.visibility = 'hidden';
+        const modalHeight = modalContent.offsetHeight;
+        const modalWidth = modalContent.offsetWidth || 350; // Antatt bredde
+
+        // Beregn posisjon (prioriter over, så under, så til høyre/venstre)
+        let top = rect.top - modalHeight - 10; // Prøv over
+        if (top < 10) { // Hvis ikke plass over
+            top = rect.bottom + 10; // Prøv under
+        }
+        // Juster hvis den går utenfor bunnen
+        if (top + modalHeight > viewportHeight - 10) {
+            top = Math.max(10, viewportHeight - modalHeight - 10);
+        }
+
+        let left = rect.left + (rect.width / 2) - (modalWidth / 2); // Prøv sentrert over/under
+        // Juster hvis den går utenfor kantene
+        left = Math.max(10, Math.min(left, viewportWidth - modalWidth - 10));
+
+        modalContent.style.position = 'fixed';
+        modalContent.style.left = `${left}px`;
+        modalContent.style.top = `${top}px`;
+        modalContent.style.visibility = 'visible';
+        modalContent.style.maxHeight = `${viewportHeight - 40}px`; // Begrens høyde
+        modalContent.style.overflowY = 'auto'; // Scroll ved behov
+    }
+}
+
+// --- SLUTT: Popup-logikk ---
+
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log("DOM lastet i issue-matrix.js");
-    
-    // Laster inn data direkte
-    loadMatrixData();
+    loadMatrixData(); // Starter datainnlasting
+    // Disse kjøres NÅR data er lastet (i initializeMatrix)
+    // createPopupModalMatrix(); // Opprett modal-strukturen
+    // addQuoteStylesMatrix(); // Legg til nødvendig CSS
 });
 
-// Party data
+// Party data (som før)
 const parties = [
     { name: "Rødt", shorthand: "R", seats: 8, position: 1, color: "#da291c", classPrefix: "r" },
     { name: "Sosialistisk Venstreparti", shorthand: "SV", seats: 13, position: 2, color: "#eb2e2d", classPrefix: "sv" },
@@ -20,37 +213,25 @@ const parties = [
     { name: "Fremskrittspartiet", shorthand: "FrP", seats: 21, position: 9, color: "#002e5e", classPrefix: "frp" }
 ];
 
-// Mykere farger for enighetsgrad som matcher flertallskalkulatoren
+// Farger for enighetsgrad (som før)
 const agreementColors = {
-    0: {
-        background: "rgba(230, 60, 140, 0.1)",
-        color: "#e63c8c",
-        border: "#e63c8c"
-    },
-    1: {
-        background: "rgba(255, 190, 44, 0.1)",
-        color: "#ffbe2c",
-        border: "#ffbe2c"
-    },
-    2: {
-        background: "rgba(0, 168, 163, 0.1)",
-        color: "#00a8a3",
-        border: "#00a8a3"
-    }
+    0: { background: "rgba(230, 60, 140, 0.1)", color: "#e63c8c", border: "#e63c8c" },
+    1: { background: "rgba(255, 190, 44, 0.1)", color: "#ffbe2c", border: "#ffbe2c" },
+    2: { background: "rgba(0, 168, 163, 0.1)", color: "#00a8a3", border: "#00a8a3" }
 };
 
-// Kreftforeningens farge for overskrifter basert på nettsiden
 const headerBackground = "#b3d7f0"; // Dusere lyseblå
-const headerGradient = "linear-gradient(90deg, #6e2b62, #6e2b62)"; // Ensfarget versjon
 
-// Global variabel for å holde data
+// Global variabel for å holde data og popup-status
 let matrixIssues = [];
+let showQuotesEnabled = true; // Start med popups aktivert
 
-// Last data direkte fra issues.json
+// Last data (som før)
 function loadMatrixData() {
     console.log("Laster matrixdata direkte fra issues.json");
-    document.querySelector('.matrix-loader').textContent = 'Laster inn data...';
-    
+    const loader = document.querySelector('.matrix-loader');
+    if(loader) loader.textContent = 'Laster inn data...';
+
     fetch('data/issues.json')
         .then(response => {
             if (!response.ok) {
@@ -61,68 +242,65 @@ function loadMatrixData() {
         .then(data => {
             console.log("Data lastet fra issues.json:", data.length, "saker");
             matrixIssues = data;
-            initializeMatrix();
+            initializeMatrix(); // Initialiserer alt etter at data er lastet
         })
         .catch(error => {
             console.error("Feil ved henting av data:", error);
-            document.querySelector('.matrix-loader').textContent = 
-                'Kunne ikke laste data: ' + error.message + '. Vennligst oppdater siden.';
+            if(loader) loader.textContent = 'Kunne ikke laste data: ' + error.message + '. Vennligst oppdater siden.';
         });
 }
 
 // Hovedfunksjon for å initalisere matrisen
 function initializeMatrix() {
     console.log("Initialiserer matrix med", matrixIssues.length, "saker");
-    
-    // Sjekk at dataene faktisk er lastet
     if (!matrixIssues || matrixIssues.length === 0) {
         console.error("Ingen issues-data funnet!");
-        document.querySelector('.matrix-loader').textContent = 'Ingen data funnet. Vennligst oppdater siden.';
+        const loader = document.querySelector('.matrix-loader');
+        if(loader) loader.textContent = 'Ingen data funnet.';
         return;
     }
-    
-    // Debugg: Sjekk strukturen til issues-dataene
-    console.log("First issue:", matrixIssues[0]);
-    if (matrixIssues[0].partyStances) {
-        console.log("partyStances for første issue:", matrixIssues[0].partyStances);
-        // Sjekk flere partistanser for å se om de inneholder level-verdier
-        for (const partyCode in matrixIssues[0].partyStances) {
-            console.log(`Parti: ${partyCode}, level: ${matrixIssues[0].partyStances[partyCode].level}`);
-        }
-    }
-    
-    // Fjern lasteindikatoren
-    document.querySelector('.matrix-loader').style.display = 'none';
-    
-    // Hent unike områder
+
+    // Skjul lasteindikator
+    const loader = document.querySelector('.matrix-loader');
+    if(loader) loader.style.display = 'none';
+
+    // Opprett modal og legg til stiler FØR matrisen genereres
+    createPopupModalMatrix();
+    addQuoteStylesMatrix();
+
+    // Fyll filter og generer matrise
     const areas = getUniqueAreas();
     populateAreaFilter(areas);
-    
-    // Generer matrisen
-    generateMatrix('all', 'heatmap');
-    
-    // Sett opp event listeners
+    const initialViewMode = document.getElementById('view-mode')?.value || 'heatmap';
+    generateMatrix('all', initialViewMode);
+
+    // Sett opp lyttere ETTER at elementene er i DOM
     setupFilterListeners();
-    
-    // Legg til en event listener for å håndtere vindusstørrelsesendringer
+    setupToggleListener();
+
+    // Re-generer matrisen ved vindusendring
     window.addEventListener('resize', function() {
-        // Regenerer matrisen med gjeldende filtre når vindusstørrelsen endres
-        const areaFilter = document.getElementById('area-filter').value;
-        const viewMode = document.getElementById('view-mode').value;
+        const areaFilter = document.getElementById('area-filter')?.value || 'all';
+        const viewMode = document.getElementById('view-mode')?.value || 'heatmap';
         generateMatrix(areaFilter, viewMode);
     });
 }
 
-// Hent unike saksområder fra issues-arrayet
+// Hent unike saksområder (som før)
 function getUniqueAreas() {
-    const areas = matrixIssues.map(issue => issue.area);
+    if (!Array.isArray(matrixIssues)) return [];
+    const areas = matrixIssues.map(issue => issue.area).filter(area => area); // Filtrer ut undefined/null
     return [...new Set(areas)];
 }
 
-// Fyll area-filter med unike saksområder
+// Fyll area-filter (som før, men med sjekk)
 function populateAreaFilter(areas) {
     const areaFilter = document.getElementById('area-filter');
-    
+    if (!areaFilter) return;
+
+    // Fjern gamle options (unntatt "Alle") før vi legger til nye
+    areaFilter.querySelectorAll('option:not([value="all"])').forEach(o => o.remove());
+    areas.sort((a, b) => a.localeCompare(b)); // Sorter alfabetisk
     areas.forEach(area => {
         const option = document.createElement('option');
         option.value = area;
@@ -131,405 +309,305 @@ function populateAreaFilter(areas) {
     });
 }
 
-// Sett opp lyttere for filtrering
+// Sett opp lyttere for filtrene
 function setupFilterListeners() {
     const areaFilter = document.getElementById('area-filter');
     const viewMode = document.getElementById('view-mode');
-    
-    areaFilter.addEventListener('change', function() {
-        generateMatrix(this.value, viewMode.value);
-    });
-    
-    viewMode.addEventListener('change', function() {
-        generateMatrix(areaFilter.value, this.value);
-    });
+
+    if (areaFilter) {
+        areaFilter.addEventListener('change', function() {
+            const currentViewMode = document.getElementById('view-mode')?.value || 'heatmap';
+            generateMatrix(this.value, currentViewMode);
+        });
+    }
+
+    if (viewMode) {
+        viewMode.addEventListener('change', function() {
+            const currentArea = document.getElementById('area-filter')?.value || 'all';
+            generateMatrix(currentArea, this.value);
+        });
+    }
 }
+
+// Sett opp lytter for checkboxen
+function setupToggleListener() {
+    const toggleCheckbox = document.getElementById('show-quotes-toggle');
+    if (toggleCheckbox) {
+        // Sett initiell status basert på global variabel
+        toggleCheckbox.checked = showQuotesEnabled;
+        // Legg til lytter for endringer
+        toggleCheckbox.addEventListener('change', function() {
+            showQuotesEnabled = this.checked;
+            console.log("Vis detaljer satt til:", showQuotesEnabled);
+            // Lukk eventuell åpen modal når man skrur av
+            if (!showQuotesEnabled) {
+                const modal = document.getElementById('quoteModalMatrix');
+                if (modal) modal.style.display = 'none';
+            }
+        });
+    } else {
+        console.warn("Kunne ikke finne #show-quotes-toggle");
+    }
+}
+
 
 // Generer matrisen basert på filtrering
 function generateMatrix(areaFilter, viewMode) {
-    console.log("Genererer matrise med", matrixIssues.length, "saker, filter:", areaFilter, "visning:", viewMode);
-    
+    console.log("Genererer matrise med filter:", areaFilter, "visning:", viewMode);
     const matrixContainer = document.getElementById('matrix-visualization');
-    matrixContainer.innerHTML = '';
-    
-    // Opprett container for matrisen
+    if (!matrixContainer) {
+        console.error("Matrix container #matrix-visualization ikke funnet.");
+        return;
+    }
+    matrixContainer.innerHTML = ''; // Tøm container
     const matrixWrapper = document.createElement('div');
-    matrixWrapper.className = 'matrix-container';
-    matrixWrapper.style.overflowX = 'auto';
+    matrixWrapper.className = 'matrix-container'; // Bruk CSS-klassen
     matrixContainer.appendChild(matrixWrapper);
-    
-    // Filtrer saker basert på valgt område
+
     let filteredIssues = matrixIssues;
     if (areaFilter !== 'all') {
         filteredIssues = matrixIssues.filter(issue => issue.area === areaFilter);
     }
-    
     console.log("Filtrerte saker:", filteredIssues.length);
-    
-    // Sorter saker etter område og deretter etter navn
-    filteredIssues.sort((a, b) => {
-        if (a.area !== b.area) return a.area.localeCompare(b.area);
-        return a.name.localeCompare(b.name);
+
+    // Sortering (lik som før)
+    const areaOrder = [
+        "Arbeidsliv", "Diagnostikk og tidlig oppdagelse", "Folkehelse og forebygging",
+        "Forskning og innovasjon", "Frivillig sektor", "Kreftomsorg", "Rettigheter",
+        "Tilgang til behandling", "Økt investeringer i helse"
+    ];
+    const issuesByArea = {};
+    filteredIssues.forEach(issue => {
+        if (!issuesByArea[issue.area]) issuesByArea[issue.area] = [];
+        issuesByArea[issue.area].push(issue);
     });
-    
-    // Lag tabellen
+    for (const area in issuesByArea) {
+        issuesByArea[area].sort((a, b) => a.name.localeCompare(b.name));
+    }
+
     const table = document.createElement('table');
     table.className = 'matrix-table';
-    table.style.borderCollapse = "separate";
-    table.style.borderSpacing = "0px";
-    table.style.width = "100%";
-    
-    // Lag tabellhodet med parti-kolonner
+
+    // --- Lag Table Header (thead) ---
     const thead = document.createElement('thead');
-    thead.style.position = "sticky";
-    thead.style.top = "0";
-    thead.style.zIndex = "10";
-    thead.style.backgroundColor = "white";
-    
     const headerRow = document.createElement('tr');
-    
-    // Første kolonne for saknavn
+    // Issue Header Column
     const issueHeader = document.createElement('th');
     issueHeader.className = 'issue-col';
     issueHeader.textContent = 'Sak';
-    issueHeader.style.textAlign = "left";
-    issueHeader.style.padding = "15px";
-    
-    // Sjekk skjermstørrelse og bruk sticky bare på større skjermer
-    if (window.innerWidth > 768) {
-        issueHeader.style.position = "sticky";
-        issueHeader.style.left = "0";
-    }
-    
-    issueHeader.style.backgroundColor = "white";
-    issueHeader.style.zIndex = "11";
-    issueHeader.style.minWidth = window.innerWidth > 768 ? "300px" : "150px"; // Mindre bredde på mobil
     headerRow.appendChild(issueHeader);
-    
-    // Legg til kolonner for hvert parti - gjør dem mer subtile og avrundede
+    // Party Header Columns
     parties.forEach(party => {
         const partyHeader = document.createElement('th');
-        partyHeader.className = 'party-col';
-        partyHeader.textContent = party.shorthand;
-        partyHeader.title = party.name;
-        
-        // Bruk mykere farge og mer opasitet for å matche flertallskalkulatoren
+        partyHeader.className = 'party-col'; partyHeader.textContent = party.shorthand; partyHeader.title = party.name;
+        // Sett bakgrunnsfarge med litt opasitet
         const rgbColor = hexToRgb(party.color);
-        partyHeader.style.backgroundColor = `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, 0.6)`;
-        
-        // Gjør hjørnene mer avrundet
-        partyHeader.style.borderRadius = "12px";
-        partyHeader.style.margin = "0 2px";
-        partyHeader.style.color = '#fff';
-        partyHeader.style.padding = "15px";
-        partyHeader.style.textAlign = "center";
-        partyHeader.style.minWidth = "80px";
-        partyHeader.style.maxWidth = "80px";
+        partyHeader.style.backgroundColor = `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, 0.8)`; // Mer farge
+        partyHeader.style.color = '#fff'; // Hvit tekst
         headerRow.appendChild(partyHeader);
     });
-    
-    // Legg til SUM-kolonne
+    // SUM Header Column
     const sumHeader = document.createElement('th');
-    sumHeader.className = 'party-col';
-    sumHeader.textContent = 'SUM';
-    sumHeader.title = 'Sum av poeng fra alle partier';
-    sumHeader.style.padding = "15px";
-    sumHeader.style.textAlign = "center";
-    sumHeader.style.backgroundColor = "#f5f5f5";
-    sumHeader.style.minWidth = "80px"; // Samme bredde
+    sumHeader.className = 'party-col'; sumHeader.textContent = 'SUM'; sumHeader.title = 'Sum av poeng';
+    sumHeader.style.backgroundColor = "#e9ecef"; // Lys grå
     headerRow.appendChild(sumHeader);
-    
     thead.appendChild(headerRow);
     table.appendChild(thead);
-    
-    // Lag tabellkroppen
+    // --- Slutt Table Header ---
+
+
+    // --- Lag Table Body (tbody) ---
     const tbody = document.createElement('tbody');
-    
-    // Gruppe issues etter område - bruk samme sortering som i excelark
-    const areaOrder = [
-        "Arbeidsliv",
-        "Diagnostikk og tidlig oppdagelse",
-        "Folkehelse og forebygging",
-        "Forskning og innovasjon",
-        "Frivillig sektor",
-        "Kreftomsorg",
-        "Rettigheter",
-        "Tilgang til behandling",
-        "Økt investeringer i helse"
-    ];
-    
-    // Gruppe issues etter område
-    const issuesByArea = {};
-    filteredIssues.forEach(issue => {
-        if (!issuesByArea[issue.area]) {
-            issuesByArea[issue.area] = [];
-        }
-        issuesByArea[issue.area].push(issue);
-    });
-    
-    // Gå gjennom områdene i riktig rekkefølge
     areaOrder.forEach(area => {
-        // Hopp over hvis det ikke er noen saker i dette området eller hvis filtrert
         if (!issuesByArea[area] || issuesByArea[area].length === 0) return;
-        
-        // Lag områdeoverskrift med Kreftforeningens lilla overskriftsfarge
-        const areaRow = document.createElement('tr');
-        areaRow.className = 'area-header';
-        
-        const areaCell = document.createElement('td');
-        areaCell.colSpan = parties.length + 2; // +2 for issue-col og SUM
-        areaCell.textContent = area;
-        areaCell.style.background = headerBackground; // Bruk Kreftforeningens lilla
-        areaCell.style.color = "white";
-        areaCell.style.fontWeight = "bold";
-        areaCell.style.padding = "12px";
-        areaCell.style.textAlign = "center";
-        areaCell.style.fontSize = "1.2rem";
-        areaCell.style.borderRadius = "0"; // Fjern avrunding
-        
-        // Legg til ekstra attributter for styling og tilgjengelighet
-        areaCell.setAttribute('role', 'heading');
-        areaCell.setAttribute('aria-level', '2');
-        
-        areaRow.appendChild(areaCell);
-        tbody.appendChild(areaRow);
-        
+
+        // Area Header Row
+        const areaRow = document.createElement('tr'); areaRow.className = 'area-header';
+        const areaCell = document.createElement('td'); areaCell.colSpan = parties.length + 2; areaCell.textContent = area;
+        areaRow.appendChild(areaCell); tbody.appendChild(areaRow);
+
         // Gå gjennom hver sak i dette området
         issuesByArea[area].forEach(issue => {
             const row = document.createElement('tr');
-            row.style.height = "60px"; // Økt høyde
-            
-            // Annenhver rad styling
-            if (tbody.children.length % 2 === 0) {
-                row.style.backgroundColor = "#f8f9fa";
-            }
-            
-            // Celle for saknavn
-            const issueCell = document.createElement('td');
-            issueCell.className = 'issue-col';
-            issueCell.textContent = issue.name;
-            issueCell.title = issue.name;
-            issueCell.style.textAlign = "left";
-            issueCell.style.padding = "10px 15px";
-            
-            // Sjekk skjermstørrelse og bruk sticky bare på større skjermer
-            if (window.innerWidth > 768) {
-                issueCell.style.position = "sticky";
-                issueCell.style.left = "0";
-            }
-            
-            issueCell.style.backgroundColor = row.style.backgroundColor || "white";
-            issueCell.style.borderBottom = "1px solid #f0f0f0";
+
+            // Saknavn-celle
+            const issueCell = document.createElement('td'); issueCell.className = 'issue-col'; issueCell.textContent = issue.name; issueCell.title = issue.name;
             row.appendChild(issueCell);
-            
-            // Hold styr på total poengsum for alle partier i denne saken
+
             let totalPoints = 0;
-            
-            // Lag en celle for hvert parti
+            // Parti-celler
             parties.forEach(party => {
-                const cellContainer = document.createElement('td');
-                cellContainer.style.textAlign = "center";
-                cellContainer.style.verticalAlign = "middle";
-                cellContainer.style.borderBottom = "1px solid #f0f0f0";
-                cellContainer.style.padding = "10px";
-                cellContainer.style.width = "80px"; // Fast bredde
-                
-                // Hent enighetsgrad hvis den finnes
+                const cellContainer = document.createElement('td'); // Ytre TD for layout
+
                 let agreementLevel = 0;
+                let quote = null;
                 if (issue.partyStances && issue.partyStances[party.shorthand]) {
-                    agreementLevel = issue.partyStances[party.shorthand].level;
+                    agreementLevel = issue.partyStances[party.shorthand].level ?? 0; // Bruk 0 hvis level mangler
+                    quote = issue.partyStances[party.shorthand].quote; // Hent sitat
                 }
-                
-                // Opprett oval boks som ligner på partiboksene i flertallskalkulatoren
+
+                // Selve innholdscellen (div)
                 const cell = document.createElement('div');
-                cell.className = 'cell';
-                
-                // Sett fargeklasse basert på enighetsgrad
-                const colors = agreementColors[agreementLevel];
-                
-               // Sett styling for oval boks - mer som partiboksene i flertallskalkulatoren
+                cell.className = 'cell'; // Bruker CSS for styling
+                const colors = agreementColors[agreementLevel] || agreementColors[0]; // Bruk level 0 farger hvis ukjent
                 cell.style.backgroundColor = colors.background;
                 cell.style.color = colors.color;
                 cell.style.border = `1px solid ${colors.border}`;
-                cell.style.borderRadius = "24px"; // Mer avrundet
-                cell.style.width = "70px"; // Nesten full bredde
-                cell.style.height = "36px"; // Høyere
-                cell.style.display = "flex"; // Bruk flex for vertikal sentrering
-                cell.style.alignItems = "center"; // Vertikal sentrering
-                cell.style.justifyContent = "center"; // Horisontal sentrering
-                cell.style.fontWeight = "bold";
-                cell.style.fontSize = "1rem"; // Større tekst
-                cell.style.cursor = "pointer";
-                
-                // Sett innholdet basert på visningsmodus
+
                 if (viewMode === 'numbers') {
                     cell.textContent = agreementLevel;
                 } else {
-                    // Ved heatmap/farge-visning, ikke vis tall
-                    cell.innerHTML = '&nbsp;'; // Usynlig mellomrom for konsistent høyde
+                    cell.innerHTML = ' '; // Tom for heatmap
                 }
-                
-                // Legg til tooltip-data
+
+                // Lagre data for popup
                 cell.dataset.party = party.shorthand;
-                cell.dataset.issue = issue.id;
+                cell.dataset.issueId = issue.id;
                 cell.dataset.level = agreementLevel;
-                
-                // Event listener for å vise tooltip
-                cell.addEventListener('click', function() {
-                    showTooltip(this, issue, party.shorthand, agreementLevel);
-                });
-                
+
+                if (quote) {
+                    cell.dataset.quote = quote; // Lagre sitat direkte
+                    cell.classList.add('has-quote'); // Klasse for styling og event listeners
+                    cell.style.cursor = "pointer"; // Indiker klikkbarhet
+
+                    // Legg til info-indikator visuelt
+                    const infoIndicator = document.createElement('span');
+                    infoIndicator.className = 'info-indicator';
+                    infoIndicator.innerHTML = 'i'; // Bruk innerHTML for å unngå HTML entities
+                    cell.appendChild(infoIndicator); // Legg indikatoren inni cellen
+
+                    // Legg til event listeners KUN hvis det er et sitat
+                    if (isTouchDevice()) {
+                        cell.addEventListener('click', handleMatrixCellInteraction);
+                    } else {
+                        cell.addEventListener('mouseenter', handleMatrixCellInteraction);
+                        cell.addEventListener('mouseleave', handleMatrixCellLeave);
+                    }
+                } else {
+                    cell.style.cursor = "default"; // Ikke klikkbar uten sitat
+                }
+
                 cellContainer.appendChild(cell);
                 row.appendChild(cellContainer);
-                
-                // Legg til poengene fra dette partiet til totalen
                 totalPoints += agreementLevel;
             });
-            
-            // Legg til SUM-celle med oval styling
+
+            // SUM-celle
             const sumCellContainer = document.createElement('td');
-            sumCellContainer.style.textAlign = "center";
-            sumCellContainer.style.verticalAlign = "middle";
-            sumCellContainer.style.borderBottom = "1px solid #f0f0f0";
-            sumCellContainer.style.backgroundColor = "#f5f5f5";
-            sumCellContainer.style.width = "80px"; // Fast bredde
-            
             const sumCell = document.createElement('div');
+            sumCell.className = 'sum-cell-content'; // Bruk CSS
             sumCell.textContent = totalPoints;
-            sumCell.style.fontWeight = 'bold';
-            sumCell.style.borderRadius = '24px'; // Mer avrundet
-            sumCell.style.width = '70px'; // Matcher celler
-            sumCell.style.height = '36px'; // Matcher celler
-            sumCell.style.display = 'flex'; // Bruk flex for vertikal sentrering
-            sumCell.style.alignItems = 'center'; // Vertikal sentrering
-            sumCell.style.justifyContent = 'center'; // Horisontal sentrering
-            sumCell.style.fontSize = '1rem'; // Større tekst
-            
-            // Fargekode basert på total poengsum (maksimum mulig er parties.length * 2)
             const maxPossiblePoints = parties.length * 2;
-            const scoreRatio = totalPoints / maxPossiblePoints;
-            
-            if (scoreRatio >= 0.6) { // Høy enighet (60%+ av maksimum)
-                sumCell.style.backgroundColor = 'rgba(0, 168, 163, 0.1)'; // Mykere
-                sumCell.style.color = '#00a8a3';
-                sumCell.style.border = '1px solid #00a8a3';
-            } else if (scoreRatio >= 0.3) { // Middels enighet (30-60% av maksimum)
-                sumCell.style.backgroundColor = 'rgba(255, 190, 44, 0.1)'; // Mykere
-                sumCell.style.color = '#ffbe2c';
-                sumCell.style.border = '1px solid #ffbe2c';
-            } else { // Lav enighet (mindre enn 30% av maksimum)
-                sumCell.style.backgroundColor = 'rgba(230, 60, 140, 0.1)'; // Mykere
-                sumCell.style.color = '#e63c8c';
-                sumCell.style.border = '1px solid #e63c8c';
-            }
-            
+            const scoreRatio = maxPossiblePoints > 0 ? totalPoints / maxPossiblePoints : 0;
+            // Fargekoding av SUM-celle
+            if (scoreRatio >= 0.6) { sumCell.style.backgroundColor = agreementColors[2].background; sumCell.style.color = agreementColors[2].color; sumCell.style.border = `1px solid ${agreementColors[2].border}`; }
+            else if (scoreRatio >= 0.3) { sumCell.style.backgroundColor = agreementColors[1].background; sumCell.style.color = agreementColors[1].color; sumCell.style.border = `1px solid ${agreementColors[1].border}`; }
+            else { sumCell.style.backgroundColor = agreementColors[0].background; sumCell.style.color = agreementColors[0].color; sumCell.style.border = `1px solid ${agreementColors[0].border}`; }
             sumCellContainer.appendChild(sumCell);
             row.appendChild(sumCellContainer);
+
             tbody.appendChild(row);
         });
     });
-    
+    // --- Slutt Table Body ---
+
     table.appendChild(tbody);
     matrixWrapper.appendChild(table);
-    
-    // Lag tooltip-container hvis den ikke finnes
-    if (!document.querySelector('.matrix-tooltip')) {
-        const tooltip = document.createElement('div');
-        tooltip.className = 'matrix-tooltip';
-        tooltip.style.display = 'none';
-        tooltip.style.position = 'absolute';
-        tooltip.style.zIndex = '1000';
-        tooltip.style.backgroundColor = 'white';
-        tooltip.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
-        tooltip.style.borderRadius = '12px';
-        tooltip.style.padding = '20px';
-        tooltip.style.maxWidth = '350px';
-        document.body.appendChild(tooltip);
-    }
-    
-
+    updateLegendStyles(); // Oppdater legend-stiler til å matche celler
 }
 
-// Funksjon for å konvertere hex farge til RGB
+// Funksjon for å håndtere interaksjon med matrisecelle (som definert tidligere)
+function handleMatrixCellInteraction(event) {
+    if (!showQuotesEnabled) return; // Sjekk om funksjonen er skrudd på
+
+    const cell = event.currentTarget;
+    const partyCode = cell.dataset.party;
+    const issueId = cell.dataset.issueId;
+    const level = parseInt(cell.dataset.level, 10);
+    const quote = cell.dataset.quote; // Hent lagret sitat
+
+    // Viktig: Sjekk igjen om det faktisk ER et sitat her
+    if (!quote || quote === "null" || quote === "") {
+         console.log("Ingen sitat å vise for", partyCode, "på sak", issueId);
+         return; // Ikke vis popup hvis det ikke er sitat
+    }
+
+    // Finn den relevante saken fra den globale listen
+    const issue = matrixIssues.find(iss => iss.id == issueId);
+    if (!issue) {
+        console.error("Fant ikke sak med ID:", issueId);
+        return;
+    }
+
+    if (isTouchDevice()) {
+        // For touch, vis popup direkte ved klikk
+        showPartyQuoteMatrix(issue, partyCode, level, quote, cell);
+    } else {
+        // For desktop, bruk timer for hover
+        if (hoverTimerMatrix) clearTimeout(hoverTimerMatrix);
+        hoverTimerMatrix = setTimeout(() => {
+            // Dobbeltsjekk at musen fortsatt er over elementet
+            if (cell.matches(':hover')) {
+                showPartyQuoteMatrix(issue, partyCode, level, quote, cell);
+                currentHoveredCell = cell;
+            }
+        }, 150); // Liten forsinkelse
+    }
+}
+
+// Funksjon for å håndtere mouseleave (kun desktop)
+function handleMatrixCellLeave(event) {
+     if (hoverTimerMatrix) {
+        clearTimeout(hoverTimerMatrix);
+        hoverTimerMatrix = null;
+    }
+    // Liten forsinkelse for å la brukeren flytte musen til popupen
+    setTimeout(() => {
+        const modal = document.getElementById('quoteModalMatrix');
+        // Skjul bare hvis musen IKKE er over selve modalen ELLER den originale cellen
+        if (modal && !modal.matches(':hover') && !(currentHoveredCell && currentHoveredCell.matches(':hover'))) {
+            modal.style.display = 'none';
+            currentHoveredCell = null;
+        }
+    }, 100);
+}
+
+
+// Konverter hex til RGB (som før)
 function hexToRgb(hex) {
-    // Fjern # hvis det finnes
+    if (!hex) return { r: 200, g: 200, b: 200 }; // Fallback grå
     hex = hex.replace('#', '');
-    
-    // Parse til RGB
-    const r = parseInt(hex.substring(0, 2), 16);
-    const g = parseInt(hex.substring(2, 4), 16);
-    const b = parseInt(hex.substring(4, 6), 16);
-    
+    const r = parseInt(hex.substring(0, 2), 16) || 0;
+    const g = parseInt(hex.substring(2, 4), 16) || 0;
+    const b = parseInt(hex.substring(4, 6), 16) || 0;
     return { r, g, b };
 }
 
-// Funksjon for å vise tooltip med detaljer
-function showTooltip(element, issue, partyCode, level) {
-    const tooltip = document.querySelector('.matrix-tooltip');
-    const rect = element.getBoundingClientRect();
-    
-    // Finn partinavn og farge
-    const party = parties.find(p => p.shorthand === partyCode);
-    const partyName = party ? party.name : partyCode;
-    const partyColor = party ? party.color : '#333';
-    
-    // Finn eventuelt sitat
-    let quote = '';
-    if (issue.partyStances && issue.partyStances[partyCode] && issue.partyStances[partyCode].quote) {
-        quote = issue.partyStances[partyCode].quote;
-    }
-    
-    // Sett enighetsgrad-tekst
-    let levelText = '';
-    let colors = agreementColors[level];
-    
-    if (level === 2) {
-        levelText = 'Helt enig';
-    } else if (level === 1) {
-        levelText = 'Delvis enig';
-    } else {
-        levelText = 'Ikke enig / ingen standpunkt';
-    }
-    
-    // Bygg tooltip-innhold
-    let tooltipContent = `
-        <h3 style="margin-top: 0; color: #6e2b62; border-bottom: 1px solid #eee; padding-bottom: 10px;">${issue.name}</h3>
-        <p><strong style="color: ${partyColor}">${partyName}</strong> er <strong style="display: inline-block; padding: 3px 10px; border-radius: 24px; background-color: ${colors.background}; color: ${colors.color}; border: 1px solid ${colors.border};">${levelText}</strong> med Kreftforeningen i denne saken.</p>
-    `;
-    
-    // Legg til sitat hvis det finnes
-    if (quote) {
-        tooltipContent += `<div style="background-color: #f9f9f9; padding: 12px; margin-top: 15px; border-left: 3px solid #6e2b62; border-radius: 8px; font-style: italic;">"${quote}"</div>`;
-    } else {
-        tooltipContent += `<p style="font-style: italic; color: #777;">Ingen utdypende informasjon tilgjengelig.</p>`;
-    }
-    
-    tooltip.innerHTML = tooltipContent;
-    
-    // Posisjonere tooltip
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const tooltipHeight = 200; // Estimert høyde
-    
-    let top = rect.top + scrollTop - tooltipHeight - 20;
-    
-    // Hvis tooltip går over toppen av vinduet, vis den under elementet i stedet
-    if (top < scrollTop) {
-        top = rect.bottom + scrollTop + 10;
-    }
-    
-    tooltip.style.left = (rect.left + rect.width / 2 - 175) + 'px'; // Sentrert
-    tooltip.style.top = top + 'px';
-    tooltip.style.display = 'block';
-    
-    // Legg til event listener for å lukke tooltip
-    document.addEventListener('click', closeTooltip);
-}
+// Oppdater legend-stil (som før, men med null-sjekk)
+function updateLegendStyles() {
+    const legendItems = document.querySelectorAll('.legend-container .legend-item');
+    legendItems.forEach(item => {
+        const colorElement = item.querySelector('.legend-color');
+        if (!colorElement) return;
 
-// Funksjon for å lukke tooltip
-function closeTooltip(event) {
-    const tooltip = document.querySelector('.matrix-tooltip');
-    if (tooltip) {
-        tooltip.style.display = 'none';
-    }
-    document.removeEventListener('click', closeTooltip);
+        let level = -1;
+        if (item.classList.contains('level-2')) level = 2;
+        else if (item.classList.contains('level-1')) level = 1;
+        else if (item.classList.contains('level-0')) level = 0;
+
+        if (level !== -1) {
+            const colors = agreementColors[level];
+            if (!colors) return; // Hopp over hvis farger ikke finnes for level
+
+            // Stil legend-item
+            item.style.backgroundColor = colors.background;
+            item.style.border = `1px solid ${colors.border}`;
+            // Stil fargeprikk
+            colorElement.style.backgroundColor = colors.border; // Solid farge for prikken
+            colorElement.style.border = 'none'; // Fjern eventuell kant på prikken
+             // Stil tekst
+            const textElement = item.querySelector('.legend-text');
+            if (textElement) { textElement.style.color = colors.color; }
+        }
+    });
 }
