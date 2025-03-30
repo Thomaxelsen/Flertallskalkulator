@@ -1005,15 +1005,6 @@ footer {
     background-color: white;
 }
 
-/* === FJERN HOVER-EFFEKT PÅ RAD === */
-/* Fjern disse linjene eller kommenter dem ut:
-.matrix-table tbody tr:not(.area-header):hover td {
-    background-color: #e9ecef;
-}
-.matrix-table tbody tr:not(.area-header):hover td.issue-col {
-    background-color: #e9ecef;
-}
-*/
 
 /* Korrigert stil for Area Header */
 .matrix-table tr.area-header td {
