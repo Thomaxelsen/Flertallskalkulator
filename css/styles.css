@@ -893,7 +893,7 @@ footer {
     display: flex; /* Denne linjen endres IKKE */
     justify-content: space-between; /* Denne linjen endres IKKE */
     align-items: center; /* Denne linjen endres IKKE */
-    padding-left: 60px; /* <<< LEGG TIL DENNE LINJEN >>> */}
+    padding-left: 66px; /* <<< LEGG TIL DENNE LINJEN >>> */}
 .menu-header h3 { margin: 0; color: var(--kf-blue); }
 .close-button { font-size: 24px; cursor: pointer; background: none; border: none; padding: 0; margin: 0; line-height: 1; color: #666; }
 .close-button:hover { color: var(--kf-pink); }
