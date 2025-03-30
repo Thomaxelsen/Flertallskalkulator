@@ -927,7 +927,12 @@ footer {
 .mobile-menu.active {
     left: 0;
 }
-
+/* === NY REGEL: Skjul burger-ikonet når menyen er åpen === */
+body.menu-open .burger-menu {
+    opacity: 0; /* Gjør ikonet usynlig */
+    pointer-events: none; /* Hindrer at det (usynlige) ikonet kan klikkes */
+    transition: opacity 0.3s ease; /* Valgfritt: Legger til en myk overgang */
+}
 /* Mobil meny header */
 .menu-header {
     padding: 20px;
