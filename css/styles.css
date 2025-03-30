@@ -139,7 +139,7 @@ header h1 strong {
     border-left: 5px solid var(--kf-pink);
     transition: box-shadow 0.3s ease;
 }
-.introduction { /* Spesifikk for majority-coalitions.html */
+.introduction { /* Spesifikk for majority-coalitions.html og issue-matrix.html */
      border-left-color: var(--kf-blue); /* Blå kant for intro */
      text-align: center;
 }
@@ -858,6 +858,12 @@ footer {
 .quote-text {
    font-size: 1rem; line-height: 1.5; color: #333; padding: 12px; background-color: #f8f9fa; border-left: 3px solid var(--kf-purple); margin: 10px 0 0 0; border-radius: 4px; font-style: italic;
 }
+/* === NYTT: Stil for "Ingen sitat"-tekst === */
+.no-quote-text {
+    font-style: italic;
+    color: #777;
+}
+
 
 /* === Info Popup/Tooltip (for ? knapp) === */
 /* Info popup (kun mobil) */
@@ -888,12 +894,13 @@ footer {
 
 /* Mobil meny header */
 .menu-header {
-    padding: 20px; /* Denne linjen endres IKKE */
-    border-bottom: 1px solid var(--border-color); /* Denne linjen endres IKKE */
-    display: flex; /* Denne linjen endres IKKE */
-    justify-content: space-between; /* Denne linjen endres IKKE */
-    align-items: center; /* Denne linjen endres IKKE */
-    padding-left: 70px; /* <<< LEGG TIL DENNE LINJEN >>> */}
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* padding-left: 70px; /* Fjernet denne, juster ved behov */
+}
 .menu-header h3 { margin: 0; color: var(--kf-blue); }
 .close-button { font-size: 24px; cursor: pointer; background: none; border: none; padding: 0; margin: 0; line-height: 1; color: #666; }
 .close-button:hover { color: var(--kf-pink); }
@@ -912,32 +919,93 @@ footer {
 .filter-group label { display: block; margin-bottom: 8px; font-weight: 500; color: #444; }
 /* .filter-dropdown er definert over */
 
+/* === NYTT: Styling for popup toggle i matrix === */
+.toggle-group {
+    display: flex;
+    align-items: center; /* Sentrerer checkbox og tekst vertikalt */
+    /* Juster padding-top for å linjere bedre med dropdowns */
+    padding-top: 25px;
+    flex-basis: 100%; /* Kan ta full bredde hvis den havner på egen linje */
+    min-width: 200px; /* Mindre minimumsbredde */
+}
+@media (min-width: 992px) { /* Justering for større skjermer */
+    .toggle-group {
+        flex-basis: auto; /* Tilbake til auto bredde */
+        padding-top: 25px; /* Beholder lik linjering */
+    }
+}
+
+.toggle-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: normal; /* Gjør label mindre dominant enn dropdown-labels */
+    color: #555;
+    margin-bottom: 0; /* Overstyr eventuell standard margin */
+}
+
+.toggle-label input[type="checkbox"] {
+    margin-right: 8px;
+    cursor: pointer;
+    /* Litt større og mer synlig checkbox */
+    width: 16px;
+    height: 16px;
+    accent-color: var(--kf-blue); /* Bruk temafarge */
+}
+
+.toggle-label span {
+    font-size: 0.95rem;
+}
+/* === SLUTT: Styling for popup toggle === */
+
 .legend-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin: 25px 0; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
 /* .legend-item, .legend-color, .legend-text er definert over */
-.legend-item.level-2 { background-color: rgba(0, 168, 163, 0.1); border-color: #00a8a3; } .legend-item.level-2 .legend-color { background-color: #00a8a3; } .legend-item.level-2 .legend-text { color: #00a8a3; }
-.legend-item.level-1 { background-color: rgba(255, 190, 44, 0.1); border-color: #ffbe2c; } .legend-item.level-1 .legend-color { background-color: #ffbe2c; } .legend-item.level-1 .legend-text { color: #a67c00; }
-.legend-item.level-0 { background-color: rgba(230, 60, 140, 0.1); border-color: #e63c8c; } .legend-item.level-0 .legend-color { background-color: #e63c8c; } .legend-item.level-0 .legend-text { color: #e63c8c; }
+.legend-item.level-2 { background-color: rgba(0, 168, 163, 0.1); border: 1px solid #00a8a3; border-radius: 15px; padding: 4px 10px; } .legend-item.level-2 .legend-color { background-color: #00a8a3; } .legend-item.level-2 .legend-text { color: #00807b; font-weight: 500;}
+.legend-item.level-1 { background-color: rgba(255, 190, 44, 0.1); border: 1px solid #ffbe2c; border-radius: 15px; padding: 4px 10px; } .legend-item.level-1 .legend-color { background-color: #ffbe2c; } .legend-item.level-1 .legend-text { color: #a67c00; font-weight: 500;}
+.legend-item.level-0 { background-color: rgba(230, 60, 140, 0.1); border: 1px solid #e63c8c; border-radius: 15px; padding: 4px 10px; } .legend-item.level-0 .legend-color { background-color: #e63c8c; } .legend-item.level-0 .legend-text { color: #e63c8c; font-weight: 500;}
 
 .matrix-container { overflow-x: auto; margin-bottom: 30px; background-color: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); -webkit-overflow-scrolling: touch; }
-.matrix-table { width: 100%; border-collapse: collapse; min-width: 800px; }
-.matrix-table th, .matrix-table td { padding: 10px 12px; border: 1px solid #eee; text-align: center; vertical-align: middle; white-space: nowrap; }
-.matrix-table thead th { background-color: #f8f9fa; position: sticky; top: 0; z-index: 10; font-weight: 600; white-space: normal; }
+.matrix-table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 800px; } /* Endret til separate */
+.matrix-table th, .matrix-table td { padding: 10px 12px; border-bottom: 1px solid #eee; text-align: center; vertical-align: middle; white-space: nowrap; }
+.matrix-table td { border-right: 1px solid #eee; }
+.matrix-table th:last-child, .matrix-table td:last-child { border-right: none; }
+.matrix-table thead th { background-color: #f8f9fa; position: sticky; top: 0; z-index: 10; font-weight: 600; white-space: normal; border-top: 1px solid #eee; border-bottom: 2px solid #ddd; } /* Tykkere bunnlinje */
 .matrix-table th.issue-col, .matrix-table td.issue-col { text-align: left; position: sticky; left: 0; background-color: white; z-index: 1; min-width: 250px; white-space: normal; border-right: 2px solid #ddd; }
 .matrix-table thead th.issue-col { z-index: 11; background-color: #f8f9fa; }
 .matrix-table tbody tr:nth-child(even) td:not(.issue-col) { background-color: #fdfdff; }
 .matrix-table tbody tr:hover td:not(.issue-col) { background-color: #f1f5f8; }
-.matrix-table tr.area-header td { background-color: var(--kf-blue); color: white; font-weight: bold; font-size: 1.1rem; text-align: center; position: sticky; top: 50px; /* Juster etter behov */ z-index: 5; border: 1px solid var(--kf-blue); }
+.matrix-table tr.area-header td { background-color: var(--kf-blue); color: white; font-weight: bold; font-size: 1.1rem; text-align: center; position: sticky; /* top: 50px; */ /* Juster etter behov, avhenger av header høyde */ z-index: 5; border: 1px solid var(--kf-blue); }
 
-.cell { display: inline-flex; align-items: center; justify-content: center; width: 45px; height: 30px; border-radius: 15px; font-weight: bold; font-size: 0.9rem; cursor: pointer; border: 1px solid transparent; box-sizing: border-box; transition: transform 0.1s ease-in-out; }
-.cell:active { transform: scale(0.95); }
-.cell.level-2 { background-color: rgba(0, 168, 163, 0.1); color: #00807b; border-color: #00a8a3; }
-.cell.level-1 { background-color: rgba(255, 190, 44, 0.1); color: #a67c00; border-color: #ffbe2c; }
-.cell.level-0 { background-color: rgba(230, 60, 140, 0.1); color: #e63c8c; border-color: #e63c8c; }
+.cell { display: inline-flex; align-items: center; justify-content: center; width: 70px; height: 36px; border-radius: 24px; font-weight: bold; font-size: 1rem; cursor: default; /* Standard er ikke klikkbar */ border: 1px solid transparent; box-sizing: border-box; transition: transform 0.1s ease-in-out; position: relative; /* For indikator */ }
+.cell.has-quote { cursor: pointer; } /* Gjør kun de med sitat klikkbare */
+.cell:active { transform: scale(0.95); } /* Klikk-effekt */
+/* Farger flyttet til JS */
 
-.sum-cell-content { display: inline-flex; align-items: center; justify-content: center; width: 45px; height: 30px; border-radius: 15px; font-weight: bold; font-size: 0.9rem; border: 1px solid transparent; box-sizing: border-box; cursor: default; }
-.sum-cell-content.high-score { background-color: rgba(0, 168, 163, 0.1); color: #00807b; border-color: #00a8a3; }
-.sum-cell-content.medium-score { background-color: rgba(255, 190, 44, 0.1); color: #a67c00; border-color: #ffbe2c; }
-.sum-cell-content.low-score { background-color: rgba(230, 60, 140, 0.1); color: #e63c8c; border-color: #e63c8c; }
+/* === NYTT: Info-indikator for matrise-celler === */
+.matrix-table .cell.has-quote .info-indicator {
+    position: absolute;
+    right: -5px; /* Juster posisjon */
+    top: -5px;   /* Juster posisjon */
+    font-size: 9px;
+    width: 13px;
+    height: 13px;
+    line-height: 13px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: rgba(0, 48, 135, 0.8); /* Litt mer synlig */
+    color: white;
+    font-style: normal;
+    font-weight: bold;
+    border: 1px solid white;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    pointer-events: none; /* Ikke la indikatoren fange klikk */
+    z-index: 1; /* Sørg for at den er over cellens innhold */
+}
+/* === SLUTT: Info-indikator === */
+
+
+.sum-cell-content { display: inline-flex; align-items: center; justify-content: center; width: 70px; height: 36px; border-radius: 24px; font-weight: bold; font-size: 1rem; border: 1px solid transparent; box-sizing: border-box; cursor: default; }
+/* Farger flyttet til JS */
 
 .matrix-tooltip { display: none; position: absolute; z-index: 1000; background-color: white; box-shadow: 0 4px 20px rgba(0,0,0,0.15); border-radius: 8px; padding: 15px 20px; max-width: 350px; font-size: 0.95rem; line-height: 1.5; border-left: 4px solid var(--kf-purple); }
 .matrix-tooltip h3 { margin-top: 0; margin-bottom: 10px; color: var(--kf-blue); font-size: 1.1rem; padding-bottom: 8px; border-bottom: 1px solid #eee; }
@@ -1007,7 +1075,9 @@ footer {
     .matrix-table th, .matrix-table td { padding: 6px 4px; font-size: 0.8rem; }
     .cell, .sum-cell-content { width: 30px; height: 22px; font-size: 0.75rem; border-radius: 10px; }
     .matrix-table thead th { top: 0; }
-    .matrix-table tr.area-header td { top: 35px; /* Juster */ font-size: 0.95rem; padding: 8px; }
+    .matrix-table tr.area-header td { /* top: 35px; */ /* Juster */ font-size: 0.95rem; padding: 8px; }
+    /* Skjul info-indikator på mindre skjermer? Kan vurderes. */
+    /* .matrix-table .cell .info-indicator { display: none; } */
 }
 
 /* Kun Desktop (Større enn 1024px) */
