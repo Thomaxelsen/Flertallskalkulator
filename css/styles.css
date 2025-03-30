@@ -15,6 +15,8 @@
     --kf-yellow: #ffbe2c;
     --kf-light-green: #8ece3f;
     --kf-green: #00a8a3;
+    /* Variabel for menybredde */
+    --menu-width: 250px;
 }
 
 * {
@@ -579,64 +581,64 @@ footer {
        gap: 0.75rem;
        text-align: center;
    }
-   
+
    .logo-container {
        margin-bottom: 0.5rem;
    }
-   
+
    .header-text {
        padding-right: 0;
        text-align: center;
    }
-   
+
    header h1 {
        font-size: 1.5rem;
        text-align: center;
    }
-   
+
    .header-subtitle {
        font-size: 0.95rem;
        text-align: center;
    }
-   
+
    /* Forbedre parti-kort på mobil */
    .party-grid {
        grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
        gap: 10px;
    }
-   
+
    .party-card {
        padding: 12px;
    }
-   
+
    .party-name {
        font-size: 0.95rem;
        overflow: hidden;
        text-overflow: ellipsis;
        white-space: nowrap;
    }
-   
+
    .party-seats {
        min-width: 32px;
        text-align: center;
    }
-   
+
    .result-details {
        flex-direction: column;
    }
-   
+
    .progress-labels {
        font-size: 14px;
    }
-   
+
    .action-buttons {
        flex-direction: column;
    }
-   
+
    .two-column {
        flex-direction: column;
    }
-   
+
    .logo-image {
        height: 60px;
    }
@@ -661,17 +663,38 @@ footer {
    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
-/* CSS for saksvelger - legg til i slutten av styles.css */
-
+/* CSS for saksvelger */
 .issue-selector-container {
-   margin: 30px 0;
+   margin: 0 0 30px 0; /* Justert margin for å passe i kolonnen */
 }
 
 .issue-selector {
-   background-color: white;
-   padding: 25px;
-   border-radius: 12px;
-   box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+   background-color: #f8f9fc; /* Litt annen bakgrunn for å skille */
+   padding: 20px;
+   border-radius: 8px; /* Litt mindre avrunding */
+   /* box-shadow: 0 4px 15px rgba(0,0,0,0.06); */ /* Fjernet skygge her */
+}
+
+.issue-selector h2 { /* Overstyrer generell .result-header for denne spesifikke */
+    color: var(--kf-blue);
+    margin-top: 0;
+    margin-bottom: 15px; /* Mindre bunn-margin */
+    font-size: 1.3rem; /* Mindre overskrift */
+    font-weight: 600;
+    text-align: left; /* Venstrestilt */
+    padding-bottom: 0.5rem;
+    border-bottom: none; /* Ingen bunnlinje */
+    position: relative;
+}
+.issue-selector h2::after { /* Fjerner gradient-linje */
+    display: none;
+}
+
+
+.issue-description { /* Styling for beskrivelse under overskrift */
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 15px;
 }
 
 .issue-filters {
@@ -681,21 +704,21 @@ footer {
 .area-filter,
 .issue-dropdown {
    width: 100%;
-   padding: 12px 15px;
-   border-radius: 8px;
+   padding: 10px 12px; /* Litt mindre padding */
+   border-radius: 6px; /* Litt mindre avrunding */
    border: 1px solid var(--border-color);
-   font-size: 1rem;
-   margin: 10px 0;
+   font-size: 0.95rem; /* Litt mindre font */
+   margin: 8px 0; /* Justert margin */
    background-color: white;
    cursor: pointer;
-   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+   box-shadow: 0 1px 3px rgba(0,0,0,0.04); /* Mindre skygge */
    transition: all 0.2s ease;
 }
 
 .area-filter:hover,
 .issue-dropdown:hover {
    border-color: var(--kf-purple);
-   box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+   box-shadow: 0 2px 5px rgba(0,0,0,0.06);
 }
 
 .area-filter:focus,
@@ -706,29 +729,31 @@ footer {
 }
 
 .issue-details {
-   background-color: #f8f1f8;
-   border-radius: 8px;
-   padding: 20px;
-   margin-top: 20px;
-   border-left: 4px solid var(--kf-purple);
+   background-color: #f0f4f8; /* Lys blå bakgrunn */
+   border-radius: 6px;
+   padding: 15px; /* Mindre padding */
+   margin-top: 15px;
+   border-left: 4px solid var(--kf-blue); /* Blå kant */
    transition: all 0.3s ease;
 }
 
 .issue-details:hover {
-   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+   box-shadow: 0 3px 8px rgba(0,0,0,0.06);
 }
 
 .issue-name {
-   color: var(--kf-purple);
+   color: var(--kf-blue); /* Blå overskrift */
    margin-bottom: 5px;
-   font-size: 1.3rem;
+   font-size: 1.1rem; /* Justert størrelse */
+   font-weight: 600;
 }
 
 .issue-area {
    color: #555;
    font-style: italic;
-   margin-bottom: 15px;
-   padding-bottom: 10px;
+   font-size: 0.85rem; /* Mindre font */
+   margin-bottom: 10px;
+   padding-bottom: 8px;
    border-bottom: 1px solid #e0e0e0;
 }
 
@@ -736,15 +761,17 @@ footer {
    color: #666;
    font-style: italic;
    text-align: center;
+   font-size: 0.9rem;
+   padding: 10px 0;
 }
 
 .issue-status {
-   padding: 15px;
-   border-radius: 8px;
+   padding: 12px; /* Mindre padding */
+   border-radius: 6px;
    margin: 15px 0;
-   font-size: 1.1rem;
+   font-size: 1rem; /* Justert størrelse */
    text-align: center;
-   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+   box-shadow: 0 2px 6px rgba(0,0,0,0.06); /* Mindre skygge */
 }
 
 .issue-status.majority {
@@ -758,39 +785,55 @@ footer {
 }
 
 .issue-parties {
-   margin-top: 20px;
+   margin-top: 15px;
 }
 
 .issue-parties h4 {
    color: var(--kf-blue);
-   margin-bottom: 10px;
+   margin-bottom: 8px;
+   font-size: 1rem; /* Justert størrelse */
 }
 
 .issue-parties-list {
    display: flex;
    flex-wrap: wrap;
-   gap: 8px;
-   margin-top: 10px;
+   gap: 6px; /* Mindre gap */
+   margin-top: 8px;
 }
 
 .issue-party {
-   padding: 5px 10px;
-   border-radius: 20px;
+   padding: 4px 10px; /* Mindre padding */
+   border-radius: 15px; /* Mer avrundet */
    font-weight: 500;
-   font-size: 0.9rem;
-   background-color: #f0f0f0;
-   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+   font-size: 0.85rem; /* Mindre font */
+   background-color: white; /* Hvit bakgrunn */
+   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
    transition: transform 0.2s ease;
+   border: 1px solid #eee; /* Lys kantlinje */
 }
 
 .issue-party:hover {
    transform: translateY(-2px);
-   box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+   box-shadow: 0 2px 5px rgba(0,0,0,0.15);
 }
+
+/* Farger for issue-party tags (gjenbruk fra party-tag) */
+.issue-party.party-tag-ap { background-color: rgba(237, 27, 52, 0.1); border-color: #ed1b34; color: #b81628; }
+.issue-party.party-tag-h { background-color: rgba(0, 122, 200, 0.1); border-color: #007ac8; color: #005a93; }
+.issue-party.party-tag-sp { background-color: rgba(20, 119, 60, 0.1); border-color: #14773c; color: #0e5329; }
+.issue-party.party-tag-frp { background-color: rgba(0, 46, 94, 0.1); border-color: #002e5e; color: #001f3f; }
+.issue-party.party-tag-sv { background-color: rgba(235, 46, 45, 0.1); border-color: #eb2e2d; color: #c42625; }
+.issue-party.party-tag-v { background-color: rgba(0, 128, 123, 0.1); border-color: #00807b; color: #005f5b; }
+.issue-party.party-tag-r { background-color: rgba(218, 41, 28, 0.1); border-color: #da291c; color: #a51f15; }
+.issue-party.party-tag-krf { background-color: rgba(255, 190, 0, 0.1); border-color: #ffbe00; color: #b08400; }
+.issue-party.party-tag-mdg { background-color: rgba(67, 149, 57, 0.1); border-color: #439539; color: #2d6426; }
+.issue-party.party-tag-pf { background-color: rgba(160, 77, 148, 0.1); border-color: #a04d94; color: #703668; }
+
 
 .no-parties {
    color: #777;
    font-style: italic;
+   font-size: 0.9rem;
 }
 
 /* Responsive styles for issue selector */
@@ -798,69 +841,67 @@ footer {
    .issue-selector {
        padding: 15px;
    }
-   
+
    .issue-details {
        padding: 15px;
    }
-   
+
    .issue-name {
-       font-size: 1.2rem;
-   }
-   
-   .issue-status {
        font-size: 1rem;
-       padding: 12px;
+   }
+
+   .issue-status {
+       font-size: 0.95rem;
+       padding: 10px;
    }
 }
 
 /* Hover/click stiler for partier */
-/* For klikkbare/hoverbare partielementer */
 .clickable-party, .hoverable-party {
    position: relative;
    cursor: pointer;
 }
 
 .clickable-party {
-   padding-right: 20px; /* Space for the indicator */
+   padding-right: 20px; /* Plass for info-indikator */
 }
 
-/* Hover effects only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
    .hoverable-party:hover {
-       transform: translateY(-3px);
-       box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-       transition: all 0.2s ease;
+       /* Bruk eksisterende hover-effekt for .issue-party */
    }
 }
 
-/* Always show click effect */
 .clickable-party:active {
    transform: translateY(1px);
-   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+   box-shadow: 0 1px 2px rgba(0,0,0,0.1); /* Mindre skygge ved klikk */
 }
 
 .info-indicator {
    position: absolute;
-   right: 5px;
-   top: 4px;
+   right: 3px; /* Justert posisjon */
+   top: 50%;
+   transform: translateY(-50%); /* Sentrert vertikalt */
    font-size: 10px;
    width: 14px;
    height: 14px;
    line-height: 14px;
    text-align: center;
    border-radius: 50%;
-   background-color: rgba(255,255,255,0.7);
-   color: #555;
-   font-style: italic;
+   background-color: rgba(0, 48, 135, 0.1); /* Lys blå bakgrunn */
+   color: var(--kf-blue); /* Blå farge */
+   font-style: normal; /* Ikke kursiv */
    font-weight: bold;
+   border: 1px solid rgba(0, 48, 135, 0.2);
 }
 
 .interaction-tip {
    font-size: 0.8rem;
    color: #666;
    font-style: italic;
-   margin-bottom: 8px;
-   text-align: center;
+   margin-bottom: 10px; /* Mer luft */
+   text-align: left; /* Venstrestilt */
+   padding-left: 5px;
 }
 
 /* Modal styling */
@@ -875,45 +916,40 @@ footer {
    overflow: auto;
 }
 
-/* Regular modal (for click) */
 .quote-modal:not(.hover-mode) {
    background-color: rgba(0,0,0,0.4);
    backdrop-filter: blur(3px);
 }
 
-/* Hover modal (transparent background) */
 .quote-modal.hover-mode {
    background-color: transparent;
-   pointer-events: none;
+   pointer-events: none; /* Viktig for hover */
 }
 
 .quote-modal.hover-mode .quote-modal-content {
-   pointer-events: auto;
+   pointer-events: auto; /* Tillat interaksjon med hover-modalen */
 }
 
-/* Regular modal content styling (centered) */
-.quote-modal:not(.hover-mode) .quote-modal-content {
+.quote-modal-content { /* Felles stiler */
    background-color: white;
-   margin: 15% auto;
-   padding: 25px;
-   border-radius: 12px;
-   width: 90%;
-   max-width: 500px;
-   box-shadow: 0 4px 25px rgba(0,0,0,0.2);
-   animation: modalFadeIn 0.3s;
-   position: relative;
-}
-
-/* Hover modal content styling (positioned near element) */
-.quote-modal.hover-mode .quote-modal-content {
-   background-color: white;
-   padding: 20px;
    border-radius: 8px;
    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
    animation: modalFadeIn 0.2s;
-   position: fixed;
+}
+
+.quote-modal:not(.hover-mode) .quote-modal-content { /* Klikk-modal */
+   margin: 10% auto; /* Justert margin */
+   padding: 25px;
+   width: 90%;
+   max-width: 500px;
+   position: relative;
+}
+
+.quote-modal.hover-mode .quote-modal-content { /* Hover-modal */
+   padding: 15px 20px; /* Justert padding */
+   position: fixed; /* Posisjoneres av JS */
    width: auto;
-   max-width: 400px;
+   max-width: 350px; /* Justert bredde */
    z-index: 1001;
 }
 
@@ -922,7 +958,7 @@ footer {
    to {opacity: 1; transform: translateY(0);}
 }
 
-.close-modal {
+.close-modal { /* Kun for klikk-modal */
    color: #aaa;
    position: absolute;
    right: 15px;
@@ -941,42 +977,41 @@ footer {
    color: #333;
 }
 
-.quote-party-title {
-   font-size: 1.4rem;
-   margin-bottom: 15px;
-   padding: 8px 15px;
-   border-radius: 8px;
+.quote-party-title { /* Overskrift i modal */
+   font-size: 1.2rem; /* Justert størrelse */
+   margin-bottom: 10px;
+   padding: 5px 12px; /* Justert padding */
+   border-radius: 6px;
    display: inline-block;
+   color: white; /* Hvit tekst for bedre kontrast */
+   font-weight: 600;
 }
+/* Farger for quote-tittel basert på parti */
+.quote-party-title.party-tag-ap { background-color: #ed1b34; }
+.quote-party-title.party-tag-h { background-color: #007ac8; }
+.quote-party-title.party-tag-sp { background-color: #14773c; }
+.quote-party-title.party-tag-frp { background-color: #002e5e; }
+.quote-party-title.party-tag-sv { background-color: #eb2e2d; }
+.quote-party-title.party-tag-v { background-color: #00807b; }
+.quote-party-title.party-tag-r { background-color: #da291c; }
+.quote-party-title.party-tag-krf { background-color: #ffbe00; color: #333; } /* Mørk tekst for KrF */
+.quote-party-title.party-tag-mdg { background-color: #439539; }
+.quote-party-title.party-tag-pf { background-color: #a04d94; }
+
 
 .quote-text {
-   font-size: 1.1rem;
-   line-height: 1.6;
+   font-size: 1rem; /* Justert størrelse */
+   line-height: 1.5;
    color: #333;
-   padding: 15px;
-   background-color: #f9f9f9;
-   border-left: 4px solid #ddd;
-   margin: 15px 0;
+   padding: 12px;
+   background-color: #f8f9fa; /* Lys grå bakgrunn */
+   border-left: 3px solid var(--kf-purple); /* Lilla kant */
+   margin: 10px 0 0 0; /* Justert margin */
    border-radius: 4px;
+   font-style: italic;
 }
 
-/* Ekstra mellomrom mellom saksvelger og partivelger */
-#issue-selector-container {
-   margin-bottom: 30px;
-}
-
-/* Mer markert overskrift for partivelger-seksjonen */
-.party-section .section-title {
-   margin-top: 0;
-   margin-bottom: 15px;
-}
-
-/* Gjør beskrivelsen mer integrert i seksjonen */
-.party-section .description {
-   margin-bottom: 20px;
-}
-
-/* Partiseksjons-instruksjoner med info-knapp */
+/* Info-knapp instruksjoner */
 .party-instructions {
    display: flex;
    align-items: center;
@@ -985,6 +1020,11 @@ footer {
    padding: 10px 15px;
    background-color: #f8f9fa;
    border-radius: 8px;
+}
+.party-instructions p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #444;
 }
 
 .info-button {
@@ -996,12 +1036,13 @@ footer {
    display: flex;
    align-items: center;
    justify-content: center;
-   font-style: italic;
+   font-style: normal; /* Ikke kursiv */
    font-weight: bold;
    cursor: pointer;
    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
    transition: all 0.2s ease;
-   position: relative;
+   position: relative; /* Nødvendig for tooltip */
+   font-size: 14px; /* Større 'i' */
 }
 
 .info-button:hover {
@@ -1010,7 +1051,7 @@ footer {
    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
-/* Info popup styling */
+/* Info popup (kun mobil) */
 .info-popup {
    display: none;
    position: fixed;
@@ -1034,6 +1075,11 @@ footer {
    animation: popupFadeIn 0.3s;
    position: relative;
 }
+.info-popup h4 {
+    color: var(--kf-blue);
+    margin-top: 0;
+    margin-bottom: 15px;
+}
 
 .close-popup {
    color: #aaa;
@@ -1055,7 +1101,7 @@ footer {
    to {opacity: 1; transform: translateY(0);}
 }
 
-/* Info tooltip style (for desktop) */
+/* Info tooltip (kun desktop) */
 .info-tooltip {
     display: none;
     position: absolute;
@@ -1069,12 +1115,16 @@ footer {
     line-height: 1.4;
     border-left: 3px solid var(--kf-blue);
     animation: tooltipFadeIn 0.2s;
-    top: -10px;
-    right: -260px;
-    color: #333; /* Sørger for at teksten er mørk og lesbar */
+    /* Posisjonering justert: ved siden av knappen */
+    top: 50%;
+    left: calc(100% + 10px); /* 10px til høyre for knappen */
+    transform: translateY(-50%);
+    color: #333;
+}
+.info-button:hover .info-tooltip { /* Vis på hover av knapp */
+    display: block;
 }
 
-/* Stiler for overskrift i tooltip */
 .info-tooltip strong {
     display: block;
     margin-bottom: 8px;
@@ -1082,129 +1132,83 @@ footer {
     font-size: 1rem;
 }
 
-/* Stiler for paragraf i tooltip */
 .info-tooltip p {
     margin: 0;
     color: #333;
 }
 
 @keyframes tooltipFadeIn {
-   from {opacity: 0; transform: translateY(5px);}
-   to {opacity: 1; transform: translateY(0);}
+   from {opacity: 0; transform: translate(5px, -50%);} /* Starter litt til høyre */
+   to {opacity: 1; transform: translate(0, -50%);}
 }
 
-/* Beholder den originale popupen bare for mobile */
+/* Skjul popup på desktop, vis kun tooltip */
 @media (hover: hover) and (pointer: fine) {
    .info-popup {
-       display: none !important; /* Aldri vis fullskjerm-popup på desktop */
+       display: none !important;
    }
 }
-/* Juster vertikal posisjonering av seksjonstitler */
-.issue-selector .section-title,
-.result-header {
-    margin-top: 0;
-    margin-bottom: 20px;
-    /* Sikrer samme linjehøyde og tekstutseende på begge sider */
-    font-size: 1.6rem;
-    line-height: 1.2;
-    padding-bottom: 0.8rem;
+/* Skjul tooltip på touch-enheter */
+@media (hover: none) and (pointer: coarse) {
+    .info-tooltip {
+        display: none !important;
+    }
 }
 
-/* Sørg for at issue-selector-container starter på samme høyde som result-container */
-#issue-selector-container {
-    margin-top: 0;
-    margin-bottom: 30px;
+
+/* Layout justeringer */
+.two-column {
+   align-items: flex-start; /* Sørg for at kolonner starter øverst */
 }
 
-/* Sørg for at layouten starter øverst i kolonnen */
 .column {
     display: flex;
     flex-direction: column;
+    height: 100%; /* Prøv å gi kolonnene høyde */
 }
 
-/* Gjør kolonnetoppen lik på begge sider */
-.issue-selector,
-.result-container {
-    margin-top: 0;
-    padding-top: 25px;
-}
-/* Gir resultat og issue-selector samme styling */
-.result-header,
-.issue-selector h2 {
-    color: var(--kf-blue);
-    margin-top: 0;
-    margin-bottom: 20px;
-    font-size: 1.6rem;
-    font-weight: 600;
-    text-align: center;
-    padding-bottom: 0.8rem;
-    border-bottom: 2px solid #eee;
-    position: relative;
-}
-
-.result-header::after,
-.issue-selector h2::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 2px;
-    background: linear-gradient(90deg, var(--kf-pink), var(--kf-purple));
-}
-
-/* Justerer startposisjon for boksene */
-.result-container,
-.issue-selector {
-    margin-top: 0;
-    padding-top: 25px;
-}
-
-/* Gir samme høyde til begge kolonner */
-.column:first-child,
-.column:last-child {
-    align-self: flex-start;
-}
-/* Skjul den genererte overskriften i issue-selector */
-.issue-selector .section-title:first-child {
-    display: none;
-}
 /* Stil for valgte legend-elementer */
 .legend-item.selected {
-    background-color: #f0f0f0;
-    box-shadow: 0 0 5px rgba(0,0,0,0.2);
-    transform: translateY(-2px);
+    background-color: rgba(0, 48, 135, 0.1); /* Lys blå bakgrunn */
+    border: 1px solid var(--kf-blue); /* Blå kant */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transform: translateY(-1px); /* Liten hev-effekt */
+}
+.legend-item.selected .legend-color {
+    box-shadow: inset 0 0 0 2px white; /* Indre hvit ring */
 }
 
-/* Hover-effekt for legend-elementer */
 .legend-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+    transform: translateY(-2px) scale(1.03); /* Tydeligere hover */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
+
+
 /* Navigasjonslenker i header */
 .nav-links {
-    margin-left: 20px;
+    margin-left: auto; /* Skyv til høyre */
     display: flex;
     align-items: center;
+    gap: 10px; /* Mellomrom mellom lenker */
 }
 
 .nav-link {
     display: inline-block;
     padding: 8px 15px;
-    background-color: var(--kf-pink);
-    color: white;
+    background-color: transparent; /* Gjennomsiktig bakgrunn */
+    color: var(--kf-blue); /* Blå tekst */
     text-decoration: none;
     border-radius: 20px;
     font-weight: 500;
     transition: all 0.2s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border: 1px solid transparent; /* Usynlig kantlinje for layout */
 }
 
 .nav-link:hover {
-    background-color: var(--kf-purple);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    background-color: rgba(0, 48, 135, 0.05); /* Veldig lys blå hover */
+    color: var(--kf-purple); /* Lilla tekst på hover */
+    transform: translateY(-1px);
+    /* box-shadow: 0 2px 4px rgba(0,0,0,0.05); */
 }
 
 /* Responsive justering for navigasjon */
@@ -1212,146 +1216,19 @@ footer {
     header {
         flex-wrap: wrap;
     }
-    
+
     .nav-links {
-        margin: 10px auto 0;
+        display: none; /* Skjul desktop-lenker på mobil */
     }
 }
-/* Hamburger meny styles - Oppdatert */
-.hamburger-nav {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-}
-
-.hamburger-button {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 30px;
-    height: 20px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    transition: all 0.3s ease;
-}
-
-.hamburger-line {
-    width: 100%;
-    height: 3px;
-    background-color: var(--kf-blue);
-    border-radius: 3px;
-    transition: all 0.3s ease;
-}
-
-.hamburger-button:hover .hamburger-line {
-    background-color: var(--kf-pink);
-}
-
-.nav-menu {
-    position: fixed;
-    top: 0;
-    right: -300px; /* Start off-screen */
-    width: 300px;
-    max-width: 80vw;
-    height: 100vh;
-    background-color: white;
-    box-shadow: -2px 0 10px rgba(0,0,0,0.1);
-    transition: right 0.3s ease;
-    z-index: 1001;
-    overflow-y: auto;
-}
-
-.nav-menu.active {
-    right: 0; /* Slide in */
-}
-
-.nav-menu-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    border-bottom: 1px solid #eee;
-}
-
-.menu-title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--kf-blue);
-}
-
-.close-menu {
-    background: none;
-    border: none;
-    font-size: 24px;
-    color: #666;
-    cursor: pointer;
-    transition: color 0.2s ease;
-}
-
-.close-menu:hover {
-    color: var(--kf-pink);
-}
-
-.nav-menu-links {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-}
-
-.menu-link {
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    color: #333;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    font-weight: 500;
-}
-
-.menu-link:hover {
-    background-color: rgba(0, 48, 135, 0.05);
-    color: var(--kf-blue);
-    transform: translateX(5px);
-}
-
-.menu-link.active {
-    background-color: var(--kf-blue);
-    color: white;
-}
-
-/* Prevent scrolling when menu is open */
-body.menu-open {
-    overflow: hidden;
-}
-
-/* Overlay when menu is open */
-body.menu-open::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.4);
-    z-index: 999;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .nav-links {
-        display: none; /* Hide regular nav links on mobile */
-    }
-}
-
 @media (min-width: 769px) {
-    .hamburger-button {
-        display: none; /* Hide hamburger on desktop */
+    .burger-menu { /* Skjul burger på desktop */
+        display: none !important;
     }
 }
-/* ===== START: Hamburgermeny Styling (Sentralisert) ===== */
+
+
+/* ===== START: Hamburgermeny Styling (Sentralisert & Korrigert) ===== */
 
 /* Hamburgermeny knapp */
 .burger-menu {
@@ -1379,9 +1256,9 @@ body.menu-open::after {
 /* Mobil meny container */
 .mobile-menu {
     position: fixed;
-    left: -250px; /* Starter utenfor skjermen på venstre side */
+    left: calc(-1 * var(--menu-width)); /* Start utenfor skjermen, bruk variabel */
     top: 0;
-    width: 250px;
+    width: var(--menu-width); /* Bruk variabel */
     max-width: 80vw;
     height: 100%;
     background-color: white;
@@ -1459,8 +1336,8 @@ body.menu-open::after {
 .menu-overlay {
     position: fixed;
     top: 0;
-    left: 0;
-    width: 100%;
+    /* left: 0; */ /* Fjernet - settes kun når aktiv */
+    /* width: 100%; */ /* Fjernet - settes kun når aktiv */
     height: 100%;
     background-color: rgba(0,0,0,0.5);
     z-index: 998; /* Under menyen */
@@ -1469,9 +1346,12 @@ body.menu-open::after {
     opacity: 0;
 }
 
+/* Overlay NÅR AKTIV - Korrigert */
 .menu-overlay.active {
     display: block;
     opacity: 1;
+    left: var(--menu-width); /* Start ETTER menyen */
+    width: calc(100% - var(--menu-width)); /* Fyll resten av skjermen */
 }
 
 /* Vis/skjul elementer basert på skjermstørrelse */
@@ -1484,23 +1364,20 @@ body.menu-open::after {
         display: block; /* Gjør menyen klar for visning på mobil */
     }
 
-    .nav-links {
-        display: none; /* Skjul desktop-lenker på mobil */
-    }
+    /* .nav-links er allerede skjult på mobil lenger opp */
 }
 
-@media (min-width: 769px) {
-    .nav-links {
-        display: flex; /* Vis desktop-lenker på større skjermer */
-    }
-}
+/* @media (min-width: 769px) er allerede håndtert lenger opp */
+
 
 /* Hindre scrolling av body når menyen er åpen */
 body.menu-open {
     overflow: hidden;
 }
 
-/* ===== SLUTT: Hamburgermeny Styling (Sentralisert) ===== */
+/* ===== SLUTT: Hamburgermeny Styling (Sentralisert & Korrigert) ===== */
+
+
 /* ===== START: Issue Matrix Styling ===== */
 
 /* Filter styling */
@@ -1511,92 +1388,23 @@ body.menu-open {
     margin: 20px 0 30px;
     background: white;
     padding: 25px;
-    border-radius: 12px; /* Mer konsistent avrunding */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.06); /* Konsistent skygge */
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
 }
 
-.filter-group {
-    flex: 1;
-    min-width: 250px;
-}
-
-.filter-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-    color: #444; /* Konsistent farge */
-}
-
-.filter-dropdown { /* Gjenbruker stil fra styles.css, men sikrer at den er her */
-    width: 100%;
-    padding: 12px 15px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    font-size: 1rem;
-    margin-top: 8px; /* Litt luft over */
-    background-color: white;
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    transition: all 0.2s ease;
-}
-
-.filter-dropdown:hover {
-   border-color: var(--kf-purple);
-   box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-}
-
-.filter-dropdown:focus {
-   outline: none;
-   border-color: var(--kf-pink);
-   box-shadow: 0 0 0 2px rgba(230, 60, 140, 0.2);
-}
+/* .filter-group, .filter-group label, .filter-dropdown er allerede definert over */
 
 /* Legend styling */
-.legend-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-    margin: 25px 0;
-    padding: 20px;
-    background: white;
-    border-radius: 12px; /* Konsistent avrunding */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.06); /* Konsistent skygge */
-}
-
-.legend-item { /* Stiler for selve legend-boksen */
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    border: 1px solid transparent; /* Basis-border */
-}
-
-.legend-color { /* Stiler for fargeprikken */
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    flex-shrink: 0;
-}
-
-.legend-text { /* Stiler for teksten i legenden */
-     font-weight: 600;
-}
-
-/* Farger basert på agreementColors i JS */
-/* Level 2 (Full Enighet) */
+/* .legend-container, .legend-item, .legend-color, .legend-text er allerede definert over */
+/* Farger for legend */
 .legend-item.level-2 { background-color: rgba(0, 168, 163, 0.1); border-color: #00a8a3; }
 .legend-item.level-2 .legend-color { background-color: #00a8a3; }
 .legend-item.level-2 .legend-text { color: #00a8a3; }
 
-/* Level 1 (Delvis Enighet) */
 .legend-item.level-1 { background-color: rgba(255, 190, 44, 0.1); border-color: #ffbe2c; }
 .legend-item.level-1 .legend-color { background-color: #ffbe2c; }
-.legend-item.level-1 .legend-text { color: #a67c00; } /* Mørkere gul for lesbarhet */
+.legend-item.level-1 .legend-text { color: #a67c00; }
 
-/* Level 0 (Ingen Støtte) */
 .legend-item.level-0 { background-color: rgba(230, 60, 140, 0.1); border-color: #e63c8c; }
 .legend-item.level-0 .legend-color { background-color: #e63c8c; }
 .legend-item.level-0 .legend-text { color: #e63c8c; }
@@ -1604,76 +1412,69 @@ body.menu-open {
 
 /* Table styling */
 .matrix-container {
-    overflow-x: auto; /* Viktig for scrolling på små skjermer */
+    overflow-x: auto;
     margin-bottom: 30px;
     background-color: white;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-    -webkit-overflow-scrolling: touch; /* Jevnere scrolling på iOS */
+    -webkit-overflow-scrolling: touch;
 }
 .matrix-table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 800px; /* Minimumsbredde for å tvinge scrolling ved behov */
+    min-width: 800px;
 }
 
 .matrix-table th, .matrix-table td {
     padding: 10px 12px;
-    border: 1px solid #eee; /* Tynne, lyse skillelinjer */
+    border: 1px solid #eee;
     text-align: center;
     vertical-align: middle;
-    white-space: nowrap; /* Forhindre uønsket linjeskift */
+    white-space: nowrap;
 }
 
-/* Tabellhode (Partinavn) */
 .matrix-table thead th {
-    background-color: #f8f9fa; /* Lys grå bakgrunn */
+    background-color: #f8f9fa;
     position: sticky;
-    top: 0; /* Festes til toppen ved scrolling */
+    top: 0;
     z-index: 10;
     font-weight: 600;
-    white-space: normal; /* Tillat linjeskift i headere om nødvendig */
+    white-space: normal;
 }
 
-/* Første kolonne (Saksnavn) */
 .matrix-table th.issue-col,
 .matrix-table td.issue-col {
     text-align: left;
     position: sticky;
-    left: 0; /* Festes til venstre ved scrolling */
-    background-color: white; /* Hvit bakgrunn for å dekke innhold bak */
-    z-index: 1; /* Lavere z-index enn thead */
+    left: 0;
+    background-color: white;
+    z-index: 1;
     min-width: 250px;
-    white-space: normal; /* Tillat linjeskift for lange saksnavn */
-    border-right: 2px solid #ddd; /* Tydeligere skille for sticky kolonne */
+    white-space: normal;
+    border-right: 2px solid #ddd;
 }
-/* Sikre at thead-cellen for issue også har riktig bakgrunn og z-index */
 .matrix-table thead th.issue-col {
-     z-index: 11; /* Over thead-rader */
-     background-color: #f8f9fa; /* Match resten av thead */
+     z-index: 11;
+     background-color: #f8f9fa;
 }
 
-
-/* Rad-styling */
-.matrix-table tbody tr:nth-child(even) td:not(.issue-col) { /* Striping, unngå sticky kolonne */
-     background-color: #fdfdff; /* Veldig lys blå/lilla */
+.matrix-table tbody tr:nth-child(even) td:not(.issue-col) {
+     background-color: #fdfdff;
 }
-/* Hover-effekt på rader */
 .matrix-table tbody tr:hover td:not(.issue-col) {
-     background-color: #f1f5f8; /* Litt mørkere hover */
+     background-color: #f1f5f8;
 }
 
-/* Områdeoverskrift-rad */
 .matrix-table tr.area-header td {
-    background-color: var(--kf-blue); /* Bruk standard blåfarge */
+    background-color: var(--kf-blue);
     color: white;
     font-weight: bold;
     font-size: 1.1rem;
     text-align: center;
     position: sticky;
-    top: 50px; /* Plasseres under den faste partinavn-raden */
-    z-index: 5; /* Under thead, over vanlige rader */
-    border: 1px solid var(--kf-blue); /* Samme farge på border */
+    top: 50px; /* Juster denne verdien basert på høyden til thead */
+    z-index: 5;
+    border: 1px solid var(--kf-blue);
 }
 
 /* Enighetsbokser (celler) */
@@ -1689,10 +1490,10 @@ body.menu-open {
     cursor: pointer;
     border: 1px solid transparent;
     box-sizing: border-box;
-    transition: transform 0.1s ease-in-out; /* Liten effekt ved klikk */
+    transition: transform 0.1s ease-in-out;
 }
 .cell:active {
-    transform: scale(0.95); /* Krymp litt ved klikk */
+    transform: scale(0.95);
 }
 
 /* Farger for enighetsbokser */
@@ -1712,7 +1513,7 @@ body.menu-open {
     font-size: 0.9rem;
     border: 1px solid transparent;
     box-sizing: border-box;
-    cursor: default; /* Ikke klikkbar */
+    cursor: default;
 }
 
 /* Farger for SUM */
@@ -1720,22 +1521,21 @@ body.menu-open {
 .sum-cell-content.medium-score { background-color: rgba(255, 190, 44, 0.1); color: #a67c00; border-color: #ffbe2c; }
 .sum-cell-content.low-score { background-color: rgba(230, 60, 140, 0.1); color: #e63c8c; border-color: #e63c8c; }
 
-
 /* Tooltip styling */
 .matrix-tooltip {
     display: none;
-    position: absolute; /* Posisjoneres av JS */
+    position: absolute;
     z-index: 1000;
     background-color: white;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15); /* Litt mer skygge */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
     border-radius: 8px;
-    padding: 15px 20px; /* Litt mer padding */
+    padding: 15px 20px;
     max-width: 350px;
     font-size: 0.95rem;
     line-height: 1.5;
-    border-left: 4px solid var(--kf-purple); /* Lilla kant */
+    border-left: 4px solid var(--kf-purple);
 }
-.matrix-tooltip h3 { /* Overskrift (Saksnavn) */
+.matrix-tooltip h3 {
     margin-top: 0;
     margin-bottom: 10px;
     color: var(--kf-blue);
@@ -1743,19 +1543,19 @@ body.menu-open {
     padding-bottom: 8px;
     border-bottom: 1px solid #eee;
 }
-.matrix-tooltip p { /* Paragraf (Partinavn + status) */
-    margin-bottom: 8px; /* Litt mer luft */
+.matrix-tooltip p {
+    margin-bottom: 8px;
 }
-.matrix-tooltip .quote-box { /* Boks for sitat */
+.matrix-tooltip .quote-box {
      background-color: #f9f9f9;
      padding: 12px;
      margin-top: 12px;
-     border-left: 3px solid var(--kf-purple); /* Matcher kanten på tooltip */
+     border-left: 3px solid var(--kf-purple);
      border-radius: 4px;
      font-style: italic;
      color: #555;
 }
-.matrix-tooltip .no-quote { /* Melding ved manglende sitat */
+.matrix-tooltip .no-quote {
     font-style: italic;
     color: #777;
     margin-top: 10px;
@@ -1769,28 +1569,26 @@ body.menu-open {
     color: #666;
 }
 
-/* Responsivitet for tabell */
+/* Responsivitet for tabell (Matrix) */
 @media (max-width: 768px) {
     .matrix-table th.issue-col,
     .matrix-table td.issue-col {
-        min-width: 150px; /* Smalere sticky kolonne på mobil */
+        min-width: 150px;
         font-size: 0.9rem;
-        border-right-width: 1px; /* Tynnere skille på mobil */
+        border-right-width: 1px;
     }
     .matrix-table th,
     .matrix-table td {
-        padding: 8px 5px; /* Mindre padding */
+        padding: 8px 5px;
         font-size: 0.85rem;
-        white-space: nowrap; /* Forhindre linjeskift i data celler */
+        white-space: nowrap;
     }
-    /* Juster størrelse på enighetsbokser på mobil */
     .cell, .sum-cell-content {
          width: 35px;
          height: 25px;
          font-size: 0.8rem;
          border-radius: 12px;
     }
-    /* Juster sticky posisjon for headere på mobil */
     .matrix-table thead th {
         top: 0;
     }
