@@ -464,48 +464,6 @@ function hexToRgb(hex) {
     return { r, g, b };
 }
 
-// Funksjon for å oppdatere legendens stiler
-function updateLegendStyles() {
-    const legendItems = document.querySelectorAll('.legend-item');
-    
-    legendItems.forEach(item => {
-        // Finn level fra klassen til .legend-color innenfor dette elementet
-        const colorElement = item.querySelector('.legend-color');
-        if (!colorElement) return;
-        
-        const level = colorElement.classList.contains('level-0') ? 0 : 
-                     colorElement.classList.contains('level-1') ? 1 : 2;
-        
-        const colors = agreementColors[level];
-        
-        // Stil legendeelementet
-        item.style.borderRadius = '24px'; // Mer avrundet
-        item.style.padding = '8px 20px'; // Større padding
-        item.style.backgroundColor = colors.background;
-        item.style.border = `1px solid ${colors.border}`;
-        item.style.color = colors.color;
-        item.style.display = 'inline-flex';
-        item.style.alignItems = 'center';
-        
-        // Stil fargeelementet
-        colorElement.style.display = 'inline-block';
-        colorElement.style.width = '25px'; // Større
-        colorElement.style.height = '25px'; // Større
-        colorElement.style.borderRadius = '12px';
-        colorElement.style.marginRight = '10px';
-        colorElement.style.backgroundColor = colors.background;
-        colorElement.style.border = `1px solid ${colors.border}`;
-        
-        // Stil tekstelementet
-        const textElement = item.querySelector('.legend-text');
-        if (textElement) {
-            textElement.style.color = colors.color;
-            textElement.style.fontWeight = 'bold';
-            textElement.style.fontSize = '1rem'; // Større tekst
-        }
-    });
-}
-
 // Funksjon for å vise tooltip med detaljer
 function showTooltip(element, issue, partyCode, level) {
     const tooltip = document.querySelector('.matrix-tooltip');
