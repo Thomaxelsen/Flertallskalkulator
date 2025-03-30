@@ -1,3 +1,5 @@
+/* === styles.css === */
+
 :root {
     --primary-color: #003087;
     --secondary-color: #c8102e;
@@ -15,8 +17,11 @@
     --kf-yellow: #ffbe2c;
     --kf-light-green: #8ece3f;
     --kf-green: #00a8a3;
+    /* Variabel for menybredde */
+    --menu-width: 250px;
 }
 
+/* === Generelle Stiler === */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -30,13 +35,18 @@ body {
     color: #333;
 }
 
+/* Hindre scrolling av body når mobilmenyen er åpen */
+body.menu-open {
+    overflow: hidden;
+}
+
 .container {
     max-width: 1500px;
     margin: 0 auto;
     padding: 1.5rem;
 }
 
-/* Header styles */
+/* === Header === */
 header {
     display: flex;
     align-items: center;
@@ -46,11 +56,13 @@ header {
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     justify-content: space-between;
+    gap: 1rem; /* Litt luft mellom elementene */
 }
 
 .logo-container {
     display: flex;
     align-items: center;
+    flex-shrink: 0;
 }
 
 .logo-container:hover {
@@ -65,9 +77,9 @@ header {
 }
 
 .header-text {
-    flex: 1;
+    flex-grow: 1;
     text-align: center;
-    padding-right: 70px; /* For balanse med logo */
+    padding: 0 1rem; /* Mindre padding for å gi plass */
 }
 
 header h1 {
@@ -88,19 +100,65 @@ header h1 strong {
     margin-top: 0.4rem;
 }
 
-/* Description styles */
-.description {
-    margin-bottom: 2rem;
-    padding: 1.8rem;
-    background-color: #f8f1f8;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-    border-left: 5px solid var(--kf-pink);
-    transition: all 0.3s ease;
+/* Desktop Navigasjonslenker (vises/skjules via media queries) */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    margin-left: auto; /* Skyv helt til høyre */
 }
 
-.description:hover {
-    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+.nav-link {
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: transparent;
+    color: var(--kf-blue);
+    text-decoration: none;
+    border-radius: 20px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    white-space: nowrap;
+}
+
+.nav-link:hover {
+    background-color: rgba(0, 48, 135, 0.05);
+    color: var(--kf-purple);
+    transform: translateY(-1px);
+}
+
+/* === Beskrivelse / Introduksjon === */
+.description,
+.introduction { /* Felles stiler */
+    margin-bottom: 2rem;
+    padding: 1.8rem;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    border-left: 5px solid var(--kf-pink);
+    transition: box-shadow 0.3s ease;
+}
+.introduction { /* Spesifikk for majority-coalitions.html */
+     border-left-color: var(--kf-blue); /* Blå kant for intro */
+     text-align: center;
+}
+.introduction h2 {
+    color: var(--kf-blue);
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+}
+.introduction p {
+    color: #555;
+    max-width: 800px;
+    margin: 0 auto 1rem auto;
+    line-height: 1.6;
+}
+
+
+.description:hover,
+.introduction:hover {
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
 .info-text {
@@ -114,34 +172,41 @@ header h1 strong {
     font-weight: 600;
 }
 
-/* Party grid styles */
+/* === Partivelger (index.html) === */
+.party-section {
+    background-color: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    margin-bottom: 30px;
+}
+
 .party-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); /* Litt smalere min */
+    gap: 12px; /* Litt mindre gap */
     margin-bottom: 25px;
 }
 
 .party-card {
     background: white;
-    border-radius: 12px;
-    padding: 14px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    border-radius: 10px; /* Litt mindre avrunding */
+    padding: 12px; /* Litt mindre padding */
+    box-shadow: 0 3px 8px rgba(0,0,0,0.05);
     transition: transform 0.2s, box-shadow 0.2s;
     cursor: pointer;
-    border: 2px solid transparent;
+    border: 1px solid #eee; /* Alltid en tynn kant */
     display: flex;
     align-items: center;
 }
-
-.party-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-}
-
 .party-card.selected {
     border-color: var(--kf-pink);
     background-color: rgba(230, 60, 140, 0.05);
+    box-shadow: 0 4px 10px rgba(230, 60, 140, 0.1);
+}
+.party-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.08);
 }
 
 .party-icon {
@@ -149,47 +214,116 @@ header h1 strong {
     height: 24px;
     border-radius: 50%;
     margin-right: 10px;
-    display: inline-block;
-    text-align: center;
+    display: flex; /* Bruk flex for perfekt sentrering */
+    align-items: center;
+    justify-content: center;
     color: white;
     font-weight: bold;
-    line-height: 24px;
-    font-size: 14px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    font-size: 13px; /* Justert */
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    flex-shrink: 0;
 }
 
 .party-name {
     flex-grow: 1;
-    font-size: 1rem;
+    font-size: 0.95rem; /* Litt mindre */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 5px;
 }
 
 .party-seats {
-    font-weight: bold;
+    font-weight: 600; /* Litt tykkere */
     color: var(--kf-blue);
-    margin-left: 5px;
-    background-color: rgba(0, 48, 135, 0.1);
-    padding: 4px 8px;
-    border-radius: 20px;
-    font-size: 0.9rem;
+    margin-left: auto; /* Skyv til høyre */
+    background-color: rgba(0, 48, 135, 0.08);
+    padding: 3px 8px; /* Justert */
+    border-radius: 12px;
+    font-size: 0.85rem;
+    flex-shrink: 0;
 }
 
-/* Party section */
-.party-section {
+/* Fargekoder for ikoner og tags */
+.icon-ap, .party-tag-ap { background-color: #ed1b34; }
+.icon-h, .party-tag-h { background-color: #007ac8; }
+.icon-sp, .party-tag-sp { background-color: #14773c; }
+.icon-frp, .party-tag-frp { background-color: #002e5e; }
+.icon-sv, .party-tag-sv { background-color: #eb2e2d; }
+.icon-v, .party-tag-v { background-color: #00807b; }
+.icon-r, .party-tag-r { background-color: #da291c; }
+.icon-krf, .party-tag-krf { background-color: #ffbe00; }
+.icon-mdg, .party-tag-mdg { background-color: #439539; }
+.icon-pf, .party-tag-pf { background-color: #a04d94; }
+.icon-krf { color: #333 !important; } /* Mørk tekst for KrF ikon */
+
+/* Party tags (brukes flere steder) */
+.party-tag {
+    display: inline-block;
+    padding: 8px 15px;
     background-color: white;
-    padding: 25px;
-    border-radius: 12px 12px 0 0;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-    margin-bottom: 0;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    margin: 4px; /* Justert margin */
+    font-size: 0.9rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: all 0.2s ease;
 }
+.party-tag:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+/* Farger for tags (bakgrunn og border) */
+.party-tag-ap { background-color: rgba(237, 27, 52, 0.1); border-color: #ed1b34; color: #b81628; }
+.party-tag-h { background-color: rgba(0, 122, 200, 0.1); border-color: #007ac8; color: #005a93; }
+.party-tag-sp { background-color: rgba(20, 119, 60, 0.1); border-color: #14773c; color: #0e5329; }
+.party-tag-frp { background-color: rgba(0, 46, 94, 0.1); border-color: #002e5e; color: #001f3f; }
+.party-tag-sv { background-color: rgba(235, 46, 45, 0.1); border-color: #eb2e2d; color: #c42625; }
+.party-tag-v { background-color: rgba(0, 128, 123, 0.1); border-color: #00807b; color: #005f5b; }
+.party-tag-r { background-color: rgba(218, 41, 28, 0.1); border-color: #da291c; color: #a51f15; }
+.party-tag-krf { background-color: rgba(255, 190, 0, 0.1); border-color: #ffbe00; color: #b08400; }
+.party-tag-mdg { background-color: rgba(67, 149, 57, 0.1); border-color: #439539; color: #2d6426; }
+.party-tag-pf { background-color: rgba(160, 77, 148, 0.1); border-color: #a04d94; color: #703668; }
 
-/* Section divider */
-.section-divider {
-    height: 2px;
-    background: linear-gradient(90deg, var(--kf-pink), var(--kf-purple));
+/* Info-knapp instruksjoner */
+.party-instructions {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   margin-bottom: 20px;
+   padding: 10px 15px;
+   background-color: #f8f9fa;
+   border-radius: 8px;
+}
+.party-instructions p {
     margin: 0;
+    font-size: 0.95rem;
+    color: #444;
+}
+.info-button {
+   width: 24px;
+   height: 24px;
+   border-radius: 50%;
+   background-color: var(--kf-blue);
+   color: white;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-style: normal;
+   font-weight: bold;
+   cursor: pointer;
+   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+   transition: all 0.2s ease;
+   position: relative;
+   font-size: 14px;
+}
+.info-button:hover {
+   background-color: var(--kf-purple);
+   transform: translateY(-2px);
+   box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
-/* Result container styles */
+/* === Resultatvisning (index.html) === */
 .result-container {
     background-color: white;
     padding: 25px;
@@ -200,116 +334,108 @@ header h1 strong {
 
 .result-header {
     color: var(--kf-blue);
+    margin-top: 0;
     margin-bottom: 20px;
     font-size: 1.6rem;
     font-weight: 600;
     text-align: center;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px solid #eee;
+    position: relative;
 }
-
-.result-details {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-bottom: 25px;
-}
-
-.result-box {
-    flex: 1;
-    min-width: 220px;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-    transition: transform 0.3s ease;
-}
-
-.result-box:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0,0,0,0.08);
-}
-
-.result-value {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin: 10px 0;
-}
-
-.result-label {
-    font-size: 1rem;
-    color: #555;
-}
-
-.result-status {
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    font-weight: bold;
-    font-size: 1.3rem;
-    margin-top: 20px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.required-votes {
-    background-color: #f8f9fa;
-    color: var(--kf-blue);
-    border: 1px solid rgba(0, 48, 135, 0.1);
-}
-
-.votes-for {
-    background-color: rgba(142, 206, 63, 0.1); /* Endret fra pink til light-green */
-    color: var(--kf-green);
-    border: 1px solid rgba(0, 168, 163, 0.2);
-}
-
-.votes-against {
-    background-color: rgba(230, 60, 140, 0.1); /* Endret fra green til pink */
-    color: var(--kf-pink);
-    border: 1px solid rgba(230, 60, 140, 0.2);
-}
-
-.has-majority {
-    background: linear-gradient(90deg, var(--kf-light-green), var(--kf-green));
-    color: white;
-}
-
-.no-majority {
+.result-header::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 2px;
     background: linear-gradient(90deg, var(--kf-pink), var(--kf-purple));
-    color: white;
 }
 
 .progress-container {
-    height: 35px;
+    height: 30px;
     background-color: #e9ecef;
-    border-radius: 18px;
+    border-radius: 15px;
     margin: 25px 0;
     overflow: hidden;
     position: relative;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .progress-bar {
     height: 100%;
     background: linear-gradient(90deg, var(--kf-pink), var(--kf-purple));
-    transition: width 0.3s ease, background 0.3s ease;
-    border-radius: 18px;
+    transition: width 0.4s ease, background 0.4s ease;
+    border-radius: 15px;
 }
-
 .progress-bar.majority {
-    background: linear-gradient(90deg, var(--kf-purple), var(--kf-green));
+    background: linear-gradient(90deg, var(--kf-light-green), var(--kf-green));
 }
 
 .progress-labels {
     position: absolute;
     display: flex;
     justify-content: space-between;
-    width: 100%;
-    padding: 0 20px;
+    width: calc(100% - 40px);
+    left: 20px;
     top: 50%;
     transform: translateY(-50%);
     color: white;
     font-weight: bold;
-    text-shadow: 0 0 3px rgba(0,0,0,0.5);
+    font-size: 0.9rem;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.4);
 }
+
+.result-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Litt mindre gap */
+    margin-bottom: 25px;
+}
+
+.result-box {
+    flex: 1;
+    min-width: 180px; /* Kan være smalere */
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.04);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #eee;
+}
+.result-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+}
+
+.result-value {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin: 8px 0;
+}
+
+.result-label {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.result-status {
+    padding: 15px 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-top: 20px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+}
+
+.required-votes { background-color: #f8f9fa; color: var(--kf-blue); border: 1px solid rgba(0, 48, 135, 0.1); }
+.votes-for { background-color: rgba(142, 206, 63, 0.08); color: var(--kf-green); border: 1px solid rgba(0, 168, 163, 0.2); }
+.votes-against { background-color: rgba(230, 60, 140, 0.08); color: var(--kf-pink); border: 1px solid rgba(230, 60, 140, 0.2); }
+.has-majority { background: linear-gradient(90deg, var(--kf-light-green), var(--kf-green)); color: white; }
+.no-majority { background: linear-gradient(90deg, var(--kf-pink), var(--kf-purple)); color: white; }
 
 .selected-parties {
     margin-top: 25px;
@@ -319,54 +445,20 @@ header h1 strong {
 }
 
 .selected-parties-title {
-    font-size: 1.2rem;
+    font-size: 1.1rem; /* Litt mindre */
     color: var(--kf-blue);
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     text-align: center;
+    font-weight: 600;
+}
+#selectedPartyTags {
+    text-align: center; /* Sentrer tags */
+}
+#selectedPartyTags .party-tag {
+    margin: 4px;
 }
 
-.party-tag {
-    display: inline-block;
-    padding: 8px 15px;
-    background-color: white;
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    margin: 5px;
-    font-size: 0.9rem;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    transition: all 0.2s ease;
-}
-
-.party-tag:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
-}
-
-/* Modernized party tag colors */
-.party-tag-ap { background-color: rgba(237, 27, 52, 0.1); border-color: #ed1b34; color: #ed1b34; }
-.party-tag-h { background-color: rgba(0, 122, 200, 0.1); border-color: #007ac8; color: #007ac8; }
-.party-tag-sp { background-color: rgba(20, 119, 60, 0.1); border-color: #14773c; color: #14773c; }
-.party-tag-frp { background-color: rgba(0, 46, 94, 0.1); border-color: #002e5e; color: #002e5e; }
-.party-tag-sv { background-color: rgba(235, 46, 45, 0.1); border-color: #eb2e2d; color: #eb2e2d; }
-.party-tag-v { background-color: rgba(0, 128, 123, 0.1); border-color: #00807b; color: #00807b; }
-.party-tag-r { background-color: rgba(218, 41, 28, 0.1); border-color: #da291c; color: #da291c; }
-.party-tag-krf { background-color: rgba(255, 190, 0, 0.1); border-color: #ffbe00; color: #333; }
-.party-tag-mdg { background-color: rgba(67, 149, 57, 0.1); border-color: #439539; color: #439539; }
-.party-tag-pf { background-color: rgba(160, 77, 148, 0.1); border-color: #a04d94; color: #a04d94; }
-
-/* Party icon colors */
-.icon-ap { background-color: #ed1b34; }
-.icon-h { background-color: #007ac8; }
-.icon-sp { background-color: #14773c; }
-.icon-frp { background-color: #002e5e; }
-.icon-sv { background-color: #eb2e2d; }
-.icon-v { background-color: #00807b; }
-.icon-r { background-color: #da291c; }
-.icon-krf { background-color: #ffbe00; color: #333; }
-.icon-mdg { background-color: #439539; }
-.icon-pf { background-color: #a04d94; }
-
-/* Action buttons */
+/* === Knapper === */
 .action-buttons {
     margin: 25px 0;
     display: flex;
@@ -374,67 +466,63 @@ header h1 strong {
     justify-content: center;
 }
 
-button {
-    padding: 12px 24px;
+button, .button { /* Felles stil for knapper */
+    padding: 10px 20px; /* Litt mindre padding */
     border: none;
-    border-radius: 30px;
+    border-radius: 25px; /* Mer avrundet */
     cursor: pointer;
     font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    font-size: 1rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+    font-size: 0.95rem; /* Litt mindre */
+    text-decoration: none; /* For lenker som ser ut som knapper */
+    display: inline-block; /* For lenker */
+    text-align: center;
 }
 
-.btn-primary {
+.btn-primary, .button.primary {
     background: linear-gradient(45deg, var(--kf-pink), var(--kf-purple));
     color: white;
 }
 
-.btn-secondary {
+.btn-secondary, .button.secondary {
     background-color: #f5f5f5;
     color: #444;
     border: 1px solid #ddd;
 }
 
-.btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+.btn-primary:hover, .button.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
 }
 
-.btn-secondary:hover {
+.btn-secondary:hover, .button.secondary:hover {
     background-color: #eee;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
 }
 
-/* Footer */
+/* === Footer === */
 footer {
     margin-top: 40px;
     border-top: 1px solid var(--border-color);
-    padding: 20px 0;
+    padding: 25px 0; /* Mer padding */
     font-size: 0.9rem;
     color: #777;
     text-align: center;
 }
 
-/* Parliament Visualization */
+/* === Parliament Visualization (D3) === */
 .parliament-visualization {
-    margin: 0 0 30px 0;
+    margin-top: 30px; /* Separer fra resultat */
     text-align: center;
     background-color: white;
     padding: 25px;
-    border-radius: 0 0 12px 12px;
+    border-radius: 12px; /* Avrunding på alle kanter */
     box-shadow: 0 4px 15px rgba(0,0,0,0.06);
 }
 
-.parliament-container {
-    width: 100%;
-    max-width: 500px;
-    margin: 0 auto;
-    position: relative;
-    overflow: visible;
-}
-
+/* Section Title (gjenbrukes for Parliament Vis) */
 .section-title {
    font-size: 1.5rem;
    color: var(--kf-blue);
@@ -444,7 +532,6 @@ footer {
    position: relative;
    text-align: center;
 }
-
 .section-title::after {
    content: '';
    position: absolute;
@@ -456,222 +543,127 @@ footer {
    background: linear-gradient(90deg, var(--kf-pink), var(--kf-purple));
 }
 
-.parliament-legend {
-   display: flex;
-   flex-wrap: wrap;
-   justify-content: center;
-   margin-top: 25px;
-   gap: 10px;
-   font-size: 0.9em;
+.parliament-container { /* Container for D3 SVG */
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto 20px auto; /* Mer bunn-margin */
+    position: relative;
 }
-
-.legend-item {
-   display: flex;
-   align-items: center;
-   margin: 5px 8px;
-   white-space: nowrap;
-   background-color: #f9f9f9;
-   padding: 5px 10px;
-   border-radius: 20px;
-   box-shadow: 0 2px 5px rgba(0,0,0,0.03);
-   transition: all 0.2s ease;
-}
-
-.legend-item:hover {
-   transform: scale(1.05);
-   box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-}
-
-.legend-color {
-   width: 15px;
-   height: 15px;
-   border-radius: 50%;
-   margin-right: 8px;
-   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-}
-
-/* Two column layout */
-.two-column {
-   display: flex;
-   flex-wrap: wrap;
-   gap: 25px;
-   margin-top: 30px;
-}
-
-.column {
-   flex: 1;
-   min-width: 320px;
-}
-
-/* Info Panel */
-.info-panel {
-   background-color: white;
-   border-radius: 12px;
-   padding: 1.5rem;
-   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-   margin-top: 2rem;
-}
-
-.info-panel h3 {
-   color: var(--kf-blue);
-   margin-bottom: 1rem;
-   font-size: 1.2rem;
-   position: relative;
-   padding-bottom: 0.5rem;
-}
-
-.info-panel h3::after {
-   content: '';
-   position: absolute;
-   bottom: 0;
-   left: 0;
-   width: 40px;
-   height: 2px;
-   background-color: var(--kf-pink);
-}
-
-.info-panel p {
-   font-size: 0.95rem;
-   color: #555;
-   line-height: 1.5;
-}
-
-.info-panel .fact {
-   display: flex;
-   align-items: flex-start;
-   margin-bottom: 0.75rem;
-   padding-bottom: 0.75rem;
-   border-bottom: 1px solid #f0f0f0;
-}
-
-.info-panel .fact:last-child {
-   border-bottom: none;
-   padding-bottom: 0;
-}
-
-.info-panel .fact-icon {
-   flex-shrink: 0;
-   width: 24px;
-   height: 24px;
-   margin-right: 12px;
-   color: var(--kf-pink);
-   font-size: 1.2rem;
-}
-
-.info-panel a {
-   color: var(--kf-blue);
-   text-decoration: none;
-   font-weight: 500;
-   transition: color 0.2s;
-}
-
-.info-panel a:hover {
-   color: var(--kf-pink);
-   text-decoration: underline;
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-   /* Forbedre header-layout på mobil */
-   header {
-       flex-direction: column;
-       padding: 1rem;
-       gap: 0.75rem;
-       text-align: center;
-   }
-   
-   .logo-container {
-       margin-bottom: 0.5rem;
-   }
-   
-   .header-text {
-       padding-right: 0;
-       text-align: center;
-   }
-   
-   header h1 {
-       font-size: 1.5rem;
-       text-align: center;
-   }
-   
-   .header-subtitle {
-       font-size: 0.95rem;
-       text-align: center;
-   }
-   
-   /* Forbedre parti-kort på mobil */
-   .party-grid {
-       grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
-       gap: 10px;
-   }
-   
-   .party-card {
-       padding: 12px;
-   }
-   
-   .party-name {
-       font-size: 0.95rem;
-       overflow: hidden;
-       text-overflow: ellipsis;
-       white-space: nowrap;
-   }
-   
-   .party-seats {
-       min-width: 32px;
-       text-align: center;
-   }
-   
-   .result-details {
-       flex-direction: column;
-   }
-   
-   .progress-labels {
-       font-size: 14px;
-   }
-   
-   .action-buttons {
-       flex-direction: column;
-   }
-   
-   .two-column {
-       flex-direction: column;
-   }
-   
-   .logo-image {
-       height: 60px;
-   }
-}
-
-/* D3 Parliament styling */
-#d3-parliament svg {
+#d3-parliament svg { /* Selve SVG */
    max-width: 100%;
    height: auto;
    display: block;
    margin: 0 auto;
 }
-
-#d3-parliament text {
+#d3-parliament text { /* Tekst inni SVG (tooltip) */
    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
    font-size: 10px;
-   pointer-events: none;
+   pointer-events: none; /* Unngå at tekst fanger musepeker */
+   fill: #333; /* Mørk tekst */
 }
-
-#tooltip {
+#tooltip { /* ID brukt for tooltip-tekst */
    font-weight: bold;
-   text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+   text-shadow: 0 1px 1px rgba(255,255,255,0.7); /* Lys skygge for lesbarhet */
+   paint-order: stroke; /* Tegn stroke under fill */
+   stroke: white;
+   stroke-width: 2px;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
 }
 
-/* CSS for saksvelger - legg til i slutten av styles.css */
+.parliament-legend { /* Container for legend under D3 */
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   margin-top: 15px; /* Mindre margin */
+   gap: 8px; /* Mindre gap */
+   font-size: 0.85em; /* Litt mindre */
+}
 
+.legend-item { /* Individuelt legend-element */
+   display: flex;
+   align-items: center;
+   margin: 3px 5px; /* Mindre margin */
+   white-space: nowrap;
+   background-color: #f8f9fa; /* Lys bakgrunn */
+   padding: 4px 10px; /* Mindre padding */
+   border-radius: 15px; /* Mer avrundet */
+   box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+   transition: all 0.2s ease;
+   border: 1px solid #eee;
+   cursor: pointer; /* Gjør klikkbar */
+   opacity: 0.7; /* Standard opasitet */
+}
+.legend-item.selected { /* Stil for valgt parti i legend */
+    opacity: 1; /* Full opasitet */
+    background-color: rgba(0, 48, 135, 0.1);
+    border: 1px solid var(--kf-blue);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transform: translateY(-1px);
+}
+.legend-item:hover {
+   transform: translateY(-2px) scale(1.03);
+   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+   opacity: 1; /* Full opasitet på hover */
+}
+.legend-item.selected .legend-color {
+    box-shadow: inset 0 0 0 2px white; /* Hvit ring inni */
+}
+
+.legend-color { /* Fargeprikk i legend */
+   width: 14px; /* Litt mindre */
+   height: 14px;
+   border-radius: 50%;
+   margin-right: 6px; /* Mindre margin */
+   box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+   flex-shrink: 0;
+}
+
+/* === To-kolonne Layout (index.html) === */
+.two-column {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 25px;
+   margin-top: 30px;
+   align-items: flex-start; /* Viktig for justering */
+}
+
+.column {
+   flex: 1;
+   min-width: 320px;
+   display: flex; /* For å kontrollere innhold */
+   flex-direction: column;
+}
+
+/* === Saksvelger (index.html) === */
 .issue-selector-container {
-   margin: 30px 0;
+   margin: 0; /* Styres av .result-container rundt */
+   width: 100%;
 }
 
 .issue-selector {
-   background-color: white;
-   padding: 25px;
-   border-radius: 12px;
-   box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+   background-color: #f8f9fc;
+   padding: 20px;
+   border-radius: 8px;
+}
+
+.issue-selector h2 { /* Spesifikk tittel for saksvelger */
+    color: var(--kf-blue);
+    margin-top: 0;
+    margin-bottom: 10px; /* Mindre margin */
+    font-size: 1.2rem; /* Mindre */
+    font-weight: 600;
+    text-align: left;
+    padding-bottom: 0; /* Ingen padding */
+    border-bottom: none; /* Ingen linje */
+}
+.issue-selector h2::after { display: none; } /* Ingen gradient-linje */
+
+.issue-description {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 15px;
+    text-align: left;
 }
 
 .issue-filters {
@@ -679,191 +671,145 @@ footer {
 }
 
 .area-filter,
-.issue-dropdown {
+.issue-dropdown { /* Gjenbruker stil fra Matrix-filter */
    width: 100%;
-   padding: 12px 15px;
-   border-radius: 8px;
+   padding: 10px 12px;
+   border-radius: 6px;
    border: 1px solid var(--border-color);
-   font-size: 1rem;
-   margin: 10px 0;
+   font-size: 0.95rem;
+   margin: 8px 0;
    background-color: white;
    cursor: pointer;
-   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+   box-shadow: 0 1px 3px rgba(0,0,0,0.04);
    transition: all 0.2s ease;
 }
-
-.area-filter:hover,
-.issue-dropdown:hover {
-   border-color: var(--kf-purple);
-   box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-}
-
-.area-filter:focus,
-.issue-dropdown:focus {
-   outline: none;
-   border-color: var(--kf-pink);
-   box-shadow: 0 0 0 2px rgba(230, 60, 140, 0.2);
-}
+.area-filter:hover, .issue-dropdown:hover { border-color: var(--kf-purple); box-shadow: 0 2px 5px rgba(0,0,0,0.06); }
+.area-filter:focus, .issue-dropdown:focus { outline: none; border-color: var(--kf-pink); box-shadow: 0 0 0 2px rgba(230, 60, 140, 0.2); }
 
 .issue-details {
-   background-color: #f8f1f8;
-   border-radius: 8px;
-   padding: 20px;
-   margin-top: 20px;
-   border-left: 4px solid var(--kf-purple);
+   background-color: #f0f4f8;
+   border-radius: 6px;
+   padding: 15px;
+   margin-top: 15px;
+   border-left: 4px solid var(--kf-blue);
    transition: all 0.3s ease;
+   min-height: 150px; /* Sørger for litt høyde selv når tom */
 }
-
-.issue-details:hover {
-   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-}
+.issue-details:hover { box-shadow: 0 3px 8px rgba(0,0,0,0.06); }
 
 .issue-name {
-   color: var(--kf-purple);
+   color: var(--kf-blue);
    margin-bottom: 5px;
-   font-size: 1.3rem;
+   font-size: 1.1rem;
+   font-weight: 600;
 }
-
 .issue-area {
    color: #555;
    font-style: italic;
-   margin-bottom: 15px;
-   padding-bottom: 10px;
+   font-size: 0.85rem;
+   margin-bottom: 10px;
+   padding-bottom: 8px;
    border-bottom: 1px solid #e0e0e0;
 }
-
 .issue-explainer {
    color: #666;
    font-style: italic;
    text-align: center;
-}
-
-.issue-status {
-   padding: 15px;
-   border-radius: 8px;
-   margin: 15px 0;
-   font-size: 1.1rem;
-   text-align: center;
-   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-}
-
-.issue-status.majority {
-   background: linear-gradient(90deg, var(--kf-light-green), var(--kf-green));
-   color: white;
-}
-
-.issue-status.no-majority {
-   background: linear-gradient(90deg, var(--kf-pink), var(--kf-purple));
-   color: white;
-}
-
-.issue-parties {
-   margin-top: 20px;
-}
-
-.issue-parties h4 {
-   color: var(--kf-blue);
-   margin-bottom: 10px;
-}
-
-.issue-parties-list {
-   display: flex;
-   flex-wrap: wrap;
-   gap: 8px;
-   margin-top: 10px;
-}
-
-.issue-party {
-   padding: 5px 10px;
-   border-radius: 20px;
-   font-weight: 500;
    font-size: 0.9rem;
-   background-color: #f0f0f0;
-   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+   padding: 20px 0; /* Mer padding når den vises */
+}
+.issue-status {
+   padding: 12px;
+   border-radius: 6px;
+   margin: 15px 0;
+   font-size: 1rem;
+   text-align: center;
+   box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+.issue-status strong { font-weight: 600; }
+.issue-status.majority { background: linear-gradient(90deg, var(--kf-light-green), var(--kf-green)); color: white; }
+.issue-status.no-majority { background: linear-gradient(90deg, var(--kf-pink), var(--kf-purple)); color: white; }
+
+.issue-parties { margin-top: 15px; }
+.issue-parties h4 { color: var(--kf-blue); margin-bottom: 8px; font-size: 1rem; }
+.issue-parties-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 5px; /* Mindre margin */ }
+
+.issue-party { /* Tags for partier som støtter saken */
+   padding: 4px 10px;
+   border-radius: 15px;
+   font-weight: 500;
+   font-size: 0.85rem;
+   background-color: white;
+   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
    transition: transform 0.2s ease;
-}
-
-.issue-party:hover {
-   transform: translateY(-2px);
-   box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-}
-
-.no-parties {
-   color: #777;
-   font-style: italic;
-}
-
-/* Responsive styles for issue selector */
-@media (max-width: 768px) {
-   .issue-selector {
-       padding: 15px;
-   }
-   
-   .issue-details {
-       padding: 15px;
-   }
-   
-   .issue-name {
-       font-size: 1.2rem;
-   }
-   
-   .issue-status {
-       font-size: 1rem;
-       padding: 12px;
-   }
-}
-
-/* Hover/click stiler for partier */
-/* For klikkbare/hoverbare partielementer */
-.clickable-party, .hoverable-party {
-   position: relative;
+   border: 1px solid #eee;
+   position: relative; /* For info-indikator */
    cursor: pointer;
 }
+.issue-party:hover { transform: translateY(-2px); box-shadow: 0 2px 5px rgba(0,0,0,0.15); }
 
-.clickable-party {
-   padding-right: 20px; /* Space for the indicator */
-}
+/* Farger for issue-party tags */
+.issue-party.party-tag-ap { background-color: rgba(237, 27, 52, 0.1); border-color: #ed1b34; color: #b81628; }
+.issue-party.party-tag-h { background-color: rgba(0, 122, 200, 0.1); border-color: #007ac8; color: #005a93; }
+.issue-party.party-tag-sp { background-color: rgba(20, 119, 60, 0.1); border-color: #14773c; color: #0e5329; }
+.issue-party.party-tag-frp { background-color: rgba(0, 46, 94, 0.1); border-color: #002e5e; color: #001f3f; }
+.issue-party.party-tag-sv { background-color: rgba(235, 46, 45, 0.1); border-color: #eb2e2d; color: #c42625; }
+.issue-party.party-tag-v { background-color: rgba(0, 128, 123, 0.1); border-color: #00807b; color: #005f5b; }
+.issue-party.party-tag-r { background-color: rgba(218, 41, 28, 0.1); border-color: #da291c; color: #a51f15; }
+.issue-party.party-tag-krf { background-color: rgba(255, 190, 0, 0.1); border-color: #ffbe00; color: #b08400; }
+.issue-party.party-tag-mdg { background-color: rgba(67, 149, 57, 0.1); border-color: #439539; color: #2d6426; }
+.issue-party.party-tag-pf { background-color: rgba(160, 77, 148, 0.1); border-color: #a04d94; color: #703668; }
 
-/* Hover effects only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-   .hoverable-party:hover {
-       transform: translateY(-3px);
-       box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-       transition: all 0.2s ease;
-   }
-}
-
-/* Always show click effect */
-.clickable-party:active {
-   transform: translateY(1px);
-   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.info-indicator {
+.info-indicator { /* 'i'-ikon på issue-party tag */
    position: absolute;
-   right: 5px;
-   top: 4px;
-   font-size: 10px;
-   width: 14px;
-   height: 14px;
-   line-height: 14px;
+   right: 4px;
+   top: 50%;
+   transform: translateY(-50%);
+   font-size: 9px; /* Mindre */
+   width: 12px; /* Mindre */
+   height: 12px;
+   line-height: 12px;
    text-align: center;
    border-radius: 50%;
-   background-color: rgba(255,255,255,0.7);
-   color: #555;
-   font-style: italic;
+   background-color: rgba(0, 48, 135, 0.2); /* Litt sterkere farge */
+   color: var(--kf-blue);
+   font-style: normal;
    font-weight: bold;
+   border: 1px solid rgba(0, 48, 135, 0.3);
 }
-
-.interaction-tip {
+.interaction-tip { /* Tekst (Hold musepeker over...) */
    font-size: 0.8rem;
    color: #666;
    font-style: italic;
-   margin-bottom: 8px;
-   text-align: center;
+   margin: 5px 0 8px 0; /* Justert margin */
+   text-align: left;
+   padding-left: 0;
 }
 
-/* Modal styling */
+/* Knapper under issue-details (f.eks. link til dokument) */
+.issue-buttons {
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-start; /* Venstrestill */
+}
+.document-link-btn { /* Bruker .button stil */
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    background-color: var(--kf-pink); /* Bruk KF rosa */
+    color: white;
+    border-radius: 6px;
+}
+.document-link-btn:hover {
+    background-color: var(--kf-purple); /* Mørkere på hover */
+}
+
+.no-parties { /* Melding hvis ingen partier støtter */
+   color: #777;
+   font-style: italic;
+   font-size: 0.9rem;
+}
+
+/* === Modal (for sitater) === */
 .quote-modal {
    display: none;
    position: fixed;
@@ -874,480 +820,202 @@ footer {
    height: 100%;
    overflow: auto;
 }
+.quote-modal:not(.hover-mode) { background-color: rgba(0,0,0,0.4); backdrop-filter: blur(3px); }
+.quote-modal.hover-mode { background-color: transparent; pointer-events: none; }
+.quote-modal.hover-mode .quote-modal-content { pointer-events: auto; }
 
-/* Regular modal (for click) */
-.quote-modal:not(.hover-mode) {
-   background-color: rgba(0,0,0,0.4);
-   backdrop-filter: blur(3px);
-}
-
-/* Hover modal (transparent background) */
-.quote-modal.hover-mode {
-   background-color: transparent;
-   pointer-events: none;
-}
-
-.quote-modal.hover-mode .quote-modal-content {
-   pointer-events: auto;
-}
-
-/* Regular modal content styling (centered) */
-.quote-modal:not(.hover-mode) .quote-modal-content {
+.quote-modal-content {
    background-color: white;
-   margin: 15% auto;
-   padding: 25px;
-   border-radius: 12px;
-   width: 90%;
-   max-width: 500px;
-   box-shadow: 0 4px 25px rgba(0,0,0,0.2);
-   animation: modalFadeIn 0.3s;
-   position: relative;
-}
-
-/* Hover modal content styling (positioned near element) */
-.quote-modal.hover-mode .quote-modal-content {
-   background-color: white;
-   padding: 20px;
    border-radius: 8px;
    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
    animation: modalFadeIn 0.2s;
-   position: fixed;
-   width: auto;
-   max-width: 400px;
-   z-index: 1001;
+}
+.quote-modal:not(.hover-mode) .quote-modal-content { /* Klikk-modal */
+   margin: 10% auto; padding: 25px; width: 90%; max-width: 500px; position: relative;
+}
+.quote-modal.hover-mode .quote-modal-content { /* Hover-modal */
+   padding: 15px 20px; position: fixed; width: auto; max-width: 350px; z-index: 1001;
 }
 
-@keyframes modalFadeIn {
-   from {opacity: 0; transform: translateY(-10px);}
-   to {opacity: 1; transform: translateY(0);}
-}
+@keyframes modalFadeIn { from {opacity: 0; transform: translateY(-10px);} to {opacity: 1; transform: translateY(0);} }
 
-.close-modal {
-   color: #aaa;
-   position: absolute;
-   right: 15px;
-   top: 10px;
-   font-size: 28px;
-   font-weight: bold;
-   cursor: pointer;
-   transition: color 0.2s;
+.close-modal { /* Kun for klikk-modal */
+   color: #aaa; position: absolute; right: 15px; top: 10px; font-size: 28px; font-weight: bold; cursor: pointer; transition: color 0.2s;
 }
-
-.hover-mode .close-modal {
-   display: none;
-}
-
-.close-modal:hover {
-   color: #333;
-}
+.hover-mode .close-modal { display: none; }
+.close-modal:hover { color: #333; }
 
 .quote-party-title {
-   font-size: 1.4rem;
-   margin-bottom: 15px;
-   padding: 8px 15px;
-   border-radius: 8px;
-   display: inline-block;
+   font-size: 1.2rem; margin-bottom: 10px; padding: 5px 12px; border-radius: 6px; display: inline-block; color: white; font-weight: 600;
 }
+/* Bakgrunnsfarger for modal-tittel */
+.quote-party-title.party-tag-ap { background-color: #ed1b34; } .quote-party-title.party-tag-h { background-color: #007ac8; }
+.quote-party-title.party-tag-sp { background-color: #14773c; } .quote-party-title.party-tag-frp { background-color: #002e5e; }
+.quote-party-title.party-tag-sv { background-color: #eb2e2d; } .quote-party-title.party-tag-v { background-color: #00807b; }
+.quote-party-title.party-tag-r { background-color: #da291c; } .quote-party-title.party-tag-krf { background-color: #ffbe00; color: #333; }
+.quote-party-title.party-tag-mdg { background-color: #439539; } .quote-party-title.party-tag-pf { background-color: #a04d94; }
 
 .quote-text {
-   font-size: 1.1rem;
-   line-height: 1.6;
-   color: #333;
-   padding: 15px;
-   background-color: #f9f9f9;
-   border-left: 4px solid #ddd;
-   margin: 15px 0;
-   border-radius: 4px;
+   font-size: 1rem; line-height: 1.5; color: #333; padding: 12px; background-color: #f8f9fa; border-left: 3px solid var(--kf-purple); margin: 10px 0 0 0; border-radius: 4px; font-style: italic;
 }
 
-/* Ekstra mellomrom mellom saksvelger og partivelger */
-#issue-selector-container {
-   margin-bottom: 30px;
-}
+/* === Info Popup/Tooltip (for ? knapp) === */
+/* Info popup (kun mobil) */
+.info-popup { display: none; position: fixed; z-index: 1001; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.4); backdrop-filter: blur(3px); }
+.info-popup-content { background-color: white; margin: 15% auto; padding: 25px; border-radius: 12px; width: 90%; max-width: 500px; box-shadow: 0 4px 25px rgba(0,0,0,0.2); animation: popupFadeIn 0.3s; position: relative; }
+.info-popup h4 { color: var(--kf-blue); margin-top: 0; margin-bottom: 15px; }
+.close-popup { color: #aaa; position: absolute; right: 15px; top: 10px; font-size: 28px; font-weight: bold; cursor: pointer; transition: color 0.2s; }
+.close-popup:hover { color: #333; }
+@keyframes popupFadeIn { from {opacity: 0; transform: translateY(-20px);} to {opacity: 1; transform: translateY(0);} }
 
-/* Mer markert overskrift for partivelger-seksjonen */
-.party-section .section-title {
-   margin-top: 0;
-   margin-bottom: 15px;
-}
+/* Info tooltip (kun desktop) */
+.info-tooltip { display: none; position: absolute; background-color: white; padding: 15px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); width: 250px; z-index: 100; font-size: 0.9rem; line-height: 1.4; border-left: 3px solid var(--kf-blue); animation: tooltipFadeIn 0.2s; top: 50%; left: calc(100% + 10px); transform: translateY(-50%); color: #333; }
+.info-button:hover .info-tooltip { display: block; }
+.info-tooltip strong { display: block; margin-bottom: 8px; color: var(--kf-blue); font-size: 1rem; }
+.info-tooltip p { margin: 0; color: #333; }
+@keyframes tooltipFadeIn { from {opacity: 0; transform: translate(5px, -50%);} to {opacity: 1; transform: translate(0, -50%);} }
 
-/* Gjør beskrivelsen mer integrert i seksjonen */
-.party-section .description {
-   margin-bottom: 20px;
-}
+/* Skjul popup/tooltip basert på enhet */
+@media (hover: hover) and (pointer: fine) { .info-popup { display: none !important; } }
+@media (hover: none) and (pointer: coarse) { .info-tooltip { display: none !important; } }
 
-/* Partiseksjons-instruksjoner med info-knapp */
-.party-instructions {
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-   margin-bottom: 20px;
-   padding: 10px 15px;
-   background-color: #f8f9fa;
-   border-radius: 8px;
-}
+/* === Hamburgermeny (Sentralisert & Korrigert) === */
+.burger-menu { position: fixed; top: 20px; left: 20px; z-index: 1000; cursor: pointer; background: white; padding: 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); display: none; }
+.burger-bar { width: 25px; height: 3px; background-color: var(--kf-blue); margin: 5px 0; transition: 0.4s; }
 
-.info-button {
-   width: 24px;
-   height: 24px;
-   border-radius: 50%;
-   background-color: var(--kf-blue);
-   color: white;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   font-style: italic;
-   font-weight: bold;
-   cursor: pointer;
-   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-   transition: all 0.2s ease;
-   position: relative;
-}
+.mobile-menu { position: fixed; left: calc(-1 * var(--menu-width)); top: 0; width: var(--menu-width); max-width: 80vw; height: 100%; background-color: white; transition: left 0.3s ease; box-shadow: 2px 0 5px rgba(0,0,0,0.2); z-index: 999; display: none; /* Vises via media query */ }
+.mobile-menu.active { left: 0; }
 
-.info-button:hover {
-   background-color: var(--kf-purple);
-   transform: translateY(-2px);
-   box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-}
+/* Mobil meny header */
+.menu-header {
+    padding: 20px; /* Denne linjen endres IKKE */
+    border-bottom: 1px solid var(--border-color); /* Denne linjen endres IKKE */
+    display: flex; /* Denne linjen endres IKKE */
+    justify-content: space-between; /* Denne linjen endres IKKE */
+    align-items: center; /* Denne linjen endres IKKE */
+    padding-left: 66px; /* <<< LEGG TIL DENNE LINJEN >>> */}
+.menu-header h3 { margin: 0; color: var(--kf-blue); }
+.close-button { font-size: 24px; cursor: pointer; background: none; border: none; padding: 0; margin: 0; line-height: 1; color: #666; }
+.close-button:hover { color: var(--kf-pink); }
 
-/* Info popup styling */
-.info-popup {
-   display: none;
-   position: fixed;
-   z-index: 1001;
-   left: 0;
-   top: 0;
-   width: 100%;
-   height: 100%;
-   background-color: rgba(0,0,0,0.4);
-   backdrop-filter: blur(3px);
-}
+.menu-items { padding: 20px; }
+.menu-items a { display: block; padding: 12px 15px; margin-bottom: 10px; color: #333; text-decoration: none; border-radius: 5px; transition: background-color 0.2s, color 0.2s; font-weight: 500; }
+.menu-items a:hover { background-color: rgba(0, 48, 135, 0.05); color: var(--kf-blue); }
+.menu-items a.active { background-color: var(--kf-blue); color: white; font-weight: 600; }
 
-.info-popup-content {
-   background-color: white;
-   margin: 15% auto;
-   padding: 25px;
-   border-radius: 12px;
-   width: 90%;
-   max-width: 500px;
-   box-shadow: 0 4px 25px rgba(0,0,0,0.2);
-   animation: popupFadeIn 0.3s;
-   position: relative;
-}
+.menu-overlay { position: fixed; top: 0; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 998; display: none; transition: opacity 0.3s ease; opacity: 0; }
+.menu-overlay.active { display: block; opacity: 1; left: var(--menu-width); width: calc(100% - var(--menu-width)); }
 
-.close-popup {
-   color: #aaa;
-   position: absolute;
-   right: 15px;
-   top: 10px;
-   font-size: 28px;
-   font-weight: bold;
-   cursor: pointer;
-   transition: color 0.2s;
-}
+/* === Issue Matrix Styling === */
+.matrix-filters { display: flex; flex-wrap: wrap; gap: 20px; margin: 20px 0 30px; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
+.filter-group { flex: 1; min-width: 250px; }
+.filter-group label { display: block; margin-bottom: 8px; font-weight: 500; color: #444; }
+/* .filter-dropdown er definert over */
 
-.close-popup:hover {
-   color: #333;
-}
+.legend-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin: 25px 0; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
+/* .legend-item, .legend-color, .legend-text er definert over */
+.legend-item.level-2 { background-color: rgba(0, 168, 163, 0.1); border-color: #00a8a3; } .legend-item.level-2 .legend-color { background-color: #00a8a3; } .legend-item.level-2 .legend-text { color: #00a8a3; }
+.legend-item.level-1 { background-color: rgba(255, 190, 44, 0.1); border-color: #ffbe2c; } .legend-item.level-1 .legend-color { background-color: #ffbe2c; } .legend-item.level-1 .legend-text { color: #a67c00; }
+.legend-item.level-0 { background-color: rgba(230, 60, 140, 0.1); border-color: #e63c8c; } .legend-item.level-0 .legend-color { background-color: #e63c8c; } .legend-item.level-0 .legend-text { color: #e63c8c; }
 
-@keyframes popupFadeIn {
-   from {opacity: 0; transform: translateY(-20px);}
-   to {opacity: 1; transform: translateY(0);}
-}
+.matrix-container { overflow-x: auto; margin-bottom: 30px; background-color: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); -webkit-overflow-scrolling: touch; }
+.matrix-table { width: 100%; border-collapse: collapse; min-width: 800px; }
+.matrix-table th, .matrix-table td { padding: 10px 12px; border: 1px solid #eee; text-align: center; vertical-align: middle; white-space: nowrap; }
+.matrix-table thead th { background-color: #f8f9fa; position: sticky; top: 0; z-index: 10; font-weight: 600; white-space: normal; }
+.matrix-table th.issue-col, .matrix-table td.issue-col { text-align: left; position: sticky; left: 0; background-color: white; z-index: 1; min-width: 250px; white-space: normal; border-right: 2px solid #ddd; }
+.matrix-table thead th.issue-col { z-index: 11; background-color: #f8f9fa; }
+.matrix-table tbody tr:nth-child(even) td:not(.issue-col) { background-color: #fdfdff; }
+.matrix-table tbody tr:hover td:not(.issue-col) { background-color: #f1f5f8; }
+.matrix-table tr.area-header td { background-color: var(--kf-blue); color: white; font-weight: bold; font-size: 1.1rem; text-align: center; position: sticky; top: 50px; /* Juster etter behov */ z-index: 5; border: 1px solid var(--kf-blue); }
 
-/* Info tooltip style (for desktop) */
-.info-tooltip {
-    display: none;
-    position: absolute;
-    background-color: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    width: 250px;
-    z-index: 100;
-    font-size: 0.9rem;
-    line-height: 1.4;
-    border-left: 3px solid var(--kf-blue);
-    animation: tooltipFadeIn 0.2s;
-    top: -10px;
-    right: -260px;
-    color: #333; /* Sørger for at teksten er mørk og lesbar */
-}
+.cell { display: inline-flex; align-items: center; justify-content: center; width: 45px; height: 30px; border-radius: 15px; font-weight: bold; font-size: 0.9rem; cursor: pointer; border: 1px solid transparent; box-sizing: border-box; transition: transform 0.1s ease-in-out; }
+.cell:active { transform: scale(0.95); }
+.cell.level-2 { background-color: rgba(0, 168, 163, 0.1); color: #00807b; border-color: #00a8a3; }
+.cell.level-1 { background-color: rgba(255, 190, 44, 0.1); color: #a67c00; border-color: #ffbe2c; }
+.cell.level-0 { background-color: rgba(230, 60, 140, 0.1); color: #e63c8c; border-color: #e63c8c; }
 
-/* Stiler for overskrift i tooltip */
-.info-tooltip strong {
-    display: block;
-    margin-bottom: 8px;
-    color: var(--kf-blue);
-    font-size: 1rem;
-}
+.sum-cell-content { display: inline-flex; align-items: center; justify-content: center; width: 45px; height: 30px; border-radius: 15px; font-weight: bold; font-size: 0.9rem; border: 1px solid transparent; box-sizing: border-box; cursor: default; }
+.sum-cell-content.high-score { background-color: rgba(0, 168, 163, 0.1); color: #00807b; border-color: #00a8a3; }
+.sum-cell-content.medium-score { background-color: rgba(255, 190, 44, 0.1); color: #a67c00; border-color: #ffbe2c; }
+.sum-cell-content.low-score { background-color: rgba(230, 60, 140, 0.1); color: #e63c8c; border-color: #e63c8c; }
 
-/* Stiler for paragraf i tooltip */
-.info-tooltip p {
-    margin: 0;
-    color: #333;
-}
+.matrix-tooltip { display: none; position: absolute; z-index: 1000; background-color: white; box-shadow: 0 4px 20px rgba(0,0,0,0.15); border-radius: 8px; padding: 15px 20px; max-width: 350px; font-size: 0.95rem; line-height: 1.5; border-left: 4px solid var(--kf-purple); }
+.matrix-tooltip h3 { margin-top: 0; margin-bottom: 10px; color: var(--kf-blue); font-size: 1.1rem; padding-bottom: 8px; border-bottom: 1px solid #eee; }
+.matrix-tooltip p { margin-bottom: 8px; }
+.matrix-tooltip .quote-box { background-color: #f9f9f9; padding: 12px; margin-top: 12px; border-left: 3px solid var(--kf-purple); border-radius: 4px; font-style: italic; color: #555; }
+.matrix-tooltip .no-quote { font-style: italic; color: #777; margin-top: 10px; }
 
-@keyframes tooltipFadeIn {
-   from {opacity: 0; transform: translateY(5px);}
-   to {opacity: 1; transform: translateY(0);}
-}
+.matrix-loader { text-align: center; padding: 50px; font-size: 1.2rem; color: #666; }
 
-/* Beholder den originale popupen bare for mobile */
-@media (hover: hover) and (pointer: fine) {
-   .info-popup {
-       display: none !important; /* Aldri vis fullskjerm-popup på desktop */
-   }
-}
-/* Juster vertikal posisjonering av seksjonstitler */
-.issue-selector .section-title,
-.result-header {
-    margin-top: 0;
-    margin-bottom: 20px;
-    /* Sikrer samme linjehøyde og tekstutseende på begge sider */
-    font-size: 1.6rem;
-    line-height: 1.2;
-    padding-bottom: 0.8rem;
-}
+/* === Responsivitet === */
 
-/* Sørg for at issue-selector-container starter på samme høyde som result-container */
-#issue-selector-container {
-    margin-top: 0;
-    margin-bottom: 30px;
-}
+/* Mobil og Nettbrett (Opp til 1024px) */
+@media (max-width: 1024px) {
+    .container {
+        padding: 1rem; /* Mindre padding på små skjermer */
+    }
 
-/* Sørg for at layouten starter øverst i kolonnen */
-.column {
-    display: flex;
-    flex-direction: column;
-}
-
-/* Gjør kolonnetoppen lik på begge sider */
-.issue-selector,
-.result-container {
-    margin-top: 0;
-    padding-top: 25px;
-}
-/* Gir resultat og issue-selector samme styling */
-.result-header,
-.issue-selector h2 {
-    color: var(--kf-blue);
-    margin-top: 0;
-    margin-bottom: 20px;
-    font-size: 1.6rem;
-    font-weight: 600;
-    text-align: center;
-    padding-bottom: 0.8rem;
-    border-bottom: 2px solid #eee;
-    position: relative;
-}
-
-.result-header::after,
-.issue-selector h2::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 2px;
-    background: linear-gradient(90deg, var(--kf-pink), var(--kf-purple));
-}
-
-/* Justerer startposisjon for boksene */
-.result-container,
-.issue-selector {
-    margin-top: 0;
-    padding-top: 25px;
-}
-
-/* Gir samme høyde til begge kolonner */
-.column:first-child,
-.column:last-child {
-    align-self: flex-start;
-}
-/* Skjul den genererte overskriften i issue-selector */
-.issue-selector .section-title:first-child {
-    display: none;
-}
-/* Stil for valgte legend-elementer */
-.legend-item.selected {
-    background-color: #f0f0f0;
-    box-shadow: 0 0 5px rgba(0,0,0,0.2);
-    transform: translateY(-2px);
-}
-
-/* Hover-effekt for legend-elementer */
-.legend-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-}
-/* Navigasjonslenker i header */
-.nav-links {
-    margin-left: 20px;
-    display: flex;
-    align-items: center;
-}
-
-.nav-link {
-    display: inline-block;
-    padding: 8px 15px;
-    background-color: var(--kf-pink);
-    color: white;
-    text-decoration: none;
-    border-radius: 20px;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.nav-link:hover {
-    background-color: var(--kf-purple);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-}
-
-/* Responsive justering for navigasjon */
-@media (max-width: 768px) {
+    /* Header justeringer */
     header {
-        flex-wrap: wrap;
+        flex-direction: column;
+        padding: 1rem;
+        gap: 0.75rem;
+        text-align: center;
+        margin-bottom: 1.5rem;
     }
-    
-    .nav-links {
-        margin: 10px auto 0;
+    .logo-container {
+        margin-bottom: 0.5rem;
+        justify-content: center;
     }
-}
-/* Hamburger meny styles - Oppdatert */
-.hamburger-nav {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-}
-
-.hamburger-button {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 30px;
-    height: 20px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    transition: all 0.3s ease;
-}
-
-.hamburger-line {
-    width: 100%;
-    height: 3px;
-    background-color: var(--kf-blue);
-    border-radius: 3px;
-    transition: all 0.3s ease;
-}
-
-.hamburger-button:hover .hamburger-line {
-    background-color: var(--kf-pink);
-}
-
-.nav-menu {
-    position: fixed;
-    top: 0;
-    right: -300px; /* Start off-screen */
-    width: 300px;
-    max-width: 80vw;
-    height: 100vh;
-    background-color: white;
-    box-shadow: -2px 0 10px rgba(0,0,0,0.1);
-    transition: right 0.3s ease;
-    z-index: 1001;
-    overflow-y: auto;
-}
-
-.nav-menu.active {
-    right: 0; /* Slide in */
-}
-
-.nav-menu-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    border-bottom: 1px solid #eee;
-}
-
-.menu-title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--kf-blue);
-}
-
-.close-menu {
-    background: none;
-    border: none;
-    font-size: 24px;
-    color: #666;
-    cursor: pointer;
-    transition: color 0.2s ease;
-}
-
-.close-menu:hover {
-    color: var(--kf-pink);
-}
-
-.nav-menu-links {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-}
-
-.menu-link {
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    color: #333;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    font-weight: 500;
-}
-
-.menu-link:hover {
-    background-color: rgba(0, 48, 135, 0.05);
-    color: var(--kf-blue);
-    transform: translateX(5px);
-}
-
-.menu-link.active {
-    background-color: var(--kf-blue);
-    color: white;
-}
-
-/* Prevent scrolling when menu is open */
-body.menu-open {
-    overflow: hidden;
-}
-
-/* Overlay when menu is open */
-body.menu-open::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.4);
-    z-index: 999;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .nav-links {
-        display: none; /* Hide regular nav links on mobile */
+    .header-text {
+        padding: 0; /* Fjern padding */
+        order: 1; /* Tekst under logo */
+        margin-bottom: 0.5rem;
     }
+    header h1 { font-size: 1.6rem; /* Mindre tittel */ }
+    .header-subtitle { font-size: 1rem; }
+    .nav-links { display: none !important; /* Skjul desktop nav */ }
+    .burger-menu { display: block !important; /* Vis burger */ }
+    .mobile-menu { display: block; /* Gjør klar for visning */ }
+
+    /* Generell layout */
+    .two-column { flex-direction: column; margin-top: 0; gap: 20px; }
+    .party-section, .result-container, .parliament-visualization, .matrix-container { margin-bottom: 20px; padding: 20px; }
+
+    /* Partivelger */
+    .party-grid { grid-template-columns: 1fr; gap: 8px; } /* En kolonne */
+    .party-card { padding: 10px; }
+    .party-name { font-size: 0.9rem; }
+    .party-seats { font-size: 0.8rem; padding: 3px 6px; }
+
+    /* Resultater */
+    .result-details { flex-direction: column; gap: 10px; }
+    .result-box { min-width: unset; width: 100%; }
+    .result-value { font-size: 2rem; }
+    .result-label { font-size: 0.85rem; }
+    .result-status { font-size: 1.1rem; padding: 12px; }
+    .progress-labels { font-size: 0.8rem; }
+
+    /* Saksvelger */
+    .issue-selector { padding: 15px; }
+    .issue-name { font-size: 1rem; }
+    .issue-status { font-size: 0.95rem; }
+    .issue-party { font-size: 0.8rem; }
+
+    /* Matrix */
+    .matrix-table th.issue-col, .matrix-table td.issue-col { min-width: 120px; font-size: 0.85rem; border-right-width: 1px; }
+    .matrix-table th, .matrix-table td { padding: 6px 4px; font-size: 0.8rem; }
+    .cell, .sum-cell-content { width: 30px; height: 22px; font-size: 0.75rem; border-radius: 10px; }
+    .matrix-table thead th { top: 0; }
+    .matrix-table tr.area-header td { top: 35px; /* Juster */ font-size: 0.95rem; padding: 8px; }
 }
 
-@media (min-width: 769px) {
-    .hamburger-button {
-        display: none; /* Hide hamburger on desktop */
-    }
+/* Kun Desktop (Større enn 1024px) */
+@media (min-width: 1025px) {
+     .burger-menu { display: none !important; } /* Skjul burger */
+     /* Gjenopprett header layout hvis nødvendig (hvis den ble endret over) */
+     /* (Ser ut som standard header er ok, men la dette stå som eksempel)
+     header { flex-direction: row; padding: 1.5rem; text-align: left; }
+     .header-text { padding-right: 70px; text-align: center; }
+     */
 }

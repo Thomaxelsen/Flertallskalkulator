@@ -4,165 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flertallskoalisjoner - Kreftforeningens politikk</title>
+    <!-- Sentrale CSS-filer -->
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/majority-coalitions.css">
-    <!-- Inline CSS for hamburgermenyen -->
-    <style>
-        /* Hamburgermeny styling - uavhengig av andre stiler */
-        .burger-menu {
-            position: fixed;
-            top: 20px;
-            left: 20px; /* Flyttet til venstre side */
-            z-index: 1000;
-            cursor: pointer;
-            background: white;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            display: none; /* Skjul på desktop */
-        }
-        
-        @media (max-width: 768px) {
-            .burger-menu {
-                display: block; /* Vis bare på mobil */
-            }
-            
-            .nav-links {
-                display: none; /* Skjul vanlige lenker på mobil */
-            }
-        }
-        
-        .burger-bar {
-            width: 25px;
-            height: 3px;
-            background-color: #003087; /* Kreftforeningens blå */
-            margin: 5px 0;
-            transition: 0.4s;
-        }
-        
-        /* Menycontainer - nå kommer fra venstre side */
-        .mobile-menu {
-            position: fixed;
-            left: -250px; /* Starter utenfor skjermen på venstre side */
-            top: 0;
-            width: 250px;
-            max-width: 80vw;
-            height: 100%;
-            background-color: white;
-            transition: left 0.3s ease; /* Endret fra right til left */
-            box-shadow: 2px 0 5px rgba(0,0,0,0.2); /* Endret skyggeside */
-            z-index: 999;
-        }
-        
-        .mobile-menu.active {
-            left: 0; /* Kommer inn fra venstre side */
-        }
-        
-        /* Menyinnhold */
-        .menu-header {
-            padding: 20px;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .close-button {
-            font-size: 24px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding: 0;
-            margin: 0;
-            line-height: 1;
-        }
-        
-        .menu-items {
-            padding: 20px;
-        }
-        
-        .menu-items a {
-            display: block;
-            padding: 12px 15px;
-            margin-bottom: 10px;
-            color: #333;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.2s;
-        }
-        
-        .menu-items a:hover {
-            background-color: #f0f0f0;
-        }
-        
-        .menu-items a.active {
-            background-color: #003087;
-            color: white;
-        }
-        
-        /* Overlay når menyen er åpen */
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            z-index: 998;
-            display: none;
-        }
-        
-        .menu-overlay.active {
-            display: block;
-        }
-    </style>
+
+    <!-- MERK: Inline <style>-blokken for menyen er fjernet -->
+
 </head>
 <body>
-    <!-- Hamburger meny knapp -->
+    <!-- START: HTML-struktur for Hamburgermeny (Skal være lik på alle sider) -->
     <div class="burger-menu" id="burgerMenu">
         <div class="burger-bar"></div>
         <div class="burger-bar"></div>
         <div class="burger-bar"></div>
     </div>
-    
-    <!-- Mobil meny -->
+
     <div class="mobile-menu" id="mobileMenu">
         <div class="menu-header">
             <h3>Meny</h3>
-            <button class="close-button" id="closeMenu">&times;</button>
+            <button class="close-button" id="closeMenu">×</button>
         </div>
         <div class="menu-items" id="mobileMenuItems">
-            <!-- Fylles dynamisk med JavaScript -->
+            <!-- Lenker fylles dynamisk av navigation.js -->
         </div>
     </div>
-    
-    <!-- Bakgrunnsoverlay for menyen -->
+
     <div class="menu-overlay" id="menuOverlay"></div>
+    <!-- SLUTT: HTML-struktur for Hamburgermeny -->
 
     <div class="container">
         <!-- Header -->
         <header>
            <div class="logo-container">
-    <a href="index.html">
-        <img src="images/Logo.png" alt="Kreftforeningens logo" class="logo-image">
-    </a>
-</div>
+                <a href="index.html">
+                    <img src="images/Logo.png" alt="Kreftforeningens logo" class="logo-image">
+                </a>
+            </div>
             <div class="header-text">
                 <h1>Flertallskoalisjoner</h1>
                 <div class="header-subtitle">Mulige flertall for Kreftforeningens politikk</div>
             </div>
             <div class="nav-links">
-                <!-- Fylles dynamisk av JavaScript -->
+                <!-- Desktop-lenker fylles dynamisk av navigation.js -->
             </div>
         </header>
-        
+
         <!-- Introduksjon -->
         <div class="introduction">
             <h2>Oversikt over mulige flertallskonstellasjoner</h2>
-            <p>Her ser du hvilke partier som sammen danner flertall for ulike saker i Kreftforeningens politikk. 
+            <p>Her ser du hvilke partier som sammen danner flertall for ulike saker i Kreftforeningens politikk (basert på full enighet).
             Stortinget har 169 representanter, og et flertall krever minst 85 stemmer.</p>
         </div>
-        
+
         <!-- Filtreringsvalg -->
         <div class="filter-container">
             <div class="filter-group">
@@ -172,35 +65,39 @@
                     <option value="traditional">Tradisjonelle blokker</option>
                     <option value="smallest">Minste mulige flertall</option>
                     <option value="largest">Bredest mulig flertall</option>
+                    <!-- Flere alternativer kan legges til via JS om nødvendig -->
                 </select>
             </div>
-            
+
             <div class="filter-group">
                 <label for="issue-area-filter">Filtrer etter saksområde:</label>
                 <select id="issue-area-filter" class="filter-dropdown">
                     <option value="all">Alle saksområder</option>
-                    <!-- Saksområder legges til med JavaScript -->
+                    <!-- Saksområder legges til med majority-coalitions.js -->
                 </select>
             </div>
         </div>
-        
+
         <!-- Hovedinnhold: Flertallskonstellasjoner -->
         <div class="coalitions-container" id="coalitionsContainer">
-            <!-- Flertallskonstellasjoner legges til med JavaScript -->
+            <!-- Flertallskonstellasjoner legges til med majority-coalitions.js -->
+            <div class="no-coalitions" style="display: none;"> <!-- Skjult som standard -->
+                <h3>Laster koalisjoner...</h3>
+                <p>Vennligst vent mens dataene behandles.</p>
+            </div>
         </div>
-        
+
         <!-- Footer -->
         <footer>
-            Data basert på mandatfordeling etter Stortingsvalget 2021. Til bruk for informasjonsformål.
+            Data basert på mandatfordeling etter Stortingsvalget 2021 og partienes program/uttalelser. Til bruk for informasjonsformål.
         </footer>
     </div>
 
-    <!-- Scripts -->
+    <!-- Scripts lastes til slutt -->
     <script src="js/navigationConfig.js"></script>
     <script src="js/navigation.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="js/issues.js"></script>
-    <script src="js/majority-coalitions.js"></script>
+    <script src="js/issues.js"></script> <!-- Nødvendig for majority-coalitions -->
+    <script src="js/majority-coalitions.js"></script> <!-- Sidespesifikt script -->
+
 </body>
 </html>
