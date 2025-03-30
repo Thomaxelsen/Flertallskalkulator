@@ -1,3 +1,5 @@
+--- START OF FILE issue-matrix.html ---
+
 <!DOCTYPE html>
 <html lang="no">
 <head>
@@ -51,7 +53,7 @@
             <h2>Matrise over partienes støtte til Kreftforeningens saker</h2>
             <p>Denne visualiseringen viser hvordan de ulike partiene stiller seg til ulike saker i Kreftforeningens program.
             Fargekodene indikerer nivå av støtte: grønt for full enighet (2), gult for delvis enighet (1), og rosa for ingen støtte (0).
-            Klikk på en celle for å se mer detaljert informasjon om partiets standpunkt, inkludert eventuelle sitater.</p>
+            Cellene som har en liten <span style="display: inline-block; background-color: rgba(0, 48, 135, 0.8); color: white; width: 13px; height: 13px; font-size: 9px; line-height: 13px; text-align: center; border-radius: 50%; font-weight: bold; font-style: normal;">i</span>-indikator inneholder mer detaljer. Hold musepekeren over (eller trykk på mobil) for å se partiets begrunnelse.</p>
         </div>
 
         <!-- Filtreringsvalg -->
@@ -71,6 +73,15 @@
                     <option value="numbers">Farge og tall</option>
                 </select>
             </div>
+
+           <!-- === NYTT ELEMENT START === -->
+           <div class="filter-group toggle-group">
+               <label for="show-quotes-toggle" class="toggle-label">
+                   <input type="checkbox" id="show-quotes-toggle" checked>
+                   <span>Vis detaljer ved hover/klikk</span>
+               </label>
+           </div>
+           <!-- === NYTT ELEMENT SLUTT === -->
         </div>
 
         <!-- Forklaring av fargekoder/legend -->
