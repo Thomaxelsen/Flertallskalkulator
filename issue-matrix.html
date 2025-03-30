@@ -95,11 +95,6 @@
             background-color: #f0f0f0;
         }
         
-        .menu-items a.active {
-            background-color: #003087;
-            color: white;
-        }
-        
         /* Overlay når menyen er åpen */
         .menu-overlay {
             position: fixed;
@@ -114,6 +109,120 @@
         
         .menu-overlay.active {
             display: block;
+        }
+
+        /* Oppdaterte stiler for saksmatrise-siden - tilpasset flertallskalkulatoren */
+        /* Filter styling */
+        .matrix-filters, .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0 30px;
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .filter-group {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .filter-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #003087;
+        }
+        
+        .filter-dropdown {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            background-color: white;
+            font-size: 1rem;
+        }
+        
+        /* Legend styling med avrundede former lik partiboksene */
+        .legend-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            background-color: #f9f9f9;
+            border-radius: 25px;
+        }
+        
+        .legend-color {
+            width: 25px;
+            height: 25px;
+            border-radius: 25px;
+        }
+        
+        .legend-color.level-2 {
+            background-color: rgba(0, 168, 163, 0.7); /* Dusere grønn */
+        }
+        
+        .legend-color.level-1 {
+            background-color: rgba(255, 190, 44, 0.7); /* Dusere gul */
+        }
+        
+        .legend-color.level-0 {
+            background-color: rgba(230, 60, 140, 0.7); /* Dusere rosa */
+        }
+
+        /* Mobile responsiv styling for matrix-tabellen */
+        @media (max-width: 768px) {
+            .matrix-table {
+                /* Fjern fixed layout på mobil */
+                table-layout: auto;
+            }
+            
+            /* Reduser padding og font-size på mobil */
+            .matrix-table th, .matrix-table td {
+                padding: 8px 5px;
+                font-size: 0.9rem;
+            }
+            
+            /* Gjør celler smalere på mobil */
+            .party-col {
+                min-width: 40px !important;
+                max-width: 40px !important;
+            }
+            
+            /* Mindre cell-bokser på mobil */
+            .cell {
+                min-width: 30px !important;
+                height: 20px !important;
+                line-height: 20px !important;
+                font-size: 0.8rem !important;
+            }
+            
+            /* Mindre padding på issue-kolonnen */
+            .issue-col {
+                padding: 8px !important;
+                min-width: 150px !important;
+            }
+
+            /* Bedre scrolling på mobil */
+            .matrix-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
         }
     </style>
 </head>
@@ -131,8 +240,11 @@
             <h3>Meny</h3>
             <button class="close-button" id="closeMenu">&times;</button>
         </div>
-        <div class="menu-items" id="mobileMenuItems">
-            <!-- Fylles dynamisk med JavaScript -->
+        <div class="menu-items">
+            <a href="index.html">Flertallskalkulator</a>
+            <a href="party-overview.html">Partioversikt</a>
+            <a href="majority-coalitions.html">Flertallskoalisjoner</a>
+            <a href="issue-matrix.html">Saksmatrise</a>
         </div>
     </div>
     
@@ -142,15 +254,19 @@
     <div class="container">
         <!-- Header -->
         <header>
-            <div class="logo-container">
-                <img src="images/Logo.png" alt="Kreftforeningens logo" class="logo-image">
-            </div>
+           <div class="logo-container">
+    <a href="index.html">
+        <img src="images/Logo.png" alt="Kreftforeningens logo" class="logo-image">
+    </a>
+</div>
             <div class="header-text">
                 <h1>Saksmatrise</h1>
                 <div class="header-subtitle">Oversikt over partienes standpunkt til saker fra Kreftforeningens program</div>
             </div>
             <div class="nav-links">
-                <!-- Fylles dynamisk av JavaScript -->
+                <a href="index.html" class="nav-link">Flertallskalkulator</a>
+                <a href="party-overview.html" class="nav-link">Partioversikt</a>
+                <a href="majority-coalitions.html" class="nav-link">Flertallskoalisjoner</a>
             </div>
         </header>
         
@@ -208,9 +324,46 @@
         </footer>
     </div>
 
+    <!-- Inline JavaScript for hamburger-meny -->
+    <script>
+        // Vent til DOM er fullstendig lastet
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hent nødvendige elementer
+            const burgerMenu = document.getElementById('burgerMenu');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const closeMenu = document.getElementById('closeMenu');
+            const menuOverlay = document.getElementById('menuOverlay');
+            
+            // Hvis elementene ikke finnes, avbryt
+            if (!burgerMenu || !mobileMenu || !closeMenu || !menuOverlay) {
+                console.error("Kunne ikke finne nødvendige menyelementer");
+                return;
+            }
+            
+            // Åpne menyen når burger-knappen klikkes
+            burgerMenu.addEventListener('click', function() {
+                mobileMenu.classList.add('active');
+                menuOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Hindre scrolling
+            });
+            
+            // Lukk menyen når lukke-knappen klikkes
+            closeMenu.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
+                document.body.style.overflow = ''; // Gjenopprett scrolling
+            });
+            
+            // Lukk menyen når man klikker på overlay
+            menuOverlay.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
+                document.body.style.overflow = ''; // Gjenopprett scrolling
+            });
+        });
+    </script>
+
     <!-- Scripts -->
-    <script src="js/navigationConfig.js"></script>
-    <script src="js/navigation.js"></script>
     <script src="js/issue-matrix.js"></script>
 </body>
 </html>
