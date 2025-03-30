@@ -33,6 +33,7 @@ body {
     background-color: var(--light-bg);
     line-height: 1.6;
     color: #333;
+    /* La overflow håndteres av elementer, unngå å sette på body her */
 }
 
 /* Hindre scrolling av body når mobilmenyen er åpen */
@@ -102,7 +103,8 @@ header h1 strong {
 
 /* Desktop Navigasjonslenker (vises/skjules via media queries) */
 .nav-links {
-    display: flex;
+    /* display: flex; <-- Flyttet til media query for desktop */
+    display: none; /* Skjult som standard (mobil først) */
     align-items: center;
     gap: 10px;
     flex-shrink: 0;
@@ -139,7 +141,7 @@ header h1 strong {
     border-left: 5px solid var(--kf-pink);
     transition: box-shadow 0.3s ease;
 }
-.introduction { /* Spesifikk for majority-coalitions.html */
+.introduction { /* Spesifikk for majority-coalitions.html og issue-matrix.html */
      border-left-color: var(--kf-blue); /* Blå kant for intro */
      text-align: center;
 }
@@ -386,6 +388,7 @@ header h1 strong {
     font-weight: bold;
     font-size: 0.9rem;
     text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+    pointer-events: none; /* Allow clicks to go through */
 }
 
 .result-details {
@@ -858,6 +861,12 @@ footer {
 .quote-text {
    font-size: 1rem; line-height: 1.5; color: #333; padding: 12px; background-color: #f8f9fa; border-left: 3px solid var(--kf-purple); margin: 10px 0 0 0; border-radius: 4px; font-style: italic;
 }
+/* Stil for "Ingen sitat"-tekst */
+.no-quote-text {
+    font-style: italic;
+    color: #777;
+}
+
 
 /* === Info Popup/Tooltip (for ? knapp) === */
 /* Info popup (kun mobil) */
@@ -880,31 +889,90 @@ footer {
 @media (hover: none) and (pointer: coarse) { .info-tooltip { display: none !important; } }
 
 /* === Hamburgermeny (Sentralisert & Korrigert) === */
-.burger-menu { position: fixed; top: 20px; left: 20px; z-index: 1000; cursor: pointer; background: white; padding: 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); display: none; }
-.burger-bar { width: 25px; height: 3px; background-color: var(--kf-blue); margin: 5px 0; transition: 0.4s; }
+.burger-menu {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    cursor: pointer;
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    display: block; /* ENDRING: Synlig som standard (mobil først) */
+}
+.burger-bar {
+    width: 25px;
+    height: 3px;
+    background-color: var(--kf-blue);
+    margin: 5px 0;
+    transition: 0.4s;
+}
 
-.mobile-menu { position: fixed; left: calc(-1 * var(--menu-width)); top: 0; width: var(--menu-width); max-width: 80vw; height: 100%; background-color: white; transition: left 0.3s ease; box-shadow: 2px 0 5px rgba(0,0,0,0.2); z-index: 999; display: none; /* Vises via media query */ }
-.mobile-menu.active { left: 0; }
-
+.mobile-menu {
+    position: fixed;
+    left: calc(-1 * var(--menu-width)); /* ENDRING: Skjult via left */
+    top: 0;
+    width: var(--menu-width);
+    max-width: 80vw;
+    height: 100%;
+    background-color: white;
+    transition: left 0.3s ease;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+    z-index: 999;
+    /* display: none; <-- FJERNES */
+    display: flex; /* ENDRING: Bruk flex for intern layout */
+    flex-direction: column; /* Stabler header og items */
+}
+.mobile-menu.active {
+    left: 0;
+}
+/* === NY REGEL: Skjul burger-ikonet når menyen er åpen === */
+body.menu-open .burger-menu {
+    opacity: 0; /* Gjør ikonet usynlig */
+    pointer-events: none; /* Hindrer at det (usynlige) ikonet kan klikkes */
+    transition: opacity 0.3s ease; /* Valgfritt: Legger til en myk overgang */
+}
 /* Mobil meny header */
 .menu-header {
-    padding: 20px; /* Denne linjen endres IKKE */
-    border-bottom: 1px solid var(--border-color); /* Denne linjen endres IKKE */
-    display: flex; /* Denne linjen endres IKKE */
-    justify-content: space-between; /* Denne linjen endres IKKE */
-    align-items: center; /* Denne linjen endres IKKE */
-    padding-left: 70px; /* <<< LEGG TIL DENNE LINJEN >>> */}
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0; /* Forhindrer krymping */
+}
 .menu-header h3 { margin: 0; color: var(--kf-blue); }
 .close-button { font-size: 24px; cursor: pointer; background: none; border: none; padding: 0; margin: 0; line-height: 1; color: #666; }
 .close-button:hover { color: var(--kf-pink); }
 
-.menu-items { padding: 20px; }
+.menu-items {
+    padding: 20px;
+    overflow-y: auto; /* Scroll hvis mange lenker */
+    flex-grow: 1; /* Tar resten av plassen */
+}
 .menu-items a { display: block; padding: 12px 15px; margin-bottom: 10px; color: #333; text-decoration: none; border-radius: 5px; transition: background-color 0.2s, color 0.2s; font-weight: 500; }
 .menu-items a:hover { background-color: rgba(0, 48, 135, 0.05); color: var(--kf-blue); }
 .menu-items a.active { background-color: var(--kf-blue); color: white; font-weight: 600; }
 
-.menu-overlay { position: fixed; top: 0; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 998; display: none; transition: opacity 0.3s ease; opacity: 0; }
-.menu-overlay.active { display: block; opacity: 1; left: var(--menu-width); width: calc(100% - var(--menu-width)); }
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0; /* ENDRING: Dekker hele skjermen når aktiv */
+    width: 100%; /* ENDRING: Dekker hele skjermen når aktiv */
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 998;
+    display: none;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+}
+.menu-overlay.active {
+    display: block;
+    opacity: 1;
+    /* left: var(--menu-width); <-- FJERNES */
+    /* width: calc(100% - var(--menu-width)); <-- FJERNES */
+}
 
 /* === Issue Matrix Styling === */
 .matrix-filters { display: flex; flex-wrap: wrap; gap: 20px; margin: 20px 0 30px; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
@@ -912,38 +980,170 @@ footer {
 .filter-group label { display: block; margin-bottom: 8px; font-weight: 500; color: #444; }
 /* .filter-dropdown er definert over */
 
+/* Styling for popup toggle i matrix */
+.toggle-group {
+    display: flex;
+    align-items: center;
+    padding-top: 25px;
+    flex-basis: 100%;
+    min-width: 200px;
+}
+@media (min-width: 992px) {
+    .toggle-group {
+        flex-basis: auto;
+        padding-top: 25px;
+    }
+}
+
+.toggle-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: normal;
+    color: #555;
+    margin-bottom: 0;
+}
+
+.toggle-label input[type="checkbox"] {
+    margin-right: 8px;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    accent-color: var(--kf-blue);
+}
+
+.toggle-label span {
+    font-size: 0.95rem;
+}
+
 .legend-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin: 25px 0; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
-/* .legend-item, .legend-color, .legend-text er definert over */
-.legend-item.level-2 { background-color: rgba(0, 168, 163, 0.1); border-color: #00a8a3; } .legend-item.level-2 .legend-color { background-color: #00a8a3; } .legend-item.level-2 .legend-text { color: #00a8a3; }
-.legend-item.level-1 { background-color: rgba(255, 190, 44, 0.1); border-color: #ffbe2c; } .legend-item.level-1 .legend-color { background-color: #ffbe2c; } .legend-item.level-1 .legend-text { color: #a67c00; }
-.legend-item.level-0 { background-color: rgba(230, 60, 140, 0.1); border-color: #e63c8c; } .legend-item.level-0 .legend-color { background-color: #e63c8c; } .legend-item.level-0 .legend-text { color: #e63c8c; }
+/* Stil for legend er nå satt i JS (updateLegendStyles) for konsistens med celler */
 
 .matrix-container { overflow-x: auto; margin-bottom: 30px; background-color: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); -webkit-overflow-scrolling: touch; }
-.matrix-table { width: 100%; border-collapse: collapse; min-width: 800px; }
-.matrix-table th, .matrix-table td { padding: 10px 12px; border: 1px solid #eee; text-align: center; vertical-align: middle; white-space: nowrap; }
-.matrix-table thead th { background-color: #f8f9fa; position: sticky; top: 0; z-index: 10; font-weight: 600; white-space: normal; }
+.matrix-table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 800px; }
+.matrix-table th, .matrix-table td { padding: 10px 12px; border-bottom: 1px solid #eee; text-align: center; vertical-align: middle; white-space: nowrap; }
+.matrix-table td { border-right: 1px solid #eee; }
+.matrix-table th:last-child, .matrix-table td:last-child { border-right: none; }
+.matrix-table thead th { background-color: #f8f9fa; position: sticky; top: 0; z-index: 10; font-weight: 600; white-space: normal; border-top: 1px solid #eee; border-bottom: 2px solid #ddd; padding: 15px 12px; }
+
+/* Styling for Parti-header-kolonner */
+.matrix-table thead th.party-col {
+    padding: 10px 5px;
+    min-width: 70px;
+    max-width: 70px;
+    border-radius: 12px;
+    color: white;
+    border-left: 1px solid rgba(255,255,255,0.2);
+    border-right: 1px solid rgba(255,255,255,0.2);
+    /* Bakgrunnsfarge settes av JS med hexToRgb */
+}
+.matrix-table thead th.party-col:first-of-type { border-left: none; }
+.matrix-table thead th.party-col:last-of-type { border-right: none; }
+/* Spesifikk SUM-header stil */
+.matrix-table thead th.party-col[title="Sum av poeng"] {
+    background-color: #e9ecef;
+    color: #555;
+    border-left: 1px solid #ddd;
+    border-radius: 0 12px 12px 0;
+}
+
+
 .matrix-table th.issue-col, .matrix-table td.issue-col { text-align: left; position: sticky; left: 0; background-color: white; z-index: 1; min-width: 250px; white-space: normal; border-right: 2px solid #ddd; }
-.matrix-table thead th.issue-col { z-index: 11; background-color: #f8f9fa; }
-.matrix-table tbody tr:nth-child(even) td:not(.issue-col) { background-color: #fdfdff; }
-.matrix-table tbody tr:hover td:not(.issue-col) { background-color: #f1f5f8; }
-.matrix-table tr.area-header td { background-color: var(--kf-blue); color: white; font-weight: bold; font-size: 1.1rem; text-align: center; position: sticky; top: 50px; /* Juster etter behov */ z-index: 5; border: 1px solid var(--kf-blue); }
+.matrix-table thead th.issue-col { z-index: 11; background-color: #f8f9fa; border-radius: 12px 0 0 12px; }
 
-.cell { display: inline-flex; align-items: center; justify-content: center; width: 45px; height: 30px; border-radius: 15px; font-weight: bold; font-size: 0.9rem; cursor: pointer; border: 1px solid transparent; box-sizing: border-box; transition: transform 0.1s ease-in-out; }
+/* Annenhver rad KUN for saksrader */
+.matrix-table tbody tr:not(.area-header):nth-child(even) td {
+     background-color: #f8f9fa;
+}
+.matrix-table tbody tr:not(.area-header):nth-child(odd) td {
+     background-color: white;
+}
+/* Override for sticky issue-kolonne */
+.matrix-table tbody tr:not(.area-header):nth-child(even) td.issue-col {
+    background-color: #f8f9fa;
+}
+.matrix-table tbody tr:not(.area-header):nth-child(odd) td.issue-col {
+    background-color: white;
+}
+
+
+/* Korrigert stil for Area Header */
+.matrix-table tr.area-header td {
+    background-color: #b3d7f0;
+    color: #003087;
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-align: center;
+    position: sticky;
+    z-index: 5;
+    border-top: 2px solid #9ac0e0;
+    border-bottom: 1px solid #9ac0e0;
+    border-left: none;
+    border-right: none;
+    /* Sørger for at thead vises over area-header hvis scrolling skjer */
+    top: 60px; /* Juster denne verdien basert på faktisk høyde av thead */
+}
+/* Hover-regel for Area Header for å BEHOLDE fargen */
+.matrix-table tr.area-header:hover td {
+    background-color: #a8cbe8; /* Litt mørkere lyseblå på hover */
+    color: #002569;
+}
+
+
+.cell { display: inline-flex; align-items: center; justify-content: center; width: 70px; height: 36px; border-radius: 24px; font-weight: bold; font-size: 1rem; cursor: default; border: 1px solid transparent; box-sizing: border-box; transition: transform 0.1s ease-in-out, background-color 0.2s, box-shadow 0.2s; position: relative; }
+.cell.has-quote { cursor: pointer; }
 .cell:active { transform: scale(0.95); }
-.cell.level-2 { background-color: rgba(0, 168, 163, 0.1); color: #00807b; border-color: #00a8a3; }
-.cell.level-1 { background-color: rgba(255, 190, 44, 0.1); color: #a67c00; border-color: #ffbe2c; }
-.cell.level-0 { background-color: rgba(230, 60, 140, 0.1); color: #e63c8c; border-color: #e63c8c; }
+/* Farger settes av JS */
 
-.sum-cell-content { display: inline-flex; align-items: center; justify-content: center; width: 45px; height: 30px; border-radius: 15px; font-weight: bold; font-size: 0.9rem; border: 1px solid transparent; box-sizing: border-box; cursor: default; }
-.sum-cell-content.high-score { background-color: rgba(0, 168, 163, 0.1); color: #00807b; border-color: #00a8a3; }
-.sum-cell-content.medium-score { background-color: rgba(255, 190, 44, 0.1); color: #a67c00; border-color: #ffbe2c; }
-.sum-cell-content.low-score { background-color: rgba(230, 60, 140, 0.1); color: #e63c8c; border-color: #e63c8c; }
+/* === NY HOVER-EFFEKT KUN PÅ INTERAKTIVE CELLER === */
+.cell.has-quote:hover {
+    /* Gjør rammen litt tykkere og mer synlig */
+    border-width: 2px;
+    /* Legg til en diskret skygge for å løfte elementet */
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    /* Gjør bakgrunnen litt mørkere (kan justeres) */
+    /* filter: brightness(95%); */ /* Alternativ til å endre farge i JS */
+    transform: translateY(-1px); /* Liten løfteeffekt */
+}
+/* === SLUTT HOVER-EFFEKT CELLER === */
+
+
+/* === NY STIL FOR INFO-INDIKATOR === */
+.matrix-table .cell.has-quote .info-indicator {
+    position: absolute;
+    right: 1px;  /* Tettere på kanten */
+    top: 1px;    /* Tettere på kanten */
+    font-size: 9px;
+    width: 14px; /* Litt større */
+    height: 14px;
+    line-height: 14px;
+    text-align: center;
+    border-radius: 50%;
+    /* Bruker semi-transparent hvit for bedre lesbarhet på ulike bakgrunner */
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #555; /* Mørk grå tekst */
+    font-style: italic; /* Kursiv 'i' */
+    font-weight: 600;
+    border: 1px solid rgba(0, 0, 0, 0.1); /* Tynn, mørk kant */
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    pointer-events: none;
+    z-index: 1;
+    transition: background-color 0.2s, color 0.2s;
+}
+/* Litt tydeligere indikator når man holder over cellen */
+.matrix-table .cell.has-quote:hover .info-indicator {
+    background-color: white;
+    color: var(--kf-blue);
+    border-color: rgba(0, 48, 135, 0.3);
+}
+/* === SLUTT STIL INFO-INDIKATOR === */
+
+
+.sum-cell-content { display: inline-flex; align-items: center; justify-content: center; width: 70px; height: 36px; border-radius: 24px; font-weight: bold; font-size: 1rem; border: 1px solid transparent; box-sizing: border-box; cursor: default; }
+/* Farger settes av JS */
 
 .matrix-tooltip { display: none; position: absolute; z-index: 1000; background-color: white; box-shadow: 0 4px 20px rgba(0,0,0,0.15); border-radius: 8px; padding: 15px 20px; max-width: 350px; font-size: 0.95rem; line-height: 1.5; border-left: 4px solid var(--kf-purple); }
-.matrix-tooltip h3 { margin-top: 0; margin-bottom: 10px; color: var(--kf-blue); font-size: 1.1rem; padding-bottom: 8px; border-bottom: 1px solid #eee; }
-.matrix-tooltip p { margin-bottom: 8px; }
-.matrix-tooltip .quote-box { background-color: #f9f9f9; padding: 12px; margin-top: 12px; border-left: 3px solid var(--kf-purple); border-radius: 4px; font-style: italic; color: #555; }
-.matrix-tooltip .no-quote { font-style: italic; color: #777; margin-top: 10px; }
+/* ... (resten av matrix-tooltip stiler som før) ... */
 
 .matrix-loader { text-align: center; padding: 50px; font-size: 1.2rem; color: #666; }
 
@@ -951,71 +1151,139 @@ footer {
 
 /* Mobil og Nettbrett (Opp til 1024px) */
 @media (max-width: 1024px) {
+    /* --- GENERELLE MOBILJUSTERINGER --- */
     .container {
-        padding: 1rem; /* Mindre padding på små skjermer */
-    }
-
-    /* Header justeringer */
-    header {
-        flex-direction: column;
         padding: 1rem;
-        gap: 0.75rem;
-        text-align: center;
-        margin-bottom: 1.5rem;
     }
-    .logo-container {
-        margin-bottom: 0.5rem;
-        justify-content: center;
+    header {
+        flex-direction: column; /* Stabler logo, tekst, nav */
+        padding: 1rem;
+        align-items: center; /* Sentrer innhold i kolonnen */
+        gap: 0.5rem;
     }
     .header-text {
-        padding: 0; /* Fjern padding */
-        order: 1; /* Tekst under logo */
+        text-align: center; /* Alltid sentrert */
+        padding: 0;
+    }
+    header h1 {
+        font-size: 1.6rem; /* Mindre på mobil */
+    }
+    header .header-subtitle {
+        font-size: 0.95rem;
+    }
+    .logo-image {
+        height: 50px; /* Mindre logo */
         margin-bottom: 0.5rem;
     }
-    header h1 { font-size: 1.6rem; /* Mindre tittel */ }
-    .header-subtitle { font-size: 1rem; }
-    .nav-links { display: none !important; /* Skjul desktop nav */ }
-    .burger-menu { display: block !important; /* Vis burger */ }
-    .mobile-menu { display: block; /* Gjør klar for visning */ }
 
-    /* Generell layout */
-    .two-column { flex-direction: column; margin-top: 0; gap: 20px; }
-    .party-section, .result-container, .parliament-visualization, .matrix-container { margin-bottom: 20px; padding: 20px; }
+    .two-column {
+        flex-direction: column; /* Stabler kolonner */
+    }
 
-    /* Partivelger */
-    .party-grid { grid-template-columns: 1fr; gap: 8px; } /* En kolonne */
-    .party-card { padding: 10px; }
-    .party-name { font-size: 0.9rem; }
-    .party-seats { font-size: 0.8rem; padding: 3px 6px; }
+    /* --- MOBILNAVIGASJON --- */
+    .nav-links {
+        display: none; /* ENDRING: Skjul desktop-linker */
+    }
+    .burger-menu {
+        display: block; /* Sikrer at den vises */
+    }
+    .mobile-menu {
+        display: flex; /* Sikrer at den vises når den aktiveres */
+    }
 
-    /* Resultater */
-    .result-details { flex-direction: column; gap: 10px; }
-    .result-box { min-width: unset; width: 100%; }
-    .result-value { font-size: 2rem; }
-    .result-label { font-size: 0.85rem; }
-    .result-status { font-size: 1.1rem; padding: 12px; }
-    .progress-labels { font-size: 0.8rem; }
+
+    /* --- SPESIFIKKE MOBILJUSTERINGER --- */
+
+    /* Party Grid */
+    .party-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Enda smalere */
+        gap: 8px;
+    }
+    .party-card {
+        padding: 10px;
+    }
+    .party-name {
+        font-size: 0.9rem;
+    }
+    .party-seats {
+        font-size: 0.8rem;
+        padding: 2px 6px;
+    }
+
+    /* Resultatvisning */
+    .result-header {
+        font-size: 1.4rem;
+    }
+    .result-value {
+        font-size: 1.8rem;
+    }
+    .result-label {
+        font-size: 0.85rem;
+    }
+    .result-status {
+        font-size: 1.1rem;
+    }
 
     /* Saksvelger */
-    .issue-selector { padding: 15px; }
+    .issue-selector h2 { font-size: 1.1rem; }
+    .area-filter, .issue-dropdown { font-size: 0.9rem; }
     .issue-name { font-size: 1rem; }
+    .issue-area { font-size: 0.8rem; }
     .issue-status { font-size: 0.95rem; }
-    .issue-party { font-size: 0.8rem; }
+    .issue-parties h4 { font-size: 0.95rem; }
+    .issue-party { font-size: 0.8rem; padding: 3px 8px; }
+    .info-indicator { width: 10px; height: 10px; line-height: 10px; font-size: 7px; }
+    .interaction-tip { font-size: 0.75rem; }
+    .document-link-btn { font-size: 0.8rem; padding: 5px 10px; }
 
-    /* Matrix */
-    .matrix-table th.issue-col, .matrix-table td.issue-col { min-width: 120px; font-size: 0.85rem; border-right-width: 1px; }
-    .matrix-table th, .matrix-table td { padding: 6px 4px; font-size: 0.8rem; }
-    .cell, .sum-cell-content { width: 30px; height: 22px; font-size: 0.75rem; border-radius: 10px; }
-    .matrix-table thead th { top: 0; }
-    .matrix-table tr.area-header td { top: 35px; /* Juster */ font-size: 0.95rem; padding: 8px; }
+    /* Parliament Visualization */
+    .parliament-container {
+        max-width: 95%; /* La den ta mer plass */
+    }
+    .parliament-legend {
+        font-size: 0.8em;
+        gap: 5px;
+    }
+    .legend-item {
+        padding: 3px 8px;
+    }
+    .legend-color {
+        width: 12px;
+        height: 12px;
+    }
+
+    /* Issue Matrix */
+    .matrix-table thead th { padding: 8px 5px; font-size: 0.85rem; } /* Justert */
+    .matrix-table thead th.party-col { min-width: 50px; max-width: 50px; border-radius: 8px; font-size: 0.75rem; } /* Justert */
+    .matrix-table thead th.issue-col { min-width: 150px; border-radius: 8px 0 0 8px; font-size: 0.9rem;} /* Justert */
+    .matrix-table thead th.party-col[title="Sum av poeng"] { border-radius: 0 8px 8px 0; }
+    .matrix-table th.issue-col, .matrix-table td.issue-col { min-width: 150px; font-size: 0.85rem; } /* Justert */
+    .matrix-table th, .matrix-table td { padding: 8px 6px; font-size: 0.8rem; } /* Justert */
+    .cell, .sum-cell-content { width: 45px; height: 28px; font-size: 0.8rem; border-radius: 14px; } /* Justert */
+    .matrix-table tr.area-header td { font-size: 0.95rem; padding: 10px; top: 50px; /* Juster evt. sticky top for mobil */ } /* Justert */
+    .matrix-table .cell.has-quote .info-indicator { width: 12px; height: 12px; line-height: 12px; font-size: 8px; right: 0px; top: 0px; } /* Juster posisjon for mobil */
+
+    /* Mobilmeny breddejustering */
+    :root {
+        --menu-width: 280px; /* Kan justere denne for mobil */
+    }
 }
 
 /* Kun Desktop (Større enn 1024px) */
 @media (min-width: 1025px) {
-     .burger-menu { display: none !important; } /* Skjul burger */
-     /* Gjenopprett header layout hvis nødvendig (hvis den ble endret over) */
-     /* (Ser ut som standard header er ok, men la dette stå som eksempel)
-     header { flex-direction: row; padding: 1.5rem; text-align: left; }
-     .header-text { padding-right: 70px; text-align: center; }
-     */
+     .burger-menu {
+         display: none !important; /* ENDRING: Skjul burger på desktop */
+     }
+     .mobile-menu {
+         display: none !important; /* ENDRING: Skjul mobilmeny på desktop */
+     }
+     .menu-overlay {
+        display: none !important; /* ENDRING: Skjul overlay på desktop */
+     }
+     .nav-links {
+         display: flex; /* ENDRING: Vis desktop-linker */
+     }
+     body.menu-open {
+        overflow: auto; /* Tillat scrolling på desktop selv om menyen (utilsiktet) er åpen */
+     }
 }
