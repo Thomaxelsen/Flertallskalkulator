@@ -1257,17 +1257,52 @@ body.menu-open .burger-menu {
     .matrix-table thead th.party-col { min-width: 50px; max-width: 50px; border-radius: 8px; font-size: 0.75rem; } /* Justert */
     .matrix-table thead th.issue-col { min-width: 150px; border-radius: 8px 0 0 8px; font-size: 0.9rem;} /* Justert */
     .matrix-table thead th.party-col[title="Sum av poeng"] { border-radius: 0 8px 8px 0; }
-    .matrix-table th.issue-col, .matrix-table td.issue-col { min-width: 150px; font-size: 0.85rem; } /* Justert */
+    /* .matrix-table th.issue-col, .matrix-table td.issue-col { min-width: 150px; font-size: 0.85rem; } <-- Denne overstyres under */
     .matrix-table th, .matrix-table td { padding: 8px 6px; font-size: 0.8rem; } /* Justert */
     .cell, .sum-cell-content { width: 45px; height: 28px; font-size: 0.8rem; border-radius: 14px; } /* Justert */
-    .matrix-table tr.area-header td { font-size: 0.95rem; padding: 10px; top: 50px; /* Juster evt. sticky top for mobil */ } /* Justert */
+    /* .matrix-table tr.area-header td { font-size: 0.95rem; padding: 10px; top: 50px; } <-- Denne overstyres under */
     .matrix-table .cell.has-quote .info-indicator { width: 12px; height: 12px; line-height: 12px; font-size: 8px; right: 0px; top: 0px; } /* Juster posisjon for mobil */
+
+    /* === START: FIKS FOR MOBIL MATRISE (LØSNING 1) === */
+    .matrix-table th.issue-col,
+    .matrix-table td.issue-col {
+        position: static; /* Fjern sticky-oppførsel */
+        min-width: 150px; /* Behold eller juster ønsket bredde */
+        font-size: 0.85rem; /* Behold eller juster ønsket størrelse */
+        border-right: 1px solid #ddd; /* Sørg for border */
+        z-index: auto; /* Tilbakestill z-index */
+        left: auto; /* Tilbakestill left */
+        /* Sørg for at bakgrunnsfargen stemmer med raden */
+    }
+     .matrix-table tbody tr:not(.area-header):nth-child(even) td.issue-col {
+        background-color: #f8f9fa; /* Match even rows */
+    }
+    .matrix-table tbody tr:not(.area-header):nth-child(odd) td.issue-col {
+        background-color: white; /* Match odd rows */
+    }
+
+    .matrix-table thead th.issue-col {
+         /* Fjernet spesifikk sticky styling, men beholder bakgrunn/utseende */
+         position: static; /* Fjern sticky også her */
+         background-color: #f8f9fa; /* Matcher thead */
+         z-index: auto;
+         left: auto;
+    }
+
+    .matrix-table tr.area-header td {
+       /* Gjør også denne statisk for å unngå komplikasjoner med thead */
+        position: static;
+        top: auto; /* Fjern top siden den ikke er sticky */
+        font-size: 0.95rem; /* Behold ønsket størrelse */
+        padding: 10px; /* Behold ønsket padding */
+    }
+    /* === SLUTT: FIKS FOR MOBIL MATRISE === */
 
     /* Mobilmeny breddejustering */
     :root {
         --menu-width: 280px; /* Kan justere denne for mobil */
     }
-}
+} /* Slutten på @media (max-width: 1024px) */
 
 /* Kun Desktop (Større enn 1024px) */
 @media (min-width: 1025px) {
