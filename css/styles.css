@@ -33,6 +33,7 @@ body {
     background-color: var(--light-bg);
     line-height: 1.6;
     color: #333;
+    /* La overflow håndteres av elementer, unngå å sette på body her */
 }
 
 /* Hindre scrolling av body når mobilmenyen er åpen */
@@ -102,7 +103,8 @@ header h1 strong {
 
 /* Desktop Navigasjonslenker (vises/skjules via media queries) */
 .nav-links {
-    display: flex;
+    /* display: flex; <-- Flyttet til media query for desktop */
+    display: none; /* Skjult som standard (mobil først) */
     align-items: center;
     gap: 10px;
     flex-shrink: 0;
@@ -386,6 +388,7 @@ header h1 strong {
     font-weight: bold;
     font-size: 0.9rem;
     text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+    pointer-events: none; /* Allow clicks to go through */
 }
 
 .result-details {
@@ -886,11 +889,44 @@ footer {
 @media (hover: none) and (pointer: coarse) { .info-tooltip { display: none !important; } }
 
 /* === Hamburgermeny (Sentralisert & Korrigert) === */
-.burger-menu { position: fixed; top: 20px; left: 20px; z-index: 1000; cursor: pointer; background: white; padding: 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); display: none; }
-.burger-bar { width: 25px; height: 3px; background-color: var(--kf-blue); margin: 5px 0; transition: 0.4s; }
+.burger-menu {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    cursor: pointer;
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    display: block; /* ENDRING: Synlig som standard (mobil først) */
+}
+.burger-bar {
+    width: 25px;
+    height: 3px;
+    background-color: var(--kf-blue);
+    margin: 5px 0;
+    transition: 0.4s;
+}
 
-.mobile-menu { position: fixed; left: calc(-1 * var(--menu-width)); top: 0; width: var(--menu-width); max-width: 80vw; height: 100%; background-color: white; transition: left 0.3s ease; box-shadow: 2px 0 5px rgba(0,0,0,0.2); z-index: 999; display: none; /* Vises via media query */ }
-.mobile-menu.active { left: 0; }
+.mobile-menu {
+    position: fixed;
+    left: calc(-1 * var(--menu-width)); /* ENDRING: Skjult via left */
+    top: 0;
+    width: var(--menu-width);
+    max-width: 80vw;
+    height: 100%;
+    background-color: white;
+    transition: left 0.3s ease;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+    z-index: 999;
+    /* display: none; <-- FJERNES */
+    display: flex; /* ENDRING: Bruk flex for intern layout */
+    flex-direction: column; /* Stabler header og items */
+}
+.mobile-menu.active {
+    left: 0;
+}
 
 /* Mobil meny header */
 .menu-header {
@@ -899,19 +935,39 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* padding-left: 70px; /* Fjernet denne, juster ved behov */
+    flex-shrink: 0; /* Forhindrer krymping */
 }
 .menu-header h3 { margin: 0; color: var(--kf-blue); }
 .close-button { font-size: 24px; cursor: pointer; background: none; border: none; padding: 0; margin: 0; line-height: 1; color: #666; }
 .close-button:hover { color: var(--kf-pink); }
 
-.menu-items { padding: 20px; }
+.menu-items {
+    padding: 20px;
+    overflow-y: auto; /* Scroll hvis mange lenker */
+    flex-grow: 1; /* Tar resten av plassen */
+}
 .menu-items a { display: block; padding: 12px 15px; margin-bottom: 10px; color: #333; text-decoration: none; border-radius: 5px; transition: background-color 0.2s, color 0.2s; font-weight: 500; }
 .menu-items a:hover { background-color: rgba(0, 48, 135, 0.05); color: var(--kf-blue); }
 .menu-items a.active { background-color: var(--kf-blue); color: white; font-weight: 600; }
 
-.menu-overlay { position: fixed; top: 0; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 998; display: none; transition: opacity 0.3s ease; opacity: 0; }
-.menu-overlay.active { display: block; opacity: 1; left: var(--menu-width); width: calc(100% - var(--menu-width)); }
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0; /* ENDRING: Dekker hele skjermen når aktiv */
+    width: 100%; /* ENDRING: Dekker hele skjermen når aktiv */
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 998;
+    display: none;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+}
+.menu-overlay.active {
+    display: block;
+    opacity: 1;
+    /* left: var(--menu-width); <-- FJERNES */
+    /* width: calc(100% - var(--menu-width)); <-- FJERNES */
+}
 
 /* === Issue Matrix Styling === */
 .matrix-filters { display: flex; flex-wrap: wrap; gap: 20px; margin: 20px 0 30px; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
@@ -1090,21 +1146,139 @@ footer {
 
 /* Mobil og Nettbrett (Opp til 1024px) */
 @media (max-width: 1024px) {
-    /* ... (alle tidligere mobile regler beholdes) ... */
+    /* --- GENERELLE MOBILJUSTERINGER --- */
+    .container {
+        padding: 1rem;
+    }
+    header {
+        flex-direction: column; /* Stabler logo, tekst, nav */
+        padding: 1rem;
+        align-items: center; /* Sentrer innhold i kolonnen */
+        gap: 0.5rem;
+    }
+    .header-text {
+        text-align: center; /* Alltid sentrert */
+        padding: 0;
+    }
+    header h1 {
+        font-size: 1.6rem; /* Mindre på mobil */
+    }
+    header .header-subtitle {
+        font-size: 0.95rem;
+    }
+    .logo-image {
+        height: 50px; /* Mindre logo */
+        margin-bottom: 0.5rem;
+    }
 
-    /* Justeringer spesifikt for matrix på mobil */
-    .matrix-table thead th { padding: 10px 6px; }
-    .matrix-table thead th.party-col { min-width: 45px; max-width: 45px; border-radius: 8px; font-size: 0.8rem; }
-    .matrix-table thead th.issue-col { min-width: 100px; border-radius: 8px 0 0 8px; }
+    .two-column {
+        flex-direction: column; /* Stabler kolonner */
+    }
+
+    /* --- MOBILNAVIGASJON --- */
+    .nav-links {
+        display: none; /* ENDRING: Skjul desktop-linker */
+    }
+    .burger-menu {
+        display: block; /* Sikrer at den vises */
+    }
+    .mobile-menu {
+        display: flex; /* Sikrer at den vises når den aktiveres */
+    }
+
+
+    /* --- SPESIFIKKE MOBILJUSTERINGER --- */
+
+    /* Party Grid */
+    .party-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Enda smalere */
+        gap: 8px;
+    }
+    .party-card {
+        padding: 10px;
+    }
+    .party-name {
+        font-size: 0.9rem;
+    }
+    .party-seats {
+        font-size: 0.8rem;
+        padding: 2px 6px;
+    }
+
+    /* Resultatvisning */
+    .result-header {
+        font-size: 1.4rem;
+    }
+    .result-value {
+        font-size: 1.8rem;
+    }
+    .result-label {
+        font-size: 0.85rem;
+    }
+    .result-status {
+        font-size: 1.1rem;
+    }
+
+    /* Saksvelger */
+    .issue-selector h2 { font-size: 1.1rem; }
+    .area-filter, .issue-dropdown { font-size: 0.9rem; }
+    .issue-name { font-size: 1rem; }
+    .issue-area { font-size: 0.8rem; }
+    .issue-status { font-size: 0.95rem; }
+    .issue-parties h4 { font-size: 0.95rem; }
+    .issue-party { font-size: 0.8rem; padding: 3px 8px; }
+    .info-indicator { width: 10px; height: 10px; line-height: 10px; font-size: 7px; }
+    .interaction-tip { font-size: 0.75rem; }
+    .document-link-btn { font-size: 0.8rem; padding: 5px 10px; }
+
+    /* Parliament Visualization */
+    .parliament-container {
+        max-width: 95%; /* La den ta mer plass */
+    }
+    .parliament-legend {
+        font-size: 0.8em;
+        gap: 5px;
+    }
+    .legend-item {
+        padding: 3px 8px;
+    }
+    .legend-color {
+        width: 12px;
+        height: 12px;
+    }
+
+    /* Issue Matrix */
+    .matrix-table thead th { padding: 8px 5px; font-size: 0.85rem; } /* Justert */
+    .matrix-table thead th.party-col { min-width: 50px; max-width: 50px; border-radius: 8px; font-size: 0.75rem; } /* Justert */
+    .matrix-table thead th.issue-col { min-width: 150px; border-radius: 8px 0 0 8px; font-size: 0.9rem;} /* Justert */
     .matrix-table thead th.party-col[title="Sum av poeng"] { border-radius: 0 8px 8px 0; }
-    .matrix-table th.issue-col, .matrix-table td.issue-col { min-width: 100px; font-size: 0.8rem; }
-    .matrix-table th, .matrix-table td { padding: 8px 4px; font-size: 0.75rem; }
-    .cell, .sum-cell-content { width: 35px; height: 24px; font-size: 0.7rem; border-radius: 12px; }
-    .matrix-table tr.area-header td { font-size: 0.9rem; padding: 8px; top: 50px; /* Juster evt. sticky top for mobil */ }
-    .matrix-table .cell.has-quote .info-indicator { width: 10px; height: 10px; line-height: 10px; font-size: 7px; right: -2px; top: -2px; } /* Juster posisjon for mobil */
+    .matrix-table th.issue-col, .matrix-table td.issue-col { min-width: 150px; font-size: 0.85rem; } /* Justert */
+    .matrix-table th, .matrix-table td { padding: 8px 6px; font-size: 0.8rem; } /* Justert */
+    .cell, .sum-cell-content { width: 45px; height: 28px; font-size: 0.8rem; border-radius: 14px; } /* Justert */
+    .matrix-table tr.area-header td { font-size: 0.95rem; padding: 10px; top: 50px; /* Juster evt. sticky top for mobil */ } /* Justert */
+    .matrix-table .cell.has-quote .info-indicator { width: 12px; height: 12px; line-height: 12px; font-size: 8px; right: 0px; top: 0px; } /* Juster posisjon for mobil */
+
+    /* Mobilmeny breddejustering */
+    :root {
+        --menu-width: 280px; /* Kan justere denne for mobil */
+    }
 }
 
 /* Kun Desktop (Større enn 1024px) */
 @media (min-width: 1025px) {
-     .burger-menu { display: none !important; }
+     .burger-menu {
+         display: none !important; /* ENDRING: Skjul burger på desktop */
+     }
+     .mobile-menu {
+         display: none !important; /* ENDRING: Skjul mobilmeny på desktop */
+     }
+     .menu-overlay {
+        display: none !important; /* ENDRING: Skjul overlay på desktop */
+     }
+     .nav-links {
+         display: flex; /* ENDRING: Vis desktop-linker */
+     }
+     body.menu-open {
+        overflow: auto; /* Tillat scrolling på desktop selv om menyen (utilsiktet) er åpen */
+     }
 }
