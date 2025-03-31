@@ -41,13 +41,23 @@
     font-size: 1.2rem;
     color: #666;
 }
+/* Melding ved ingen data */
+.visualization-container .no-data,
+.visualization-container .error {
+     text-align: center;
+     padding: 40px 20px;
+     font-size: 1.1rem;
+     color: #777;
+}
 
-/* D3 Chart Styles (eksempel for søylediagram) */
+
+/* D3 Chart Styles (felles) */
 .sk-visualization-area svg {
     display: block;
     width: 100%;
     height: auto;
     min-height: 600px; /* Juster etter behov basert på antall saker */
+    overflow: visible; /* Tillat at aksetekst går litt utenfor */
 }
 
 .sk-visualization-area .axis path,
@@ -60,25 +70,13 @@
 .sk-visualization-area .axis text {
     font-size: 0.8rem;
     fill: #555;
-}
-.sk-visualization-area .y-axis text {
     cursor: default; /* Indikerer at man ikke kan klikke */
 }
-
-.sk-visualization-area .bar-group:hover {
-     /* Litt utheving på hover */
-     filter: brightness(95%);
+.sk-visualization-area .y-axis .tick text {
+    /* Standard utseende for Y-akse tekst */
+     transition: fill 0.2s, font-weight 0.2s;
 }
 
-.sk-visualization-area .bar-segment {
-    transition: fill-opacity 0.2s ease, stroke-width 0.2s ease;
-    stroke: white; /* Linje mellom segmenter */
-    stroke-width: 0.5px;
-}
-.sk-visualization-area .bar-segment:hover {
-    stroke: black;
-    stroke-width: 1.5px;
-}
 
 .sk-visualization-area .majority-line {
     stroke: var(--kf-purple);
@@ -93,10 +91,30 @@
     text-anchor: middle;
 }
 
-/* D3 Tooltip Style (enkel) */
+/* Horisontalt Søylediagram Spesifikt */
+.sk-visualization-area .bar-group:hover {
+     /* filter: brightness(95%); */ /* Valgfri generell utheving */
+}
+.sk-visualization-area .bar-segment {
+    transition: fill-opacity 0.2s ease, stroke-width 0.2s ease, stroke 0.2s;
+    stroke: white; /* Linje mellom segmenter */
+    stroke-width: 0.5px;
+}
+/* Tydeligere kant når man hover over selve søylen/segmentet */
+.sk-visualization-area .bar-segment:hover {
+    stroke: #555;
+    stroke-width: 1px;
+}
+/* Label for total mandater */
+.sk-visualization-area .total-mandate-label {
+    pointer-events: none; /* Skal ikke fange mus */
+}
+
+
+/* D3 Tooltip Style (felles) */
 .d3-tooltip {
     position: absolute;
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: rgba(0, 0, 0, 0.8); /* Litt mørkere */
     color: white;
     padding: 8px 12px;
     border-radius: 4px;
@@ -104,13 +122,26 @@
     pointer-events: none; /* Viktig for at hover skal funke under */
     opacity: 0;
     transition: opacity 0.2s ease;
-    white-space: nowrap;
-    z-index: 10;
+    white-space: nowrap; /* Standard */
+    z-index: 1050; /* Høyt over alt annet */
+    max-width: 300px; /* Begrens bredde */
 }
 .d3-tooltip.visible {
     opacity: 1;
 }
-
+/* Tillat linjeskift i tooltip */
+.d3-tooltip br {
+    display: block; /* Sikrer linjeskift */
+    content: "";
+    margin-top: 4px;
+}
+.d3-tooltip small { /* For partidetaljer */
+    font-size: 0.8em;
+    color: #ddd;
+    display: block;
+    margin-top: 5px;
+    line-height: 1.3;
+}
 
 /* Stiler for Tabellvisning */
 .sk-table-container {
@@ -127,21 +158,25 @@
     padding: 10px 12px;
     border: 1px solid #eee;
     text-align: left;
+    vertical-align: top; /* Juster topp for lange celler */
 }
 .sk-table th {
     background-color: #f8f9fa;
     font-weight: 600;
-    position: sticky;
+    position: sticky; /* Gjør header sticky */
     top: 0;
+    z-index: 10; /* Sørg for at den ligger over innhold */
 }
 .sk-table td.mandates-col {
     text-align: right;
     font-weight: bold;
     min-width: 80px;
+    vertical-align: middle; /* Midtstill tall */
 }
 .sk-table td.parties-col {
     white-space: normal; /* Tillat bryting av partiliste */
     min-width: 200px;
+    line-height: 1.8; /* Litt mer luft mellom tags */
 }
 /* Mini party tags in table */
 .sk-table .mini-party-tag {
@@ -151,6 +186,7 @@
     font-size: 0.75rem;
     margin: 2px;
     border: 1px solid transparent; /* For konsistens */
+    white-space: nowrap; /* Unngå at taggen brytes */
 }
 .sk-table .mini-party-tag.level-1 {
     opacity: 0.7; /* Gjør nivå 1 litt dusere */
@@ -184,48 +220,83 @@
      .sk-visualization-area svg {
         min-height: 500px; /* Mindre minimumshøyde */
     }
+    /* Gjør aksetekstene mindre på mobil */
     .sk-visualization-area .axis text {
         font-size: 0.7rem; /* Mindre aksetekst */
     }
+    /* Gjør flertallsetiketten litt mindre */
+     .sk-visualization-area .majority-label {
+        font-size: 0.7rem;
+    }
+    /* Juster posisjon/størrelse for mandate-label */
+     .sk-visualization-area .total-mandate-label {
+         font-size: 0.75rem; /* Litt mindre label */
+     }
+     /* Juster dot-plot labels */
+     .sk-visualization-area .dot-label {
+         font-size: 0.7rem;
+     }
+
+    /* Tabell på mobil */
     .sk-table {
         font-size: 0.8rem;
     }
      .sk-table th, .sk-table td {
         padding: 6px 8px;
     }
-}
-/* css/sakskompass.css ELLER css/styles.css */
-
-@media (max-width: 768px) {
-    .sk-visualization-area .y-axis .tick text {
-        font-size: 0.7rem; /* Gjør teksten litt mindre på små skjermer */
-        /* fill: #666; /* Litt lysere grå hvis ønskelig */
+     .sk-table td.parties-col {
+        min-width: 150px; /* Tillat smalere kolonne */
     }
-
-    /* Eventuelt reduser font-størrelsen på x-aksen også */
-    .sk-visualization-area .x-axis .tick text {
-        font-size: 0.7rem;
-    }
-
-    /* Gjør flertallsetiketten litt mindre */
-     .sk-visualization-area .majority-label {
-        font-size: 0.7rem;
-    }
-
-    /* Juster posisjon/størrelse for mandate-label */
-     .sk-visualization-area .total-mandate-label {
-         font-size: 0.75rem; /* Litt mindre label */
-         /* Flytt label litt lenger til høyre hvis den overlapper */
-         /* transform: translateX(3px); */
-     }
-
-     /* Juster dot-plot labels hvis de brukes og er for store */
-     .sk-visualization-area .dot-label {
-         font-size: 0.7rem;
-     }
 }
 
-/* Forbedring for wrapping: hindre at tspan blir for lang */
-.sk-visualization-area .y-axis .tick text tspan {
-    display: inline-block; /* Kan hjelpe noen nettlesere */
+/* ------ START: NYE REGLER FOR HJELPELINJER OG UTHEVING ------ */
+
+/* Styling for de nye hjelpelinjene */
+.guideline {
+    stroke: #e0e0e0; /* Lys grå farge */
+    stroke-width: 1px;
+    stroke-dasharray: 3, 3; /* Stiplede linjer */
+    opacity: 0.7; /* Gjør dem litt svake */
+    pointer-events: none; /* Viktig: Lar museklikk gå gjennom */
+    transition: stroke 0.2s, opacity 0.2s, stroke-dasharray 0.2s; /* Myk overgang */
 }
+
+/* Utheving av hjelpelinje ved hover */
+.guideline.highlighted {
+    stroke: #888; /* Mørkere grå */
+    stroke-dasharray: none; /* Hel linje */
+    opacity: 1; /* Full synlighet */
+}
+
+/* Utheving av Y-akse etikett ved hover */
+.y-axis .tick.highlighted text { /* Målretter teksten inni uthevet tick */
+    font-weight: bold;
+    fill: var(--kf-blue); /* Bruk en tydelig farge */
+}
+/* Generell hover på tick for å gi litt feedback */
+ .y-axis .tick:hover text {
+     fill: #333; /* Mørkere tekst ved hover */
+ }
+
+
+/* Utheving av søylegruppe ved hover */
+/* (Ingen spesifikk stil nødvendig her med nåværende JS,
+   men kan legges til hvis man f.eks. vil ha en ramme rundt gruppen) */
+.bar-group.highlighted {
+    /* filter: brightness(105%); */ /* Valgfritt: Gjør gruppen litt lysere */
+}
+
+/* Valgfritt: Gjør andre søyler/ticks/linjer dusere når en er uthevet */
+.sk-visualization-area:hover .bar-group:not(.highlighted),
+.sk-visualization-area:hover .y-axis .tick:not(.highlighted),
+.sk-visualization-area:hover .guideline:not(.highlighted) {
+    /* opacity: 0.5; */ /* Kan bli litt forstyrrende */
+    /* transition: opacity 0.3s ease; */
+}
+.sk-visualization-area:hover .bar-group.highlighted,
+.sk-visualization-area:hover .y-axis .tick.highlighted,
+.sk-visualization-area:hover .guideline.highlighted {
+    opacity: 1; /* Sørg for at uthevede er fullt synlige */
+}
+
+/* ------ SLUTT: NYE REGLER FOR HJELPELINJER OG UTHEVING ------ */
