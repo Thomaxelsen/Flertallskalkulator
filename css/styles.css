@@ -763,22 +763,26 @@ footer {
 .issue-party.party-tag-mdg { background-color: rgba(67, 149, 57, 0.1); border-color: #439539; color: #2d6426; }
 .issue-party.party-tag-pf { background-color: rgba(160, 77, 148, 0.1); border-color: #a04d94; color: #703668; }
 
-.info-indicator { /* 'i'-ikon på issue-party tag */
-   position: absolute;
-   right: 4px;
-   top: 50%;
-   transform: translateY(-50%);
-   font-size: 9px; /* Mindre */
-   width: 12px; /* Mindre */
-   height: 12px;
-   line-height: 12px;
-   text-align: center;
-   border-radius: 50%;
-   background-color: rgba(0, 48, 135, 0.2); /* Litt sterkere farge */
-   color: var(--kf-blue);
-   font-style: normal;
+/* --- MODIFISERT Rule for Info Indicator on Issue Party Tags --- */
+.issue-party .info-indicator { /* Mer spesifikk selector */
+   position: absolute;          /* Fortsatt absolutt posisjonert */
+   top: -4px;                 /* Flytter den 4px OPP fra toppen (ut av boksen) */
+   right: -4px;                /* Flytter den 4px til HØYRE fra høyre kant (ut av boksen) */
+   /* transform: translateY(-50%); <-- Denne linjen er fjernet */
+   width: 14px;                /* Kan justere størrelsen litt */
+   height: 14px;
+   line-height: 14px;          /* Viktig for vertikal tekst-sentrering */
+   font-size: 9px;             /* Størrelse på 'i'-en */
    font-weight: bold;
-   border: 1px solid rgba(0, 48, 135, 0.3);
+   font-style: normal;
+   text-align: center;
+   border-radius: 50%;         /* Rund form */
+   background-color: var(--kf-blue); /* Solid bakgrunn (Kreftforeningens blå) */
+   color: white;               /* Hvit tekst ('i') */
+   border: 1px solid white;    /* Tynn hvit kant for å skille fra taggen under */
+   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); /* Liten skygge for dybde */
+   z-index: 1;                 /* Sikrer at den ligger over taggen */
+   pointer-events: none;       /* Gjør at museklikk går "gjennom" 'i'-en til taggen under */
 }
 .interaction-tip { /* Tekst (Hold musepeker over...) */
    font-size: 0.8rem;
