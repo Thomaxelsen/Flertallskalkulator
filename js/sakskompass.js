@@ -1,4 +1,4 @@
-// js/sakskompass.js (MED FIKS FOR MOBIL SØYLEDIAGRAM)
+// js/sakskompass.js (MED FIKS FOR MOBIL SØYLEDIAGRAM + HJELPELINJER/HOVER)
 
 document.addEventListener('DOMContentLoaded', function() {
     // Vent på at både issues og party data er lastet
@@ -264,7 +264,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Visualiseringsfunksjoner ---
 
-    // *** START: createHorizontalBarChart med DYNAMISK VENSTREMARG ***
+    // *** START: createHorizontalBarChart med ALLE OPPDATERINGER ***
     function createHorizontalBarChart(data) {
         console.log("Sakskompass: createHorizontalBarChart called with data:", data.length);
         const container = d3.select("#sk-visualization-container");
@@ -272,7 +272,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const containerWidth = container.node().getBoundingClientRect().width;
 
-        // --- START ENDRING ---
         // Bestem venstremarg basert på bredde
         let dynamicMarginLeft;
         if (containerWidth < 500) { // Små skjermer (mobil portrett)
@@ -285,7 +284,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Definer margin-objektet med den dynamiske venstremargen
         const margin = { top: 20, right: 30, bottom: 40, left: dynamicMarginLeft };
-        // --- SLUTT ENDRING ---
 
         // Beregn bredde og høyde
         const effectiveChartWidth = Math.max(100, containerWidth - margin.left - margin.right);
@@ -312,14 +310,50 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Akser
         const yAxis = d3.axisLeft(yScale).tickSizeOuter(0);
-        svg.append("g")
+        const yAxisGroup = svg.append("g") // Lagre referanse til y-akse gruppen
             .attr("class", "y-axis axis")
             .call(yAxis)
-            .call(g => g.select(".domain").remove())
-            // --- START ENDRING ---
-            .selectAll(".tick text")
-            .call(wrapAxisText, margin.left - 15); // Bruker dynamisk margin og litt mer padding
-            // --- SLUTT ENDRING ---
+            .call(g => g.select(".domain").remove());
+
+        yAxisGroup.selectAll(".tick") // Velg alle ticks innenfor y-aksen
+            .selectAll("text") // Velg teksten innenfor hver tick
+            .call(wrapAxisText, margin.left - 15) // Bruker dynamisk margin og litt mer padding
+            // --- START: Hover-lytter på Y-akse ticks ---
+            .each(function(d) {
+                // Gå opp til forelder (<g class="tick">) for å legge til datum og lytter
+                d3.select(this.parentNode).datum(d); // Legg saksnavnet til <g class="tick">
+            });
+
+        // Legg lyttere til tick-gruppene (<g class="tick">)
+        yAxisGroup.selectAll(".tick")
+            .on("mouseover", function(event, d) { // 'd' her er saksnavnet
+                const issueName = d;
+                // console.log("Over tick:", issueName); // DEBUG
+                d3.select(this).classed("highlighted", true); // Uthev tick-gruppen (inkl tekst)
+
+                // Finn og uthev tilhørende søylegruppe og hjelpelinje
+                svg.selectAll(".bar-group")
+                    .filter(barData => barData.name === issueName)
+                    .classed("highlighted", true);
+                svg.selectAll(".guideline")
+                    .filter(lineData => lineData.name === issueName)
+                    .classed("highlighted", true);
+            })
+            .on("mouseout", function(event, d) {
+                const issueName = d;
+                // console.log("Out tick:", issueName); // DEBUG
+                d3.select(this).classed("highlighted", false); // Fjern utheving fra tick
+
+                // Fjern utheving fra tilhørende elementer
+                svg.selectAll(".bar-group.highlighted")
+                    .filter(barData => barData.name === issueName)
+                    .classed("highlighted", false);
+                svg.selectAll(".guideline.highlighted")
+                    .filter(lineData => lineData.name === issueName)
+                    .classed("highlighted", false);
+            });
+            // --- SLUTT: Hover-lytter på Y-akse ticks ---
+
 
         const xAxis = d3.axisBottom(xScale).ticks(Math.max(5, Math.floor(effectiveChartWidth / 80))).tickSizeOuter(0);
         svg.append("g")
@@ -327,6 +361,17 @@ document.addEventListener('DOMContentLoaded', function() {
             .attr("transform", `translate(0,${height - margin.top - margin.bottom})`)
             .call(xAxis)
             .call(g => g.select(".domain").remove());
+
+        // --- START: Legg til hjelpelinjer ---
+        svg.selectAll(".guideline")
+            .data(data, d => d.id) // Bruk samme data som for søyler/akse
+            .join("line")
+            .attr("class", "guideline")
+            .attr("x1", 0) // Start ved x=0 (der søylene starter)
+            .attr("x2", -6) // Gå litt inn på y-aksens område
+            .attr("y1", d => yScale(d.name) + yScale.bandwidth() / 2) // Midt på søylens høyde
+            .attr("y2", d => yScale(d.name) + yScale.bandwidth() / 2); // Rett linje
+        // --- SLUTT: Legg til hjelpelinjer ---
 
         // Flertallslinje
         const majorityThreshold = 85;
@@ -356,8 +401,35 @@ document.addEventListener('DOMContentLoaded', function() {
             .data(data, d => d.id)
             .join("g")
             .attr("class", "bar-group")
-            .attr("transform", d => `translate(0,${yScale(d.name)})`);
+            .attr("transform", d => `translate(0,${yScale(d.name)})`)
+            // --- START: Hover-lytter på Bar Groups ---
+            .on("mouseover", function(event, d) { // 'd' her er hele dataobjektet for saken
+                // console.log("Over bar group:", d.name); // DEBUG
+                d3.select(this).classed("highlighted", true); // Uthev selve søylegruppen
 
+                // Finn og uthev tilhørende Y-akse tick og hjelpelinje
+                yAxisGroup.selectAll(".tick") // Bruk referansen yAxisGroup
+                    .filter(tickData => tickData === d.name) // Sammenlign med navnet
+                    .classed("highlighted", true);
+                svg.selectAll(".guideline")
+                    .filter(lineData => lineData.id === d.id) // Sammenlign med ID
+                    .classed("highlighted", true);
+            })
+            .on("mouseout", function(event, d) {
+                // console.log("Out bar group:", d.name); // DEBUG
+                d3.select(this).classed("highlighted", false); // Fjern utheving fra søylegruppe
+
+                // Fjern utheving fra tilhørende elementer
+                yAxisGroup.selectAll(".tick.highlighted") // Bruk referansen yAxisGroup
+                    .filter(tickData => tickData === d.name)
+                    .classed("highlighted", false);
+                svg.selectAll(".guideline.highlighted")
+                    .filter(lineData => lineData.id === d.id)
+                    .classed("highlighted", false);
+            });
+            // --- SLUTT: Hover-lytter på Bar Groups ---
+
+        // Tegn segmentene INNI gruppene
         barGroups.selectAll(".bar-segment")
             .data(d => {
                 let currentX = 0;
@@ -384,17 +456,21 @@ document.addEventListener('DOMContentLoaded', function() {
             .attr("width", d => d.width)
             .attr("fill", d => d.color || "#cccccc")
             .attr("fill-opacity", d => d.level === 1 ? 0.6 : 1.0) // Dusere farge for nivå 1
-            .on("mouseover", function(event, d) {
+            .on("mouseover", function(event, d) { // Hover på segment for tooltip
                 tooltip.classed("visible", true)
                     .html(`<b>${d.name}</b><br>Støtte: Nivå ${d.level}<br>Mandater: ${d.seats}`);
                 d3.select(this).attr("stroke-width", 1.5).attr("stroke", "black");
+                // Stopp event propagering så ikke barGroup sin mouseover trigger unødvendig
+                event.stopPropagation();
             })
             .on("mousemove", function(event) {
                 tooltip.style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 10) + "px");
+                event.stopPropagation();
             })
-            .on("mouseout", function() {
+            .on("mouseout", function(event) { // Mouseout fra segment
                 tooltip.classed("visible", false);
                 d3.select(this).attr("stroke-width", 0.5).attr("stroke", "white");
+                event.stopPropagation();
             });
 
         // Legg til totalt mandat-label
@@ -412,9 +488,10 @@ document.addEventListener('DOMContentLoaded', function() {
             .text(d => d.totalMandates);
 
     }
-    // *** SLUTT: createHorizontalBarChart med DYNAMISK VENSTREMARG ***
+    // *** SLUTT: createHorizontalBarChart med ALLE OPPDATERINGER ***
 
 
+    // Dot plot (bruker samme dynamiske margin)
     function createDotPlot(data) {
         console.log("Sakskompass: createDotPlot called with data:", data);
         const container = d3.select("#sk-visualization-container");
@@ -595,7 +672,7 @@ document.addEventListener('DOMContentLoaded', function() {
          console.log(`  -> Legend updated with ${sortedParties.length} parties.`);
     }
 
-    // Funksjon for å bryte lange aksetekster (uendret)
+    // Funksjon for å bryte lange aksetekster
     function wrapAxisText(text, width) {
         text.each(function() {
             var text = d3.select(this),
@@ -607,7 +684,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 y = text.attr("y"),
                 dy = parseFloat(text.attr("dy") || 0),
                 // Sentrer teksten vertikalt mot ticken (juster x etter behov)
-                tspan = text.text(null).append("tspan").attr("x", -10).attr("y", y).attr("dy", dy + "em");
+                tspan = text.text(null).append("tspan").attr("x", -10).attr("y", y).attr("dy", dy + "em").style("text-anchor", "end"); // Juster ankerpunkt
 
             while (word = words.pop()) {
                 line.push(word);
@@ -621,10 +698,12 @@ document.addEventListener('DOMContentLoaded', function() {
                                 .attr("x", -10) // Sørg for lik x-posisjon
                                 .attr("y", y)
                                 .attr("dy", ++lineNumber * lineHeight + dy + "em")
+                                .style("text-anchor", "end") // Juster ankerpunkt
                                 .text(word);
                 }
             }
         });
     }
+
 
 }); // Slutt på DOMContentLoaded
