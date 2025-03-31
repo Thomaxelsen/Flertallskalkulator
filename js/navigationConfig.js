@@ -8,7 +8,6 @@ window.navigationConfig = {
         // Viktig: Bytt rekkefølge om ønskelig. Den første brukes ofte som "hjem".
         { href: "index.html", title: "Flertallskalkulator" },
         { href: "party-overview.html", title: "Partioversikt" },
-        { href: "majority-coalitions.html", title: "Flertallskoalisjoner" },
         { href: "issue-matrix.html", title: "Saksmatrise" }, // <--- KOMMA LAGT TIL HER
         { href: "sakskompass.html", title: "Sakskompass" }
         // Legg til nye sider her i fremtiden, f.eks.:
