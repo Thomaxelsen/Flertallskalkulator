@@ -1,7 +1,8 @@
+// js/sakskompass.js (MED DEBUGGING CONSOLE.LOGS)
+
 document.addEventListener('DOMContentLoaded', function() {
     // Vent på at både issues og party data er lastet
-    // Antar at issues lastes via issues.js og trigger 'issuesDataLoaded'
-    // Antar at parties lastes via partiesData.js og trigger 'partiesDataLoaded' (eller lignende)
+    console.log("Sakskompass: DOM Loaded. Waiting for data...");
 
     let issuesData = [];
     let partiesData = [];
@@ -12,11 +13,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Funksjon for å initialisere når all data er klar
     function initializeSakskompass() {
-        if (!issuesLoaded || !partiesLoaded) return; // Vent på begge
+        // EKSTRA SJEKK: Kjør kun hvis begge er klare
+        if (!issuesLoaded || !partiesLoaded) {
+            console.log(`Sakskompass: Still waiting... Issues: ${issuesLoaded}, Parties: ${partiesLoaded}`);
+            return;
+        }
         console.log("Sakskompass: All data loaded. Initializing.");
 
         // Lag rask oppslags-map for partier
         partiesData.forEach(p => partiesMap[p.shorthand] = p);
+        console.log("Sakskompass: partiesMap created:", partiesMap); // DEBUG: Sjekk at map er ok
 
         populateAreaFilter();
         setupEventListeners();
@@ -25,49 +31,54 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Lytt etter at issues er lastet
     document.addEventListener('issuesDataLoaded', () => {
-        // Hent data fra global variabel eller annen kilde issues.js bruker
+        console.log("Sakskompass: 'issuesDataLoaded' event received.");
         issuesData = window.issues || [];
          if (!Array.isArray(issuesData) || issuesData.length === 0) {
-            // Prøv å hente fra issues.json på nytt hvis window.issues er tom
-            console.warn("Sakskompass: window.issues var tom, prøver fetch...");
+            console.warn("Sakskompass: window.issues was empty after event, trying fetch...");
             fetch('data/issues.json')
                 .then(response => response.ok ? response.json() : Promise.reject('Network response was not ok'))
                 .then(data => {
                     issuesData = data;
+                    console.log(`Sakskompass: Fetched ${issuesData.length} issues from issues.json.`);
                     issuesLoaded = true;
-                     console.log("Sakskompass: Fetched issues.json data.");
                     initializeSakskompass();
                 })
                 .catch(error => console.error("Sakskompass: Error fetching issues.json:", error));
         } else {
+            console.log(`Sakskompass: ${issuesData.length} issues loaded from window.issues.`);
             issuesLoaded = true;
-            console.log("Sakskompass: Issues data loaded from window.issues.");
             initializeSakskompass();
         }
     });
 
-    // Antar at du har en måte å laste partydata på (f.eks. partiesData.js)
-    // Hvis ikke, legg til fetch her:
-    if (!window.partiesDataLoaded) { // Sjekk om data allerede er lastet
+    // Lasting av partydata (justert logging)
+    if (!window.partiesDataLoaded) {
+         console.log("Sakskompass: partiesData not pre-loaded, fetching parties.json...");
         fetch('data/parties.json')
             .then(response => response.ok ? response.json() : Promise.reject('Network response was not ok'))
             .then(data => {
                 partiesData = data;
+                window.partiesData = partiesData; // Lagre globalt
+                window.partiesDataLoaded = true; // Sett flagg
                 partiesLoaded = true;
-                 console.log("Sakskompass: Fetched parties.json data.");
-                initializeSakskompass();
-                // Lagre evt. globalt hvis andre skript trenger det
+                 console.log(`Sakskompass: Fetched and stored ${partiesData.length} parties globally.`);
+                document.dispatchEvent(new CustomEvent('partiesDataLoaded')); // Send signal
+                initializeSakskompass(); // Prøv å initialisere
+            })
+            .catch(error => {
+                console.error("Sakskompass: Error fetching parties.json:", error);
+                partiesData = [];
                 window.partiesData = partiesData;
                 window.partiesDataLoaded = true;
-                 // Dispatch et event hvis andre lytter
-                document.dispatchEvent(new CustomEvent('partiesDataLoaded'));
-            })
-            .catch(error => console.error("Sakskompass: Error fetching parties.json:", error));
+                partiesLoaded = true; // Sett flagg uansett
+                document.dispatchEvent(new CustomEvent('partiesDataLoaded')); // Send signal selv ved feil
+                initializeSakskompass(); // Prøv å initialisere
+            });
     } else {
-        partiesData = window.partiesData; // Bruk eksisterende data
+        console.log("Sakskompass: Parties data already loaded globally.");
+        partiesData = window.partiesData;
         partiesLoaded = true;
-        console.log("Sakskompass: Parties data already loaded.");
-        initializeSakskompass();
+        initializeSakskompass(); // Prøv å initialisere
     }
 
 
@@ -81,6 +92,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function populateAreaFilter() {
         const areaFilter = document.getElementById('sk-area-filter');
         if (!areaFilter) return;
+        // Tøm eksisterende (unntatt første) før fylling
+        areaFilter.querySelectorAll('option:not([value="all"])').forEach(o => o.remove());
         const areas = getUniqueAreas();
         areas.forEach(area => {
             const option = document.createElement('option');
@@ -88,26 +101,46 @@ document.addEventListener('DOMContentLoaded', function() {
             option.textContent = area;
             areaFilter.appendChild(option);
         });
+        console.log("Sakskompass: Area filter populated.");
     }
 
     function setupEventListeners() {
         const controls = document.querySelectorAll('.sk-controls select');
         controls.forEach(select => {
+            // Fjern gammel lytter før vi legger til ny, for sikkerhets skyld
+            select.removeEventListener('change', processAndVisualizeData);
             select.addEventListener('change', processAndVisualizeData);
         });
+         console.log("Sakskompass: Event listeners set up.");
     }
 
     function processIssueData(supportLevelType) {
+        console.log(`Sakskompass: Processing issue data for support level: ${supportLevelType}`);
+        if (!Array.isArray(issuesData) || issuesData.length === 0) {
+             console.error("Sakskompass: issuesData is empty or not an array in processIssueData!");
+             return [];
+        }
+         if (Object.keys(partiesMap).length === 0) {
+             console.error("Sakskompass: partiesMap is empty in processIssueData!");
+             return [];
+         }
+
         const processedIssues = issuesData.map(issue => {
             let totalMandates = 0;
             const supportingPartiesData = [];
+
+            // DEBUG: Logg den enkelte saken som behandles
+            // console.log(`  Processing issue ID ${issue.id}: ${issue.name}`);
 
             if (issue.partyStances) {
                 for (const partyCode in issue.partyStances) {
                     const stance = issue.partyStances[partyCode];
                     const partyInfo = partiesMap[partyCode];
 
-                    if (partyInfo && stance) {
+                    // DEBUG: Sjekk om partiinfo og stance finnes
+                    // console.log(`    Checking party: ${partyCode}, Found PartyInfo: ${!!partyInfo}, Found Stance: ${!!stance}`);
+
+                    if (partyInfo && stance && typeof stance.level !== 'undefined') { // Sjekk også om level finnes
                         const level = stance.level;
                         let includeParty = false;
 
@@ -117,22 +150,40 @@ document.addEventListener('DOMContentLoaded', function() {
                             includeParty = true;
                         }
 
+                        // DEBUG: Sjekk om partiet ble inkludert
+                        // if (includeParty) console.log(`      -> Including ${partyCode} (Level ${level}), Seats: ${partyInfo.seats}`);
+
                         if (includeParty) {
-                            totalMandates += partyInfo.seats;
-                            supportingPartiesData.push({
-                                shorthand: partyCode,
-                                name: partyInfo.name,
-                                seats: partyInfo.seats,
-                                color: partyInfo.color,
-                                level: level, // Viktig for opasitet/styling
-                                position: partyInfo.position // For sortering av segmenter
-                            });
+                            if (typeof partyInfo.seats === 'number') { // Sjekk at seter er et tall
+                                totalMandates += partyInfo.seats;
+                                supportingPartiesData.push({
+                                    shorthand: partyCode,
+                                    name: partyInfo.name,
+                                    seats: partyInfo.seats,
+                                    color: partyInfo.color,
+                                    level: level, // Viktig for opasitet/styling
+                                    position: partyInfo.position // For sortering av segmenter
+                                });
+                            } else {
+                                console.warn(`      -> Party ${partyCode} included but 'seats' is not a number:`, partyInfo.seats);
+                            }
                         }
+                    } else if (!partyInfo) {
+                         console.warn(`    Party code '${partyCode}' from issue ${issue.id} not found in partiesMap.`);
+                    } else if (!stance) {
+                         console.warn(`    Stance data missing for party '${partyCode}' in issue ${issue.id}.`);
+                    } else if (typeof stance.level === 'undefined') {
+                        console.warn(`    Stance 'level' missing for party '${partyCode}' in issue ${issue.id}.`);
                     }
                 }
+            } else {
+                 console.warn(`  Issue ID ${issue.id} (${issue.name}) has no partyStances object.`);
             }
             // Sorter partiene internt (f.eks. politisk posisjon) for konsistent segmentrekkefølge
             supportingPartiesData.sort((a, b) => a.position - b.position);
+
+             // DEBUG: Logg resultatet for *hver* sak
+             console.log(`  -> Issue: ${issue.name}, Calculated Mandates: ${totalMandates}, Supporting Parties Count: ${supportingPartiesData.length}`);
 
             return {
                 id: issue.id,
@@ -142,17 +193,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 supportingPartiesData: supportingPartiesData
             };
         });
+        console.log(`Sakskompass: Finished processing ${processedIssues.length} issues.`);
         return processedIssues;
     }
 
     function applyFiltersAndSort(processedIssues) {
         const areaFilter = document.getElementById('sk-area-filter').value;
         const sortFilter = document.getElementById('sk-sort-filter').value;
+        console.log(`Sakskompass: Applying filters - Area: ${areaFilter}, Sort: ${sortFilter}`);
 
         // 1. Filtrer etter område
         let filtered = processedIssues;
         if (areaFilter !== 'all') {
             filtered = processedIssues.filter(issue => issue.area === areaFilter);
+             console.log(`  -> Filtered by area, ${filtered.length} issues remaining.`);
         }
 
         // 2. Sorter
@@ -171,25 +225,38 @@ document.addEventListener('DOMContentLoaded', function() {
                 filtered.sort((a, b) => b.totalMandates - a.totalMandates);
                 break;
         }
+         console.log("  -> Sorting applied.");
         return filtered;
     }
 
     function processAndVisualizeData() {
-         console.log("Sakskompass: Processing and visualizing data...");
+         console.log("=============================================");
+         console.log("Sakskompass: processAndVisualizeData CALLED");
+         console.log("=============================================");
         const supportLevelType = document.getElementById('sk-support-level-filter').value;
         const viewType = document.getElementById('sk-view-type-filter').value;
         const container = d3.select("#sk-visualization-container");
 
+        // Sjekk om nødvendig data er klar
+         if (!issuesLoaded || !partiesLoaded || Object.keys(partiesMap).length === 0) {
+             console.error("Sakskompass: Cannot visualize - data not fully ready.", { issuesLoaded, partiesLoaded, partiesMapSize: Object.keys(partiesMap).length });
+             container.html('<p class="error">Kunne ikke laste nødvendig data for visualisering.</p>');
+             return;
+         }
+
         container.html('<div class="loader">Behandler data...</div>'); // Vis loader
 
-        // Simuler litt lastetid om nødvendig, eller kjør direkte
+        // Bruk setTimeout 0 for å la UI oppdatere (vise loader) før tung prosessering
         setTimeout(() => {
             const processedIssues = processIssueData(supportLevelType);
             const finalData = applyFiltersAndSort(processedIssues);
 
-             container.html(''); // Fjern loader
+            console.log("Sakskompass: Final data for visualization:", finalData); // DEBUG: Se den endelige dataen
 
-            if (finalData.length === 0) {
+            container.html(''); // Fjern loader
+
+            if (!Array.isArray(finalData) || finalData.length === 0) {
+                console.warn("Sakskompass: No data to visualize after processing and filtering.");
                 container.html('<p class="no-data">Ingen saker funnet for gjeldende filtre.</p>');
                 updateLegend([]); // Tøm legende
                 return;
@@ -199,6 +266,7 @@ document.addEventListener('DOMContentLoaded', function() {
             updateLegend(partiesData);
 
 
+            console.log(`Sakskompass: Rendering view type: ${viewType}`);
             if (viewType === 'bar-chart') {
                 createHorizontalBarChart(finalData);
             } else if (viewType === 'dot-plot') {
@@ -206,19 +274,23 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (viewType === 'table') {
                 createTable(finalData); // Implementer denne
             }
-        }, 50); // Liten forsinkelse for å la loader vises
+        }, 0); // Kjør prosessering asynkront
     }
 
     // --- Visualiseringsfunksjoner ---
 
     function createHorizontalBarChart(data) {
+         console.log("Sakskompass: createHorizontalBarChart called with data:", data); // DEBUG
         const container = d3.select("#sk-visualization-container");
         container.html(''); // Tøm container
 
-        const margin = { top: 20, right: 50, bottom: 40, left: 300 }; // Økt venstre margin
+        const margin = { top: 20, right: 60, bottom: 40, left: 300 }; // Økt høyre margin for labels
         const containerWidth = container.node().getBoundingClientRect().width;
-        const height = data.length * 30 + margin.top + margin.bottom; // Dynamisk høyde + buffer
-        const width = containerWidth - margin.left - margin.right;
+        // Sørg for minimum bredde for å unngå negative verdier
+        const effectiveChartWidth = Math.max(100, containerWidth - margin.left - margin.right);
+        const barHeight = 20; // Fast høyde per søyle
+        const barPadding = 10; // Mellomrom
+        const height = data.length * (barHeight + barPadding) + margin.top + margin.bottom;
 
         const svg = container.append("svg")
             .attr("width", containerWidth)
@@ -230,53 +302,60 @@ document.addEventListener('DOMContentLoaded', function() {
         const yScale = d3.scaleBand()
             .domain(data.map(d => d.name))
             .range([0, height - margin.top - margin.bottom])
-            .padding(0.2);
+            .paddingInner(barPadding / (barHeight + barPadding)) // Beregn padding basert på høyde/mellomrom
+            .paddingOuter(0.1);
+
 
         const xScale = d3.scaleLinear()
             .domain([0, 169]) // 0 til maks mandater
-            .range([0, width]);
+            .range([0, effectiveChartWidth]);
+        console.log("xScale Domain:", xScale.domain(), "Range:", xScale.range()); // DEBUG
 
         // Akser
-        const yAxis = d3.axisLeft(yScale).tickSizeOuter(0); // Fjern ytterste tick
+        const yAxis = d3.axisLeft(yScale).tickSizeOuter(0);
         svg.append("g")
             .attr("class", "y-axis axis")
             .call(yAxis)
-             // Fjern domene-linjen for y-aksen for et renere utseende
             .call(g => g.select(".domain").remove())
-            // Wrap long labels (optional but recommended)
             .selectAll(".tick text")
             .call(wrapAxisText, margin.left - 10); // Funksjon for tekstbryting (se under)
 
-
-        const xAxis = d3.axisBottom(xScale).ticks(10).tickSizeOuter(0);
+        const xAxis = d3.axisBottom(xScale).ticks(Math.max(5, Math.floor(effectiveChartWidth / 80))).tickSizeOuter(0); // Færre ticks på smal skjerm
         svg.append("g")
             .attr("class", "x-axis axis")
             .attr("transform", `translate(0,${height - margin.top - margin.bottom})`)
             .call(xAxis)
-            .call(g => g.select(".domain").remove()); // Fjern domene-linjen for x-aksen
+            .call(g => g.select(".domain").remove());
 
         // Flertallslinje
         const majorityThreshold = 85;
-        svg.append("line")
-            .attr("class", "majority-line")
-            .attr("x1", xScale(majorityThreshold))
-            .attr("x2", xScale(majorityThreshold))
-            .attr("y1", 0)
-            .attr("y2", height - margin.top - margin.bottom);
+        if (xScale(majorityThreshold) >= 0 && xScale(majorityThreshold) <= effectiveChartWidth) { // Bare tegn hvis innenfor
+            svg.append("line")
+                .attr("class", "majority-line")
+                .attr("x1", xScale(majorityThreshold))
+                .attr("x2", xScale(majorityThreshold))
+                .attr("y1", 0)
+                .attr("y2", height - margin.top - margin.bottom);
 
-        svg.append("text")
-            .attr("class", "majority-label")
-            .attr("x", xScale(majorityThreshold))
-            .attr("y", -5) // Plasser litt over toppen
-            .text(`Flertall (${majorityThreshold})`);
+            svg.append("text")
+                .attr("class", "majority-label")
+                .attr("x", xScale(majorityThreshold))
+                .attr("y", -5)
+                .text(`Flertall (${majorityThreshold})`);
+        } else {
+             console.log("Sakskompass: Majority line outside chart area.");
+        }
+
 
         // Tooltip
-        const tooltip = d3.select("body").append("div")
-            .attr("class", "d3-tooltip");
+        const tooltip = d3.select("body").select(".d3-tooltip").empty() // Sjekk om den finnes før vi lager ny
+            ? d3.select("body").append("div").attr("class", "d3-tooltip")
+            : d3.select("body").select(".d3-tooltip"); // Bruk eksisterende
+
 
         // Søyler (grupper per sak)
         const barGroups = svg.selectAll(".bar-group")
-            .data(data, d => d.id)
+            .data(data, d => d.id) // Bruk ID for object constancy
             .join("g")
             .attr("class", "bar-group")
             .attr("transform", d => `translate(0,${yScale(d.name)})`);
@@ -284,30 +363,35 @@ document.addEventListener('DOMContentLoaded', function() {
         // Segmenter inni hver søyle
         barGroups.selectAll(".bar-segment")
             .data(d => {
-                // Legg til startposisjon for hvert segment
                 let currentX = 0;
-                return d.supportingPartiesData.map(p => {
-                    const segment = { ...p, startX: currentX };
-                    currentX += p.seats;
+                const segments = d.supportingPartiesData.map(p => {
+                    const segmentWidth = Math.max(0, xScale(p.seats) - xScale(0)); // Unngå negativ bredde
+                    const segment = { ...p, startX: currentX, width: segmentWidth };
+                    currentX += p.seats; // Bruk faktisk antall seter for neste start
                     return segment;
                 });
+                // DEBUG: Log segment data før tegning
+                // console.log(`Segments for ${d.name}:`, segments);
+                return segments;
             })
             .join("rect")
             .attr("class", "bar-segment")
             .attr("y", 0)
             .attr("height", yScale.bandwidth())
             .attr("x", d => xScale(d.startX))
-            .attr("width", d => xScale(d.seats) - xScale(0)) // Korrekt breddeberegning
-            .attr("fill", d => d.color)
-            .attr("fill-opacity", d => d.level === 1 ? 0.6 : 1.0) // Lavere opasitet for nivå 1
+            .attr("width", d => d.width) // Bruk pre-kalkulert bredde
+            .attr("fill", d => d.color || "#cccccc") // Fallback farge
+            .attr("fill-opacity", d => d.level === 1 ? 0.6 : 1.0)
             .on("mouseover", function(event, d) {
+                 // DEBUG: Logg tooltip data
+                 // console.log("Tooltip mouseover:", d);
                 tooltip.classed("visible", true)
                        .html(`<b>${d.name}</b><br>Støtte: Nivå ${d.level}<br>Mandater: ${d.seats}`);
                 d3.select(this).attr("stroke-width", 1.5).attr("stroke", "black");
             })
             .on("mousemove", function(event) {
-                tooltip.style("left", (event.pageX + 10) + "px")
-                       .style("top", (event.pageY - 15) + "px");
+                tooltip.style("left", (event.pageX + 15) + "px") // Litt mer til høyre
+                       .style("top", (event.pageY - 10) + "px");
             })
             .on("mouseout", function() {
                 tooltip.classed("visible", false);
@@ -317,15 +401,19 @@ document.addEventListener('DOMContentLoaded', function() {
             // Legg til totalt antall mandater på slutten av hver søyle
             barGroups.append("text")
                 .attr("class", "total-mandate-label")
-                .attr("x", d => xScale(d.totalMandates) + 5) // Litt til høyre for søylen
+                .attr("x", d => {
+                    const labelX = xScale(d.totalMandates) + 5;
+                    // Sørg for at labelen ikke går utenfor kanten
+                    return Math.min(labelX, effectiveChartWidth - 15); // Juster 15 etter behov
+                })
                 .attr("y", yScale.bandwidth() / 2)
-                .attr("dy", "0.35em") // Vertikal sentrering
+                .attr("dy", "0.35em")
                 .attr("font-size", "0.8rem")
                 .attr("fill", "#333")
                 .text(d => d.totalMandates);
     }
 
-    // Funksjon for å bryte lange aksetekster (fra D3 eksempel)
+    // Funksjon for å bryte lange aksetekster (fra D3 eksempel - INGEN ENDRING HER)
     function wrapAxisText(text, width) {
       text.each(function() {
         var text = d3.select(this),
@@ -353,13 +441,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     function createDotPlot(data) {
+        console.log("Sakskompass: createDotPlot called (showing table instead)."); // DEBUG
         const container = d3.select("#sk-visualization-container");
         container.html('<p style="padding: 20px; text-align: center;">(Prikkdiagram ikke implementert ennå - viser tabell i stedet)</p>');
-        // Fallback til tabell eller en enklere visualisering
-        createTable(data); // Vis tabell som fallback
+        createTable(data);
     }
 
     function createTable(data) {
+        console.log("Sakskompass: createTable called with data:", data); // DEBUG
         const container = d3.select("#sk-visualization-container");
         container.html(''); // Tøm
 
@@ -380,20 +469,20 @@ document.addEventListener('DOMContentLoaded', function() {
         const tbody = table.append("tbody");
         data.forEach(issue => {
             const row = tbody.append("tr");
-            row.append("td").text(issue.name);
-            row.append("td").text(issue.area);
+            row.append("td").text(issue.name || 'Mangler navn'); // Safety check
+            row.append("td").text(issue.area || 'Mangler område'); // Safety check
             row.append("td").attr("class", "mandates-col").text(issue.totalMandates);
 
-            // Partiliste med nivå
             const partiesCell = row.append("td").attr("class", "parties-col");
-            if (issue.supportingPartiesData.length > 0) {
+            if (Array.isArray(issue.supportingPartiesData) && issue.supportingPartiesData.length > 0) {
                  issue.supportingPartiesData.forEach(p => {
+                    const partyClass = p.shorthand ? p.shorthand.toLowerCase() : 'unknown';
                     partiesCell.append("span")
-                        .attr("class", `mini-party-tag level-${p.level} party-tag-${p.shorthand.toLowerCase()}`) // Bruk eksisterende fargeklasser
-                        .style("background-color", `${p.color}20`) // Lys bakgrunn basert på farge
-                        .style("border", `1px solid ${p.color}80`)
-                        .style("color", `${p.color}`)
-                        .text(`${p.shorthand} (${p.level})`);
+                        .attr("class", `mini-party-tag level-${p.level} party-tag-${partyClass}`)
+                        .style("background-color", `${p.color || '#cccccc'}20`)
+                        .style("border", `1px solid ${p.color || '#cccccc'}80`)
+                        .style("color", `${p.color || '#333333'}`)
+                        .text(`${p.shorthand || '?'} (${p.level})`);
                  });
             } else {
                 partiesCell.append("span").style("font-style", "italic").text("Ingen");
@@ -402,11 +491,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateLegend(partyList) {
+        console.log("Sakskompass: updateLegend called."); // DEBUG
         const legendContainer = d3.select("#sk-legend-container");
         legendContainer.html(''); // Tøm
 
+        if (!Array.isArray(partyList) || partyList.length === 0) {
+             console.log("  -> No parties to show in legend.");
+             return;
+        }
+
          // Sorter partier etter posisjon for konsistent rekkefølge
-        const sortedParties = [...partyList].sort((a, b) => a.position - b.position);
+        const sortedParties = [...partyList].sort((a, b) => (a.position || 99) - (b.position || 99)); // Fallback position
 
         sortedParties.forEach(party => {
             const item = legendContainer.append("div")
@@ -414,12 +509,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
             item.append("div")
                 .attr("class", "legend-color")
-                .style("background-color", party.color);
+                .style("background-color", party.color || '#cccccc'); // Fallback farge
 
             item.append("span")
-                .text(`${party.name} (${party.seats})`);
+                .text(`${party.name || 'Ukjent'} (${party.seats || '?'})`);
         });
+         console.log(`  -> Legend updated with ${sortedParties.length} parties.`);
     }
-
 
 }); // Slutt på DOMContentLoaded
