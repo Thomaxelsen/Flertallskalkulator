@@ -8,16 +8,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <!-- Andre CSS-linker (om nødvendig) kan legges her -->
 
-    <!-- === START: Lagt til Tippy.js biblioteker === -->
-    <!-- Tippy.js Core -->
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
-    <script src="https://unpkg.com/tippy.js@6"></script>
-    <!-- Tippy.js CSS (du kan laste ned og hoste selv om ønskelig) -->
-    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />
-    <!-- Valgfri: Anbefalte temaer for Tippy -->
-    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/themes/light.css"/>
-    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css"/>
-    <!-- === SLUTT: Lagt til Tippy.js biblioteker === -->
+    <!-- MERK: Inline <style>-blokken for menyen er fjernet herfra -->
 
 </head>
 <body>
@@ -73,11 +64,22 @@
 
                     <div class="party-instructions">
                         <p>Velg partiene som stemmer <strong class="highlight">for</strong> forslaget</p>
-                        <!-- ENDRING: Fjernet den skjulte tooltipen herfra, innholdet settes i script.js med Tippy -->
-                        <div class="info-button" id="infoButton">i</div>
+                        <div class="info-button" id="infoButton">i
+                            <div class="info-tooltip" id="infoTooltip">
+                                <strong>Om flertall på Stortinget:</strong>
+                                <p>Stortinget har totalt 169 representanter. Et forslag trenger minst 85 stemmer for å få flertall.</p>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Mobil popup er fjernet (håndteres av Tippy.js eller alternativ logikk i JS) -->
+                    <!-- Mobil popup (kun for touch) -->
+                    <div class="info-popup" id="infoPopup">
+                        <div class="info-popup-content">
+                            <span class="close-popup">×</span>
+                            <h4>Om flertall på Stortinget</h4>
+                            <p>Stortinget har totalt 169 representanter. Et forslag trenger minst 85 stemmer for å få flertall.</p>
+                        </div>
+                    </div>
 
                     <div class="party-grid" id="partyGrid">
                         <!-- Party cards legges til av script.js -->
@@ -125,9 +127,7 @@
 
                     <div class="selected-parties">
                         <h3 class="selected-parties-title">Partier som stemmer for:</h3>
-                        <div id="selectedPartyTags">
-                            <!-- Tags legges til her -->
-                        </div>
+                        <div id="selectedPartyTags"></div>
                     </div>
                 </div>
 
@@ -153,16 +153,17 @@
         </footer>
     </div>
 
+    <!-- MERK: Inline <script>-blokken for menyen er fjernet herfra -->
+
     <!-- Scripts lastes til slutt, i riktig rekkefølge -->
     <script src="js/navigationConfig.js"></script>
     <script src="js/navigation.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="js/issues.js"></script>
-    <script src="js/partiesData.js"></script> <!-- Sørg for at denne lastes FØR script.js -->
     <script src="js/parliament-visualization.js"></script>
-    <script src="js/script.js"></script> <!-- Hovedscript for index -->
-    <script src="js/issue-selector.js"></script> <!-- Script for saksvelger -->
+    <script src="js/script.js"></script>
+    <script src="js/issue-selector.js"></script>
 
 </body>
 </html>
