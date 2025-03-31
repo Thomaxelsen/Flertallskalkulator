@@ -1,154 +1,232 @@
-// majority-coalitions.js
+// majority-coalitions.js (OPPDATERT for å bruke full issue-data)
 // Script for å vise flertallskoalisjoner for Kreftforeningens politikk
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Lytt etter issues-data
-    if (window.issues && window.issues.length > 0) {
-        initializeCoalitions(); // Issues allerede lastet
-    } else {
-        document.addEventListener('issuesDataLoaded', initializeCoalitions);
+    console.log("Majority Coalitions: DOM loaded.");
+    // Lytt etter at både issues og parties er lastet
+    let issuesLoadedMC = false;
+    let partiesLoadedMC = false;
+
+    function checkDataAndInit() {
+        if (issuesLoadedMC && partiesLoadedMC) {
+             console.log("Majority Coalitions: Both issues and parties loaded. Initializing...");
+            initializeCoalitions();
+        } else {
+             console.log(`Majority Coalitions: Still waiting... Issues: ${issuesLoadedMC}, Parties: ${partiesLoadedMC}`);
+        }
     }
+
+    // Håndter issues lasting
+    if (window.issues && window.issues.length > 0) {
+        console.log("Majority Coalitions: Issues already loaded.");
+        issuesLoadedMC = true;
+    } else {
+        console.log("Majority Coalitions: Waiting for 'issuesDataLoaded' event.");
+        document.addEventListener('issuesDataLoaded', () => {
+            console.log("Majority Coalitions: 'issuesDataLoaded' event received.");
+            issuesLoadedMC = true;
+            checkDataAndInit();
+        });
+    }
+
+    // Håndter parties lasting
+    if (window.partiesDataLoaded && window.partiesData) {
+         console.log("Majority Coalitions: Parties already loaded.");
+        partiesLoadedMC = true;
+    } else {
+         console.log("Majority Coalitions: Waiting for 'partiesDataLoaded' event.");
+        document.addEventListener('partiesDataLoaded', () => {
+             console.log("Majority Coalitions: 'partiesDataLoaded' event received.");
+            partiesLoadedMC = true;
+            checkDataAndInit();
+        });
+         // Trigger lasting hvis nødvendig (fallback)
+        if (!window.partiesDataLoaded) {
+             console.log("Majority Coalitions: Triggering party data load (if needed)...");
+            if (typeof loadPartiesData === 'function') { // Antar at partiesData.js eksponerer en funksjon
+                loadPartiesData();
+            } else { // Enkel fetch som backup
+                 fetch('data/parties.json')
+                    .then(r => r.ok ? r.json() : Promise.reject('fail'))
+                    .then(d => { window.partiesData = d; window.partiesDataLoaded = true; document.dispatchEvent(new CustomEvent('partiesDataLoaded')); })
+                    .catch(e => console.error("MC fallback fetch failed", e));
+            }
+        }
+    }
+
+    // Prøv å initialisere i tilfelle begge var klare med en gang
+    checkDataAndInit();
 });
 
 // Koalisjonsdata - vil fylles under initialisering
 let coalitionsData = [];
-const MAJORITY_THRESHOLD = 85; // Flertallsgrense på Stortinget
+const MAJORITY_THRESHOLD_MC = 85; // Flertallsgrense på Stortinget (unik variabelnavn)
+let partiesMapMC = {}; // Map for raskt oppslag
 
 function initializeCoalitions() {
-    // Definer partiinformasjon
-    const parties = [
-        { name: "Rødt", shorthand: "R", seats: 8, position: 1, color: "#da291c", classPrefix: "r" },
-        { name: "Sosialistisk Venstreparti", shorthand: "SV", seats: 13, position: 2, color: "#eb2e2d", classPrefix: "sv" },
-        { name: "Arbeiderpartiet", shorthand: "AP", seats: 48, position: 3, color: "#ed1b34", classPrefix: "ap" },
-        { name: "Senterpartiet", shorthand: "SP", seats: 28, position: 4, color: "#14773c", classPrefix: "sp" },
-        { name: "Miljøpartiet De Grønne", shorthand: "MDG", seats: 3, position: 5, color: "#439539", classPrefix: "mdg" },
-        { name: "Kristelig Folkeparti", shorthand: "KrF", seats: 3, position: 6, color: "#ffbe00", classPrefix: "krf" },
-        { name: "Venstre", shorthand: "V", seats: 8, position: 7, color: "#00807b", classPrefix: "v" },
-        { name: "Høyre", shorthand: "H", seats: 36, position: 8, color: "#007ac8", classPrefix: "h" },
-        { name: "Fremskrittspartiet", shorthand: "FrP", seats: 21, position: 9, color: "#002e5e", classPrefix: "frp" },
-        { name: "Pasientfokus", shorthand: "PF", seats: 1, position: 10, color: "#a04d94", classPrefix: "pf" }
-    ];
-    
-    // Lag en map for rask tilgang til partiinformasjon
-    const partyMap = {};
-    parties.forEach(party => {
-        partyMap[party.shorthand] = party;
+    // Sjekk om data faktisk er klar
+    if (!window.issues || !window.partiesData || window.issues.length === 0 || window.partiesData.length === 0) {
+        console.error("Majority Coalitions: Cannot initialize, data missing.", {issues: window.issues, parties: window.partiesData});
+        const container = document.getElementById('coalitionsContainer');
+         if (container) container.innerHTML = '<div class="no-coalitions"><p>Kunne ikke laste nødvendig data for å finne koalisjoner.</p></div>';
+        return;
+    }
+
+    // Lag map for partidata
+    window.partiesData.forEach(party => {
+        partiesMapMC[party.shorthand] = party;
     });
-    
-    // Finn unike saksområder for filteret
-    const uniqueAreas = [...new Set(window.issues.map(issue => issue.area))];
-    populateAreaFilter(uniqueAreas);
-    
+     console.log("Majority Coalitions: Parties map created:", partiesMapMC);
+
+    // Nullstill koalisjonsdata før ny beregning
+    coalitionsData = [];
+
     // Finn koalisjoner for hver sak
     window.issues.forEach(issue => {
-        // Hopp over saker uten definerte støttepartier
-        if (!issue.partiesInAgreement || issue.partiesInAgreement.length === 0) return;
-        
+        // *** ENDRING: Hent nivå 2-partier fra partyStances ***
+        let supportingParties = [];
+        if (issue.partyStances) {
+            for (const partyCode in issue.partyStances) {
+                if (issue.partyStances[partyCode]?.level === 2) {
+                     // Sjekk om partiet finnes i vår partiliste
+                     if(partiesMapMC[partyCode]){
+                        supportingParties.push(partyCode);
+                     } else {
+                         console.warn(`Majority Coalitions: Party code '${partyCode}' found in issue ${issue.id} stance, but not in parties.json map.`);
+                     }
+                }
+            }
+        } else {
+             console.warn(`Majority Coalitions: Issue ${issue.id} (${issue.name}) has no partyStances object.`);
+             return; // Gå til neste sak hvis partyStances mangler
+        }
+
+        // Hopp over saker uten støttepartier (nivå 2)
+        if (supportingParties.length === 0) {
+             // console.log(`Majority Coalitions: Issue ${issue.id} has no supporting parties (Level 2). Skipping.`);
+             return;
+        }
+        // *** SLUTT ENDRING ***
+
         // Beregn totalt antall seter for støttepartiene
-        const supportingParties = issue.partiesInAgreement;
         const totalSeats = supportingParties.reduce((total, partyCode) => {
-            return total + (partyMap[partyCode]?.seats || 0);
+            // Bruk map for å hente seter, med fallback til 0
+            return total + (partiesMapMC[partyCode]?.seats || 0);
         }, 0);
-        
+
         // Sjekk om denne koalisjonen har flertall
-        const hasMajority = totalSeats >= MAJORITY_THRESHOLD;
-        
+        const hasMajority = totalSeats >= MAJORITY_THRESHOLD_MC;
+
         // Legg bare til koalisjoner med flertall
         if (hasMajority) {
             // Generer en unik identifikator for denne koalisjonen
-            const coalitionId = supportingParties.sort().join('-');
-            
+            const sortedPartyCodes = [...supportingParties].sort(); // Kopier og sorter for ID
+            const coalitionId = sortedPartyCodes.join('-');
+
             // Sjekk om vi allerede har denne koalisjonen
             let existingCoalition = coalitionsData.find(c => c.id === coalitionId);
-            
+
             if (existingCoalition) {
                 // Legg til denne saken i den eksisterende koalisjonen
                 existingCoalition.issues.push(issue);
             } else {
                 // Opprett en ny koalisjon
+                // Sorter partiene for visning basert på posisjon
+                const partiesSortedByPosition = [...supportingParties].sort((a, b) => {
+                     return (partiesMapMC[a]?.position || 99) - (partiesMapMC[b]?.position || 99);
+                 });
+
                 coalitionsData.push({
                     id: coalitionId,
-                    parties: supportingParties.sort((a, b) => {
-                        return (partyMap[a]?.position || 0) - (partyMap[b]?.position || 0);
-                    }),
-                    partyObjects: supportingParties.map(code => partyMap[code]),
+                    parties: partiesSortedByPosition, // Sortert for visning
+                    partyObjects: partiesSortedByPosition.map(code => partiesMapMC[code]).filter(Boolean), // Filtrer ut evt. manglende partier
                     seats: totalSeats,
-                    issues: [issue],
-                    // Klassifiser koalisjonen
-                    type: classifyCoalition(supportingParties, totalSeats)
+                    issues: [issue], // Start med denne saken
+                    type: classifyCoalition(partiesSortedByPosition, totalSeats) // Klassifiser
                 });
             }
         }
-    });
-    
+    }); // Slutt på window.issues.forEach
+
+     console.log(`Majority Coalitions: Found ${coalitionsData.length} potential majority coalitions.`);
+
     // Sorter koalisjonene etter antall seter (størst først)
     coalitionsData.sort((a, b) => b.seats - a.seats);
-    
-    // Oppdater UI
+
+    // Finn unike saksområder for filteret *etter* at koalisjoner er funnet
+     const uniqueAreasInCoalitions = [...new Set(coalitionsData.flatMap(c => c.issues.map(i => i.area)))].filter(Boolean).sort();
+     populateAreaFilterMC(uniqueAreasInCoalitions);
+
+
+    // Oppdater UI med *alle* funnede koalisjoner før filtrering
     renderCoalitions(coalitionsData);
-    
-    // Legg til event listeners for filtrering
-    setupFilterListeners();
+
+    // Legg til event listeners for filtrering (eller re-sett dem)
+    setupFilterListenersMC();
 }
 
-// Klassifiser koalisjoner basert på partisammensetning
-function classifyCoalition(parties, seats) {
-    // Rødgrønn blokk (R, SV, AP, SP, MDG)
+// Klassifiser koalisjoner (uendret)
+function classifyCoalition(parties, seats) { /* ... (som før) ... */
     const redGreen = ['R', 'SV', 'AP', 'SP', 'MDG'];
-    // Borgerlig blokk (H, FrP, V, KrF)
     const conservative = ['H', 'FrP', 'V', 'KrF'];
-    
-    // Sjekk om alle partiene er fra samme blokk
     const isRedGreen = parties.every(party => redGreen.includes(party));
     const isConservative = parties.every(party => conservative.includes(party));
-    
     if (isRedGreen) return 'red-green';
     if (isConservative) return 'conservative';
-    
-    // Hvis koalisjonen er nær flertall (mindre enn 90 seter), kategoriser som minimalt flertall
-    if (seats < 90) return 'smallest';
-    
-    // Hvis koalisjonen har mange partier (mer enn 5), kategoriser som bred koalisjon
-    if (parties.length > 5) return 'largest';
-    
-    // Ellers er det en kryssblokk-koalisjon
+    if (parties.length <= 3 && seats < 95) return 'smallest'; // Justert litt
+    if (parties.length >= 5) return 'largest'; // Justert litt
     return 'cross-bloc';
 }
 
-// Fyll saksområdefilteret
-function populateAreaFilter(areas) {
-    const areaFilter = document.getElementById('issue-area-filter');
-    
+// Fyll saksområdefilteret (med unik ID og tømming)
+function populateAreaFilterMC(areas) {
+    const areaFilter = document.getElementById('issue-area-filter'); // Samme ID som før? Sørg for at den er unik om nødvendig.
+     if (!areaFilter) {
+         console.error("Majority Coalitions: Area filter dropdown not found.");
+         return;
+     }
+    // Tøm eksisterende (unntatt første)
+    areaFilter.querySelectorAll('option:not([value="all"])').forEach(o => o.remove());
+
     areas.forEach(area => {
         const option = document.createElement('option');
         option.value = area;
         option.textContent = area;
         areaFilter.appendChild(option);
     });
+     console.log("Majority Coalitions: Populated area filter.");
 }
 
-// Sett opp event listeners for filtrene
-function setupFilterListeners() {
+// Sett opp event listeners for filtrene (med unik ID)
+function setupFilterListenersMC() {
     const coalitionFilter = document.getElementById('coalition-filter');
     const areaFilter = document.getElementById('issue-area-filter');
-    
-    coalitionFilter.addEventListener('change', updateFilteredCoalitions);
-    areaFilter.addEventListener('change', updateFilteredCoalitions);
+
+     if(coalitionFilter) {
+        coalitionFilter.removeEventListener('change', updateFilteredCoalitions); // Fjern gammel
+        coalitionFilter.addEventListener('change', updateFilteredCoalitions);
+     }
+     if(areaFilter) {
+        areaFilter.removeEventListener('change', updateFilteredCoalitions); // Fjern gammel
+        areaFilter.addEventListener('change', updateFilteredCoalitions);
+     }
+     console.log("Majority Coalitions: Set up filter listeners.");
 }
 
-// Oppdater visningen basert på valgte filtre
+// Oppdater visningen basert på valgte filtre (ingen store logiske endringer her)
 function updateFilteredCoalitions() {
-    const coalitionFilter = document.getElementById('coalition-filter').value;
-    const areaFilter = document.getElementById('issue-area-filter').value;
-    
-    let filteredCoalitions = [...coalitionsData];
-    
+    console.log("Majority Coalitions: Updating filtered coalitions...");
+    const coalitionFilter = document.getElementById('coalition-filter')?.value || 'all';
+    const areaFilter = document.getElementById('issue-area-filter')?.value || 'all';
+
+    let filteredCoalitions = [...coalitionsData]; // Start med alle funnede
+
     // Filtrer etter koalisjonstype
     if (coalitionFilter !== 'all') {
-        switch (coalitionFilter) {
+        // ... (samme switch-logikk som før) ...
+         switch (coalitionFilter) {
             case 'traditional':
-                filteredCoalitions = filteredCoalitions.filter(c => 
-                    c.type === 'red-green' || c.type === 'conservative');
+                filteredCoalitions = filteredCoalitions.filter(c => c.type === 'red-green' || c.type === 'conservative');
                 break;
             case 'smallest':
                 filteredCoalitions = filteredCoalitions.filter(c => c.type === 'smallest');
@@ -156,55 +234,62 @@ function updateFilteredCoalitions() {
             case 'largest':
                 filteredCoalitions = filteredCoalitions.filter(c => c.type === 'largest');
                 break;
+             // Legg evt. til 'cross-bloc' hvis ønskelig
         }
     }
-    
+
     // Filtrer etter saksområde
     if (areaFilter !== 'all') {
         filteredCoalitions = filteredCoalitions.map(coalition => {
-            // Lag en kopi av koalisjonen, men inkluder bare saker i valgt område
             const filteredIssues = coalition.issues.filter(issue => issue.area === areaFilter);
-            
-            // Bare behold koalisjoner som har minst én sak i det valgte området
             if (filteredIssues.length > 0) {
-                return { ...coalition, issues: filteredIssues };
+                return { ...coalition, issues: filteredIssues }; // Returner kopi med filtrerte saker
             }
-            return null;
-        }).filter(c => c !== null); // Fjern null-elementer
+            return null; // Fjern koalisjonen hvis ingen saker matcher
+        }).filter(Boolean); // Fjern null-verdiene
     }
-    
+
+    console.log(`Majority Coalitions: Rendering ${filteredCoalitions.length} coalitions after filtering.`);
     // Oppdater UI med filtrerte koalisjoner
     renderCoalitions(filteredCoalitions);
 }
 
-// Vis koalisjoner i UI
+// Vis koalisjoner i UI (små justeringer for robusthet)
 function renderCoalitions(coalitions) {
     const container = document.getElementById('coalitionsContainer');
-    container.innerHTML = '';
-    
-    if (coalitions.length === 0) {
-        container.innerHTML = `
-            <div class="no-coalitions">
-                <h3>Ingen flertallskoalisjoner funnet</h3>
-                <p>Ingen koalisjoner samsvarer med gjeldende filtre. Prøv å endre filtrene for å se flere resultater.</p>
-            </div>
-        `;
+    if (!container) {
+        console.error("Majority Coalitions: Container #coalitionsContainer not found.");
         return;
     }
-    
+    const noCoalitionsMessage = container.querySelector('.no-coalitions');
+    if (noCoalitionsMessage) noCoalitionsMessage.style.display = 'none'; // Skjul default melding
+
+    container.innerHTML = ''; // Tøm container
+
+    if (!Array.isArray(coalitions) || coalitions.length === 0) {
+        container.innerHTML = `
+            <div class="no-coalitions" style="display: block;"> <!-- Sørg for at den vises -->
+                <h3>Ingen flertallskoalisjoner funnet</h3>
+                <p>Ingen koalisjoner samsvarer med gjeldende filtre, eller ingen saker hadde flertall i utgangspunktet.</p>
+            </div>
+        `;
+         console.log("Majority Coalitions: No coalitions to render.");
+        return;
+    }
+
     coalitions.forEach(coalition => {
         const card = document.createElement('div');
         card.className = 'coalition-card';
-        
-        // Tittel basert på koalisjonstype
+
         let coalitionTitle = 'Flertallskoalisjon';
+        // ... (samme tittel-logikk som før) ...
         if (coalition.type === 'red-green') coalitionTitle = 'Rødgrønn koalisjon';
         if (coalition.type === 'conservative') coalitionTitle = 'Borgerlig koalisjon';
         if (coalition.type === 'smallest') coalitionTitle = 'Minimalt flertall';
         if (coalition.type === 'largest') coalitionTitle = 'Bred koalisjon';
         if (coalition.type === 'cross-bloc') coalitionTitle = 'Tverrpolitisk koalisjon';
-        
-        // Header
+
+
         card.innerHTML = `
             <div class="coalition-header">
                 <h2 class="coalition-title">${coalitionTitle}</h2>
@@ -213,36 +298,39 @@ function renderCoalitions(coalitions) {
                 </div>
                 <div class="majority-indicator">Flertall</div>
             </div>
-            
+
             <div class="coalition-parties">
                 <div class="parties-list">
-                    ${coalition.parties.map(partyCode => {
-                        const party = coalition.partyObjects.find(p => p.shorthand === partyCode);
-                        return `<span class="coalition-party-tag party-tag-${party.classPrefix}" style="background-color: rgba(${hexToRgb(party.color)}, 0.15); color: ${party.color}; border: 1px solid ${party.color}">
-                            ${party.name} (${party.seats})
+                    ${(coalition.partyObjects || []).map(party => { // Sjekk at partyObjects finnes
+                        const partyClass = party.classPrefix || party.shorthand?.toLowerCase() || 'unknown';
+                        const partyColor = party.color || '#cccccc';
+                        const rgb = hexToRgb(partyColor); // Konverter til RGB for rgba
+                        return `<span class="coalition-party-tag party-tag-${partyClass}"
+                                      style="background-color: rgba(${rgb}, 0.15); color: ${partyColor}; border: 1px solid ${partyColor}">
+                            ${party.name || party.shorthand} (${party.seats || '?'})
                         </span>`;
                     }).join('')}
                 </div>
             </div>
-            
+
             <div class="coalition-issues">
-                <h3>Støtter disse sakene (${coalition.issues.length}):</h3>
+                <h3>Støtter disse sakene (${coalition.issues?.length || 0}):</h3>
                 <ul class="issues-list">
-                    ${coalition.issues.map(issue => `
+                    ${(coalition.issues || []).map(issue => `
                         <li class="issue-card">
-                            <h4>${issue.name}</h4>
+                            <h4>${issue.name || 'Ukjent sak'}</h4>
                             <div class="issue-meta">
-                                <span class="issue-area-tag">${issue.area}</span>
+                                <span class="issue-area-tag">${issue.area || 'Ukjent område'}</span>
                             </div>
                         </li>
                     `).join('')}
                 </ul>
             </div>
-            
+
             <div class="majority-visualization">
                 <div class="parliament-seats">
-                    <div class="seat-segment coalition-segment" style="width: ${(coalition.seats / 169) * 100}%"></div>
-                    <div class="seat-segment opposition-segment" style="width: ${((169 - coalition.seats) / 169) * 100}%"></div>
+                    <div class="seat-segment coalition-segment" style="width: ${Math.min(100, (coalition.seats / 169) * 100)}%"></div>
+                    <div class="seat-segment opposition-segment" style="width: ${Math.max(0, ((169 - coalition.seats) / 169) * 100)}%"></div>
                 </div>
                 <div class="visualization-legend">
                     <span>Koalisjon: ${coalition.seats}</span>
@@ -250,20 +338,22 @@ function renderCoalitions(coalitions) {
                 </div>
             </div>
         `;
-        
+
         container.appendChild(card);
     });
 }
 
-// Hjelpefunksjon for å konvertere hex-farge til RGB
+// Hjelpefunksjon for å konvertere hex-farge til RGB (uendret, men sikrere)
 function hexToRgb(hex) {
-    // Fjern # hvis den finnes
+    if (typeof hex !== 'string') return '204, 204, 204'; // Fallback grå hvis ikke string
     hex = hex.replace('#', '');
-    
-    // Konverter til RGB
+    if (hex.length !== 6) return '204, 204, 204'; // Fallback grå hvis feil lengde
+
     const r = parseInt(hex.substring(0, 2), 16);
     const g = parseInt(hex.substring(2, 4), 16);
     const b = parseInt(hex.substring(4, 6), 16);
-    
+
+    if (isNaN(r) || isNaN(g) || isNaN(b)) return '204, 204, 204'; // Fallback hvis parsing feiler
+
     return `${r}, ${g}, ${b}`;
 }
