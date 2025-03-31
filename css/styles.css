@@ -130,6 +130,16 @@ header h1 strong {
     transform: translateY(-1px);
 }
 
+/* *** NY REGEL: Styling for aktiv desktop nav-link *** */
+.nav-links .nav-link.active {
+    font-weight: bold; /* Gjør teksten fet */
+    color: var(--kf-pink); /* Bruk en aksentfarge */
+    /* text-decoration: underline; */ /* Valgfri understreking */
+    /* background-color: rgba(0, 48, 135, 0.05); */ /* Valgfri lys bakgrunn */
+    cursor: default; /* Indikerer at man allerede er der */
+    pointer-events: none; /* Gjør den ikke-klikkbar */
+}
+
 /* === Beskrivelse / Introduksjon === */
 .description,
 .introduction { /* Felles stiler */
@@ -903,7 +913,7 @@ footer {
     padding: 10px;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    display: block; /* ENDRING: Synlig som standard (mobil først) */
+    display: block; /* Synlig som standard (mobil først) */
 }
 .burger-bar {
     width: 25px;
@@ -915,7 +925,7 @@ footer {
 
 .mobile-menu {
     position: fixed;
-    left: calc(-1 * var(--menu-width)); /* ENDRING: Skjult via left */
+    left: calc(-1 * var(--menu-width)); /* Skjult via left */
     top: 0;
     width: var(--menu-width);
     max-width: 80vw;
@@ -924,14 +934,13 @@ footer {
     transition: left 0.3s ease;
     box-shadow: 2px 0 5px rgba(0,0,0,0.2);
     z-index: 999;
-    /* display: none; <-- FJERNES */
-    display: flex; /* ENDRING: Bruk flex for intern layout */
+    display: flex;
     flex-direction: column; /* Stabler header og items */
 }
 .mobile-menu.active {
     left: 0;
 }
-/* === NY REGEL: Skjul burger-ikonet når menyen er åpen === */
+/* Skjul burger-ikonet når menyen er åpen */
 body.menu-open .burger-menu {
     opacity: 0; /* Gjør ikonet usynlig */
     pointer-events: none; /* Hindrer at det (usynlige) ikonet kan klikkes */
@@ -962,8 +971,8 @@ body.menu-open .burger-menu {
 .menu-overlay {
     position: fixed;
     top: 0;
-    left: 0; /* ENDRING: Dekker hele skjermen når aktiv */
-    width: 100%; /* ENDRING: Dekker hele skjermen når aktiv */
+    left: 0; /* Dekker hele skjermen når aktiv */
+    width: 100%; /* Dekker hele skjermen når aktiv */
     height: 100%;
     background-color: rgba(0,0,0,0.5);
     z-index: 998;
@@ -974,8 +983,6 @@ body.menu-open .burger-menu {
 .menu-overlay.active {
     display: block;
     opacity: 1;
-    /* left: var(--menu-width); <-- FJERNES */
-    /* width: calc(100% - var(--menu-width)); <-- FJERNES */
 }
 
 /* === Issue Matrix Styling === */
@@ -1099,48 +1106,40 @@ body.menu-open .burger-menu {
 .cell:active { transform: scale(0.95); }
 /* Farger settes av JS */
 
-/* === NY HOVER-EFFEKT KUN PÅ INTERAKTIVE CELLER === */
+/* HOVER-EFFEKT KUN PÅ INTERAKTIVE CELLER */
 .cell.has-quote:hover {
-    /* Gjør rammen litt tykkere og mer synlig */
     border-width: 2px;
-    /* Legg til en diskret skygge for å løfte elementet */
     box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-    /* Gjør bakgrunnen litt mørkere (kan justeres) */
-    /* filter: brightness(95%); */ /* Alternativ til å endre farge i JS */
     transform: translateY(-1px); /* Liten løfteeffekt */
 }
-/* === SLUTT HOVER-EFFEKT CELLER === */
 
 
-/* === NY STIL FOR INFO-INDIKATOR === */
+/* STIL FOR INFO-INDIKATOR */
 .matrix-table .cell.has-quote .info-indicator {
     position: absolute;
-    right: 1px;  /* Tettere på kanten */
-    top: 1px;    /* Tettere på kanten */
+    right: 1px;
+    top: 1px;
     font-size: 9px;
-    width: 14px; /* Litt større */
+    width: 14px;
     height: 14px;
     line-height: 14px;
     text-align: center;
     border-radius: 50%;
-    /* Bruker semi-transparent hvit for bedre lesbarhet på ulike bakgrunner */
     background-color: rgba(255, 255, 255, 0.8);
-    color: #555; /* Mørk grå tekst */
-    font-style: italic; /* Kursiv 'i' */
+    color: #555;
+    font-style: italic;
     font-weight: 600;
-    border: 1px solid rgba(0, 0, 0, 0.1); /* Tynn, mørk kant */
+    border: 1px solid rgba(0, 0, 0, 0.1);
     box-shadow: 0 1px 1px rgba(0,0,0,0.1);
     pointer-events: none;
     z-index: 1;
     transition: background-color 0.2s, color 0.2s;
 }
-/* Litt tydeligere indikator når man holder over cellen */
 .matrix-table .cell.has-quote:hover .info-indicator {
     background-color: white;
     color: var(--kf-blue);
     border-color: rgba(0, 48, 135, 0.3);
 }
-/* === SLUTT STIL INFO-INDIKATOR === */
 
 
 .sum-cell-content { display: inline-flex; align-items: center; justify-content: center; width: 70px; height: 36px; border-radius: 24px; font-weight: bold; font-size: 1rem; border: 1px solid transparent; box-sizing: border-box; cursor: default; }
@@ -1186,7 +1185,7 @@ body.menu-open .burger-menu {
 
     /* --- MOBILNAVIGASJON --- */
     .nav-links {
-        display: none; /* ENDRING: Skjul desktop-linker */
+        display: none; /* Skjul desktop-linker */
     }
     .burger-menu {
         display: block; /* Sikrer at den vises */
@@ -1257,26 +1256,21 @@ body.menu-open .burger-menu {
     }
 
     /* Issue Matrix */
-    .matrix-table thead th { padding: 8px 5px; font-size: 0.85rem; } /* Justert */
-    .matrix-table thead th.party-col { min-width: 50px; max-width: 50px; border-radius: 8px; font-size: 0.75rem; } /* Justert */
-    .matrix-table thead th.issue-col { min-width: 150px; border-radius: 8px 0 0 8px; font-size: 0.9rem;} /* Justert */
+    .matrix-table thead th { padding: 8px 5px; font-size: 0.85rem; }
+    .matrix-table thead th.party-col { min-width: 50px; max-width: 50px; border-radius: 8px; font-size: 0.75rem; }
+    .matrix-table thead th.issue-col { min-width: 150px; border-radius: 8px 0 0 8px; font-size: 0.9rem;}
     .matrix-table thead th.party-col[title="Sum av poeng"] { border-radius: 0 8px 8px 0; }
-    /* .matrix-table th.issue-col, .matrix-table td.issue-col { min-width: 150px; font-size: 0.85rem; } <-- Denne overstyres under */
-    .matrix-table th, .matrix-table td { padding: 8px 6px; font-size: 0.8rem; } /* Justert */
-    .cell, .sum-cell-content { width: 45px; height: 28px; font-size: 0.8rem; border-radius: 14px; } /* Justert */
-    /* .matrix-table tr.area-header td { font-size: 0.95rem; padding: 10px; top: 50px; } <-- Denne overstyres under */
-    .matrix-table .cell.has-quote .info-indicator { width: 12px; height: 12px; line-height: 12px; font-size: 8px; right: 0px; top: 0px; } /* Juster posisjon for mobil */
+    .matrix-table th, .matrix-table td { padding: 8px 6px; font-size: 0.8rem; }
+    .cell, .sum-cell-content { width: 45px; height: 28px; font-size: 0.8rem; border-radius: 14px; }
+    .matrix-table .cell.has-quote .info-indicator { width: 12px; height: 12px; line-height: 12px; font-size: 8px; right: 0px; top: 0px; }
 
-    /* === START: FIKS FOR MOBIL MATRISE (LØSNING 1) === */
+    /* FIKS FOR MOBIL MATRISE (Sticky fjernet) */
     .matrix-table th.issue-col,
     .matrix-table td.issue-col {
         position: static; /* Fjern sticky-oppførsel */
-        min-width: 150px; /* Behold eller juster ønsket bredde */
-        font-size: 0.85rem; /* Behold eller juster ønsket størrelse */
         border-right: 1px solid #ddd; /* Sørg for border */
-        z-index: auto; /* Tilbakestill z-index */
-        left: auto; /* Tilbakestill left */
-        /* Sørg for at bakgrunnsfargen stemmer med raden */
+        z-index: auto;
+        left: auto;
     }
      .matrix-table tbody tr:not(.area-header):nth-child(even) td.issue-col {
         background-color: #f8f9fa; /* Match even rows */
@@ -1284,23 +1278,18 @@ body.menu-open .burger-menu {
     .matrix-table tbody tr:not(.area-header):nth-child(odd) td.issue-col {
         background-color: white; /* Match odd rows */
     }
-
     .matrix-table thead th.issue-col {
-         /* Fjernet spesifikk sticky styling, men beholder bakgrunn/utseende */
          position: static; /* Fjern sticky også her */
          background-color: #f8f9fa; /* Matcher thead */
          z-index: auto;
          left: auto;
     }
-
     .matrix-table tr.area-header td {
-       /* Gjør også denne statisk for å unngå komplikasjoner med thead */
         position: static;
         top: auto; /* Fjern top siden den ikke er sticky */
-        font-size: 0.95rem; /* Behold ønsket størrelse */
-        padding: 10px; /* Behold ønsket padding */
+        font-size: 0.95rem;
+        padding: 10px;
     }
-    /* === SLUTT: FIKS FOR MOBIL MATRISE === */
 
     /* Mobilmeny breddejustering */
     :root {
@@ -1311,16 +1300,16 @@ body.menu-open .burger-menu {
 /* Kun Desktop (Større enn 1024px) */
 @media (min-width: 1025px) {
      .burger-menu {
-         display: none !important; /* ENDRING: Skjul burger på desktop */
+         display: none !important; /* Skjul burger på desktop */
      }
      .mobile-menu {
-         display: none !important; /* ENDRING: Skjul mobilmeny på desktop */
+         display: none !important; /* Skjul mobilmeny på desktop */
      }
      .menu-overlay {
-        display: none !important; /* ENDRING: Skjul overlay på desktop */
+        display: none !important; /* Skjul overlay på desktop */
      }
      .nav-links {
-         display: flex; /* ENDRING: Vis desktop-linker */
+         display: flex; /* Vis desktop-linker */
      }
      body.menu-open {
         overflow: auto; /* Tillat scrolling på desktop selv om menyen (utilsiktet) er åpen */
