@@ -1,4 +1,4 @@
-// js/sakskompass.js (MED FIKS FOR MOBIL SØYLEDIAGRAM + HJELPELINJER/HOVER)
+// js/sakskompass.js (MED DYNAMISK RADHØYDE + HJELPELINJER/HOVER)
 
 document.addEventListener('DOMContentLoaded', function() {
     // Vent på at både issues og party data er lastet
@@ -13,16 +13,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Funksjon for å initialisere når all data er klar
     function initializeSakskompass() {
-        // EKSTRA SJEKK: Kjør kun hvis begge er klare
         if (!issuesLoaded || !partiesLoaded) {
             console.log(`Sakskompass: Still waiting... Issues: ${issuesLoaded}, Parties: ${partiesLoaded}`);
             return;
         }
         console.log("Sakskompass: All data loaded. Initializing.");
 
-        // Lag rask oppslags-map for partier
         partiesData.forEach(p => partiesMap[p.shorthand] = p);
-        console.log("Sakskompass: partiesMap created:", partiesMap); // DEBUG: Sjekk at map er ok
+        console.log("Sakskompass: partiesMap created:", partiesMap);
 
         populateAreaFilter();
         setupEventListeners();
@@ -51,34 +49,34 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Lasting av partydata (justert logging)
+    // Lasting av partydata
     if (!window.partiesDataLoaded) {
          console.log("Sakskompass: partiesData not pre-loaded, fetching parties.json...");
         fetch('data/parties.json')
             .then(response => response.ok ? response.json() : Promise.reject('Network response was not ok'))
             .then(data => {
                 partiesData = data;
-                window.partiesData = partiesData; // Lagre globalt
-                window.partiesDataLoaded = true; // Sett flagg
+                window.partiesData = partiesData;
+                window.partiesDataLoaded = true;
                 partiesLoaded = true;
                  console.log(`Sakskompass: Fetched and stored ${partiesData.length} parties globally.`);
-                document.dispatchEvent(new CustomEvent('partiesDataLoaded')); // Send signal
-                initializeSakskompass(); // Prøv å initialisere
+                document.dispatchEvent(new CustomEvent('partiesDataLoaded'));
+                initializeSakskompass();
             })
             .catch(error => {
                 console.error("Sakskompass: Error fetching parties.json:", error);
                 partiesData = [];
                 window.partiesData = partiesData;
                 window.partiesDataLoaded = true;
-                partiesLoaded = true; // Sett flagg uansett
-                document.dispatchEvent(new CustomEvent('partiesDataLoaded')); // Send signal selv ved feil
-                initializeSakskompass(); // Prøv å initialisere
+                partiesLoaded = true;
+                document.dispatchEvent(new CustomEvent('partiesDataLoaded'));
+                initializeSakskompass();
             });
     } else {
         console.log("Sakskompass: Parties data already loaded globally.");
         partiesData = window.partiesData;
         partiesLoaded = true;
-        initializeSakskompass(); // Prøv å initialisere
+        initializeSakskompass();
     }
 
 
@@ -92,7 +90,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function populateAreaFilter() {
         const areaFilter = document.getElementById('sk-area-filter');
         if (!areaFilter) return;
-        // Tøm eksisterende (unntatt første) før fylling
         areaFilter.querySelectorAll('option:not([value="all"])').forEach(o => o.remove());
         const areas = getUniqueAreas();
         areas.forEach(area => {
@@ -107,7 +104,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function setupEventListeners() {
         const controls = document.querySelectorAll('.sk-controls select');
         controls.forEach(select => {
-            // Fjern gammel lytter før vi legger til ny, for sikkerhets skyld
             select.removeEventListener('change', processAndVisualizeData);
             select.addEventListener('change', processAndVisualizeData);
         });
@@ -115,6 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function processIssueData(supportLevelType) {
+        // ... (Denne funksjonen er uendret fra forrige versjon) ...
         console.log(`Sakskompass: Processing issue data for support level: ${supportLevelType}`);
         if (!Array.isArray(issuesData) || issuesData.length === 0) {
              console.error("Sakskompass: issuesData is empty or not an array in processIssueData!");
@@ -160,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             }
                         }
                     } else if (!partyInfo) {
-                         // console.warn(`    Party code '${partyCode}' from issue ${issue.id} not found in partiesMap.`); // Skru av for mindre støy
+                         // console.warn(`    Party code '${partyCode}' from issue ${issue.id} not found in partiesMap.`);
                     } else if (!stance) {
                          // console.warn(`    Stance data missing for party '${partyCode}' in issue ${issue.id}.`);
                     } else if (typeof stance.level === 'undefined') {
@@ -172,9 +169,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             supportingPartiesData.sort((a, b) => a.position - b.position);
-
-             // DEBUG: Logg resultatet for *hver* sak
-             // console.log(`  -> Issue: ${issue.name}, Calculated Mandates: ${totalMandates}, Supporting Parties Count: ${supportingPartiesData.length}`);
 
             return {
                 id: issue.id,
@@ -189,6 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function applyFiltersAndSort(processedIssues) {
+        // ... (Denne funksjonen er uendret fra forrige versjon) ...
         const areaFilter = document.getElementById('sk-area-filter').value;
         const sortFilter = document.getElementById('sk-sort-filter').value;
         console.log(`Sakskompass: Applying filters - Area: ${areaFilter}, Sort: ${sortFilter}`);
@@ -199,7 +194,6 @@ document.addEventListener('DOMContentLoaded', function() {
              console.log(`  -> Filtered by area, ${filtered.length} issues remaining.`);
         }
 
-        // Fjernet area_mandates_desc sortering inntil videre
         switch (sortFilter) {
             case 'mandates_asc':
                 filtered.sort((a, b) => a.totalMandates - b.totalMandates);
@@ -238,8 +232,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const processedIssues = processIssueData(supportLevelType);
             const finalData = applyFiltersAndSort(processedIssues);
 
-            // console.log("Sakskompass: Final data for visualization:", finalData); // Skru av for mindre støy
-
             container.html('');
 
             if (!Array.isArray(finalData) || finalData.length === 0) {
@@ -253,135 +245,142 @@ document.addEventListener('DOMContentLoaded', function() {
 
             console.log(`Sakskompass: Rendering view type: ${viewType}`);
             if (viewType === 'bar-chart') {
-                createHorizontalBarChart(finalData);
+                createHorizontalBarChart(finalData); // <--- DENNE ER ENDRET
             } else if (viewType === 'dot-plot') {
-                createDotPlot(finalData);
+                createDotPlot(finalData); // Denne bruker fortsatt dynamisk margin
             } else if (viewType === 'table') {
                 createTable(finalData);
             }
-        }, 0);
+        }, 10); // Liten timeout for å la loader vises
     }
 
     // --- Visualiseringsfunksjoner ---
 
-    // *** START: createHorizontalBarChart med ALLE OPPDATERINGER ***
+    // *** START: createHorizontalBarChart med DYNAMISK RADHØYDE ***
     function createHorizontalBarChart(data) {
-        console.log("Sakskompass: createHorizontalBarChart called with data:", data.length);
+        console.log("Sakskompass: createHorizontalBarChart (dynamic height) called with data:", data.length);
         const container = d3.select("#sk-visualization-container");
-        container.html(''); // Tøm container
+        container.html('');
 
         const containerWidth = container.node().getBoundingClientRect().width;
 
-        // Bestem venstremarg basert på bredde
+        // --- Dynamisk venstremarg ---
         let dynamicMarginLeft;
-        if (containerWidth < 500) { // Små skjermer (mobil portrett)
-            dynamicMarginLeft = 120; // Mindre marg
-        } else if (containerWidth < 768) { // Mellomstore skjermer (mobil landskap / små nettbrett)
-            dynamicMarginLeft = 180; // Litt mer marg
-        } else { // Større skjermer (desktop)
-            dynamicMarginLeft = 300; // Original marg
-        }
-
-        // Definer margin-objektet med den dynamiske venstremargen
+        if (containerWidth < 500) { dynamicMarginLeft = 120; }
+        else if (containerWidth < 768) { dynamicMarginLeft = 180; }
+        else { dynamicMarginLeft = 300; }
         const margin = { top: 20, right: 30, bottom: 40, left: dynamicMarginLeft };
+        // --- Slutt dynamisk venstremarg ---
 
-        // Beregn bredde og høyde
         const effectiveChartWidth = Math.max(100, containerWidth - margin.left - margin.right);
-        const barHeight = 20;
-        const barPadding = 10;
-        const height = data.length * (barHeight + barPadding) + margin.top + margin.bottom;
 
+        // --- Definer minimumshøyde og padding for dynamisk beregning ---
+        const minItemHeight = 25; // Minimum høyde for en søyle/tekst-område
+        const itemPadding = 15;   // Vertikal luft mellom hver sak
+
+        // --- Start SVG uten fast høyde ---
         const svg = container.append("svg")
             .attr("width", containerWidth)
-            .attr("height", height)
+            // Høyde settes senere
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        // Skalaer
+        // --- Y-akse (skala og tegning uten tekstbryting) ---
         const yScale = d3.scaleBand()
             .domain(data.map(d => d.name))
-            .range([0, height - margin.top - margin.bottom])
-            .paddingInner(barPadding / (barHeight + barPadding))
+            // Bruk en foreløpig høy range, justeres senere
+            .range([0, data.length * (minItemHeight + itemPadding)])
             .paddingOuter(0.1);
 
-        const xScale = d3.scaleLinear()
+        const yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(10); // Ingen tick linjer, litt padding
+
+        const yAxisGroup = svg.append("g")
+            .attr("class", "y-axis axis")
+            .call(yAxis)
+            .call(g => g.select(".domain").remove()); // Fjern selve akselinjen
+
+        // Velg tekstetikettene
+        const yAxisTextLabels = yAxisGroup.selectAll(".tick text");
+
+        // --- Bryt teksten NÅ ---
+        yAxisTextLabels.call(wrapAxisText, margin.left - 15); // Bruk dynamisk margin for bredde
+
+        // --- Mål høyder og beregn posisjoner ---
+        let calculatedPositions = []; // Array for { name: "...", y: ..., height: ... }
+        let currentY = 0; // Start Y-posisjon
+
+        yAxisGroup.selectAll(".tick").each(function(d) { // Gå gjennom hver tick <g>
+            const tickElement = d3.select(this);
+            const textElement = tickElement.select("text");
+            let textHeight = minItemHeight; // Start med minimum
+            try {
+                const bbox = textElement.node().getBBox();
+                if (bbox && bbox.height > 0) {
+                    // Bruk målt høyde, men aldri mindre enn minimum
+                    textHeight = Math.max(minItemHeight, bbox.height);
+                }
+            } catch (e) {
+                console.warn("Could not get BBox for text:", textElement.text(), e);
+            }
+
+            const itemStartY = currentY; // Hvor denne raden starter
+            const itemTotalHeight = textHeight; // Total høyde for denne radens tekst
+            const itemCenterY = itemStartY + itemTotalHeight / 2; // Vertikalt senter for denne raden
+
+            // Lagre beregnet posisjon og høyde
+            calculatedPositions.push({ name: d, y: itemCenterY, height: itemTotalHeight });
+
+            // Oppdater Y for neste element
+            currentY += itemTotalHeight + itemPadding;
+        });
+
+        // Beregn total høyde for innholdet
+        const totalContentHeight = currentY > 0 ? currentY - itemPadding : 0;
+
+        // --- Oppdater SVG og X-akse ---
+        container.select("svg").attr("height", totalContentHeight + margin.top + margin.bottom);
+
+        const xScale = d3.scaleLinear() // Definer xScale her
             .domain([0, 169])
             .range([0, effectiveChartWidth]);
 
-        // Akser
-        const yAxis = d3.axisLeft(yScale).tickSizeOuter(0);
-        const yAxisGroup = svg.append("g") // Lagre referanse til y-akse gruppen
-            .attr("class", "y-axis axis")
-            .call(yAxis)
-            .call(g => g.select(".domain").remove());
-
-        yAxisGroup.selectAll(".tick") // Velg alle ticks innenfor y-aksen
-            .selectAll("text") // Velg teksten innenfor hver tick
-            .call(wrapAxisText, margin.left - 15) // Bruker dynamisk margin og litt mer padding
-            // --- START: Hover-lytter på Y-akse ticks ---
-            .each(function(d) {
-                // Gå opp til forelder (<g class="tick">) for å legge til datum og lytter
-                d3.select(this.parentNode).datum(d); // Legg saksnavnet til <g class="tick">
-            });
-
-        // Legg lyttere til tick-gruppene (<g class="tick">)
-        yAxisGroup.selectAll(".tick")
-            .on("mouseover", function(event, d) { // 'd' her er saksnavnet
-                const issueName = d;
-                // console.log("Over tick:", issueName); // DEBUG
-                d3.select(this).classed("highlighted", true); // Uthev tick-gruppen (inkl tekst)
-
-                // Finn og uthev tilhørende søylegruppe og hjelpelinje
-                svg.selectAll(".bar-group")
-                    .filter(barData => barData.name === issueName)
-                    .classed("highlighted", true);
-                svg.selectAll(".guideline")
-                    .filter(lineData => lineData.name === issueName)
-                    .classed("highlighted", true);
-            })
-            .on("mouseout", function(event, d) {
-                const issueName = d;
-                // console.log("Out tick:", issueName); // DEBUG
-                d3.select(this).classed("highlighted", false); // Fjern utheving fra tick
-
-                // Fjern utheving fra tilhørende elementer
-                svg.selectAll(".bar-group.highlighted")
-                    .filter(barData => barData.name === issueName)
-                    .classed("highlighted", false);
-                svg.selectAll(".guideline.highlighted")
-                    .filter(lineData => lineData.name === issueName)
-                    .classed("highlighted", false);
-            });
-            // --- SLUTT: Hover-lytter på Y-akse ticks ---
-
-
         const xAxis = d3.axisBottom(xScale).ticks(Math.max(5, Math.floor(effectiveChartWidth / 80))).tickSizeOuter(0);
-        svg.append("g")
+        svg.append("g") // Tegn X-aksen nå som vi vet høyden
             .attr("class", "x-axis axis")
-            .attr("transform", `translate(0,${height - margin.top - margin.bottom})`)
+            .attr("transform", `translate(0,${totalContentHeight})`)
             .call(xAxis)
             .call(g => g.select(".domain").remove());
 
-        // --- START: Legg til hjelpelinjer ---
-        svg.selectAll(".guideline")
-            .data(data, d => d.id) // Bruk samme data som for søyler/akse
-            .join("line")
-            .attr("class", "guideline")
-            .attr("x1", 0) // Start ved x=0 (der søylene starter)
-            .attr("x2", -6) // Gå litt inn på y-aksens område
-            .attr("y1", d => yScale(d.name) + yScale.bandwidth() / 2) // Midt på søylens høyde
-            .attr("y2", d => yScale(d.name) + yScale.bandwidth() / 2); // Rett linje
-        // --- SLUTT: Legg til hjelpelinjer ---
 
-        // Flertallslinje
+        // --- Oppdater Y-akse tick posisjoner ---
+        yAxisGroup.selectAll(".tick")
+            .attr("transform", function(d) {
+                const posData = calculatedPositions.find(p => p.name === d);
+                return `translate(0, ${posData ? posData.y : 0})`; // Flytt til beregnet senter Y
+            });
+
+        // --- Tegn Hjelpelinjer på riktig sted ---
+        svg.selectAll(".guideline").remove(); // Fjern evt gamle
+        svg.selectAll(".guideline")
+           .data(calculatedPositions, d => d.name) // Bruk beregnede posisjoner
+           .join("line")
+           .attr("class", "guideline")
+           .attr("x1", 0)
+           .attr("x2", -6)
+           .attr("y1", d => d.y) // Bruk senter Y
+           .attr("y2", d => d.y);
+
+        // --- Flertallslinje ---
         const majorityThreshold = 85;
         if (xScale(majorityThreshold) >= 0 && xScale(majorityThreshold) <= effectiveChartWidth) {
+            svg.selectAll(".majority-line").remove(); // Fjern evt gammel
             svg.append("line")
                 .attr("class", "majority-line")
                 .attr("x1", xScale(majorityThreshold))
                 .attr("x2", xScale(majorityThreshold))
                 .attr("y1", 0)
-                .attr("y2", height - margin.top - margin.bottom);
+                .attr("y2", totalContentHeight); // Strekk til ny bunn
+            svg.selectAll(".majority-label").remove(); // Fjern evt gammel
             svg.append("text")
                 .attr("class", "majority-label")
                 .attr("x", xScale(majorityThreshold))
@@ -391,108 +390,128 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("Sakskompass: Majority line outside chart area.");
         }
 
-        // Tooltip
+        // --- Tooltip ---
         const tooltip = d3.select("body").select(".d3-tooltip").empty()
             ? d3.select("body").append("div").attr("class", "d3-tooltip")
             : d3.select("body").select(".d3-tooltip");
 
-        // Tegn søyler (grupper og segmenter)
+        // --- Tegn Søylegrupper på riktig sted ---
         const barGroups = svg.selectAll(".bar-group")
             .data(data, d => d.id)
             .join("g")
             .attr("class", "bar-group")
-            .attr("transform", d => `translate(0,${yScale(d.name)})`)
-            // --- START: Hover-lytter på Bar Groups ---
-            .on("mouseover", function(event, d) { // 'd' her er hele dataobjektet for saken
-                // console.log("Over bar group:", d.name); // DEBUG
-                d3.select(this).classed("highlighted", true); // Uthev selve søylegruppen
-
-                // Finn og uthev tilhørende Y-akse tick og hjelpelinje
-                yAxisGroup.selectAll(".tick") // Bruk referansen yAxisGroup
-                    .filter(tickData => tickData === d.name) // Sammenlign med navnet
+            .attr("transform", d => {
+                const posData = calculatedPositions.find(p => p.name === d.name);
+                // Søylen (med minItemHeight) skal sentreres vertikalt i sin tildelte plass
+                const barY = posData ? posData.y - minItemHeight / 2 : 0;
+                return `translate(0, ${barY})`;
+            })
+            // --- Hover-logikk (som før, men med oppdatert guideline filter) ---
+            .on("mouseover", function(event, d) {
+                d3.select(this).classed("highlighted", true);
+                yAxisGroup.selectAll(".tick")
+                    .filter(tickData => tickData === d.name)
                     .classed("highlighted", true);
                 svg.selectAll(".guideline")
-                    .filter(lineData => lineData.id === d.id) // Sammenlign med ID
+                    .filter(lineData => lineData.name === d.name) // Filter på navn
                     .classed("highlighted", true);
             })
             .on("mouseout", function(event, d) {
-                // console.log("Out bar group:", d.name); // DEBUG
-                d3.select(this).classed("highlighted", false); // Fjern utheving fra søylegruppe
-
-                // Fjern utheving fra tilhørende elementer
-                yAxisGroup.selectAll(".tick.highlighted") // Bruk referansen yAxisGroup
+                d3.select(this).classed("highlighted", false);
+                yAxisGroup.selectAll(".tick.highlighted")
                     .filter(tickData => tickData === d.name)
                     .classed("highlighted", false);
                 svg.selectAll(".guideline.highlighted")
-                    .filter(lineData => lineData.id === d.id)
+                    .filter(lineData => lineData.name === d.name) // Filter på navn
                     .classed("highlighted", false);
             });
-            // --- SLUTT: Hover-lytter på Bar Groups ---
 
-        // Tegn segmentene INNI gruppene
+
+        // --- Tegn Segmenter og Label INNI gruppene ---
         barGroups.selectAll(".bar-segment")
             .data(d => {
                 let currentX = 0;
-                // Beregn startposisjon for hvert segment basert på *akkumulerte* mandater
                 const segments = d.supportingPartiesData.map(p => {
-                    const startXValue = currentX; // Hvor segmentet starter på x-aksen (i mandater)
-                    const segmentWidthValue = p.seats; // Bredden på segmentet (i mandater)
+                    const startXValue = currentX;
+                    const segmentWidthValue = p.seats;
                     const segment = {
                         ...p,
-                        startX: xScale(startXValue), // Startposisjon i piksler
-                        width: Math.max(0, xScale(startXValue + segmentWidthValue) - xScale(startXValue)), // Bredde i piksler
-                        startXMandates: startXValue // Lagre start i mandater for tooltip
+                        startX: xScale(startXValue),
+                        width: Math.max(0, xScale(startXValue + segmentWidthValue) - xScale(startXValue)),
+                        startXMandates: startXValue
                     };
-                    currentX += segmentWidthValue; // Oppdater akkumulert sum
+                    currentX += segmentWidthValue;
                     return segment;
                 });
                 return segments;
             })
             .join("rect")
             .attr("class", "bar-segment")
-            .attr("y", 0)
-            .attr("height", yScale.bandwidth())
+            .attr("y", 0) // Start på toppen av gruppen (<g>)
+            .attr("height", minItemHeight) // Bruk minimumshøyden for selve søylen
             .attr("x", d => d.startX)
             .attr("width", d => d.width)
             .attr("fill", d => d.color || "#cccccc")
-            .attr("fill-opacity", d => d.level === 1 ? 0.6 : 1.0) // Dusere farge for nivå 1
-            .on("mouseover", function(event, d) { // Hover på segment for tooltip
+            .attr("fill-opacity", d => d.level === 1 ? 0.6 : 1.0)
+            .on("mouseover", function(event, d) {
                 tooltip.classed("visible", true)
                     .html(`<b>${d.name}</b><br>Støtte: Nivå ${d.level}<br>Mandater: ${d.seats}`);
                 d3.select(this).attr("stroke-width", 1.5).attr("stroke", "black");
-                // Stopp event propagering så ikke barGroup sin mouseover trigger unødvendig
                 event.stopPropagation();
             })
             .on("mousemove", function(event) {
                 tooltip.style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 10) + "px");
                 event.stopPropagation();
             })
-            .on("mouseout", function(event) { // Mouseout fra segment
+            .on("mouseout", function(event) {
                 tooltip.classed("visible", false);
                 d3.select(this).attr("stroke-width", 0.5).attr("stroke", "white");
                 event.stopPropagation();
             });
 
-        // Legg til totalt mandat-label
+        // Legg til totalt mandat-label (sentrert i søylehøyden)
         barGroups.append("text")
             .attr("class", "total-mandate-label")
             .attr("x", d => {
-                const labelX = xScale(d.totalMandates) + 5; // Plasser litt til høyre for søylen
-                // Sørg for at labelen ikke går utenfor kanten
-                return Math.min(labelX, effectiveChartWidth - 15); // Gi litt luft til høyre
+                const labelX = xScale(d.totalMandates) + 5;
+                return Math.min(labelX, effectiveChartWidth - 15);
             })
-            .attr("y", yScale.bandwidth() / 2)
-            .attr("dy", "0.35em") // Sentrer vertikalt
+            .attr("y", minItemHeight / 2) // Senter i søylens høyde
+            .attr("dy", "0.35em")
             .attr("font-size", "0.8rem")
             .attr("fill", "#333")
             .text(d => d.totalMandates);
 
+        // --- Oppdater Y-akse tick hover-logikk (plassert etter alt er tegnet) ---
+         yAxisGroup.selectAll(".tick") // Velg ticks igjen for å legge til hover
+            .on("mouseover", function(event, d) {
+                const issueName = d;
+                d3.select(this).classed("highlighted", true);
+                svg.selectAll(".bar-group")
+                    .filter(barData => barData.name === issueName)
+                    .classed("highlighted", true);
+                svg.selectAll(".guideline")
+                    .filter(lineData => lineData.name === issueName)
+                    .classed("highlighted", true);
+            })
+            .on("mouseout", function(event, d) {
+                const issueName = d;
+                d3.select(this).classed("highlighted", false);
+                svg.selectAll(".bar-group.highlighted")
+                    .filter(barData => barData.name === issueName)
+                    .classed("highlighted", false);
+                svg.selectAll(".guideline.highlighted")
+                    .filter(lineData => lineData.name === issueName)
+                    .classed("highlighted", false);
+            });
+
     }
-    // *** SLUTT: createHorizontalBarChart med ALLE OPPDATERINGER ***
+    // *** SLUTT: createHorizontalBarChart med DYNAMISK RADHØYDE ***
 
 
-    // Dot plot (bruker samme dynamiske margin)
+    // Dot plot (bruker fortsatt dynamisk margin, men ikke dynamisk radhøyde)
     function createDotPlot(data) {
+        // ... (Denne funksjonen er uendret fra forrige 'fullstendig fil'-svar) ...
         console.log("Sakskompass: createDotPlot called with data:", data);
         const container = d3.select("#sk-visualization-container");
         container.html(''); // Tøm container
@@ -601,9 +620,10 @@ document.addEventListener('DOMContentLoaded', function() {
             .text(d => d.totalMandates);
     }
 
-
+    // Tabellvisning (uendret)
     function createTable(data) {
-         console.log("Sakskompass: createTable called with data:", data);
+        // ... (uendret fra forrige 'fullstendig fil'-svar) ...
+        console.log("Sakskompass: createTable called with data:", data);
         const container = d3.select("#sk-visualization-container");
         container.html('');
         const tableContainer = container.append("div").attr("class", "sk-table-container"); // For scrolling
@@ -643,7 +663,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Oppdater legende (uendret)
     function updateLegend(partyList) {
+        // ... (uendret fra forrige 'fullstendig fil'-svar) ...
          console.log("Sakskompass: updateLegend called.");
         const legendContainer = d3.select("#sk-legend-container");
         legendContainer.html(''); // Tøm eksisterende
@@ -672,7 +694,7 @@ document.addEventListener('DOMContentLoaded', function() {
          console.log(`  -> Legend updated with ${sortedParties.length} parties.`);
     }
 
-    // Funksjon for å bryte lange aksetekster
+    // Funksjon for å bryte lange aksetekster (justert text-anchor)
     function wrapAxisText(text, width) {
         text.each(function() {
             var text = d3.select(this),
@@ -681,24 +703,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 line = [],
                 lineNumber = 0,
                 lineHeight = 1.1, // ems
-                y = text.attr("y"),
-                dy = parseFloat(text.attr("dy") || 0),
-                // Sentrer teksten vertikalt mot ticken (juster x etter behov)
-                tspan = text.text(null).append("tspan").attr("x", -10).attr("y", y).attr("dy", dy + "em").style("text-anchor", "end"); // Juster ankerpunkt
+                y = text.attr("y"), // y-posisjon er relativt til tick-gruppen (<g>)
+                dy = parseFloat(text.attr("dy") || 0), // Hent eksisterende dy
+                // Juster x for høyrejustering, y settes av D3, dy håndterer linjeskift
+                tspan = text.text(null).append("tspan")
+                           .attr("x", -10) // Negativ x for høyrejustering fra tick-punktet
+                           .attr("dy", dy + "em") // Bruk original dy for første linje
+                           .style("text-anchor", "end"); // Høyrejuster teksten
 
             while (word = words.pop()) {
                 line.push(word);
                 tspan.text(line.join(" "));
-                // Sjekk om noden faktisk finnes før getComputedTextLength
                 if (tspan.node() && tspan.node().getComputedTextLength() > width) {
                     line.pop();
                     tspan.text(line.join(" "));
                     line = [word];
                     tspan = text.append("tspan")
-                                .attr("x", -10) // Sørg for lik x-posisjon
-                                .attr("y", y)
-                                .attr("dy", ++lineNumber * lineHeight + dy + "em")
-                                .style("text-anchor", "end") // Juster ankerpunkt
+                                .attr("x", -10) // Samme x for alle linjer
+                                .attr("dy", lineHeight + "em") // Bruk lineHeight for påfølgende linjer
+                                .style("text-anchor", "end")
                                 .text(word);
                 }
             }
