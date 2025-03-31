@@ -1,4 +1,4 @@
-// js/sakskompass.js (KUN FIKS FOR Y-AKSE OVERLAPP I DOT PLOT)
+// js/sakskompass.js (MED FIKS FOR MOBIL SØYLEDIAGRAM)
 
 document.addEventListener('DOMContentLoaded', function() {
     // Vent på at både issues og party data er lastet
@@ -255,7 +255,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (viewType === 'bar-chart') {
                 createHorizontalBarChart(finalData);
             } else if (viewType === 'dot-plot') {
-                createDotPlot(finalData); // Kall den oppdaterte funksjonen
+                createDotPlot(finalData);
             } else if (viewType === 'table') {
                 createTable(finalData);
             }
@@ -264,50 +264,177 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Visualiseringsfunksjoner ---
 
+    // *** START: createHorizontalBarChart med DYNAMISK VENSTREMARG ***
     function createHorizontalBarChart(data) {
-         // ... (Denne funksjonen er uendret fra forrige versjon) ...
-         console.log("Sakskompass: createHorizontalBarChart called with data:", data);
+        console.log("Sakskompass: createHorizontalBarChart called with data:", data.length);
         const container = d3.select("#sk-visualization-container");
-        container.html('');
-        const margin = { top: 20, right: 60, bottom: 40, left: 300 };
+        container.html(''); // Tøm container
+
         const containerWidth = container.node().getBoundingClientRect().width;
+
+        // --- START ENDRING ---
+        // Bestem venstremarg basert på bredde
+        let dynamicMarginLeft;
+        if (containerWidth < 500) { // Små skjermer (mobil portrett)
+            dynamicMarginLeft = 120; // Mindre marg
+        } else if (containerWidth < 768) { // Mellomstore skjermer (mobil landskap / små nettbrett)
+            dynamicMarginLeft = 180; // Litt mer marg
+        } else { // Større skjermer (desktop)
+            dynamicMarginLeft = 300; // Original marg
+        }
+
+        // Definer margin-objektet med den dynamiske venstremargen
+        const margin = { top: 20, right: 30, bottom: 40, left: dynamicMarginLeft };
+        // --- SLUTT ENDRING ---
+
+        // Beregn bredde og høyde
         const effectiveChartWidth = Math.max(100, containerWidth - margin.left - margin.right);
-        const barHeight = 20; const barPadding = 10;
+        const barHeight = 20;
+        const barPadding = 10;
         const height = data.length * (barHeight + barPadding) + margin.top + margin.bottom;
-        const svg = container.append("svg").attr("width", containerWidth).attr("height", height).append("g").attr("transform", `translate(${margin.left},${margin.top})`);
-        const yScale = d3.scaleBand().domain(data.map(d => d.name)).range([0, height - margin.top - margin.bottom]).paddingInner(barPadding / (barHeight + barPadding)).paddingOuter(0.1);
-        const xScale = d3.scaleLinear().domain([0, 169]).range([0, effectiveChartWidth]);
-        // console.log("xScale Domain:", xScale.domain(), "Range:", xScale.range());
+
+        const svg = container.append("svg")
+            .attr("width", containerWidth)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        // Skalaer
+        const yScale = d3.scaleBand()
+            .domain(data.map(d => d.name))
+            .range([0, height - margin.top - margin.bottom])
+            .paddingInner(barPadding / (barHeight + barPadding))
+            .paddingOuter(0.1);
+
+        const xScale = d3.scaleLinear()
+            .domain([0, 169])
+            .range([0, effectiveChartWidth]);
+
+        // Akser
         const yAxis = d3.axisLeft(yScale).tickSizeOuter(0);
-        svg.append("g").attr("class", "y-axis axis").call(yAxis).call(g => g.select(".domain").remove()).selectAll(".tick text").call(wrapAxisText, margin.left - 10);
+        svg.append("g")
+            .attr("class", "y-axis axis")
+            .call(yAxis)
+            .call(g => g.select(".domain").remove())
+            // --- START ENDRING ---
+            .selectAll(".tick text")
+            .call(wrapAxisText, margin.left - 15); // Bruker dynamisk margin og litt mer padding
+            // --- SLUTT ENDRING ---
+
         const xAxis = d3.axisBottom(xScale).ticks(Math.max(5, Math.floor(effectiveChartWidth / 80))).tickSizeOuter(0);
-        svg.append("g").attr("class", "x-axis axis").attr("transform", `translate(0,${height - margin.top - margin.bottom})`).call(xAxis).call(g => g.select(".domain").remove());
+        svg.append("g")
+            .attr("class", "x-axis axis")
+            .attr("transform", `translate(0,${height - margin.top - margin.bottom})`)
+            .call(xAxis)
+            .call(g => g.select(".domain").remove());
+
+        // Flertallslinje
         const majorityThreshold = 85;
         if (xScale(majorityThreshold) >= 0 && xScale(majorityThreshold) <= effectiveChartWidth) {
-            svg.append("line").attr("class", "majority-line").attr("x1", xScale(majorityThreshold)).attr("x2", xScale(majorityThreshold)).attr("y1", 0).attr("y2", height - margin.top - margin.bottom);
-            svg.append("text").attr("class", "majority-label").attr("x", xScale(majorityThreshold)).attr("y", -5).text(`Flertall (${majorityThreshold})`);
-        } else { console.log("Sakskompass: Majority line outside chart area."); }
-        const tooltip = d3.select("body").select(".d3-tooltip").empty() ? d3.select("body").append("div").attr("class", "d3-tooltip") : d3.select("body").select(".d3-tooltip");
-        const barGroups = svg.selectAll(".bar-group").data(data, d => d.id).join("g").attr("class", "bar-group").attr("transform", d => `translate(0,${yScale(d.name)})`);
-        barGroups.selectAll(".bar-segment").data(d => { let currentX = 0; const segments = d.supportingPartiesData.map(p => { const segmentWidth = Math.max(0, xScale(p.seats) - xScale(0)); const segment = { ...p, startX: currentX, width: segmentWidth }; currentX += p.seats; return segment; }); return segments; }).join("rect").attr("class", "bar-segment").attr("y", 0).attr("height", yScale.bandwidth()).attr("x", d => xScale(d.startX)).attr("width", d => d.width).attr("fill", d => d.color || "#cccccc").attr("fill-opacity", d => d.level === 1 ? 0.6 : 1.0).on("mouseover", function(event, d) { tooltip.classed("visible", true).html(`<b>${d.name}</b><br>Støtte: Nivå ${d.level}<br>Mandater: ${d.seats}`); d3.select(this).attr("stroke-width", 1.5).attr("stroke", "black"); }).on("mousemove", function(event) { tooltip.style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 10) + "px"); }).on("mouseout", function() { tooltip.classed("visible", false); d3.select(this).attr("stroke-width", 0.5).attr("stroke", "white"); });
-        barGroups.append("text").attr("class", "total-mandate-label").attr("x", d => { const labelX = xScale(d.totalMandates) + 5; return Math.min(labelX, effectiveChartWidth - 15); }).attr("y", yScale.bandwidth() / 2).attr("dy", "0.35em").attr("font-size", "0.8rem").attr("fill", "#333").text(d => d.totalMandates);
+            svg.append("line")
+                .attr("class", "majority-line")
+                .attr("x1", xScale(majorityThreshold))
+                .attr("x2", xScale(majorityThreshold))
+                .attr("y1", 0)
+                .attr("y2", height - margin.top - margin.bottom);
+            svg.append("text")
+                .attr("class", "majority-label")
+                .attr("x", xScale(majorityThreshold))
+                .attr("y", -5)
+                .text(`Flertall (${majorityThreshold})`);
+        } else {
+            console.log("Sakskompass: Majority line outside chart area.");
+        }
+
+        // Tooltip
+        const tooltip = d3.select("body").select(".d3-tooltip").empty()
+            ? d3.select("body").append("div").attr("class", "d3-tooltip")
+            : d3.select("body").select(".d3-tooltip");
+
+        // Tegn søyler (grupper og segmenter)
+        const barGroups = svg.selectAll(".bar-group")
+            .data(data, d => d.id)
+            .join("g")
+            .attr("class", "bar-group")
+            .attr("transform", d => `translate(0,${yScale(d.name)})`);
+
+        barGroups.selectAll(".bar-segment")
+            .data(d => {
+                let currentX = 0;
+                // Beregn startposisjon for hvert segment basert på *akkumulerte* mandater
+                const segments = d.supportingPartiesData.map(p => {
+                    const startXValue = currentX; // Hvor segmentet starter på x-aksen (i mandater)
+                    const segmentWidthValue = p.seats; // Bredden på segmentet (i mandater)
+                    const segment = {
+                        ...p,
+                        startX: xScale(startXValue), // Startposisjon i piksler
+                        width: Math.max(0, xScale(startXValue + segmentWidthValue) - xScale(startXValue)), // Bredde i piksler
+                        startXMandates: startXValue // Lagre start i mandater for tooltip
+                    };
+                    currentX += segmentWidthValue; // Oppdater akkumulert sum
+                    return segment;
+                });
+                return segments;
+            })
+            .join("rect")
+            .attr("class", "bar-segment")
+            .attr("y", 0)
+            .attr("height", yScale.bandwidth())
+            .attr("x", d => d.startX)
+            .attr("width", d => d.width)
+            .attr("fill", d => d.color || "#cccccc")
+            .attr("fill-opacity", d => d.level === 1 ? 0.6 : 1.0) // Dusere farge for nivå 1
+            .on("mouseover", function(event, d) {
+                tooltip.classed("visible", true)
+                    .html(`<b>${d.name}</b><br>Støtte: Nivå ${d.level}<br>Mandater: ${d.seats}`);
+                d3.select(this).attr("stroke-width", 1.5).attr("stroke", "black");
+            })
+            .on("mousemove", function(event) {
+                tooltip.style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 10) + "px");
+            })
+            .on("mouseout", function() {
+                tooltip.classed("visible", false);
+                d3.select(this).attr("stroke-width", 0.5).attr("stroke", "white");
+            });
+
+        // Legg til totalt mandat-label
+        barGroups.append("text")
+            .attr("class", "total-mandate-label")
+            .attr("x", d => {
+                const labelX = xScale(d.totalMandates) + 5; // Plasser litt til høyre for søylen
+                // Sørg for at labelen ikke går utenfor kanten
+                return Math.min(labelX, effectiveChartWidth - 15); // Gi litt luft til høyre
+            })
+            .attr("y", yScale.bandwidth() / 2)
+            .attr("dy", "0.35em") // Sentrer vertikalt
+            .attr("font-size", "0.8rem")
+            .attr("fill", "#333")
+            .text(d => d.totalMandates);
 
     }
+    // *** SLUTT: createHorizontalBarChart med DYNAMISK VENSTREMARG ***
 
-    // *** createDotPlot - KUN MED FIKS FOR VERTIKAL PLASS ***
+
     function createDotPlot(data) {
         console.log("Sakskompass: createDotPlot called with data:", data);
         const container = d3.select("#sk-visualization-container");
         container.html(''); // Tøm container
 
-        const margin = { top: 20, right: 60, bottom: 40, left: 300 };
+        // --- START: Bruker samme dynamiske marginlogikk som bar chart ---
         const containerWidth = container.node().getBoundingClientRect().width;
+        let dynamicMarginLeft;
+        if (containerWidth < 500) {
+            dynamicMarginLeft = 120;
+        } else if (containerWidth < 768) {
+            dynamicMarginLeft = 180;
+        } else {
+            dynamicMarginLeft = 300;
+        }
+        const margin = { top: 20, right: 30, bottom: 40, left: dynamicMarginLeft };
         const effectiveChartWidth = Math.max(100, containerWidth - margin.left - margin.right);
+        // --- SLUTT: Dynamisk marginlogikk ---
 
-        // === START ENDRING ===
-        const dotPlotItemHeight = 35; // ØKT HØYDE PER SAK
-        // === SLUTT ENDRING ===
-
+        const dotPlotItemHeight = 35; // Høyde per sak
         const height = data.length * dotPlotItemHeight + margin.top + margin.bottom; // Dynamisk høyde
 
         const svg = container.append("svg")
@@ -320,24 +447,20 @@ document.addEventListener('DOMContentLoaded', function() {
         const yScale = d3.scaleBand()
             .domain(data.map(d => d.name))
             .range([0, height - margin.top - margin.bottom])
-            // === START ENDRING ===
-            .padding(0.5); // ØKT PADDING MELLOM BÅND
-            // === SLUTT ENDRING ===
+            .padding(0.5); // Padding mellom bånd
 
         const xScale = d3.scaleLinear()
             .domain([0, 169])
             .range([0, effectiveChartWidth]);
 
         // Akser
-        // === START ENDRING ===
-        const yAxis = d3.axisLeft(yScale).tickSize(0); // Fjernet tick marks for renere utseende
-        // === SLUTT ENDRING ===
+        const yAxis = d3.axisLeft(yScale).tickSize(0); // Fjernet tick marks
         svg.append("g")
             .attr("class", "y-axis axis")
             .call(yAxis)
             .call(g => g.select(".domain").remove())
             .selectAll(".tick text")
-            .call(wrapAxisText, margin.left - 10); // Bruker fortsatt tekstbryting
+            .call(wrapAxisText, margin.left - 15); // Bruker dynamisk margin for tekstbryting
 
         const xAxis = d3.axisBottom(xScale).ticks(Math.max(5, Math.floor(effectiveChartWidth / 80))).tickSizeOuter(0);
         svg.append("g")
@@ -358,7 +481,7 @@ document.addEventListener('DOMContentLoaded', function() {
             ? d3.select("body").append("div").attr("class", "d3-tooltip")
             : d3.select("body").select(".d3-tooltip");
 
-        // Tegn Prikkene (Dots) - bruker enkel fargelegging fra forrige versjon
+        // Tegn Prikkene (Dots)
         const dotRadius = 5;
         svg.selectAll(".issue-dot")
             .data(data, d => d.id)
@@ -367,13 +490,19 @@ document.addEventListener('DOMContentLoaded', function() {
             .attr("cx", d => xScale(d.totalMandates))
             .attr("cy", d => yScale(d.name) + yScale.bandwidth() / 2)
             .attr("r", dotRadius)
-            .attr("fill", d => { // Farge basert på største parti
+            .attr("fill", d => { // Farge basert på fargen til det "første" (mest venstreorienterte) støttepartiet
                  if (d.supportingPartiesData.length > 0) { return d.supportingPartiesData[0].color || '#cccccc'; }
-                 return '#cccccc';
+                 return '#cccccc'; // Fallback grå
+             })
+             .attr("fill-opacity", d => { // Gjør prikker for saker som kun har nivå 1-støtte dusere
+                 const onlyLevel1 = d.supportingPartiesData.length > 0 && d.supportingPartiesData.every(p => p.level === 1);
+                 return onlyLevel1 ? 0.6 : 1.0;
              })
             .style("cursor", "pointer")
             .on("mouseover", function(event, d) {
-                tooltip.classed("visible", true).html(`<b>${d.name}</b><br>Total støtte: ${d.totalMandates} mandater`);
+                 const partyDetails = d.supportingPartiesData.map(p => `${p.shorthand} (${p.seats}, Nivå ${p.level})`).join('<br>');
+                tooltip.classed("visible", true)
+                    .html(`<b>${d.name}</b><br>Total støtte: ${d.totalMandates} mandater<br><small>${partyDetails || 'Ingen detaljer'} </small>`);
                 d3.select(this).transition().duration(150).attr("r", dotRadius * 1.5).attr("stroke", "black").attr("stroke-width", 1.5);
             })
             .on("mousemove", function(event) { tooltip.style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 10) + "px"); })
@@ -382,7 +511,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 d3.select(this).transition().duration(150).attr("r", dotRadius).attr("stroke", "none");
             });
 
-        // Valgfri Tekst ved siden av prikkene (uendret)
+        // Valgfri Tekst ved siden av prikkene
          svg.selectAll(".dot-label")
             .data(data, d => d.id)
             .join("text")
@@ -390,37 +519,112 @@ document.addEventListener('DOMContentLoaded', function() {
             .attr("x", d => xScale(d.totalMandates) + dotRadius + 4)
             .attr("y", d => yScale(d.name) + yScale.bandwidth() / 2)
             .attr("dy", "0.35em")
-            .attr("font-size", "0.75rem")
+            .attr("font-size", "0.75rem") // Juster størrelse etter behov
             .attr("fill", "#555")
             .text(d => d.totalMandates);
     }
-    // *** SLUTT PÅ OPPDATERT createDotPlot ***
 
 
-    function createTable(data) { /* ... (uendret) ... */
+    function createTable(data) {
          console.log("Sakskompass: createTable called with data:", data);
         const container = d3.select("#sk-visualization-container");
         container.html('');
-        const tableContainer = container.append("div").attr("class", "sk-table-container");
+        const tableContainer = container.append("div").attr("class", "sk-table-container"); // For scrolling
         const table = tableContainer.append("table").attr("class", "sk-table");
-        table.append("thead").append("tr").selectAll("th").data(["Sak", "Saksområde", "Total Støtte", "Støttende Partier (Nivå)"]).join("th").text(d => d);
+
+        // Tabellhode
+        table.append("thead").append("tr")
+            .selectAll("th")
+            .data(["Sak", "Saksområde", "Total Støtte", "Støttende Partier (Nivå)"])
+            .join("th")
+            .text(d => d);
+
+        // Tabellkropp
         const tbody = table.append("tbody");
-        data.forEach(issue => { const row = tbody.append("tr"); row.append("td").text(issue.name || 'Mangler navn'); row.append("td").text(issue.area || 'Mangler område'); row.append("td").attr("class", "mandates-col").text(issue.totalMandates); const partiesCell = row.append("td").attr("class", "parties-col"); if (Array.isArray(issue.supportingPartiesData) && issue.supportingPartiesData.length > 0) { issue.supportingPartiesData.forEach(p => { const partyClass = p.shorthand ? p.shorthand.toLowerCase() : 'unknown'; partiesCell.append("span").attr("class", `mini-party-tag level-${p.level} party-tag-${partyClass}`).style("background-color", `${p.color || '#cccccc'}20`).style("border", `1px solid ${p.color || '#cccccc'}80`).style("color", `${p.color || '#333333'}`).text(`${p.shorthand || '?'} (${p.level})`); }); } else { partiesCell.append("span").style("font-style", "italic").text("Ingen"); } });
+        data.forEach(issue => {
+            const row = tbody.append("tr");
+            row.append("td").text(issue.name || 'Mangler navn');
+            row.append("td").text(issue.area || 'Mangler område');
+            row.append("td").attr("class", "mandates-col").text(issue.totalMandates);
+
+            const partiesCell = row.append("td").attr("class", "parties-col");
+            if (Array.isArray(issue.supportingPartiesData) && issue.supportingPartiesData.length > 0) {
+                issue.supportingPartiesData.forEach(p => {
+                    const partyClass = p.shorthand ? p.shorthand.toLowerCase() : 'unknown';
+                    // Bruk rgba for bakgrunn med lav opasitet, og full farge for border/tekst
+                    const partyColor = p.color || '#cccccc';
+                    partiesCell.append("span")
+                        .attr("class", `mini-party-tag level-${p.level} party-tag-${partyClass}`)
+                        .style("background-color", `${partyColor}20`) // Lav opasitet bakgrunn (hex + alpha)
+                        .style("border", `1px solid ${partyColor}80`) // Medium opasitet border
+                        .style("color", `${partyColor}`) // Full opasitet tekstfarge
+                        .text(`${p.shorthand || '?'} (${p.level})`); // Vis partikode og nivå
+                });
+            } else {
+                partiesCell.append("span").style("font-style", "italic").text("Ingen");
+            }
+        });
     }
 
-    function updateLegend(partyList) { /* ... (uendret) ... */
+    function updateLegend(partyList) {
          console.log("Sakskompass: updateLegend called.");
         const legendContainer = d3.select("#sk-legend-container");
-        legendContainer.html('');
-        if (!Array.isArray(partyList) || partyList.length === 0) { console.log("  -> No parties to show in legend."); return; }
+        legendContainer.html(''); // Tøm eksisterende
+
+        if (!Array.isArray(partyList) || partyList.length === 0) {
+            console.log("  -> No parties to show in legend.");
+            return;
+        }
+
+        // Sorter partier etter posisjon for konsistent rekkefølge
         const sortedParties = [...partyList].sort((a, b) => (a.position || 99) - (b.position || 99));
-        sortedParties.forEach(party => { const item = legendContainer.append("div").attr("class", "legend-item"); item.append("div").attr("class", "legend-color").style("background-color", party.color || '#cccccc'); item.append("span").text(`${party.name || 'Ukjent'} (${party.seats || '?'})`); });
+
+        // Lag legendeelementer
+        sortedParties.forEach(party => {
+            const item = legendContainer.append("div")
+                .attr("class", "legend-item"); // Bruker felles legend-item stil
+
+            item.append("div")
+                .attr("class", "legend-color")
+                .style("background-color", party.color || '#cccccc');
+
+            item.append("span")
+                 // .attr("class", "legend-text") // Kan bruke egen klasse om nødvendig
+                 .text(`${party.name || 'Ukjent'} (${party.seats || '?'})`);
+        });
          console.log(`  -> Legend updated with ${sortedParties.length} parties.`);
     }
 
     // Funksjon for å bryte lange aksetekster (uendret)
-    function wrapAxisText(text, width) { /* ... (uendret) ... */
-        text.each(function() { var text = d3.select(this), words = text.text().split(/\s+/).reverse(), word, line = [], lineNumber = 0, lineHeight = 1.1, y = text.attr("y"), dy = parseFloat(text.attr("dy") || 0), tspan = text.text(null).append("tspan").attr("x", -10).attr("y", y).attr("dy", dy + "em"); while (word = words.pop()) { line.push(word); tspan.text(line.join(" ")); if (tspan.node() && tspan.node().getComputedTextLength() > width) { line.pop(); tspan.text(line.join(" ")); line = [word]; tspan = text.append("tspan").attr("x", -10).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word); } } });
+    function wrapAxisText(text, width) {
+        text.each(function() {
+            var text = d3.select(this),
+                words = text.text().split(/\s+/).reverse(),
+                word,
+                line = [],
+                lineNumber = 0,
+                lineHeight = 1.1, // ems
+                y = text.attr("y"),
+                dy = parseFloat(text.attr("dy") || 0),
+                // Sentrer teksten vertikalt mot ticken (juster x etter behov)
+                tspan = text.text(null).append("tspan").attr("x", -10).attr("y", y).attr("dy", dy + "em");
+
+            while (word = words.pop()) {
+                line.push(word);
+                tspan.text(line.join(" "));
+                // Sjekk om noden faktisk finnes før getComputedTextLength
+                if (tspan.node() && tspan.node().getComputedTextLength() > width) {
+                    line.pop();
+                    tspan.text(line.join(" "));
+                    line = [word];
+                    tspan = text.append("tspan")
+                                .attr("x", -10) // Sørg for lik x-posisjon
+                                .attr("y", y)
+                                .attr("dy", ++lineNumber * lineHeight + dy + "em")
+                                .text(word);
+                }
+            }
+        });
     }
 
 }); // Slutt på DOMContentLoaded
