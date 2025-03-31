@@ -194,3 +194,38 @@
         padding: 6px 8px;
     }
 }
+/* css/sakskompass.css ELLER css/styles.css */
+
+@media (max-width: 768px) {
+    .sk-visualization-area .y-axis .tick text {
+        font-size: 0.7rem; /* Gjør teksten litt mindre på små skjermer */
+        /* fill: #666; /* Litt lysere grå hvis ønskelig */
+    }
+
+    /* Eventuelt reduser font-størrelsen på x-aksen også */
+    .sk-visualization-area .x-axis .tick text {
+        font-size: 0.7rem;
+    }
+
+    /* Gjør flertallsetiketten litt mindre */
+     .sk-visualization-area .majority-label {
+        font-size: 0.7rem;
+    }
+
+    /* Juster posisjon/størrelse for mandate-label */
+     .sk-visualization-area .total-mandate-label {
+         font-size: 0.75rem; /* Litt mindre label */
+         /* Flytt label litt lenger til høyre hvis den overlapper */
+         /* transform: translateX(3px); */
+     }
+
+     /* Juster dot-plot labels hvis de brukes og er for store */
+     .sk-visualization-area .dot-label {
+         font-size: 0.7rem;
+     }
+}
+
+/* Forbedring for wrapping: hindre at tspan blir for lang */
+.sk-visualization-area .y-axis .tick text tspan {
+    display: inline-block; /* Kan hjelpe noen nettlesere */
+}
