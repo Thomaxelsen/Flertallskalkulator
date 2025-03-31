@@ -10,6 +10,7 @@ window.navigationConfig = {
         { href: "party-overview.html", title: "Partioversikt" },
         { href: "majority-coalitions.html", title: "Flertallskoalisjoner" },
         { href: "issue-matrix.html", title: "Saksmatrise" }
+        { href: "sakskompass.html", title: "Sakskompass" } 
         // Legg til nye sider her i fremtiden, f.eks.:
         // { href: "om-prosjektet.html", title: "Om Prosjektet" }
     ]
