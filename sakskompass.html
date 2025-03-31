@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="no">
 <head>
@@ -75,9 +76,6 @@
                     <option value="mandates_asc">Total støtte (lavest først)</option>
                     <option value="name_asc">Saksnavn (A-Å)</option>
                     <option value="name_desc">Saksnavn (Å-A)</option>
-                    <!-- === START ENDRING: Lagt til sortering etter ID === -->
-                    <option value="id_asc">Original rekkefølge (ID)</option>
-                    <!-- === SLUTT ENDRING === -->
                 </select>
             </div>
         </div>
@@ -105,9 +103,8 @@
     <script src="js/navigationConfig.js"></script>
     <script src="js/navigation.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script> <!-- D3.js trengs -->
-    <!-- Sørg for at disse lastes FØR sakskompass.js -->
-    <script src="js/issues.js"></script>
-    <script src="js/partiesData.js"></script> <!-- Eller tilsvarende som laster partidata -->
+    <script src="js/issues.js"></script> <!-- Laster rådata for issues -->
+    <script src="js/partiesData.js"></script> <!-- Trenger en måte å få tak i partidata (farger, seter etc.) -->
     <script src="js/sakskompass.js"></script> <!-- Sidespesifikt script -->
 
 </body>
