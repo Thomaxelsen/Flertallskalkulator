@@ -1,4 +1,4 @@
-// navigation.js - Sentralisert logikk for desktop og mobil navigasjon
+// js/navigation.js - Sentralisert logikk for desktop og mobil navigasjon (OPPDATERT)
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Navigation JS: DOM loaded.");
@@ -9,10 +9,10 @@ document.addEventListener('DOMContentLoaded', function() {
         return; // Avslutt hvis konfigurasjonen mangler
     }
 
-    // Fyller desktop navigasjon
+    // Fyller desktop navigasjon (nå med aktiv markering)
     populateDesktopNav();
 
-    // Fyller mobilmeny
+    // Fyller mobilmeny (uendret logikk)
     populateMobileMenu();
 
     // Setter opp menyhendelser (åpne/lukke)
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 /**
  * Fyller navigasjonsområdet for desktop-visning.
- * Ekskluderer lenken til den gjeldende siden.
+ * Viser ALLE lenker og markerer den aktive siden.
  */
 function populateDesktopNav() {
     const desktopNav = document.querySelector('.nav-links'); // Bruker klasse for desktop nav container
@@ -35,34 +35,38 @@ function populateDesktopNav() {
     // Tøm eksisterende navigasjon
     desktopNav.innerHTML = '';
 
-    // Finn gjeldende filnavn for å ekskludere lenken
+    // Finn gjeldende filnavn for å markere aktiv lenke
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    console.log("Navigation JS: Current page for desktop nav exclusion:", currentPage);
+    console.log("Navigation JS: Current page for desktop nav active state:", currentPage);
 
     // Legg til lenker fra konfigurasjon
     window.navigationConfig.navLinks.forEach(link => {
-        // Hvis lenken IKKE peker til den aktive siden
-        if (link.href !== currentPage) {
-            const navLink = document.createElement('a');
-            navLink.href = link.href;
-            navLink.className = 'nav-link'; // Bruker klasse fra styles.css
-            navLink.textContent = link.title;
-            desktopNav.appendChild(navLink);
-        } else {
-             console.log("Navigation JS: Skipping desktop link for current page:", link.href);
+        const navLink = document.createElement('a');
+        navLink.href = link.href;
+        navLink.className = 'nav-link'; // Bruker klasse fra styles.css
+        navLink.textContent = link.title;
+
+        // *** ENDRING: Marker aktiv side ***
+        if (link.href === currentPage) {
+            navLink.classList.add('active'); // Legg til 'active' klasse for styling
+            console.log("Navigation JS: Marking desktop link as active:", link.href);
+            // Gjør lenken ikke-klikkbar hvis ønskelig (via CSS: pointer-events: none;)
         }
+
+        desktopNav.appendChild(navLink);
     });
-    console.log("Navigation JS: Desktop nav populated.");
+    console.log("Navigation JS: Desktop nav populated with active state.");
 }
 
 /**
  * Fyller innholdet i mobilmenyen.
  * Markerer lenken til den gjeldende siden som aktiv.
+ * (Denne funksjonen er uendret)
  */
 function populateMobileMenu() {
     const mobileMenuItemsContainer = document.getElementById('mobileMenuItems');
 
-    // Avslutt hvis container ikke finnes (skal finnes pga. Steg 1 i forrige svar)
+    // Avslutt hvis container ikke finnes
     if (!mobileMenuItemsContainer) {
         console.error("Navigation JS: Mobile menu item container (#mobileMenuItems) not found!");
         return;
@@ -85,16 +89,17 @@ function populateMobileMenu() {
         // Marker aktiv side
         if (link.href === currentPage) {
             menuLink.classList.add('active'); // Legg til 'active' klasse for styling
-             console.log("Navigation JS: Marking mobile link as active:", link.href);
+            console.log("Navigation JS: Marking mobile link as active:", link.href);
         }
 
         mobileMenuItemsContainer.appendChild(menuLink);
     });
-     console.log("Navigation JS: Mobile menu populated.");
+    console.log("Navigation JS: Mobile menu populated.");
 }
 
 /**
  * Setter opp hendelseslyttere for å åpne og lukke mobilmenyen.
+ * (Denne funksjonen er uendret)
  */
 function setupMenuEvents() {
     const burgerMenuButton = document.getElementById('burgerMenu');
