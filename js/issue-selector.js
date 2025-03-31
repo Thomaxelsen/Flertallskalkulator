@@ -49,7 +49,15 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // --- Globale variabler og hjelpefunksjoner (uendret) ---
-function isTouchDevice() { /* ... (som før) ... */ }
+function isTouchDevice() { /* ... (som før) ... */
+    try {
+        return (('ontouchstart' in window) ||
+                (navigator.maxTouchPoints > 0) ||
+                (navigator.msMaxTouchPoints > 0));
+    } catch (e) {
+        return false; // Anta ikke-touch hvis sjekken feiler
+    }
+ }
 let currentIssueId = null;
 let hoverTimer = null;
 let currentHoveredParty = null;
@@ -128,6 +136,9 @@ function setupModalInteraction() {
      if (modalContent && !isTouchDevice()) {
          modalContent.removeEventListener('mouseleave', modalMouseLeaveHandler); // Fjern gammel
          modalContent.addEventListener('mouseleave', modalMouseLeaveHandler);
+         modalContent.addEventListener('mouseenter', () => {
+            if (hoverTimer) clearTimeout(hoverTimer); // Stopp eventuell lukketime
+         });
      }
 
      // Event delegation for klikk på partielementer (Touch)
@@ -135,7 +146,7 @@ function setupModalInteraction() {
      document.body.addEventListener('click', partyElementClickHandler);
 
      // Setup hover for desktop
-     setupHoverListeners(); // Sørger for at hover er aktivt
+     setupInitialHoverListeners(); // Sørger for at hover er aktivt
 }
 // Håndterere for modal-lukking
 function closeModalHandler() { document.getElementById('quoteModal').style.display = 'none'; }
@@ -170,8 +181,24 @@ function setupHoverListeners() {
         element.addEventListener('mouseleave', handlePartyLeave);
     });
 }
-function handlePartyHover(e) { /* ... (som før) ... */ }
-function handlePartyLeave(e) { /* ... (som før) ... */ }
+function handlePartyLeave(e) {
+    if (isTouchDevice()) return;
+    // console.log("Mouse leave:", e.currentTarget.dataset.party);
+    if (hoverTimer) {
+        clearTimeout(hoverTimer);
+        hoverTimer = null;
+    }
+    // Sett en liten timeout før vi skjuler, slik at brukeren kan flytte musen til popupen
+    setTimeout(() => {
+        const modal = document.getElementById('quoteModal');
+        // Sjekk om musen er over selve popupen eller over partielementet vi nettopp forlot
+        if (modal && !modal.matches(':hover') && !(currentHoveredParty && currentHoveredParty.matches(':hover')) && !modal.querySelector('.quote-modal-content').matches(':hover')) {
+            modal.style.display = 'none';
+            currentHoveredParty = null;
+        }
+    }, 100); // 100ms delay
+}
+
 
 // --- Henting og oppretting av UI (Stort sett uendret) ---
 function getUniqueAreas() {
@@ -179,7 +206,7 @@ function getUniqueAreas() {
      const areas = window.issues.map(issue => issue.area).filter(Boolean);
      return [...new Set(areas)].sort();
 }
-function createIssueSelector() { /* ... (HTML-oppretting som før) ... */
+function createIssueSelector() {
     // ... (inne i createIssueSelector)
     const issueSelectorContainer = document.getElementById('issue-selector-container');
     if (!issueSelectorContainer) {
@@ -198,8 +225,10 @@ function createIssueSelector() { /* ... (HTML-oppretting som før) ... */
     containerDiv.className = 'issue-selector';
     const areas = getUniqueAreas();
 
+    // Sorter saker alfabetisk for default visning
+    const sortedIssues = (window.issues || []).slice().sort((a, b) => a.name.localeCompare(b.name));
+
     containerDiv.innerHTML = `
-        <h2 class="section-title">Velg sak fra Kreftforeningens program</h2>
         <p class="issue-description">Velg en sak for å se om det er flertall for Kreftforeningens standpunkt på Stortinget.</p>
         <div class="issue-filters">
             <select id="areaFilter" class="area-filter">
@@ -209,7 +238,7 @@ function createIssueSelector() { /* ... (HTML-oppretting som før) ... */
         </div>
         <select id="issueSelect" class="issue-dropdown">
             <option value="">Velg en sak...</option>
-            ${(window.issues || []).map(issue => `<option value="${issue.id}">${issue.name}</option>`).join('')}
+            ${sortedIssues.map(issue => `<option value="${issue.id}">${issue.name}</option>`).join('')}
         </select>
         <div id="issueDetails" class="issue-details">
             <p class="issue-explainer">Velg en sak fra listen ovenfor for å se hvilke partier som er enige med Kreftforeningens standpunkt.</p>
@@ -218,7 +247,7 @@ function createIssueSelector() { /* ... (HTML-oppretting som før) ... */
     issueSelectorContainer.appendChild(containerDiv);
     setupIssueSelectionListeners();
 }
-function setupIssueSelectionListeners() { /* ... (som før) ... */
+function setupIssueSelectionListeners() {
     const issueSelect = document.getElementById('issueSelect');
     const areaFilter = document.getElementById('areaFilter');
 
@@ -247,7 +276,34 @@ function areaFilterChangeHandler() {
 }
 
 
-function updateIssueDropdown(selectedArea) { /* ... (som før) ... */ }
+// *** HER ER ENDRINGEN ***
+function updateIssueDropdown(selectedArea) {
+    const issueSelect = document.getElementById('issueSelect');
+    if (!issueSelect) return;
+
+    let filteredIssues = window.issues || [];
+    // Kun filtrer hvis selectedArea IKKE er en tom streng
+    if (selectedArea !== "") {
+        filteredIssues = filteredIssues.filter(issue => issue.area === selectedArea);
+    }
+    // Hvis selectedArea ER en tom streng (Alle), beholdes alle issues i filteredIssues
+
+    // Sort filtered issues alphabetically by name
+    filteredIssues.sort((a, b) => a.name.localeCompare(b.name));
+
+    // Generate options HTML
+    const optionsHTML = [
+        '<option value="">Velg en sak...</option>', // Default option
+        ...filteredIssues.map(issue => `<option value="${issue.id}">${issue.name}</option>`)
+    ].join('');
+
+    // Update the dropdown's inner HTML
+    issueSelect.innerHTML = optionsHTML;
+
+    console.log(`Issue Selector: Updated issue dropdown for area: ${selectedArea || 'Alle'}, ${filteredIssues.length} issues shown.`);
+}
+// *** SLUTT PÅ ENDRINGEN ***
+
 
 // --- Håndtering av saksvalg (MODIFISERT) ---
 function handleIssueSelection(issueId) {
@@ -315,6 +371,12 @@ function updateIssueDetails(issue = null, partiesLevel2 = []) {
             const infoIndicator = hasQuote ? '<span class="info-indicator">i</span>' : '';
             const partyClassPrefix = getPartyClassPrefix(partyCode); // Hent prefix
 
+            // Sjekk om partiet finnes i mappen vår for å unngå feil
+             if (!partiesMapSelector[partyCode]) {
+                console.warn(`Issue Selector: Party code '${partyCode}' in issue ${issue.id} not found in partiesMapSelector. Skipping tag.`);
+                return ''; // Hopp over dette partiet hvis det ikke er i mappen
+            }
+
             return `<span class="issue-party party-tag-${partyClassPrefix} ${interactiveClass}"
                           data-party="${partyCode}" ${interactionAttr}>
                         ${partyCode} ${infoIndicator}
@@ -344,7 +406,12 @@ function updateIssueDetails(issue = null, partiesLevel2 = []) {
     // Legg til dokument-knapp (uendret logikk)
     if (issue && issueDocuments[issue.id]) {
         const docButton = document.createElement('a');
-        // ... (som før) ...
+        docButton.href = issueDocuments[issue.id];
+        docButton.target = '_blank';
+        docButton.rel = 'noopener noreferrer';
+        docButton.className = 'button document-link-btn'; // Bruker knappestiler
+        docButton.textContent = 'Les påvirkningsnotat';
+
         const buttonsContainer = document.createElement('div');
         buttonsContainer.className = 'issue-buttons';
         buttonsContainer.appendChild(docButton);
@@ -463,6 +530,14 @@ function calculateTotalSeats(partyShorthands) {
         const partyCard = document.querySelector(`.party-card[data-shorthand="${shorthand}"]`);
         if (partyCard) {
             totalSeats += parseInt(partyCard.dataset.seats || 0);
+        } else {
+            // Fallback to using the map if party card isn't found (e.g., if it hasn't been rendered yet)
+             const partyInfo = partiesMapSelector[shorthand];
+             if (partyInfo && typeof partyInfo.seats === 'number') {
+                 totalSeats += partyInfo.seats;
+             } else {
+                  console.warn(`calculateTotalSeats: Could not find seats for party '${shorthand}' either in DOM or map.`);
+             }
         }
     });
     return totalSeats;
@@ -502,5 +577,228 @@ function getPartyClassPrefix(partyCode) {
 
 
 // --- CSS injeksjon (uendret) ---
-function addIssueSelectCSS() { /* ... (som før) ... */ }
-function addQuoteStyles() { /* ... (som før) ... */ }
+function addIssueSelectCSS() {
+    if (document.getElementById('issue-selector-styles')) return; // Unngå duplikat
+    const style = document.createElement('style');
+    style.id = 'issue-selector-styles';
+    style.textContent = `
+        /* issue-selector.css */
+        .issue-selector {
+            /* Styles for the main container if needed */
+        }
+        .issue-description {
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+        .issue-filters {
+            margin-bottom: 1rem;
+        }
+        .area-filter,
+        .issue-dropdown {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            font-size: 0.95rem;
+            margin-top: 5px; /* Added margin top */
+            background-color: white;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            transition: all 0.2s ease;
+        }
+        .area-filter:hover, .issue-dropdown:hover {
+            border-color: var(--kf-purple);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+        }
+         .area-filter:focus, .issue-dropdown:focus {
+            outline: none;
+            border-color: var(--kf-pink);
+            box-shadow: 0 0 0 2px rgba(230, 60, 140, 0.2);
+        }
+        .issue-details {
+            background-color: #f0f4f8;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 1rem;
+            border-left: 4px solid var(--kf-blue);
+             transition: all 0.3s ease;
+             min-height: 150px; /* Default height */
+        }
+        .issue-details:hover { box-shadow: 0 3px 8px rgba(0,0,0,0.06); }
+        .issue-explainer {
+            color: #666;
+            font-style: italic;
+            text-align: center;
+            font-size: 0.9rem;
+            padding: 20px 0;
+        }
+        .issue-name {
+            color: var(--kf-blue);
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .issue-area {
+            color: #555;
+            font-style: italic;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+             padding-bottom: 8px;
+             border-bottom: 1px solid #e0e0e0;
+        }
+        .issue-status {
+             padding: 12px;
+             border-radius: 6px;
+             margin: 15px 0;
+             font-size: 1rem;
+             text-align: center;
+             box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+        .issue-status strong { font-weight: 600; }
+        .issue-status.majority { background: linear-gradient(90deg, var(--kf-light-green), var(--kf-green)); color: white; }
+        .issue-status.no-majority { background: linear-gradient(90deg, var(--kf-pink), var(--kf-purple)); color: white; }
+
+        .issue-parties { margin-top: 15px; }
+        .issue-parties h4 { color: var(--kf-blue); margin-bottom: 8px; font-size: 1rem; }
+        .issue-parties-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 5px; }
+        .issue-party {
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+            border: 1px solid #eee;
+            position: relative;
+        }
+         .issue-party.clickable-party, .issue-party.hoverable-party {
+            cursor: pointer;
+        }
+        .issue-party:hover { transform: translateY(-2px); box-shadow: 0 2px 5px rgba(0,0,0,0.15); }
+        .no-parties { color: #777; font-style: italic; font-size: 0.9rem; }
+
+         /* Farger for issue-party tags */
+        .issue-party.party-tag-ap { background-color: rgba(237, 27, 52, 0.1); border-color: #ed1b34; color: #b81628; }
+        .issue-party.party-tag-h { background-color: rgba(0, 122, 200, 0.1); border-color: #007ac8; color: #005a93; }
+        .issue-party.party-tag-sp { background-color: rgba(20, 119, 60, 0.1); border-color: #14773c; color: #0e5329; }
+        .issue-party.party-tag-frp { background-color: rgba(0, 46, 94, 0.1); border-color: #002e5e; color: #001f3f; }
+        .issue-party.party-tag-sv { background-color: rgba(235, 46, 45, 0.1); border-color: #eb2e2d; color: #c42625; }
+        .issue-party.party-tag-v { background-color: rgba(0, 128, 123, 0.1); border-color: #00807b; color: #005f5b; }
+        .issue-party.party-tag-r { background-color: rgba(218, 41, 28, 0.1); border-color: #da291c; color: #a51f15; }
+        .issue-party.party-tag-krf { background-color: rgba(255, 190, 0, 0.1); border-color: #ffbe00; color: #b08400; }
+        .issue-party.party-tag-mdg { background-color: rgba(67, 149, 57, 0.1); border-color: #439539; color: #2d6426; }
+        .issue-party.party-tag-pf { background-color: rgba(160, 77, 148, 0.1); border-color: #a04d94; color: #703668; }
+
+        /* Info indicator 'i' */
+        .issue-party .info-indicator {
+           position: absolute;
+           top: -4px;
+           right: -4px;
+           width: 14px;
+           height: 14px;
+           line-height: 14px;
+           font-size: 9px;
+           font-weight: bold;
+           font-style: normal;
+           text-align: center;
+           border-radius: 50%;
+           background-color: var(--kf-blue);
+           color: white;
+           border: 1px solid white;
+           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+           z-index: 1;
+           pointer-events: none;
+        }
+        .interaction-tip {
+            font-size: 0.8rem;
+            color: #666;
+            font-style: italic;
+            margin: 5px 0 8px 0;
+            text-align: left;
+        }
+        .issue-buttons {
+            margin-top: 15px;
+            display: flex;
+            justify-content: flex-start;
+        }
+        .document-link-btn { /* Gjenbruker .button stil fra styles.css */
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            background-color: var(--kf-pink);
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
+        .document-link-btn:hover {
+            background-color: var(--kf-purple);
+             box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+             transform: translateY(-1px);
+        }
+    `;
+    document.head.appendChild(style);
+}
+function addQuoteStyles() {
+    if (document.getElementById('quote-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'quote-styles';
+    style.textContent = `
+        /* Modal styling */
+        .quote-modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; }
+        .quote-modal:not(.hover-mode) { background-color: rgba(0,0,0,0.4); backdrop-filter: blur(3px); }
+        /* Hover mode specific */
+        .quote-modal.hover-mode { background-color: transparent; pointer-events: none; }
+        .quote-modal.hover-mode .quote-modal-content { pointer-events: auto; }
+
+        /* Content Box */
+        .quote-modal-content {
+            background-color: white;
+            border-radius: 8px; /* Default for hover */
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15); /* Default for hover */
+            animation: modalFadeIn 0.2s;
+        }
+        /* Click mode specific */
+        .quote-modal:not(.hover-mode) .quote-modal-content {
+            margin: 10% auto; padding: 25px; width: 90%; max-width: 500px; position: relative; border-radius: 12px; box-shadow: 0 4px 25px rgba(0,0,0,0.2);
+        }
+        /* Hover mode specific */
+        .quote-modal.hover-mode .quote-modal-content {
+             padding: 15px 20px; position: fixed; width: auto; max-width: 350px; z-index: 1001;
+        }
+
+        @keyframes modalFadeIn { from {opacity: 0; transform: translateY(-10px);} to {opacity: 1; transform: translateY(0);} }
+
+        /* Close Button (Click mode only) */
+        .close-modal { color: #aaa; position: absolute; right: 15px; top: 10px; font-size: 28px; font-weight: bold; cursor: pointer; transition: color 0.2s; }
+        .hover-mode .close-modal { display: none; }
+        .close-modal:hover { color: #333; }
+
+        /* Party Title */
+        .quote-party-title {
+            font-size: 1.2rem; margin-bottom: 10px; padding: 5px 12px; border-radius: 6px; display: inline-block; color: white; font-weight: 600;
+        }
+        /* Background colors for party title */
+        .quote-party-title.party-tag-ap { background-color: #ed1b34; }
+        .quote-party-title.party-tag-h { background-color: #007ac8; }
+        .quote-party-title.party-tag-sp { background-color: #14773c; }
+        .quote-party-title.party-tag-frp { background-color: #002e5e; }
+        .quote-party-title.party-tag-sv { background-color: #eb2e2d; }
+        .quote-party-title.party-tag-v { background-color: #00807b; }
+        .quote-party-title.party-tag-r { background-color: #da291c; }
+        .quote-party-title.party-tag-krf { background-color: #ffbe00; color: #333; } /* Dark text for KrF */
+        .quote-party-title.party-tag-mdg { background-color: #439539; }
+        .quote-party-title.party-tag-pf { background-color: #a04d94; }
+
+        /* Quote Text */
+        .quote-text {
+            font-size: 1rem; line-height: 1.5; color: #333; padding: 12px; background-color: #f8f9fa; border-left: 3px solid var(--kf-purple); margin: 10px 0 0 0; border-radius: 4px; font-style: italic;
+        }
+         .no-quote-text { font-style: italic; color: #777; } /* Stil for melding om manglende sitat */
+    `;
+    document.head.appendChild(style);
+}
