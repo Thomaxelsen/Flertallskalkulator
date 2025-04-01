@@ -1,0 +1,112 @@
+/* css/party-similarity.css */
+
+/* Introduksjonsseksjon */
+.similarity-introduction {
+    background-color: white;
+    padding: 25px 30px; /* Litt mer padding */
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    margin-bottom: 30px;
+    text-align: center; /* Sentrer innhold */
+    border-left: 5px solid var(--kf-green); /* Grønn farge for likhetstema */
+}
+
+.similarity-introduction h2 {
+    color: var(--kf-blue); /* Samme som andre H2 */
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+}
+
+.similarity-introduction p {
+    color: #555;
+    max-width: 800px;
+    margin: 0 auto 20px auto; /* Mer bunnmargin */
+    line-height: 1.6;
+}
+
+/* Kontrollseksjon (valgfri, starter skjult) */
+.similarity-controls {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px dashed #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.similarity-controls label {
+    margin-bottom: 0; /* Fjerner bunnmargin siden den er inline nå */
+    font-weight: 500;
+    color: #444;
+}
+
+/* Bruker eksisterende .filter-dropdown stil hvis mulig, ellers definer her */
+.similarity-controls .filter-dropdown {
+    min-width: 250px; /* Gi den litt bredde */
+    max-width: 300px;
+    margin-top: 0; /* Fjerner toppmargin */
+    /* Forsikre deg om at basisstiler for .filter-dropdown finnes i styles.css */
+}
+
+/* Hovedcontainer for heatmapen */
+.heatmap-container-main {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    padding: 20px; /* Juster padding etter behov for Plotly */
+    min-height: 500px; /* Gir plass til heatmap og loader */
+    display: flex; /* Brukes for å sentrere loader */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Loader-tekst */
+.heatmap-loader {
+    font-size: 1.2rem;
+    color: #666;
+    text-align: center;
+}
+
+/* Plotly spesifikt (kan trenge justering etter implementering) */
+/* Selve div-en som Plotly tegner i (hvis vi gir den en ID/klasse i JS) */
+#plotly-heatmap-div { /* Antatt ID som settes i JS */
+    width: 100%;
+    height: 100%; /* Eller fast høyde hvis ønskelig */
+    min-height: 500px; /* Sørger for at den tar plass */
+}
+
+/* Man kan eventuelt overstyre Plotly's standardstiler her hvis nødvendig, */
+/* f.eks. tooltip-utseende, aksetekst etc., men start uten for mye av dette. */
+/* Eksempel:
+.js-plotly-plot .plotly .heatmaplayer .slice .hmtool text {
+    font-family: 'Segoe UI', system-ui, sans-serif !important;
+    fill: white !important;
+} */
+
+/* Responsivitet (hvis nødvendig for denne siden) */
+@media (max-width: 768px) {
+    .similarity-introduction {
+        padding: 20px;
+    }
+    .similarity-introduction h2 {
+        font-size: 1.5rem;
+    }
+    .similarity-introduction p {
+        font-size: 0.95rem;
+    }
+    .similarity-controls {
+        flex-direction: column;
+        align-items: stretch; /* Strekk elementene */
+    }
+    .similarity-controls .filter-dropdown {
+        min-width: unset; /* Fjern minimumsbredde */
+        max-width: unset;
+        width: 100%; /* Full bredde */
+    }
+
+    .heatmap-container-main {
+        padding: 10px; /* Mindre padding på mobil */
+        min-height: 400px; /* Juster minimumshøyde */
+    }
+}
