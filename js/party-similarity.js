@@ -1,4 +1,4 @@
-// js/party-similarity.js
+// js/party-similarity.js (OPPDATERT FOR LESBARHET)
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Party Similarity: DOM loaded. Waiting for data...");
@@ -101,11 +101,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Beregn prosentscore (0-100)
         const score = (commonIssuesCount > 0) ? (agreementCount / commonIssuesCount) * 100 : 0;
-        // console.log(`Sim(${partyCodeA}, ${partyCodeB}): Agreed=${agreementCount}, Common=${commonIssuesCount}, Score=${score.toFixed(1)}%`);
-        return score;
+        return score; // Returner score (vi fikser desimaler for Plotly senere)
     }
 
-    // Genererer data og tegner heatmapen
+    // Genererer data og tegner heatmapen (Oppdatert versjon)
     function generateSimilarityHeatmap() {
         const heatmapContainer = document.getElementById('heatmap-container');
         const loader = heatmapContainer.querySelector('.heatmap-loader');
@@ -116,97 +115,159 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         if (partiesListSorted.length === 0) {
             console.error("Parties list is empty, cannot generate heatmap.");
-             loader.textContent = "Kunne ikke laste partidata.";
+             if(loader) loader.textContent = "Kunne ikke laste partidata.";
             return;
         }
 
         console.log("Party Similarity: Generating heatmap data...");
-        loader.textContent = "Beregner likhetsscore...";
+        if(loader) loader.textContent = "Beregner likhetsscore...";
 
-        // Hent partikoder i sortert rekkefølge for akser
+        // --- Bruk forkortelser for akser og lag map for navn ---
         const partyCodes = partiesListSorted.map(p => p.shorthand);
-        const partyNames = partiesListSorted.map(p => p.name); // For hover-tekst
+        const partyNamesLookup = partiesListSorted.reduce((acc, p) => { acc[p.shorthand] = p.name; return acc; }, {});
+        // ---------------------------------------------------------
 
-        // Beregn likhetsmatrisen (z-data for Plotly)
+        // Beregn likhetsmatrisen
         const similarityMatrix = [];
-        partyCodes.forEach(partyY => { // Y-akse (rader)
+        partyCodes.forEach(partyY => {
             const row = [];
-            partyCodes.forEach(partyX => { // X-akse (kolonner)
+            partyCodes.forEach(partyX => {
                 if (partyX === partyY) {
-                    row.push(100); // Parti er 100% enig med seg selv
+                    row.push(100);
                 } else {
-                    // Bruk standard metrikk for nå
                     const score = calculateSimilarityScore(partyX, partyY, 'agreement_level2');
-                    row.push(parseFloat(score.toFixed(1))); // Legg til score med 1 desimal
+                    row.push(parseFloat(score.toFixed(1))); // Begrens til 1 desimal for visning
                 }
             });
             similarityMatrix.push(row);
         });
 
-        console.log("Party Similarity: Heatmap matrix calculated:", similarityMatrix);
+        console.log("Party Similarity: Heatmap matrix calculated.");
 
         // Konfigurer data for Plotly heatmap
         const plotData = [{
-            z: similarityMatrix,       // Selve score-matrisen
-            x: partyNames, //partyCodes, // Partinavn på X-aksen
-            y: partyNames, //partyCodes, // Partinavn på Y-aksen
+            z: similarityMatrix,
+            x: partyCodes, // <-- Bruk forkortelser
+            y: partyCodes, // <-- Bruk forkortelser
             type: 'heatmap',
-            colorscale: 'YlGnBu', // Fargeskala (Grønn/Blå = høy enighet, Gul = lav) - kan endres
-            // Alternative: 'Viridis', 'Blues', 'Greens', 'RdBu' (for +/- korrelasjon)
+            colorscale: 'Blues', // <-- Byttet til Blå skala (mørk = høy score)
+            // Andre alternativer: 'Greens', 'Viridis', 'Plasma'
+            reversescale: false, // <-- Viktig hvis du bruker skalaer som starter mørkt
             hoverongaps: false,
-            // Definer hva som vises når man holder over en celle
-            hovertemplate:
-                `<b>%{y}</b> vs <b>%{x}</b><br>` +
-                `Enighet: %{z}%<extra></extra>`, // <extra></extra> fjerner ekstra info
-            zmin: 0,   // Sørger for at fargeskalaen starter på 0
-            zmax: 100, // Sørger for at fargeskalaen går til 100
+            // Oppdatert hovertemplate for å vise fulle navn
+            hovertemplate: (data) => {
+                const codeX = data.points[0].x;
+                const codeY = data.points[0].y;
+                const nameX = partyNamesLookup[codeX] || codeX;
+                const nameY = partyNamesLookup[codeY] || codeY;
+                const z = data.points[0].z;
+                // Vis ikke % for diagonalen (seg selv)
+                if (codeX === codeY) {
+                     return `<b>${nameY}</b><extra></extra>`;
+                }
+                return `<b>${nameY}</b> vs <b>${nameX}</b><br>Enighet: ${z}%<extra></extra>`;
+            },
+            zmin: 0,
+            zmax: 100,
+            // Tekst i celler
+            text: similarityMatrix.map(row => row.map(val => (val === 100 ? '' : `${val}%`))), // Vis prosent, ikke for 100%
+            texttemplate: "%{text}",
+            hoverinfo: "none", // Bruk kun custom hovertemplate
+            colorbar: { // Justeringer for fargelegenden
+                title: 'Enighet (%)',
+                titleside: 'right',
+                tickvals: [0, 20, 40, 60, 80, 100], // Tydelige tick verdier
+                ticktext: ['0%', '20%', '40%', '60%', '80%', '100%'] // Formaterte labels
+            }
         }];
 
         // Konfigurer layout for Plotly heatmap
         const layout = {
             title: 'Partienes Enighet om Kreftforeningens Saker',
             xaxis: {
-                tickangle: -45, // Vri etikettene for lesbarhet
+                tickangle: -45, // Vinkle etiketter
                 automargin: true,
-                 side: 'top' // Flytt X-aksen til toppen for bedre lesbarhet med vridde etiketter
+                 side: 'top', // Flytt til toppen
+                 tickfont: { size: 11 } // Juster størrelse ved behov
             },
             yaxis: {
                 automargin: true,
-                autorange: 'reversed' // Viser vanligvis første parti øverst
+                autorange: 'reversed', // Viser Rødt øverst
+                 tickfont: { size: 11 } // Juster størrelse ved behov
             },
-            margin: { // Gi god plass til etiketter
-                l: 150, // Venstre (Y-akse etiketter)
-                r: 50,
-                b: 50,  // Bunn
-                t: 100  // Topp (X-akse etiketter og tittel)
+            margin: { // Justerte marger for kortere etiketter
+                l: 60,  // Plass for Y-akse (kan reduseres)
+                r: 80,  // Plass for colorbar
+                b: 20,
+                t: 120 // Plass for X-akse og tittel
             },
-             autosize: true // La Plotly prøve å tilpasse størrelsen
-             // Man kan sette fast 'width' og 'height' hvis ønskelig
+            autosize: true,
+             font: { // Font for tekst i celler
+                 size: 9, // Liten font for prosenter
+                 color: null // La Plotly bestemme farge basert på bakgrunn (null)
+             },
+            // Forbedre kontrast mellom tekst og bakgrunn dynamisk (krever mer avansert oppsett)
+            // annotations: createContrastAnnotations(similarityMatrix, partyCodes), // Se eksempel under (valgfritt)
         };
 
         // Tegn heatmapen
-        loader.textContent = "Tegner heatmap..."; // Oppdater loader
+        if(loader) loader.textContent = "Tegner heatmap...";
         try {
-             // Opprett en div spesifikt for Plotly hvis den ikke finnes
-             let plotDiv = document.getElementById('plotly-heatmap-div');
-             if (!plotDiv) {
-                 plotDiv = document.createElement('div');
-                 plotDiv.id = 'plotly-heatmap-div';
-                 heatmapContainer.innerHTML = ''; // Fjern loader
-                 heatmapContainer.appendChild(plotDiv);
-             } else {
-                heatmapContainer.innerHTML = ''; // Fjern loader hvis div'en fantes
-                 heatmapContainer.appendChild(plotDiv); // Sørg for at den er der
-             }
+            let plotDiv = document.getElementById('plotly-heatmap-div');
+            if (!plotDiv) {
+                plotDiv = document.createElement('div');
+                plotDiv.id = 'plotly-heatmap-div';
+                heatmapContainer.innerHTML = '';
+                heatmapContainer.appendChild(plotDiv);
+            } else {
+                plotDiv.innerHTML = '';
+                heatmapContainer.innerHTML = '';
+                heatmapContainer.appendChild(plotDiv);
+            }
 
             Plotly.newPlot('plotly-heatmap-div', plotData, layout, {responsive: true});
-            console.log("Party Similarity: Heatmap drawn successfully.");
-            // Skjul loader (selv om den teknisk sett ble fjernet over)
-            loader.style.display = 'none';
+            console.log("Party Similarity: Heatmap drawn successfully with updates.");
+            if(loader) loader.style.display = 'none';
         } catch(error) {
             console.error("Error drawing Plotly heatmap:", error);
-            heatmapContainer.innerHTML = `<div class="heatmap-loader error">Kunne ikke vise heatmap: ${error.message}</div>`;
+             if(loader) loader.style.display = 'none'; // Skjul loader uansett
+            heatmapContainer.innerHTML = `<div class="heatmap-loader error" style="display: block;">Kunne ikke vise heatmap: ${error.message}</div>`;
         }
     }
+
+/* --- Eksempel på funksjon for bedre tekstkontrast (Valgfri/Avansert) ---
+   Denne funksjonen prøver å bestemme om teksten skal være lys eller mørk
+   basert på bakgrunnsfargen Plotly sannsynligvis vil bruke.
+   Krever at du kjenner til hvordan fargeskalaen mapper til verdier.
+*/
+/*
+function createContrastAnnotations(matrix, codes) {
+    const annotations = [];
+    const threshold = 50; // Grense for å bytte tekstfarge (juster etter skala)
+
+    matrix.forEach((row, i) => {
+        row.forEach((value, j) => {
+            if (i === j) return; // Hopp over diagonalen
+
+            const textColor = value > threshold ? 'white' : '#333'; // Lys tekst på mørk bakgrunn, mørk på lys
+
+            annotations.push({
+                x: codes[j],
+                y: codes[i],
+                text: `${value}%`,
+                font: {
+                    family: 'Segoe UI, sans-serif',
+                    size: 9,
+                    color: textColor
+                },
+                showarrow: false
+            });
+        });
+    });
+    return annotations;
+}
+// Hvis du bruker denne, må du fjerne text/texttemplate fra plotData og legge til 'annotations: createContrastAnnotations(...)' i layout.
+*/
+
 
 }); // Slutt på DOMContentLoaded
