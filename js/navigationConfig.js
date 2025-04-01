@@ -9,6 +9,7 @@ window.navigationConfig = {
         { href: "index.html", title: "Flertallskalkulator" },
         { href: "party-overview.html", title: "Partioversikt" },
         { href: "issue-matrix.html", title: "Saksmatrise" }, // <--- KOMMA LAGT TIL HER
+        { href: "party-profile.html", title: "Partiprofil" },
         { href: "sakskompass.html", title: "Sakskompass" }
         // Legg til nye sider her i fremtiden, f.eks.:
         // { href: "om-prosjektet.html", title: "Om Prosjektet" }
