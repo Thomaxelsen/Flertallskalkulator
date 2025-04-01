@@ -1,0 +1,279 @@
+/* css/party-profile.css */
+
+/* Container for partivelger */
+.party-selector-profile {
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    margin-bottom: 30px;
+}
+
+.party-selector-profile label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 500;
+    color: #444;
+}
+
+/* Dropdown-stil (kan gjenbrukes fra styles.css hvis .filter-dropdown allerede er definert der) */
+.filter-dropdown {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    font-size: 1rem;
+    margin-top: 8px;
+    background-color: white;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: all 0.2s ease;
+}
+
+.filter-dropdown:hover {
+    border-color: var(--kf-purple);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+}
+
+.filter-dropdown:focus {
+    outline: none;
+    border-color: var(--kf-pink);
+    box-shadow: 0 0 0 2px rgba(230, 60, 140, 0.2);
+}
+
+/* Hovedcontainer for profilinnhold */
+.profile-container {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    padding: 30px;
+    min-height: 400px; /* Gir litt høyde mens man venter/ved feil */
+    margin-top: 30px; /* Avstand fra velgeren */
+    transition: opacity 0.3s ease-in-out; /* Myk overgang ved lasting */
+}
+
+/* Placeholder-tekst før et parti er valgt */
+.profile-placeholder {
+    text-align: center;
+    color: #777;
+    font-style: italic;
+    padding: 50px 0;
+    font-size: 1.1rem;
+}
+
+/* Dynamisk generert profil-header */
+.profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #eee;
+}
+
+/* Parti-ikon (gjenbruker .party-icon klassen som bør være definert i styles.css) */
+.profile-header .party-icon {
+    width: 50px; /* Større ikon her */
+    height: 50px;
+    font-size: 22px;
+    margin-right: 20px;
+    flex-shrink: 0;
+    /* Sørg for at basis-stil for .party-icon finnes i styles.css */
+}
+
+.profile-header h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0;
+    color: #333;
+    flex-grow: 1; /* Tar tilgjengelig plass */
+    line-height: 1.2;
+}
+
+/* Antall seter (gjenbruker .party-seat-count klassen som bør være i styles.css) */
+.profile-header .party-seat-count {
+    font-size: 1rem; /* Større her */
+    padding: 6px 12px;
+    flex-shrink: 0;
+     /* Sørg for at basis-stil for .party-seat-count finnes i styles.css */
+}
+
+/* Grid for diagrammer */
+.profile-charts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive kolonner */
+    gap: 30px;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed #ddd;
+}
+
+.chart-container {
+    /* Container for hvert Plotly-diagram */
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #fdfdfd;
+    box-shadow: inset 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.chart-container h3 {
+    text-align: center;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    color: var(--kf-blue);
+    font-weight: 500;
+}
+
+/* Plotly chart divs (sikrer minimum høyde) */
+#plotly-stance-chart,
+#plotly-area-chart {
+    width: 100%;
+    min-height: 350px;
+}
+
+/* Melding ved diagram-feil */
+.chart-container .error {
+    text-align: center;
+    padding: 20px;
+    color: var(--fail-color);
+}
+
+/* Seksjon for saksdetaljer (faner og lister) */
+.profile-issues-section {
+    margin-top: 30px;
+}
+
+.profile-issues-section h3 {
+     font-size: 1.5rem;
+     color: var(--kf-blue);
+     margin-bottom: 20px;
+     padding-bottom: 10px;
+     border-bottom: 1px solid #eee;
+}
+
+/* Fane-stiler (kan justeres eller hentes fra party-overview.css hvis identiske) */
+.profile-issues-section .issues-tabs {
+    display: flex;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #eee;
+}
+
+.profile-issues-section .tab-button {
+    flex: 1;
+    padding: 10px 8px; /* Litt mer padding */
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent; /* Tykkere indikator */
+    cursor: pointer;
+    font-size: 0.95rem; /* Litt større font */
+    color: #555;
+    text-align: center;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+}
+
+.profile-issues-section .tab-button:hover {
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.profile-issues-section .tab-button.active {
+    border-bottom-color: var(--kf-blue);
+    color: var(--kf-blue);
+    font-weight: 600;
+}
+
+/* Innhold under fanene */
+.profile-issues-section .tab-content {
+    display: none;
+    /* Kan ha animasjon, men holdes enkelt her */
+}
+
+.profile-issues-section .tab-content.active {
+    display: block;
+}
+
+/* Saksliste-styling (tilpasset fra party-overview.css/styles.css) */
+.profile-issues-section .issue-list {
+     max-height: 450px; /* Kan justere maks høyde */
+     overflow-y: auto;
+     list-style-type: none;
+     padding: 0 5px 0 0; /* Litt padding til høyre for scrollbar */
+     margin: 0;
+     /* Stilisert scrollbar */
+     scrollbar-width: thin; /* For Firefox */
+     scrollbar-color: #ccc #f1f1f1; /* For Firefox */
+}
+.profile-issues-section .issue-list::-webkit-scrollbar { width: 8px; }
+.profile-issues-section .issue-list::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px;}
+.profile-issues-section .issue-list::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px;}
+.profile-issues-section .issue-list::-webkit-scrollbar-thumb:hover { background: #aaa; }
+
+
+.profile-issues-section .issue-item {
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    border-left-width: 4px; /* Tykkere venstrekant */
+    border-left-style: solid;
+}
+
+.profile-issues-section .issue-item strong {
+    display: block; /* Navn på egen linje */
+    margin-bottom: 4px;
+}
+
+.profile-issues-section .issue-area {
+    font-size: 0.85rem;
+    color: #666;
+    font-style: italic;
+}
+
+.profile-issues-section .issue-quote {
+     font-style: italic;
+     margin-top: 8px; /* Mer avstand */
+     font-size: 0.9rem;
+     color: #555;
+     padding: 8px 12px;
+     background-color: rgba(0, 0, 0, 0.02); /* Veldig dus bakgrunn */
+     border-radius: 4px;
+     border-left: 2px solid #ddd;
+}
+
+/* Fargekoding for sakselementer */
+.profile-issues-section .agree-item { background-color: rgba(40, 167, 69, 0.08); border-left-color: #28a745; }
+.profile-issues-section .partial-item { background-color: rgba(255, 193, 7, 0.08); border-left-color: #ffc107; }
+.profile-issues-section .disagree-item { background-color: rgba(220, 53, 69, 0.08); border-left-color: #dc3545; }
+
+.profile-issues-section .no-issues {
+    text-align: center;
+    padding: 30px 20px;
+    color: #777;
+    font-style: italic;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+}
+
+
+/* Responsivitet */
+@media (max-width: 768px) {
+    .profile-charts {
+        grid-template-columns: 1fr; /* Stabler diagrammer på mobil */
+    }
+    .profile-container {
+        padding: 20px; /* Mindre padding på mobil */
+    }
+    .profile-header h2 {
+        font-size: 1.5rem;
+    }
+    .profile-issues-section h3 {
+         font-size: 1.3rem;
+    }
+    .profile-issues-section .tab-button {
+        font-size: 0.85rem; /* Mindre tekst på faner */
+    }
+}
