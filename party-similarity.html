@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partilikhet - Heatmap</title>
+    <title>Partilikhet & Sammenligning</title> <!-- ENDRET TITTEL -->
     <!-- Sentrale CSS-filer -->
     <link rel="stylesheet" href="css/styles.css">
-    <!-- Ny, dedikert CSS-fil for denne siden -->
+    <!-- Dedikert CSS-fil for denne siden -->
     <link rel="stylesheet" href="css/party-similarity.css">
 </head>
 <body>
-    <!-- START: HTML-struktur for Hamburgermeny (Skal være lik på alle sider) -->
+    <!-- START: Standard Hamburgermeny HTML (lik på alle sider) -->
     <div class="burger-menu" id="burgerMenu">
         <div class="burger-bar"></div>
         <div class="burger-bar"></div>
         <div class="burger-bar"></div>
     </div>
-
     <div class="mobile-menu" id="mobileMenu">
         <div class="menu-header">
             <h3>Meny</h3>
@@ -26,9 +25,8 @@
             <!-- Lenker fylles dynamisk av navigation.js -->
         </div>
     </div>
-
     <div class="menu-overlay" id="menuOverlay"></div>
-    <!-- SLUTT: HTML-struktur for Hamburgermeny -->
+    <!-- SLUTT: Standard Hamburgermeny HTML -->
 
     <div class="container">
         <!-- Standard Header -->
@@ -39,36 +37,56 @@
                 </a>
             </div>
             <div class="header-text">
-                <h1>Partilikhet Heatmap</h1>
-                <div class="header-subtitle">Visualisering av enighet mellom partiene om Kreftforeningens saker</div>
+                <h1>Partilikhet & Sammenligning</h1> <!-- ENDRET TITTEL -->
+                <div class="header-subtitle">Visualisering av enighet mellom partiene og deres profil per saksområde</div> <!-- ENDRET SUBTITTEL -->
             </div>
             <div class="nav-links">
                 <!-- Desktop-lenker fylles dynamisk av navigation.js -->
             </div>
         </header>
 
-        <!-- Introduksjon/Forklaring -->
-        <div class="similarity-introduction">
-             <h2>Hvor enige er partiene med hverandre?</h2>
-             <p>Dette heatmapet viser graden av enighet mellom hvert par av partier, basert på deres standpunkt i Kreftforeningens saker (hvor 100% betyr full enighet i alle saker der begge har tatt standpunkt). Hold musepekeren over en celle for å se den nøyaktige enighetsgraden og hvilke partier som sammenlignes.</p>
-             <!-- Optional: Controls can be added here later if needed -->
-             <div class="similarity-controls" id="similarityControls" style="display: none;"> <!-- Skjult for nå -->
-                 <label for="similarity-metric">Velg beregningsmåte:</label>
-                 <select id="similarity-metric" class="filter-dropdown">
-                     <option value="agreement_level2">Enighet (Begge Nivå 2)</option>
-                     <option value="weighted_agreement">Vektet Enighet (Nivå 1 & 2)</option>
-                     <!-- Flere alternativer kan legges til -->
-                 </select>
-             </div>
-        </div>
+        <!-- Seksjon for Heatmap -->
+        <section class="heatmap-section">
+            <div class="similarity-introduction">
+                 <h2>Hvor enige er partiene med hverandre? (Heatmap)</h2>
+                 <p>Dette heatmapet viser graden av enighet mellom hvert par av partier, basert på saker der begge er helt enige (Nivå 2) i forhold til Kreftforeningens standpunkt. Hold musepekeren over en celle for å se den nøyaktige enighetsgraden.</p>
+            </div>
+            <div id="heatmap-container" class="heatmap-container-main">
+                 <!-- Plotly Heatmap genereres her av party-similarity.js -->
+                 <div class="heatmap-loader">
+                     Laster heatmap-data...
+                 </div>
+            </div>
+        </section>
 
-        <!-- CONTAINER FOR HEATMAP -->
-        <main id="heatmap-container" class="heatmap-container-main">
-             <!-- Plotly Heatmap genereres her av party-similarity.js -->
-             <div class="heatmap-loader">
-                 Laster heatmap-data...
-             </div>
-        </main>
+        <!-- Linjeskille -->
+        <hr class="section-divider">
+
+        <!-- ===== START: Ny seksjon for Radar Sammenligning ===== -->
+        <section class="radar-comparison-section">
+            <h2>Sammenlign Partiers Støtte per Saksområde (Radar)</h2>
+            <p>Velg to eller flere partier for å visualisere deres gjennomsnittlige støtte (skala 0-2) til Kreftforeningens politikk innenfor ulike saksområder i et radardiagram.</p>
+
+            <!-- Parti Velger (Checkboxes) -->
+            <div class="party-selector-radar">
+                <fieldset>
+                    <legend>Velg partier:</legend>
+                    <div id="radar-party-checkboxes" class="checkbox-grid">
+                        <!-- Checkboxes genereres av party-similarity.js -->
+                        <span class="loading-checkboxes">Laster partier...</span>
+                    </div>
+                </fieldset>
+                <!-- Knapp med tydeligere call-to-action -->
+                <button id="update-radar-chart-btn" class="button primary radar-button">Oppdater sammenligning</button>
+            </div>
+
+            <!-- Container for Radar Chart -->
+            <div id="radar-chart-container" class="radar-chart-container">
+                <!-- Plotly Radar Chart genereres her -->
+                <div class="radar-placeholder">Velg minst to partier og trykk "Oppdater sammenligning".</div>
+            </div>
+        </section>
+        <!-- ===== SLUTT: Ny seksjon for Radar Sammenligning ===== -->
 
         <!-- Standard Footer -->
         <footer>
@@ -85,7 +103,7 @@
     <!-- Datainnlasting (Nødvendig for denne siden) -->
     <script src="js/issues.js"></script>
     <script src="js/partiesData.js"></script>
-    <!-- Sidespesifikt script for partilikhet -->
+    <!-- Sidespesifikt script -->
     <script src="js/party-similarity.js"></script>
 
 </body>
