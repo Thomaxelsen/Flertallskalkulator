@@ -1,0 +1,5389 @@
+[
+  {
+    "constituencyName": "Aust-Agder",
+    "parties": [
+      {
+        "partyName": "Arbeiderpartiet",
+        "partyShorthand": "AP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Tellef Inge Mørland",
+            "location": "Arendal",
+            "age": 44,
+            "email": "tellef.inge.morland@stortinget.no",
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Ramani Konstanse Cornels Nordli",
+            "location": "Arendal",
+            "age": 26,
+            "email": "ramaninordli@gmail.com",
+            "phone": "41669132",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 3,
+            "name": "Dagfinn Homdal Svanøe",
+            "location": "Åmli",
+            "age": 36,
+            "email": "dagfinn@lo.no",
+            "phone": "41269477",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Fremskrittspartiet",
+        "partyShorthand": "FrP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Marius Nilsen",
+            "location": "Grimstad",
+            "age": 40,
+            "email": "marius.arion.nilsen@stortinget.no",
+            "phone": "95849067",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Beathe Beckstrøm Holte",
+            "location": "Lillesand",
+            "age": 59,
+            "email": "beathebeck@gmail.com",
+            "phone": "41506666",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 3,
+            "name": "Steinar Rørvik",
+            "location": "Froland/Arendal",
+            "age": 56,
+            "email": "steinar.rorvik@politiker.froland.no",
+            "phone": "97674838",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Høyre",
+        "partyShorthand": "H",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Haagen Severin Nilson Poppe",
+            "location": "Arendal",
+            "age": 29,
+            "email": "hvonpoppe@gmail.com",
+            "phone": "95169325",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Amalie Kollstrand",
+            "location": "Arendal",
+            "age": 28,
+            "email": "amalie.kollstrand@gmail.com",
+            "phone": "48099596",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 3,
+            "name": "Kitty Theobald Gjerland",
+            "location": "Arendal/UH",
+            "age": 18,
+            "email": "Kittytheobald123@gmail.com",
+            "phone": "41111842",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Kristelig Folkeparti",
+        "partyShorthand": "KrF",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Jorunn Elisabet Gleditsch Lossius",
+            "location": "Lillesand",
+            "age": 44,
+            "email": "jorunn.lossius@politiker.agderfk.no",
+            "phone": "40105123",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Jørgen H. Kristiansen",
+            "location": "Kristiansand",
+            "age": 49,
+            "email": "post@jorgenk.no",
+            "phone": "92468673",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Rødt",
+        "partyShorthand": "R",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Laetif Akber",
+            "location": "Arendal",
+            "age": 47,
+            "email": "a.laetif@gmail.com",
+            "phone": "47314920",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Frida Graneng",
+            "location": "Lillesand",
+            "age": 21,
+            "email": null,
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Senterpartiet",
+        "partyShorthand": "SP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Gro Anita Mykjåland",
+            "location": "Iveland",
+            "age": 48,
+            "email": "gam@stortinget.no",
+            "phone": "95821968",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Eivind Drivenes",
+            "location": "Vennesla",
+            "age": 55,
+            "email": "eivind.drivenes@vennesla-kommunestyre.no",
+            "phone": "47712598",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Sosialistisk Venstreparti",
+        "partyShorthand": "SV",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Mirell Høyer-Berntsen",
+            "location": "Arendal",
+            "age": 44,
+            "email": "mirell.hoyer-berntsen@sv.no",
+            "phone": "41453013",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Alexander Liane",
+            "location": "Vennesla",
+            "age": 30,
+            "email": "Alexander.Liane@fagforbundet.no",
+            "phone": "90247167",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Venstre",
+        "partyShorthand": "V",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Ingvild Wetrhus Thorsvik",
+            "location": "Lindesnes",
+            "age": 33,
+            "email": "ingvild.wetrhus.thorsvik@stortinget.no",
+            "phone": "46445506",
+            "hasRealisticChance": false // Var ikke fet i opprinnelig bilde, antar fortsatt false
+          },
+          {
+            "rank": 2,
+            "name": "Arnt Gunnar Tønnessen",
+            "location": "Grimstad",
+            "age": 62,
+            "email": "arnt.gunnar.tonnessen@gmail.com",
+            "phone": "98206022",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Miljøpartiet de Grønne",
+        "partyShorthand": "MDG",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Hildegunn Marie Tønnessen Seip",
+            "location": "Kristiansand",
+            "age": 45,
+            "email": "hildegunn@mdg.no",
+            "phone": "98819111",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Tobias Oftedal Stokkeland",
+            "location": "Kristiansand",
+            "age": 26,
+            "email": "tobias@gronnungdom.no",
+            "phone": "46413870",
+            "hasRealisticChance": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "constituencyName": "Akershus",
+    "parties": [
+      {
+        "partyName": "Arbeiderpartiet",
+        "partyShorthand": "AP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Tonje Brenna",
+            "location": "Ullensaker",
+            "age": 37,
+            "email": "tonje.brenna@stortinget.no",
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Asmund Aukrust",
+            "location": "Bærum",
+            "age": 40,
+            "email": "asmund.aukrust@stortinget.no",
+            "phone": "91245297",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Tuva Moflag",
+            "location": "Nordre Follo",
+            "age": 46,
+            "email": "tuva.moflag@stortinget.no",
+            "phone": "90938803",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 4,
+            "name": "Sverre Myrli",
+            "location": "Lillestrøm",
+            "age": 53,
+            "email": "sverre.myrli@stortinget.no",
+            "phone": "91245293",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 5,
+            "name": "Mani Hussaini",
+            "location": "Nordre Follo",
+            "age": 37,
+            "email": "Mani.Hussain@stortinget.no",
+            "phone": "90935840",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 6,
+            "name": "Ragnhild Bergheim",
+            "location": "Lørenskog",
+            "age": 62,
+            "email": "ragnhild.bergheim@lorenskog.kommune.no", // Korrigert epost fra bilde
+            "phone": "90621036",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 7,
+            "name": "Tobias Hangaard Linge",
+            "location": "AUF",
+            "age": 27,
+            "email": "tobias.hangaard.linge@stortinget.no",
+            "phone": "95113100",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Fremskrittspartiet",
+        "partyShorthand": "FrP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Hans Andreas Limi",
+            "location": "Bærum",
+            "age": 64,
+            "email": "Hans-Andreas.Limi@stortinget.no",
+            "phone": "98218504",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Himanshu Gulati",
+            "location": "Skedsmo", // Skedsmo er nå Lillestrøm, men bruker det som står
+            "age": 36,
+            "email": "himanshu.gulati@stortinget.no",
+            "phone": "45429332",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Liv Gustavsen",
+            "location": "Årnes", // Årnes er i Nes, bruker det som står
+            "age": 51,
+            "email": "liv.gustavsen@stortinget.no", // Korrigert epost fra bilde
+            "phone": "92462743",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 4,
+            "name": "Anette C. Elseth",
+            "location": "Lillestrøm",
+            "age": 51,
+            "email": "anette.elseth@gmail.com",
+            "phone": "95202533",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 5,
+            "name": "Tony Staahle",
+            "location": "Ullensaker",
+            "age": 52,
+            "email": "tony@staahle.no", // Korrigert epost fra bilde
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 6,
+            "name": "Tonje Lavik Pedersen",
+            "location": "Asker",
+            "age": 29,
+            "email": "tonje.lavik@politiker.asker.no",
+            "phone": "94337870",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Høyre",
+        "partyShorthand": "H",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Henrik Asheim",
+            "location": "Bærum",
+            "age": 41,
+            "email": null, // Mangler fortsatt
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Tone Wilhelmsen Trøen",
+            "location": "Eidsvoll",
+            "age": 59,
+            "email": "twt@stortinget.no",
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Anne Kristine Linnestad",
+            "location": "Nordre Follo",
+            "age": 63,
+            "email": "akl@stortinget.no",
+            "phone": "41295105",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 4,
+            "name": "Kari Sofie Bjørnsen",
+            "location": "Asker",
+            "age": 58,
+            "email": "kari.sofie.bjornsen@politiker.asker.no",
+            "phone": "90090313",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 5,
+            "name": "Håkon Snortheim",
+            "location": "Lillestrøm",
+            "age": 26,
+            "email": "fylkesradsamferdsel@afk.no",
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 6,
+            "name": "Hårek Elvenes",
+            "location": "Bærum",
+            "age": 65,
+            "email": "harek.elvenes@stortinget.no",
+            "phone": "90139236",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 7,
+            "name": "Tonje Anderson Olsen",
+            "location": "Enebakk",
+            "age": 55,
+            "email": "olsen.tonjeanderson@gmail.com",
+            "phone": "90552268",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 8,
+            "name": "Sebastian Otterhals",
+            "location": "Bærum",
+            "age": 29,
+            "email": "sebastianotterhals@gmail.com",
+            "phone": "48153124",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Kristelig Folkeparti",
+        "partyShorthand": "KrF",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Ida Lindtveit Røse",
+            "location": "Nordre Follo",
+            "age": 32,
+            "email": "ida@afk.no",
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Hanne Finanger",
+            "location": "Nesodden",
+            "age": 49,
+            "email": "hanne@finanger.com",
+            "phone": "48342448",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Rødt",
+        "partyShorthand": "R",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Marie Sneve Martinussen",
+            "location": "Moss",
+            "age": 39,
+            "email": "marie.sneve.martinussen@stortinget.no",
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Joachim Espe",
+            "location": "Ås",
+            "age": 44,
+            "email": "joachim.espe@fellesforbundet.no",
+            "phone": "93451131",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Senterpartiet",
+        "partyShorthand": "SP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Sigbjørn Gjelsvik",
+            "location": "Sørumsand", // Sørumsand er i Lillestrøm, bruker det som står
+            "age": 50,
+            "email": "sigbjorn.gjelsvik@stortinget.no",
+            "phone": "91161675",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Else Marie Tveit Råby",
+            "location": "Hurum", // Hurum er i Asker, bruker det som står
+            "age": 42,
+            "email": "emr@stortinget.no",
+            "phone": "90827497",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Sosialistisk Venstreparti",
+        "partyShorthand": "SV",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Kirsti Bergstø",
+            "location": "Nittedal",
+            "age": 44,
+            "email": "kirsti.bergsto@stortinget.no",
+            "phone": "93286489",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Balder Alvær Olafsen",
+            "location": "Bærum",
+            "age": 27,
+            "email": "baldero@afk.no",
+            "phone": "47462520",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 3,
+            "name": "Najma Ahmed",
+            "location": "SU",
+            "age": 26,
+            "email": "najma@su.no",
+            "phone": "96967358",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Venstre",
+        "partyShorthand": "V",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Abid Raja",
+            "location": "Bærum",
+            "age": 49,
+            "email": "abid.raja@stortinget.no",
+            "phone": "99462495",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Ane Breivik",
+            "location": "Bærum",
+            "age": 26,
+            "email": "ane@venstre.no",
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Thorbjørn Merkesdal",
+            "location": "Ullensaker",
+            "age": 53,
+            "email": "thmerke@gmail.com",
+            "phone": "90651004",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Miljøpartiet de Grønne",
+        "partyShorthand": "MDG",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Une Bastholm",
+            "location": "Oslo", // Oslo er ikke Akershus, men bruker det som står
+            "age": 39,
+            "email": "une-aina.bastholm@stortinget.no",
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Kristoffer Robin Haug",
+            "location": "Lørenskog",
+            "age": 41,
+            "email": "kristoffer.robin.haug@mdg.no",
+            "phone": "95830942",
+            "hasRealisticChance": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "constituencyName": "Buskerud",
+    "parties": [
+      {
+        "partyName": "Arbeiderpartiet",
+        "partyShorthand": "AP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Masud Gharahkhani",
+            "location": "Drammen",
+            "age": 42,
+            "email": "masud.gharahkhani@stortinget.no",
+            "phone": "98873422",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Solveig Vestenfor",
+            "location": "Ål",
+            "age": 51,
+            "email": "Solveig.Vestenfor@aal.kommune.no",
+            "phone": "41515188",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Even Røed",
+            "location": "Kongsberg",
+            "age": 33,
+            "email": "even.amandius.roed@stortinget.no",
+            "phone": "95861318",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 4,
+            "name": "Hilde Karin Voltmerhaus", // Navn korrigert fra bilde
+            "location": "Hønefoss", // Hønefoss er i Ringerike, bruker det som står
+            "age": 55,
+            "email": "hilde.karin.voltmerhaus@ringerike.kommune.no",
+            "phone": "47040989",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Fremskrittspartiet",
+        "partyShorthand": "FrP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Jon Engen-Helgheim",
+            "location": "Drammen",
+            "age": 43,
+            "email": "jon.engen-helgheim@stortinget.no",
+            "phone": "93848497",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Morten Wold",
+            "location": "Modum",
+            "age": 57,
+            "email": "morten.wold@stortinget.no",
+            "phone": "90603320",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Morgan Langfeldt",
+            "location": "Lier",
+            "age": 57,
+            "email": "langfeldtmorgan@gmail.com",
+            "phone": "91104016",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 4,
+            "name": "Kristin Løvaas Gjerde",
+            "location": "Drammen",
+            "age": 29,
+            "email": "kristinlovaasgjerde@gmail.com",
+            "phone": "41474132",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Høyre",
+        "partyShorthand": "H",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Trond Helleland",
+            "location": "Drammen",
+            "age": 62,
+            "email": "trond.helleland@stortinget.no",
+            "phone": "93063677",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Sandra Bruflot",
+            "location": "Hole",
+            "age": 33,
+            "email": "sandra.bruflot@stortinget.no",
+            "phone": "95407717",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Kristin Ørmen Johnsen",
+            "location": "Drammen",
+            "age": 72,
+            "email": "kristin.ormen.johnsen@usn.no",
+            "phone": "41515188", // Samme som nr. 2 i AP? Dobbeltsjekk bilde. Ja, det står det.
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 4,
+            "name": "Simen Murud",
+            "location": "Kongsberg",
+            "age": 26,
+            "email": "simenmur@gmail.com",
+            "phone": "92064973",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 5,
+            "name": "Benedicte Heieren Hundhammer",
+            "location": "Ringerike",
+            "age": 26,
+            "email": "benedicte.hundhammer@hotmail.com",
+            "phone": "47682612",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Kristelig Folkeparti",
+        "partyShorthand": "KrF",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Ida Lindtveit Røse",
+            "location": "Nordre Follo",
+            "age": 31, // alder 31 her, 32 i Akershus. Bilde sier 31. Korrigerer begge til 31.
+            "email": "ida@afk.no",
+            "phone": "40054064",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Kjell E. Grønbæk",
+            "location": "Øvre Eiker",
+            "age": 59,
+            "email": "kjellg@bfk.no",
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Rødt",
+        "partyShorthand": "R",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Linn-Elise Øhn Mehlen",
+            "location": "Drammen",
+            "age": 33,
+            "email": "linn-elise.ohn.mehlen@stortinget.no",
+            "phone": "98623040",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Hanne Myren",
+            "location": "Ål",
+            "age": 40,
+            "email": "hanne.myren@hotmail.com",
+            "phone": "95175422",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Senterpartiet",
+        "partyShorthand": "SP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Sigrid Simensen Ilsøy",
+            "location": "Hol",
+            "age": 46,
+            "email": "Sigrid.Simensen.Ilsoy@hol.kommune.no",
+            "phone": "99014915",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Simon S. Nordanger",
+            "location": "Drammen",
+            "age": 33,
+            "email": "simon.nordanger@gmail.com",
+            "phone": "91330191",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 3,
+            "name": "Tine (Anne Kristine) Norman",
+            "location": "Sigdal",
+            "age": 57,
+            "email": "Tine.Norman@sigdal.kommune.no",
+            "phone": "91766187",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Sosialistisk Venstreparti",
+        "partyShorthand": "SV",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Kathy Lie",
+            "location": "Lier",
+            "age": 61,
+            "email": "kathy.lie@stortinget.no",
+            "phone": "91146138",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Audun Hammer Hovda",
+            "location": "SU",
+            "age": 25,
+            "email": "audun@su.no",
+            "phone": "93259046",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Venstre",
+        "partyShorthand": "V",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Julie Vaagø",
+            "location": "Øvre Eiker",
+            "age": 40,
+            "email": "julie.vaagø@stemvenstre.no",
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Anders Wengen",
+            "location": "Drammen",
+            "age": 48,
+            "email": "pol.Anders.Wengen@drammen.kommune.no",
+            "phone": "97136922",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Miljøpartiet de Grønne",
+        "partyShorthand": "MDG",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Cathrin Janøy",
+            "location": "Mjondalen", // Mjøndalen er i Drammen, bruker det som står
+            "age": 42,
+            "email": "pol.Cathrin.Janoy@drammen.kommune.no",
+            "phone": "91656133",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Anita Nesse Reisii", // Navn korrigert fra bilde
+            "location": "Svelvik", // Svelvik er i Drammen, bruker det som står
+            "age": 32,
+            "email": "anita.nroisli@gmail.com",
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "constituencyName": "Finnmark",
+    "parties": [
+      {
+        "partyName": "Arbeiderpartiet",
+        "partyShorthand": "AP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Marianne Sivertsen Næss",
+            "location": "Hammerfest",
+            "age": 51,
+            "email": "postmottak@nfd.dep.no",
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Sigurd Kvammen Rafaelsen",
+            "location": "Lebesby",
+            "age": 39,
+            "email": "sigurd.kvammen.rafaelsen@stortinget.no",
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Monica Nielsen",
+            "location": "Alta",
+            "age": 50,
+            "email": "monica.nielsen@alta.kommune.no",
+            "phone": "90041535",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 4,
+            "name": "Lavrans Lyngstad",
+            "location": "Alta",
+            "age": 19,
+            "email": null,
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Fremskrittspartiet",
+        "partyShorthand": "FrP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Bengt Rune Strifeldt",
+            "location": "Alta",
+            "age": 53,
+            "email": "bengt.rune.strifeldt@stortinget.no",
+            "phone": "97701730",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Terje Hansen",
+            "location": "Sør-Varanger",
+            "age": 67,
+            "email": "terje@scanvulk.no",
+            "phone": "91810596",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 3,
+            "name": "Tonje Nerdal",
+            "location": "Alta",
+            "age": 19,
+            "email": "tonje-martine.nerdal@fpu.no",
+            "phone": "90407266",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 4,
+            "name": "Stig-Ronny Nilsen",
+            "location": "Porsanger",
+            "age": 54,
+            "email": "srn@nilsen.as",
+            "phone": "92811499",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 5,
+            "name": "Emil Andre Taftø",
+            "location": "Alta",
+            "age": 31,
+            "email": "emil_tafto@hotmail.com",
+            "phone": "95826030",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Høyre",
+        "partyShorthand": "H",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Hege Christin Bjørkmann",
+            "location": "Alta",
+            "age": 26,
+            "email": "hegec@bjorkmanns.no",
+            "phone": "46945239",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Sirin Figenschou-Høyen",
+            "location": "Nordkapp",
+            "age": 44,
+            "email": "sirin.hoyen@gmail.com",
+            "phone": "40451242",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 3,
+            "name": "Ronni Fawas-Pinstrup",
+            "location": "Sør-Varanger",
+            "age": 37,
+            "email": "Ronni.fawaz@gmail.com",
+            "phone": "91544815",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Kristelig Folkeparti",
+        "partyShorthand": "KrF",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Erling-Christoffer Suhr",
+            "location": "Alta",
+            "age": 37,
+            "email": "ecsuhr@gmail.com",
+            "phone": "45434247",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Hilde Huru",
+            "location": "Vadsø",
+            "age": 57,
+            "email": "hiltho@gmail.com",
+            "phone": "92431846",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Rødt",
+        "partyShorthand": "R",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Hallgeir Johan Strifeldt",
+            "location": "Alta",
+            "age": 67,
+            "email": "halljo@online.no",
+            "phone": "91129113",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Reidun Karlsen",
+            "location": "Sør-Varanger",
+            "age": 69,
+            "email": "reiduka@hotmail.com",
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Senterpartiet",
+        "partyShorthand": "SP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Geir Adelsten Iversen",
+            "location": "Hasvik",
+            "age": 70,
+            "email": "gai@stortinget.no",
+            "phone": "91319843",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Nancy Charlotte Porsanger Anti",
+            "location": "Tana",
+            "age": 46,
+            "email": "charlotteanti@gmail.com",
+            "phone": "91547294",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Sosialistisk Venstreparti",
+        "partyShorthand": "SV",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Tore Grøtte",
+            "location": "Alta",
+            "age": 53,
+            "email": "tore.grotte@alta.kommune.no",
+            "phone": "97743222",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Amy Brox Webber",
+            "location": "Sør-Varanger",
+            "age": 39,
+            "email": "amywebbe@gmail.com",
+            "phone": "92238918",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Venstre",
+        "partyShorthand": "V",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Trine Noodt",
+            "location": "Alta",
+            "age": 57,
+            "email": "noodt@venstre.no",
+            "phone": "40729188",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Isak Ole J. Hætta",
+            "location": "Kautokeino",
+            "age": 64,
+            "email": "isak.ole.heatta@samisk.vgs.no",
+            "phone": "95226142",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Miljøpartiet de Grønne",
+        "partyShorthand": "MDG",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Siren Jensen",
+            "location": "Hammerfest",
+            "age": 42,
+            "email": "Siren.Jensen.Ase@hammerfest.kommune.no",
+            "phone": "92571995",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Roy-Håkon Friskilæ",
+            "location": "Vadsø",
+            "age": 49,
+            "email": "royfriskila@savegazachildren.org",
+            "phone": "92571795", // Korrigert fra bilde
+            "hasRealisticChance": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "constituencyName": "Hedmark",
+    "parties": [
+      {
+        "partyName": "Arbeiderpartiet",
+        "partyShorthand": "AP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Nils Kristen Sandtrøen",
+            "location": "Trysil",
+            "age": 36,
+            "email": "nils.kristen.sandtroen@stortinget.no",
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Lise Selnes",
+            "location": "Nord-Odal",
+            "age": 48,
+            "email": "lise.selnes@stortinget.no",
+            "phone": "90144991",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Even Eriksen",
+            "location": "Tynset",
+            "age": 29,
+            "email": "even.eriksen@jd.dep.no",
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 4,
+            "name": "Farahnaz Bahrami",
+            "location": "Hamar",
+            "age": 63,
+            "email": "fba@imdi.no",
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Fremskrittspartiet",
+        "partyShorthand": "FrP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Tor André Johnsen",
+            "location": "Brumunddal", // Brumunddal er i Ringsaker, bruker det som står
+            "age": 56,
+            "email": "toaj@stortinget.no",
+            "phone": "91823933",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Morten Kolbjørnsen",
+            "location": "Åmot",
+            "age": 66,
+            "email": "mortenko@hotmail.no",
+            "phone": "95096242",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 3,
+            "name": "Truls Gihlemoen",
+            "location": "Stange",
+            "age": 45,
+            "email": "gihlemoen@live.com",
+            "phone": "91366767",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Høyre",
+        "partyShorthand": "H",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Anna Molberg",
+            "location": "Hamar",
+            "age": 34,
+            "email": "Anna.Molberg@stortinget.no",
+            "phone": "46788995",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Yngve Sætre",
+            "location": "Elverum",
+            "age": 50,
+            "email": "saetre@hotmail.com",
+            "phone": "98440665",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 3,
+            "name": "Kristian Hovde",
+            "location": "Ringsaker",
+            "age": 43,
+            "email": "Kristianhovde@yahoo.no",
+            "phone": "91839457",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Kristelig Folkeparti",
+        "partyShorthand": "KrF",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Line Mette Teigland",
+            "location": "Stange",
+            "age": 53,
+            "email": "line.mette@live.no",
+            "phone": "99594820",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Oluf Maurud",
+            "location": "Ringsaker",
+            "age": 66,
+            "email": "omaurud@online.no",
+            "phone": "99518762",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Rødt",
+        "partyShorthand": "R",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Svein Ørsnes",
+            "location": "Hamar",
+            "age": 64,
+            "email": "svein.birger.orsnes@innlandetfylke.no",
+            "phone": "47504180",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Torunn Arnesen",
+            "location": "Kongsvinger",
+            "age": 67,
+            "email": "torunnar@online.no",
+            "phone": "95857647",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Senterpartiet",
+        "partyShorthand": "SP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Trygve Magnus Slagsvold Vedum",
+            "location": "Stange",
+            "age": 46,
+            "email": "trygve-slagsvold.vedum@stortinget.no",
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Emilie Enger Mehl",
+            "location": "Elverum",
+            "age": 31,
+            "email": "emilie.enger.mehl@stortinget.no",
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Per Martin Sandtrøen",
+            "location": "Tynset",
+            "age": 39,
+            "email": "Per-Martin.Sandtroen@stortinget.no",
+            "phone": "92453347",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Sosialistisk Venstreparti",
+        "partyShorthand": "SV",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Amund Røhr Heggelund",
+            "location": "Stange",
+            "age": 31,
+            "email": "amund.heggelund@sv.no",
+            "phone": "47677967",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Camilla Øien",
+            "location": "Hamar",
+            "age": 34,
+            "email": "camilla@oien.net",
+            "phone": "99478434",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Venstre",
+        "partyShorthand": "V",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Stig Vaagan",
+            "location": "Hamar",
+            "age": 53,
+            "email": "stigvaagan@hotmail.com",
+            "phone": "91542214",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Kristin Jess-Bakken",
+            "location": "Østre Toten",
+            "age": 39,
+            "email": "kristin@jess-bakken.com",
+            "phone": "47281574",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Miljøpartiet de Grønne",
+        "partyShorthand": "MDG",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Gjermund Gjestvang",
+            "location": "Elverum",
+            "age": 49,
+            "email": "elverum@mdg.no",
+            "phone": "95903686",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Marion Godager Tveter",
+            "location": "Hamar",
+            "age": 46,
+            "email": "maitve@innlandetfylke.no",
+            "phone": "97510258",
+            "hasRealisticChance": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "constituencyName": "Hordaland",
+    "parties": [
+      {
+        "partyName": "Arbeiderpartiet",
+        "partyShorthand": "AP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Lubna Jaffery",
+            "location": "Bergen",
+            "age": 44,
+            "email": "postmottak@kud.dep.no",
+            "phone": "90227263",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Rune Bakervik",
+            "location": "Bergen",
+            "age": 54,
+            "email": "Rune.Bakervik@bergen.kommune.no",
+            "phone": "98807855",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Linda Merkesdal", // Mellomnavn Monsen mangler i dette bildet
+            "location": "Voss",
+            "age": 51,
+            "email": "linda.monsen.merkesdal@stortinget.no",
+            "phone": "95964714",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 4,
+            "name": "Benjamin Jakobsen",
+            "location": "Askøy",
+            "age": 28,
+            "email": "benja.jakob@gmail.com",
+            "phone": "95799842",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 5,
+            "name": "June Trendereld Gruer", // Navn korrigert fra bilde
+            "location": "Bergen",
+            "age": 24,
+            "email": "junegruer@gmail.com",
+            "phone": "98680408",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 6,
+            "name": "Ulvar Akselsen",
+            "location": "Stord",
+            "age": 22,
+            "email": "uakselsen@gmail.com",
+            "phone": "96828813",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Fremskrittspartiet",
+        "partyShorthand": "FrP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Helge Andre Njåstad",
+            "location": "Austevoll",
+            "age": 44,
+            "email": "hnj@stortinget.no",
+            "phone": "95797221",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Silje Hjemdal",
+            "location": "Bergen",
+            "age": 40,
+            "email": "silje.hjemdal@stortinget.no",
+            "phone": "92292930",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Martin Virkesdal Jonsterhaug",
+            "location": "Bergen",
+            "age": 24,
+            "email": "martin.jonsterhaug@bergen.kommune.no",
+            "phone": "91603820",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 4,
+            "name": "Stig Atle Abrahamsen",
+            "location": "Askøy",
+            "age": 37,
+            "email": "stig.atle.abrahamsen@gmail.com",
+            "phone": "90557078",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 5,
+            "name": "Laila Marie Reiertsen",
+            "location": "Bjørnafjorden",
+            "age": 64,
+            "email": "lailarei19@gmail.com",
+            "phone": "95127555",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 6,
+            "name": "Reinert Svanberg",
+            "location": "Stord",
+            "age": 41,
+            "email": "reinert.svanberg@gmail.com",
+            "phone": "97502932",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Høyre",
+        "partyShorthand": "H",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Erna Solberg",
+            "location": "Bergen",
+            "age": 64,
+            "email": "erna.solberg@stortinget.no",
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Ove Bernt Trellevik", // Navn korrigert fra bilde
+            "location": "Øygarden",
+            "age": 58,
+            "email": "Obt@stortinget.no",
+            "phone": "48028240",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Peter Christian Frølich",
+            "location": "Bergen",
+            "age": 37,
+            "email": "peter.frolich@stortinget.no",
+            "phone": "41520873",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 4,
+            "name": "Liv Kari Eskeland",
+            "location": "Stord",
+            "age": 59,
+            "email": "lke@stortinget.no",
+            "phone": "97552018",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 5,
+            "name": "Lise-May Sæle",
+            "location": "Bergen",
+            "age": 27,
+            "email": "lisemay.saele@gmail.com",
+            "phone": "48127770",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 6,
+            "name": "Sondre Torvanger Hillestad",
+            "location": "Bergen",
+            "age": 21,
+            "email": "sondre.hillestad@bergen.kommune.no",
+            "phone": "97074421",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 7,
+            "name": "Sigurd Kotsrup Lillo",
+            "location": "Bergen",
+            "age": 75,
+            "email": "sigurd@avisconsult.no",
+            "phone": "92017821",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 8,
+            "name": "Ida Steinsland Lutro",
+            "location": "Ullensvang",
+            "age": 23,
+            "email": "ida.lutro@gmail.com",
+            "phone": "97072017",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Kristelig Folkeparti",
+        "partyShorthand": "KrF",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Joel Ystebø",
+            "location": "Bergen",
+            "age": 29, // Alder 29 her, bilde sier 23. Korrigerer til 23.
+            "email": "joel@kristenmedia.no",
+            "phone": "45454728",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Harald Rydland",
+            "location": "Fitjar",
+            "age": 62,
+            "email": "harald.rydland@haugnett.no",
+            "phone": "91634782",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Rødt",
+        "partyShorthand": "R",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Sofie Marhaug",
+            "location": "Bergen",
+            "age": 34,
+            "email": "sofie.marhaug@stortinget.no",
+            "phone": "97509995",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Terje Kolbotn", // Navn korrigert fra bilde
+            "location": "Ullensvang",
+            "age": 73,
+            "email": "terje.kollbotn@gmail.com",
+            "phone": "97194073",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Senterpartiet",
+        "partyShorthand": "SP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Kjersti Toppe",
+            "location": "Bergen",
+            "age": 57,
+            "email": "kjersti.toppe@stortinget.no",
+            "phone": "40286286",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Lars Fjeldstad",
+            "location": "Osterøy",
+            "age": 31,
+            "email": "lars.fjeldstad@osteroy.kommune.no",
+            "phone": "97044759",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Sosialistisk Venstreparti",
+        "partyShorthand": "SV",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Marthe Hammer",
+            "location": "Bergen",
+            "age": 45,
+            "email": "marthe.hammer@vlfk.no", // Vestland Fylkeskommune
+            "phone": "97672203",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Alexander Papas",
+            "location": "Bergen",
+            "age": 23,
+            "email": "Alexander.Papas@hvl.no",
+            "phone": "46659747",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 3,
+            "name": "Silje Nordtveit Olsen",
+            "location": "Kvinnherad",
+            "age": 41,
+            "email": "silje.ol.ok@gmail.com",
+            "phone": "95757154",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Venstre",
+        "partyShorthand": "V",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Sveinung Rotevatn",
+            "location": "Bergen",
+            "age": 37,
+            "email": "sveinung.rotevatn@stortinget.no",
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Ingrid Nergaard Fjeldstad",
+            "location": "Bergen",
+            "age": 41,
+            "email": "ingrid.fjeldstad@stemvenstre.no",
+            "phone": "93090492",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Miljøpartiet de Grønne",
+        "partyShorthand": "MDG",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Frøya S. Sjursæther", // Navn korrigert fra bilde
+            "location": "Bergen",
+            "age": 18,
+            "email": "froya@gronnungdom.no",
+            "phone": "40206210",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Andreas Ormevik",
+            "location": "Øygarden",
+            "age": 29,
+            "email": "abormevik@gmail.com",
+            "phone": "92297503",
+            "hasRealisticChance": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "constituencyName": "Møre og Romsdal",
+    "parties": [
+      {
+        "partyName": "Arbeiderpartiet",
+        "partyShorthand": "AP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Per Vidar Kjølmoen",
+            "location": "Rauma",
+            "age": 51,
+            "email": "per.vidar.kjolmoen@stortinget.no",
+            "phone": "91799964",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Åse Kristin Ask Bakke",
+            "location": "Ålesund",
+            "age": 28,
+            "email": "ase.kristin.ask.bakke@stortinget.no",
+            "phone": "45502595",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Berit Tønnesen",
+            "location": "Kristiansund",
+            "age": 53,
+            "email": "berit@otek.no",
+            "phone": "95754626",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Fremskrittspartiet",
+        "partyShorthand": "FrP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Sylvi Listhaug",
+            "location": "Ålesund",
+            "age": 47,
+            "email": "syl@frp.no",
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Frank Sve",
+            "location": "Stranda",
+            "age": 57,
+            "email": "frank.edvard.sve@stortinget.no",
+            "phone": "91701802",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Joakim Myklebost Tangen",
+            "location": "Gjemnes",
+            "age": 22,
+            "email": "joakim.tangen@fpu.no",
+            "phone": "96207113",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 4,
+            "name": "Anne Marie Fiksdal",
+            "location": "Vestnes",
+            "age": 55,
+            "email": "anne.marie.fiksdal@mrfylke.no",
+            "phone": "45393303",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 5,
+            "name": "Lovise Nikoline Voldsund",
+            "location": "Herøy",
+            "age": 26,
+            "email": "lovivold@hotmail.no",
+            "phone": "94854407",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Høyre",
+        "partyShorthand": "H",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Monica Molvær",
+            "location": "Ålesund",
+            "age": 39,
+            "email": "monica.molvaer@gmail.com",
+            "phone": "97501202",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Carl-Henrik Myrseth Moltumyr",
+            "location": "Herøy",
+            "age": 32,
+            "email": "Moltumyr.ch@gmail.com",
+            "phone": "99406611",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 3,
+            "name": "Anita Oterhals Eide",
+            "location": "Aukra",
+            "age": 41,
+            "email": "anitaoeide@gmail.com",
+            "phone": "92219968",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Kristelig Folkeparti",
+        "partyShorthand": "KrF",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Harry Valderhaug",
+            "location": "Giske",
+            "age": 60,
+            "email": "harry.valderhaug@gmail.com",
+            "phone": "91385761",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Dorte Klokk Indrebø",
+            "location": "Ålesund",
+            "age": 24,
+            "email": "dorte@krfu.no",
+            "phone": "47487556",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Rødt",
+        "partyShorthand": "R",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Mattis Himo",
+            "location": "Kristiansund",
+            "age": 36,
+            "email": "mattis.himo@tingvoll.kommune.no",
+            "phone": "94857954",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Ellen Litjedal Stavset",
+            "location": "Ålesund",
+            "age": 46,
+            "email": null,
+            "phone": "41191426",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Senterpartiet",
+        "partyShorthand": "SP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Geir Inge Lien",
+            "location": "Vestnes",
+            "age": 52,
+            "email": "geir-inge.lien@stortinget.no",
+            "phone": "91184000",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Lisa Alvestad",
+            "location": "Haram",
+            "age": 38,
+            "email": "lisa.alvestad@gmail.com",
+            "phone": "95229926",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Sosialistisk Venstreparti",
+        "partyShorthand": "SV",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Line Karlsvik",
+            "location": "Kristiansund",
+            "age": 46,
+            "email": "linekarlsvik9@gmail.com",
+            "phone": "90596254",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Siri Vik Bakken",
+            "location": "Ålesund",
+            "age": 34,
+            "email": "siri.vik.bakken@lo.no",
+            "phone": "92627596",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Venstre",
+        "partyShorthand": "V",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Erik Rolfsen",
+            "location": "Kristiansund",
+            "age": 63,
+            "email": "erik.rolfsen@nktv.no",
+            "phone": "99298999",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Annika Brandal",
+            "location": "Hareid",
+            "age": 43,
+            "email": "annika.brandal@gmail.com",
+            "phone": "40840900",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Miljøpartiet de Grønne",
+        "partyShorthand": "MDG",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Gro Santi Johnsen",
+            "location": "Kristiansund",
+            "age": 56,
+            "email": "gro.santi.johnsen@gmail.com",
+            "phone": "48266537",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Steinar Ørstenwik", // Navn korrigert fra bilde
+            "location": "Ålesund",
+            "age": 25,
+            "email": null,
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "constituencyName": "Nord-Trøndelag",
+    "parties": [
+      {
+        "partyName": "Arbeiderpartiet",
+        "partyShorthand": "AP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Bente Estil",
+            "location": "Lierne",
+            "age": 54,
+            "email": "benes@trondelagfylke.no",
+            "phone": "48254674",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Vebjørn Gorseth",
+            "location": "Steinkjer",
+            "age": 30,
+            "email": "vebgo@trondelagfylke.no",
+            "phone": "41669779", // Korrigert fra bilde
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Stian Sagvold",
+            "location": "Verdal",
+            "age": 39,
+            "email": "stian.sagvold@fellesforbundet.org",
+            "phone": "46543246",
+            "hasRealisticChance": true
+          }
+        ]
+      },
+      {
+        "partyName": "Fremskrittspartiet",
+        "partyShorthand": "FrP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Mats Henriksen",
+            "location": "Levanger",
+            "age": 26,
+            "email": "mats.henriksen@fpu.no",
+            "phone": "92117774",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Tore Nordfjellmark",
+            "location": "Overhalla",
+            "age": 56,
+            "email": "tore.nordfjellmark@me.com",
+            "phone": "90986155",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 3,
+            "name": "Tommy Skatland",
+            "location": "Steinkjer",
+            "age": 39,
+            "email": "tommy.skatland@gmail.com",
+            "phone": "41761369",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Høyre",
+        "partyShorthand": "H",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Pål Sæther Eiden",
+            "location": "Nærøysund",
+            "age": 55,
+            "email": "palei@trondelagfylke.no",
+            "phone": "90527323",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Renate Bjørshol",
+            "location": "Stjørdal",
+            "age": 45,
+            "email": "Renbjo@stjordal.kommune.no",
+            "phone": "97156711",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 3,
+            "name": "Henrik Aleksander Devik",
+            "location": "Namsos",
+            "age": 20,
+            "email": "henrik_devik@hotmail.com",
+            "phone": "48209103",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Kristelig Folkeparti",
+        "partyShorthand": "KrF",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Majen Helen Sævik",
+            "location": "Trondheim",
+            "age": 55,
+            "email": "majen.helen.savik@trondheim.kommune.no",
+            "phone": "93093307",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Edvard Kunzendorf",
+            "location": "Malvik",
+            "age": 28,
+            "email": "edvard.kunzendorf@stortinget.no",
+            "phone": "94820705",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Rødt",
+        "partyShorthand": "R",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Håvard Krogstad-Wiborg",
+            "location": "Steinkjer",
+            "age": 39,
+            "email": "Havard.Krogstad-Wiborg@steinkjer.kommune.no",
+            "phone": "98857632",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Silje Marie Steindal",
+            "location": "Levanger",
+            "age": 37,
+            "email": null,
+            "phone": "48123172",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Senterpartiet",
+        "partyShorthand": "SP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Bjørn Arild Gram",
+            "location": "Steinkjer",
+            "age": 52,
+            "email": "bjorn.arild.gram@ntebb.no",
+            "phone": "91367916",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Siv Sætran",
+            "location": "Stjørdal",
+            "age": 38,
+            "email": "siv@sp.no",
+            "phone": "98818537",
+            "hasRealisticChance": true
+          }
+        ]
+      },
+      {
+        "partyName": "Sosialistisk Venstreparti",
+        "partyShorthand": "SV",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Gudrun Lidal",
+            "location": "Stjørdal",
+            "age": 54,
+            "email": "gudrun.lidal@stjordal.kommune.no",
+            "phone": "92263047",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Gjermund Eggen",
+            "location": "Snåsa",
+            "age": 33,
+            "email": "gjermund.eggen@gmail.com",
+            "phone": "46934934",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Venstre",
+        "partyShorthand": "V",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Jens Fredrik Skjelstad",
+            "location": "Steinkjer",
+            "age": 27,
+            "email": "jens.fredrik.skjelstad@hotmail.com",
+            "phone": "93898012",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Torgrim Hallem",
+            "location": "Stjørdal",
+            "age": 50,
+            "email": "torgrim.hallem@hotmail.com",
+            "phone": "46827413",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Miljøpartiet de Grønne",
+        "partyShorthand": "MDG",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Oda Indgaard",
+            "location": "Oslo/Levanger",
+            "age": 37,
+            "email": "odaindgaard@gmail.com",
+            "phone": "47614349",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Frank Runar Gansmo",
+            "location": "Malvik/Namsos",
+            "age": 51,
+            "email": "runar.gansmo@malvik.kommune.no",
+            "phone": "41521919",
+            "hasRealisticChance": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "constituencyName": "Nordland",
+    "parties": [
+      {
+        "partyName": "Arbeiderpartiet",
+        "partyShorthand": "AP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Bjørnar Selnes Skjæran",
+            "location": "Lurøy",
+            "age": 58,
+            "email": "bjornar.selnes.skjeran@stortinget.no",
+            "phone": "90660573",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Mona Nilsen",
+            "location": "Narvik",
+            "age": 51,
+            "email": "mona.nilsen.ap@stortinget.no",
+            "phone": "97650452",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Øystein Mathisen",
+            "location": "Bodø",
+            "age": 33,
+            "email": "oystein.mathisen@stortinget.no",
+            "phone": "92064910",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 4,
+            "name": "Kari Baadstrand Sandnes",
+            "location": "Vestvågøy",
+            "age": 55,
+            "email": "kani.sandnes@helse-nord.no",
+            "phone": "41224994",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Fremskrittspartiet",
+        "partyShorthand": "FrP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Dagfinn Olsen",
+            "location": "Lødingen",
+            "age": 58,
+            "email": "dagfinn-henrik.olsen@stortinget.no",
+            "phone": "41225671",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Bjørn Larsen",
+            "location": "Vefsn",
+            "age": 57,
+            "email": "bjorn@ekvipasjen.no",
+            "phone": "91582428",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Kassandra Petsa",
+            "location": "Fauske",
+            "age": 30,
+            "email": "kassandrapetsas@hotmail.com",
+            "phone": "98460927",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 4,
+            "name": "Ingunn Skogmo-Nordvang",
+            "location": "Bodø",
+            "age": 49,
+            "email": "ingunn.pauline.skogmo-nordvang@bodobystyre.no",
+            "phone": "47338481",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Høyre",
+        "partyShorthand": "H",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Bård Ludvig Thorheim",
+            "location": "Bodø",
+            "age": 48,
+            "email": "Baardludvig@hotmail.com",
+            "phone": "97545181",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Anita Solli",
+            "location": "Rana",
+            "age": 59,
+            "email": "anita.sollie@rana.kommune.no",
+            "phone": "99487626",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Eivind Holst",
+            "location": "Vågan",
+            "age": 54,
+            "email": "eivindholst@gmail.com",
+            "phone": "91715427",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 4,
+            "name": "Maria Strand Munkhaug",
+            "location": "UH", // Unge Høyre
+            "age": 22,
+            "email": "maria.strand.munkhaug@stortinget.no",
+            "phone": "41202274",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Kristelig Folkeparti",
+        "partyShorthand": "KrF",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Linda Helen Haukland",
+            "location": "Bodø",
+            "age": 52,
+            "email": "linhau@nfk.no",
+            "phone": "93265777",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Boy-Arne Buyle",
+            "location": "Narvik",
+            "age": 52,
+            "email": "boy-arne.buyle@uit.no",
+            "phone": "99106186",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Rødt",
+        "partyShorthand": "R",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Geir Jørgensen",
+            "location": "Hadsel",
+            "age": 52,
+            "email": "geir-asbjorn.jorgensen@stortinget.no",
+            "phone": "94015235",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Synne Høyforsslett Bjørbæk",
+            "location": "Bodø",
+            "age": 40,
+            "email": "synnehb@gmail.com",
+            "phone": "90749154",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Senterpartiet",
+        "partyShorthand": "SP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Bent-Joacim Bentzen",
+            "location": "Hadsel",
+            "age": 34,
+            "email": "bebe@stortinget.no",
+            "phone": "41769781",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Trine Fagerli",
+            "location": "Leirfjord",
+            "age": 42,
+            "email": "fagervikatiltie@gmail.com",
+            "phone": "97066633",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 3,
+            "name": "Siv Mossleth",
+            "location": "Saltdal",
+            "age": 58,
+            "email": "siv.mossleth@stortinget.no",
+            "phone": "41477850",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Sosialistisk Venstreparti",
+        "partyShorthand": "SV",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Christian Torset",
+            "location": "Sortland",
+            "age": 54,
+            "email": "ctorseth@gmail.com",
+            "phone": "98416875",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Åshild Pettersen",
+            "location": "Leirfjord",
+            "age": 38,
+            "email": "aashild.pettersen@gmail.com",
+            "phone": "90208124",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Venstre",
+        "partyShorthand": "V",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Tarjei Svalbjørg",
+            "location": "Steigen",
+            "age": 25,
+            "email": "tarjei.svalbjorg@venstre.no",
+            "phone": "96890727",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Ida Gudding Johnsen",
+            "location": "Bodø",
+            "age": 47,
+            "email": "idajohnsa@gmail.com",
+            "phone": "95125771",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Miljøpartiet de Grønne",
+        "partyShorthand": "MDG",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Svein Hammer",
+            "location": "Hemnes",
+            "age": 58,
+            "email": "svein.hammer@gmail.com",
+            "phone": "99041806",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Malin Torset Abrahamsen",
+            "location": "Andøy",
+            "age": 42,
+            "email": "malin.abrahamsen@mdg.no",
+            "phone": "91854750",
+            "hasRealisticChance": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "constituencyName": "Oppland",
+    "parties": [
+      {
+        "partyName": "Arbeiderpartiet",
+        "partyShorthand": "AP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Rune Støstad",
+            "location": "Nord-Fron",
+            "age": 53,
+            "email": "rune@stostad.no",
+            "phone": "91864767",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Anne Hagenborg",
+            "location": "Søndre Land",
+            "age": 54,
+            "email": "anne.hagenborg@sondre-land.kommune.no",
+            "phone": "99036540",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Linnea Lie Holen",
+            "location": "Åmot", // Åmot er i Nordre Land, bruker det som står
+            "age": 24,
+            "email": "linnea.lie.holen@hotmail.com",
+            "phone": "98548027",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Fremskrittspartiet",
+        "partyShorthand": "FrP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Lars Rem",
+            "location": "Østre Toten",
+            "age": 58,
+            "email": "larsrem@hotmail.com",
+            "phone": "46828962",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Finn Krokeide",
+            "location": "Gjøvik",
+            "age": 59,
+            "email": "finn.krokeide@stortinget.no",
+            "phone": "97639463", // Korrigert fra bilde
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 3,
+            "name": "Jul Tore Kittelssrød", // Navn korrigert fra bilde
+            "location": "Gran",
+            "age": 59,
+            "email": "jultore@gmail.com",
+            "phone": "91821016",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Høyre",
+        "partyShorthand": "H",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Kari-Anne Jønnes",
+            "location": "Gran",
+            "age": 52,
+            "email": "Kari-Anne.Jonnes@stortinget.no",
+            "phone": "90947339",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Hans Olav Sundfør",
+            "location": "Lillehammer",
+            "age": 54,
+            "email": "hans.olav.sundfor@lillehammer.kommune.no",
+            "phone": "90565465",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 3,
+            "name": "Lars Elsrud",
+            "location": "Sør-Aurdal",
+            "age": 58,
+            "email": "l-elsrud@online.no",
+            "phone": "92691736",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Kristelig Folkeparti",
+        "partyShorthand": "KrF",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Jytte Sonne",
+            "location": "Lillehammer",
+            "age": 71,
+            "email": "jyttesonnesen@gmail.com", // Korrigert epost fra bilde
+            "phone": "98648420",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Marte Rebecca Dæhlen",
+            "location": "Vestre Toten",
+            "age": 36,
+            "email": "Marterebecca@icloud.com",
+            "phone": "90959692",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Rødt",
+        "partyShorthand": "R",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Turid Thomassen",
+            "location": "Lillehammer",
+            "age": 59,
+            "email": "turid.thomassen@gmail.com",
+            "phone": "90510362",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Finn Olav Rolijordet", // Navn korrigert fra bilde
+            "location": "Gjøvik",
+            "age": 68,
+            "email": "finno@raudt.no",
+            "phone": "90516931",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Senterpartiet",
+        "partyShorthand": "SP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Bengt Fasteraune",
+            "location": "Dovre",
+            "age": 60,
+            "email": "bengt.fasteraune@stortinget.no",
+            "phone": "47465370", // Korrigert fra bilde
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Kjersti Bjørnstad",
+            "location": "Gjøvik",
+            "age": 40,
+            "email": "bjornstad.kjersti@gmail.com",
+            "phone": "48074760",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 3,
+            "name": "Ola Tore Dokken",
+            "location": "Nordre Land",
+            "age": 58,
+            "email": "ola.t.dokken@nordre-land.kommune.no",
+            "phone": "90069043",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Sosialistisk Venstreparti",
+        "partyShorthand": "SV",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Anne Lise Fredlund",
+            "location": "Lillehammer",
+            "age": 42,
+            "email": "anne.lise.fredlund@sv.no",
+            "phone": "97755141",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Hans Olav Lahlum",
+            "location": "Gjøvik",
+            "age": 51,
+            "email": "hansolahlum@gmail.com",
+            "phone": "95758286",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Venstre",
+        "partyShorthand": "V",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Kristin Jess-Bakken",
+            "location": "Østre Toten",
+            "age": 39,
+            "email": "kristin@jess-bakken.com",
+            "phone": null, // Mangler i bilde
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Stig Vaagan",
+            "location": "Hamar",
+            "age": 53,
+            "email": "stigvaagan@hotmail.com",
+            "phone": "91542214",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Miljøpartiet de Grønne",
+        "partyShorthand": "MDG",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Johannes Wahl Gran",
+            "location": "Lillehammer",
+            "age": 35,
+            "email": "johannes.wahl.gran@mdg.no",
+            "phone": "98402344",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Marit Nythun Utheim",
+            "location": "Valdres", // Valdres er en region, ikke kommune. Bruker det som står.
+            "age": 62,
+            "email": "maritnu@hotmail.com",
+            "phone": "46912978",
+            "hasRealisticChance": false
+          }
+        ]
+      }
+    ]
+  }
+    {
+    "constituencyName": "Oslo",
+    "parties": [
+      {
+        "partyName": "Arbeiderpartiet",
+        "partyShorthand": "AP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Jonas Gahr Støre",
+            "location": "Oslo",
+            "age": 64,
+            "email": null, // Blank in image
+            "phone": null, // Blank in image
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Kamzy Gunaratnam",
+            "location": "Oslo",
+            "age": 36,
+            "email": "kamzy.gunaratnam@stortinget.no",
+            "phone": null, // Blank in image
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Jan Christian Vestre",
+            "location": "Oslo",
+            "age": 38,
+            "email": null, // Blank in image
+            "phone": null, // Blank in image
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 4,
+            "name": "Agnes Nærland Viljugrein",
+            "location": "Oslo",
+            "age": 24,
+            "email": "agnes.viljugrein@gmail.com",
+            "phone": null, // Blank in image
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 5,
+            "name": "Frode Jacobsen",
+            "location": "Oslo",
+            "age": 56,
+            "email": "frode.jacobsen@stortinget.no",
+            "phone": "99523495",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 6,
+            "name": "Trine Lise Sundnes",
+            "location": "Oslo",
+            "age": 55,
+            "email": "trine.lise.sundnes@stortinget.no",
+            "phone": null, // Blank in image
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 7,
+            "name": "Farukh Qureshi",
+            "location": "Oslo",
+            "age": 39,
+            "email": "Farukh.qureshi@kriminalomsorg.no",
+            "phone": "47391608",
+            "hasRealisticChance": false
+          },
+          {
+              "rank": 8,
+              "name": "Malin Bye Sørensen",
+              "location": "Oslo",
+              "age": null, // Blank in image
+              "email": "malinbye@gmail.com",
+              "phone": null, // Blank in image
+              "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Fremskrittspartiet",
+        "partyShorthand": "FrP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Tor Mikkel Vara",
+            "location": "Oslo",
+            "age": 60,
+            "email": "tmm-wara.no", // Incomplete in image, using as is
+            "phone": "91702191",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Aina Stenersen", // Korrigert rank
+            "location": "Oslo",
+            "age": 41,
+            "email": null, // Korrigert - Blank in image
+            "phone": null, // Blank in image
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Simen Velle", // Korrigert rank
+            "location": "Oslo",
+            "age": 24,
+            "email": "simen.velle@fpu.no",
+            "phone": "40621476",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 4,
+            "name": "Angelika Bjørnerud",
+            "location": "Oslo",
+            "age": 19,
+            "email": "angelika.bjornerud@fpu.no",
+            "phone": "94177808",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Høyre",
+        "partyShorthand": "H",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Ine Marie Eriksen Søreide",
+            "location": "Oslo",
+            "age": 48,
+            "email": "ine-marie.eriksen.soreide@stortinget.no",
+            "phone": null, // Blank in image
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Nikolai Astrup",
+            "location": "Oslo",
+            "age": 47,
+            "email": "nikolai.astrup@stortinget.no",
+            "phone": null, // Blank in image
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Mudassar Kapur",
+            "location": "Oslo",
+            "age": 49,
+            "email": "mudassar.kapur@stortinget.no",
+            "phone": null, // Blank in image
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 4,
+            "name": "Mathilde Tybring-Gjedde",
+            "location": "Oslo",
+            "age": 33,
+            "email": "mty@stortinget.no",
+            "phone": "95066963",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 5,
+            "name": "Ola Svenneby",
+            "location": "Oslo",
+            "age": 28,
+            "email": "ola@svenneby.no",
+            "phone": null, // Blank in image
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 6,
+            "name": "Heidi Nordby Lunde",
+            "location": "Oslo",
+            "age": 51,
+            "email": "hnl@stortinget.no",
+            "phone": "40019747",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 7,
+            "name": "Stefan Magnus Brittmark Heggelund",
+            "location": "Oslo",
+            "age": 41,
+            "email": "stefanheggelund@gmail.com",
+            "phone": "92098521",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 8,
+            "name": "Michael Tetzschner",
+            "location": "Oslo",
+            "age": 71,
+            "email": "michael@tetzschner.com",
+            "phone": "91329500",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Kristelig Folkeparti",
+        "partyShorthand": "KrF",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Øyvind Håbrekke",
+            "location": "Oslo",
+            "age": 56,
+            "email": "oyvind.habrekke@oslobystyre.no",
+            "phone": "97062368",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Ragnhild Aadland Høen",
+            "location": "Oslo",
+            "age": 49,
+            "email": "Ragnhild.Aadland.Hoen@mf.no",
+            "phone": "98850488",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Rødt",
+        "partyShorthand": "R",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Seher Aydar",
+            "location": "Oslo",
+            "age": 35,
+            "email": "seher.aydar@stortinget.no",
+            "phone": "94302774",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Bjørnar Moxnes",
+            "location": "Oslo",
+            "age": 43,
+            "email": "bjornar.moxnes@stortinget.no",
+            "phone": null, // Blank in image
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Stine Westrum",
+            "location": "Oslo",
+            "age": 47,
+            "email": "stine@roedt.no",
+            "phone": "92244717",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Senterpartiet",
+        "partyShorthand": "SP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Sigve Bolstad",
+            "location": "Oslo",
+            "age": 60,
+            "email": "sigve.bolstad@gmail.com",
+            "phone": "46414329",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Synne Lerhol",
+            "location": "Oslo",
+            "age": 34,
+            "email": "synne.lerhol@gmail.com",
+            "phone": "48093590",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Sosialistisk Venstreparti",
+        "partyShorthand": "SV",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Marian Hussein",
+            "location": "Oslo",
+            "age": 39,
+            "email": "marian.abdi.hussein@stortinget.no",
+            "phone": "41348385",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Sunniva Holmås Eidsvoll",
+            "location": "Oslo",
+            "age": 41,
+            "email": "sunniva.eidsvoll@oslobystyre.no",
+            "phone": "95938000",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Andreas Sjalg Unneland",
+            "location": "Oslo",
+            "age": 31,
+            "email": "andreas-sjalg.unneland@stortinget.no",
+            "phone": "93862054",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 4,
+            "name": "Oslo Brynild Ellingsen", // Using name as is from image
+            "location": "Oslo",
+            "age": 53,
+            "email": "cbe@online.no",
+            "phone": "93032227",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Venstre",
+        "partyShorthand": "V",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Guri Melby",
+            "location": "Oslo",
+            "age": 44,
+            "email": "guri.melby@stortinget.no",
+            "phone": null, // Blank in image
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Grunde Kreken Almeland",
+            "location": "Oslo",
+            "age": 34,
+            "email": "grunde.almeland@venstre.no",
+            "phone": null, // Blank in image
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Marit Kristine Vea",
+            "location": "Oslo",
+            "age": 39,
+            "email": null, // Blank in image
+            "phone": "97723431",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Miljøpartiet de Grønne",
+        "partyShorthand": "MDG",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Ingrid Liland",
+            "location": "Oslo",
+            "age": 34,
+            "email": "ingrid.liland@mdg.no",
+            "phone": null, // Blank in image
+            "hasRealisticChance": true
+          },
+           {
+            "rank": 2,
+            "name": "Arild Hermstad", // Korrigert - data finnes
+            "location": "Oslo",
+            "age": 57,
+            "email": "arild.hermstad@mdg.no",
+            "phone": null, // Blank in image
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 3,
+            "name": "Margit Martinsen Bye", // Korrigert - data finnes
+            "location": "Oslo",
+            "age": 22,
+            "email": "margit@mdg.no",
+            "phone": null, // Blank in image
+            "hasRealisticChance": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "constituencyName": "Rogaland",
+    "parties": [
+      {
+        "partyName": "Arbeiderpartiet",
+        "partyShorthand": "AP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Andreas Bjelland Eriksen",
+            "location": "Stavanger",
+            "age": 33,
+            "email": null, // Blank in image
+            "phone": null, // Blank in image
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Ruth Mariann Hop",
+            "location": "Karmøy",
+            "age": 50,
+            "email": "ruth.mariann.hop@hotmail.com",
+            "phone": "95898879",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Julia Eikeland",
+            "location": "AUF",
+            "age": 24,
+            "email": "julia.eikeland@hotmail.com",
+            "phone": "45222049",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 4,
+            "name": "Morten Sandanger",
+            "location": "Sandnes",
+            "age": 57,
+            "email": "morten.sandanger@fellesforbundet.no",
+            "phone": "45402983",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 5,
+            "name": "Solveig Vik",
+            "location": "Haugesund",
+            "age": 21,
+            "email": "solveig.gundersen.vik@rogfk.no",
+            "phone": "48104514",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Fremskrittspartiet",
+        "partyShorthand": "FrP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Kristoffer Sivertsen",
+            "location": "Stavanger",
+            "age": 36,
+            "email": "Kristoffer.sivertsen@stavanger.kommune.no",
+            "phone": "47602843",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Pål Morten Borgli",
+            "location": "Sandnes",
+            "age": 57,
+            "email": "pal.morten.borgli@sandnespolitiker.no",
+            "phone": "91811055",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "May Helen Hetland Ervik",
+            "location": "Eigersund",
+            "age": 55,
+            "email": "may.helen.hetland.ervik@rogfk.no",
+            "phone": "99338850",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 4,
+            "name": "Rune Midtun",
+            "location": "Karmøy",
+            "age": 51,
+            "email": "rune.midtun@3gmail.com", // Using as is from image
+            "phone": "95060895",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 5,
+            "name": "Kristin Lode",
+            "location": "Stavanger",
+            "age": 22,
+            "email": "kristin.s.lode@gmail.com",
+            "phone": "97192107",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 6,
+            "name": "Svein Erik Indbjo",
+            "location": "Haugesund",
+            "age": 53,
+            "email": "svein.erik.indbjo@rogfk.no",
+            "phone": "97588763",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Høyre",
+        "partyShorthand": "H",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Margret Hagerup",
+            "location": "Time",
+            "age": 44,
+            "email": "margret.hagerup@stortinget.no",
+            "phone": "47611670",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Aleksander Stokkebø",
+            "location": "Stavanger",
+            "age": 30,
+            "email": "aleksander.stokkebo@stortinget.no",
+            "phone": "95747143",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Lasse Fredheim",
+            "location": "Haugesund",
+            "age": 28,
+            "email": "lasse.anfinsen.fredheim@rogfk.no",
+            "phone": "91789718",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 4,
+            "name": "Sanna Rana",
+            "location": "Sandnes",
+            "age": 22,
+            "email": "sannarana@lyse.net",
+            "phone": "47860097",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 5,
+            "name": "Margrethe Vika",
+            "location": "Sola",
+            "age": 51,
+            "email": "Margrethe.vika@gmail.com",
+            "phone": "41515597",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Kristelig Folkeparti",
+        "partyShorthand": "KrF",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Jonas Andersen Sayed",
+            "location": "Sokndal",
+            "age": 27,
+            "email": "jonas.sayed@hotmail.no",
+            "phone": "46961590",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Hadle Rasmus Bjuland",
+            "location": "Hå",
+            "age": 24,
+            "email": "hrb@krf.no",
+            "phone": "90363690",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Rødt",
+        "partyShorthand": "R",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Mimir Kristjánsson",
+            "location": "Stavanger",
+            "age": 38,
+            "email": "mimir.kristjansson@stortinget.no",
+            "phone": "93269961",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Naomi Wessel",
+            "location": "Haugesund",
+            "age": 41,
+            "email": "naomi.wessel@rogfk.no",
+            "phone": "90277306",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Senterpartiet",
+        "partyShorthand": "SP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Geir Pollestad",
+            "location": "Time",
+            "age": 46,
+            "email": "gp@stortinget.no",
+            "phone": "40228595",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Lisa Marie Ness Klungland",
+            "location": "Vindafjord",
+            "age": 31,
+            "email": "lisa.marie.ness.klungland@stortinget.no",
+            "phone": "45436750",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Sosialistisk Venstreparti",
+        "partyShorthand": "SV",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Ingrid Fiskaa",
+            "location": "Time",
+            "age": 47,
+            "email": "ingrid.fiskaa@gmail.com",
+            "phone": "97016049",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Reidar Sand",
+            "location": "Suldal",
+            "age": 25,
+            "email": "reidar.sand@suldal.kommune.no",
+            "phone": "92473026",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Venstre",
+        "partyShorthand": "V",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Kjartan Alexander Lunde",
+            "location": "Stavanger",
+            "age": 38,
+            "email": "kjartan.lunde@venstre.no",
+            "phone": "95709534",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Sondre Undheim Lokøy",
+            "location": "Time",
+            "age": 22,
+            "email": "sondre.lokoy@venstre.no",
+            "phone": "41590908",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Miljøpartiet de Grønne",
+        "partyShorthand": "MDG",
+        "candidates": [ // Rows are blank in the image
+            {
+              "rank": 1,
+              "name": null,
+              "location": null,
+              "age": null,
+              "email": null,
+              "phone": null,
+              "hasRealisticChance": false
+            },
+            {
+              "rank": 2,
+              "name": null,
+              "location": null,
+              "age": null,
+              "email": null,
+              "phone": null,
+              "hasRealisticChance": false
+            }
+        ]
+      }
+    ]
+  },
+  {
+    "constituencyName": "Sogn og Fjordane",
+    "parties": [
+      {
+        "partyName": "Arbeiderpartiet",
+        "partyShorthand": "AP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Torbjørn Vereide",
+            "location": null, // Blank in image
+            "age": 36,
+            "email": "torbjorn.vereide@stortinget.no",
+            "phone": null, // Blank in image
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Anette Stegegjerdet Norberg",
+            "location": "Luster",
+            "age": 38,
+            "email": "anette.stegegjerdet@hotmail.com",
+            "phone": "97759069",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 3,
+            "name": "Frida Hegranes Selvik",
+            "location": "Kinn",
+            "age": 20,
+            "email": null, // Blank in image
+            "phone": "95124542",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Fremskrittspartiet",
+        "partyShorthand": "FrP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Stig Even Lillestøl",
+            "location": "Nordfjordeid",
+            "age": 28,
+            "email": "stig-even.lillestol@fpu.no",
+            "phone": null, // Blank in image
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Rita Navarsete",
+            "location": "Sogndal",
+            "age": 61,
+            "email": "ritanavarete@hotmail.com",
+            "phone": "48054371",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 3,
+            "name": "Bjarne Holme",
+            "location": "Kinn",
+            "age": 60,
+            "email": "bjarne.holme@avinor.no",
+            "phone": "91519168",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Høyre",
+        "partyShorthand": "H",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Olve Grotle",
+            "location": "Sunnfjord",
+            "age": 61,
+            "email": "olve.grotle@stortinget.no",
+            "phone": "95207929",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Sonja Merethe Øvre-Flo",
+            "location": "Stryn",
+            "age": 53,
+            "email": "sonja@flogardsmat.no",
+            "phone": "97521188",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 3,
+            "name": "Elias Roko Eide",
+            "location": "Sunnfjord",
+            "age": 23,
+            "email": "elias.eide@stortinget.no",
+            "phone": "48201141",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Kristelig Folkeparti",
+        "partyShorthand": "KrF",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Jonatan Hurthi",
+            "location": "Luster",
+            "age": 21,
+            "email": "jona-hur@online.no",
+            "phone": "48134998",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Ragnhild Stav",
+            "location": "Fjaler",
+            "age": 37,
+            "email": "raanhild@gmail.com",
+            "phone": "90967627",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Rødt",
+        "partyShorthand": "R",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Rita Tønning",
+            "location": "Sunnfjord",
+            "age": 60,
+            "email": "rita_tonning@msn.com",
+            "phone": "95419888",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Bjørn Christian Weinbach",
+            "location": "Sogndal",
+            "age": 28,
+            "email": "bcwein343@gmail.com",
+            "phone": "45882126",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Senterpartiet",
+        "partyShorthand": "SP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Erling Sande",
+            "location": "Gloppen",
+            "age": 46,
+            "email": "erlings78@hotmail.com",
+            "phone": "90972531",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Aleksander Øren Heen",
+            "location": null, // Blank in image
+            "age": 35,
+            "email": "arhe@stortinget.no",
+            "phone": "91134842",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Sosialistisk Venstreparti",
+        "partyShorthand": "SV",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Hege Lothe",
+            "location": "Gloppen",
+            "age": 53,
+            "email": "hege.lothe@stortinget.no",
+            "phone": "92648348",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Alice Vie",
+            "location": "Askvoll",
+            "age": 36,
+            "email": null, // Blank in image
+            "phone": "95770087",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Venstre",
+        "partyShorthand": "V",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Alfred Bjørlo",
+            "location": "Stad",
+            "age": 53,
+            "email": "alfred.jens.bjorlo@stortinget.no",
+            "phone": "480 82 652", // Using formatting from image
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Gunhild Berge Stang",
+            "location": "Fjaler",
+            "age": 51,
+            "email": "gunhildalis18@gmail.com",
+            "phone": "976 53 785", // Using formatting from image
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Miljøpartiet de Grønne",
+        "partyShorthand": "MDG",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Marius Langballe Dalin",
+            "location": "Sunnfjord",
+            "age": 53,
+            "email": "marius.dalin@mdg.no",
+            "phone": "48046592",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Mariel Eikeset Koren",
+            "location": "Gloppen",
+            "age": 37,
+            "email": "marielkoren@hotmail.com",
+            "phone": "90942503",
+            "hasRealisticChance": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "constituencyName": "Sør-Trøndelag",
+    "parties": [
+      {
+        "partyName": "Arbeiderpartiet",
+        "partyShorthand": "AP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Trond Giske",
+            "location": "Trondheim",
+            "age": 58,
+            "email": null, // Blank in image
+            "phone": null, // Blank in image
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Anniken Refseth",
+            "location": "Malvik",
+            "age": 49,
+            "email": "anniken.refseth@styrke.no",
+            "phone": "91653736",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Isak Busch",
+            "location": "Røros",
+            "age": 36,
+            "email": "isak.busch@roros.kommune.no",
+            "phone": "45207674",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 4,
+            "name": "Kristine Solli",
+            "location": "Orkland",
+            "age": 35,
+            "email": "kristinels@hotmail.com",
+            "phone": "41471957",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 5,
+            "name": "Kjell Arve Aspaas",
+            "location": "Trondheim",
+            "age": 54,
+            "email": "kjell.arve.aspaas@fellesforbundet.org",
+            "phone": "48124716",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Fremskrittspartiet",
+        "partyShorthand": "FrP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Lill Harriet Sandaune",
+            "location": "Malvik",
+            "age": 51,
+            "email": "lillsa@trondelagfylke.no",
+            "phone": "91644419",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Rikard Spets",
+            "location": "Malvik",
+            "age": 54,
+            "email": "rikard.spets@gmail.com",
+            "phone": "90761878",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Aleksander Søreng",
+            "location": "Frøya",
+            "age": 50,
+            "email": "aleksander.soreng@froya.kommune.no",
+            "phone": "93856851",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Høyre",
+        "partyShorthand": "H",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Mari Holm Lønseth",
+            "location": "Trondheim",
+            "age": 33,
+            "email": "mhl@stortinget.no",
+            "phone": "40000178",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Henrik Kierulf",
+            "location": "Trondheim",
+            "age": 44,
+            "email": "henki@trondelagfylke.no",
+            "phone": "41215444",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Ingvill Dalseg",
+            "location": "Oppdal",
+            "age": 49,
+            "email": "ingda@trondelagfylke.no",
+            "phone": "92690475",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 4,
+            "name": "Kristin Furunes Strømskag",
+            "location": "Frøya",
+            "age": 46,
+            "email": "kristin.stromskag@froya.kommune.no",
+            "phone": "48244868",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Kristelig Folkeparti",
+        "partyShorthand": "KrF",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Majen Helen Sævik",
+            "location": "Trondheim",
+            "age": 55,
+            "email": "majen.helen.savik@trondheim.kommune.no",
+            "phone": "93093307",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Edvard Kunzendorf",
+            "location": "Malvik",
+            "age": 28,
+            "email": "edvard.kunzendorf@stortinget.no",
+            "phone": "94820705",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Rødt",
+        "partyShorthand": "R",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Hege Bae Nyholt",
+            "location": "Trondheim",
+            "age": 46,
+            "email": "hege.bae.nyholt@stortinget.no",
+            "phone": null, // Blank in image
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Kai-Helge Nilsen",
+            "location": "Trondheim",
+            "age": 40,
+            "email": "kainilsen@live.no",
+            "phone": "92261847",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Senterpartiet",
+        "partyShorthand": "SP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Maren Grøthe",
+            "location": "Melhus",
+            "age": 23,
+            "email": "marengrothe@outlook.com",
+            "phone": "96046535",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Ole Herman Sveian",
+            "location": "Malvik",
+            "age": 50,
+            "email": "olesv@trondelagfylke.no",
+            "phone": "91603527",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Sosialistisk Venstreparti",
+        "partyShorthand": "SV",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Lars Haltbrekken",
+            "location": "Trondheim",
+            "age": 54,
+            "email": "Lars.Haltbrekken@stortinget.no",
+            "phone": "91612191",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Hilde Marie Gaebpie Danielsen",
+            "location": "Røros",
+            "age": 43,
+            "email": "hildemarja@hotmail.com",
+            "phone": "41459682",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Venstre",
+        "partyShorthand": "V",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Lars Øye Brandsås",
+            "location": "Trondheim",
+            "age": 26,
+            "email": "lars.brandsas@venstre.no",
+            "phone": "48207631",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Tove Eivindsen",
+            "location": "Trondheim",
+            "age": 47,
+            "email": "tove.eivindsen@venstre.no",
+            "phone": "97113297",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Miljøpartiet de Grønne",
+        "partyShorthand": "MDG",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Jonas Ali Werket Ghanizadeh",
+            "location": "Trondheim",
+            "age": 36,
+            "email": "jonasali@gmail.com",
+            "phone": "41358159",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Astrid Rem",
+            "location": "Trondheim",
+            "age": 34,
+            "email": "astrid.rem@mdg.no",
+            "phone": "98099582",
+            "hasRealisticChance": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "constituencyName": "Telemark",
+    "parties": [
+      {
+        "partyName": "Arbeiderpartiet",
+        "partyShorthand": "AP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Terje Aasland",
+            "location": "Skien",
+            "age": 60,
+            "email": null, // Blank in image
+            "phone": "47701242",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Lene Vågslid",
+            "location": "Dalen",
+            "age": 39,
+            "email": "lene.vagslid@stortinget.no",
+            "phone": "97513592",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Jone Blikra",
+            "location": "Kragerø",
+            "age": 62,
+            "email": "jone.blikra@kragero.kommune.no",
+            "phone": "92462989",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Fremskrittspartiet",
+        "partyShorthand": "FrP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Bård Hoksrud",
+            "location": "Bamble",
+            "age": 52,
+            "email": "bard.hoksrud@stortinget.no",
+            "phone": "90919838",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Line Marlene Haugen",
+            "location": "Notodden",
+            "age": 32,
+            "email": "linehaugen93@outlook.com",
+            "phone": "94896796",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Jørn Inge Næss",
+            "location": "Skien",
+            "age": 58,
+            "email": "j-i-naes@online.no",
+            "phone": "91712182",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Høyre",
+        "partyShorthand": "H",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Mahmoud Farahmand",
+            "location": "Porsgrunn",
+            "age": 45,
+            "email": "mahmoud.farahmand@stortinget.no",
+            "phone": "40440819",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Helene Røsholt",
+            "location": "Skien",
+            "age": 37,
+            "email": "Helene.rosholt@hotmail.com",
+            "phone": "99777117",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 3,
+            "name": "Tonje Harbek Brokke",
+            "location": "Notodden",
+            "age": 53,
+            "email": "tonje.brokke@usn.no",
+            "phone": "45425111",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Kristelig Folkeparti",
+        "partyShorthand": "KrF",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Hans Edvard Askjer",
+            "location": "Skien",
+            "age": 63,
+            "email": "hans.edvard.askjer@telemarkfylke.no",
+            "phone": "95041887",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Anders Rambekk",
+            "location": "Porsgrunn",
+            "age": 48,
+            "email": "anders@reklameservice.as",
+            "phone": "93218985",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Rødt",
+        "partyShorthand": "R",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Tobias Drevland Lund",
+            "location": "Kragerø",
+            "age": 28,
+            "email": "tobias.drevland.lund@stortinget.no",
+            "phone": "90577024",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Charlotte Therkelsen",
+            "location": "Kragerø",
+            "age": 43,
+            "email": "charlotte.therkelsen@kragero.kommune.no",
+            "phone": "92064797",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Senterpartiet",
+        "partyShorthand": "SP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Åslaug Sem-Jacobsen",
+            "location": "Notodden",
+            "age": 53,
+            "email": "aslaug.sem-jacobsen@stortinget.no",
+            "phone": "92023316",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Karsten Tønnevold Fiane",
+            "location": "Bamble",
+            "age": 40,
+            "email": "karsten.t.fiane@bamble.kommune.no",
+            "phone": "95877475",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Sosialistisk Venstreparti",
+        "partyShorthand": "SV",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Vilde Berg-Nilsen",
+            "location": "Porsgrunn",
+            "age": 26,
+            "email": "vildebergnilsen@gmail.com",
+            "phone": "95490065",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Jan Petter Gurholt",
+            "location": "Siljan",
+            "age": 53,
+            "email": "jan.petter.gurholt@siljan.kommune.no",
+            "phone": "93236604",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Venstre",
+        "partyShorthand": "V",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Erik Johannessen",
+            "location": "Skien",
+            "age": 60,
+            "email": "erik.johannessen@stemvenstre.no",
+            "phone": "97141888",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Evy Beate Stykket",
+            "location": "Bø",
+            "age": 50,
+            "email": "evytveter@gmail.com",
+            "phone": "47712035",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Miljøpartiet de Grønne",
+        "partyShorthand": "MDG",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Per-Erik Schulze",
+            "location": "Kragerø",
+            "age": 52,
+            "email": "pererik@mdg.no",
+            "phone": "41856697",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Mona Nicolaysen",
+            "location": "Skien",
+            "age": 53,
+            "email": "monalevina@gmail.com",
+            "phone": "48024829",
+            "hasRealisticChance": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "constituencyName": "Troms",
+    "parties": [
+      {
+        "partyName": "Arbeiderpartiet",
+        "partyShorthand": "AP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Cecilie Myrseth",
+            "location": "Tromsø",
+            "age": 40,
+            "email": null, // Blank in image
+            "phone": null, // Blank in image
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Nils-Ole Foshaug",
+            "location": "Målselv",
+            "age": 54,
+            "email": "nils-ole.foshaug@stortinget.no",
+            "phone": "99163880",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Tom Einar Karlsen",
+            "location": "Harstad",
+            "age": 43,
+            "email": "tom.einar.karlsen@stortinget.no",
+            "phone": null, // Blank in image
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 4,
+            "name": "Hilde Anita Nyvoll",
+            "location": "Nordreisa",
+            "age": 48,
+            "email": "hilde.nyvoll@nordreis", // Incomplete in image, using as is
+            "phone": "91807130",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Fremskrittspartiet",
+        "partyShorthand": "FrP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Per-Willy Amundsen",
+            "location": "Harstad",
+            "age": 54,
+            "email": "per-willy.amundsen@stortinget.no",
+            "phone": null, // Blank in image
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Kristian Eilertsen",
+            "location": "Harstad",
+            "age": 30,
+            "email": "kristian.eilertsen@tromsfylke.no",
+            "phone": "90214524",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Eirik Johansen",
+            "location": "Tromsø",
+            "age": 48,
+            "email": "eiri-joh@online.no",
+            "phone": "95091092",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Høyre",
+        "partyShorthand": "H",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Erlend Svardal Bøe",
+            "location": "Tromsø",
+            "age": 32,
+            "email": "erlend.svardal.boe@stortinget.no",
+            "phone": null, // Blank in image
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Nina Dons-Hansen",
+            "location": "Harstad",
+            "age": 53,
+            "email": "Ninamdons@gmail.com",
+            "phone": "90963623",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 3,
+            "name": "Martin Nymo",
+            "location": "Målselv",
+            "age": 52,
+            "email": "martin.nymo@malselv.kommune.no",
+            "phone": "90103998",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Kristelig Folkeparti",
+        "partyShorthand": "KrF",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Nils Einar Samuelsen",
+            "location": "Lyngen",
+            "age": 46,
+            "email": "nils.samuelsen@tromsfylke.no",
+            "phone": "90561332",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Turid Anita Amundsen",
+            "location": "Harstad",
+            "age": 46,
+            "email": "amundsenturid@hotmail.com",
+            "phone": "41731313",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Rødt",
+        "partyShorthand": "R",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Hanne Stenvaag",
+            "location": "Tromsø",
+            "age": 53,
+            "email": "hanstenv@online.no",
+            "phone": "99331705",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Stine Jensine Nordnes",
+            "location": "Harstad",
+            "age": 40,
+            "email": "stinejensinenordnes@gmail.com",
+            "phone": "92408154",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Senterpartiet",
+        "partyShorthand": "SP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Sandra Konstance Nygård Borch",
+            "location": "Tromsø",
+            "age": 36,
+            "email": "sandra.borch@stortinget.no",
+            "phone": "48123712",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Ivar Børring Prestbakmo",
+            "location": "Salangen",
+            "age": 56,
+            "email": "ivar.b.prestbakmo@icloud.com",
+            "phone": "90102556",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Sosialistisk Venstreparti",
+        "partyShorthand": "SV",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Pål Julius Skogholt",
+            "location": "Tromsø",
+            "age": 53,
+            "email": "pal.julius.skogholt@tromso.kommune.no",
+            "phone": "97077457",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Astrid Løkholm Båtnes",
+            "location": "Harstad",
+            "age": 38,
+            "email": "astrid.baatnes@gmail.com",
+            "phone": "92436154",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Venstre",
+        "partyShorthand": "V",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Even Aronsen",
+            "location": "Harstad",
+            "age": 30,
+            "email": "even.aronsen@venstre.no",
+            "phone": "97697691",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Ida Kristine Jakobsen",
+            "location": "Tromsø",
+            "age": 37,
+            "email": "ida.jakobsen@choice.no",
+            "phone": "94821113",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Miljøpartiet de Grønne",
+        "partyShorthand": "MDG",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Barbara Vögele",
+            "location": "Tromsø",
+            "age": 57,
+            "email": "barbaravoegele@gmail.com",
+            "phone": "93619058",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Kimi Nie-Nilssen",
+            "location": "Harstad",
+            "age": 18,
+            "email": "troms-og-finnmark@gronnungdom.no",
+            "phone": "99332860",
+            "hasRealisticChance": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "constituencyName": "Vest-Agder",
+    "parties": [
+      {
+        "partyName": "Arbeiderpartiet",
+        "partyShorthand": "AP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Kai Steffen Østensen",
+            "location": "Kristiansand",
+            "age": 30,
+            "email": "kai.steffen.ostensen@politiker.agderfk.no",
+            "phone": "45414793",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Ida Hirst",
+            "location": "Kristiansand",
+            "age": 24,
+            "email": "i.hirst@kristiansand-bystyre.no",
+            "phone": "94840754",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 3,
+            "name": "Even Tronstad Sagebakken",
+            "location": "Lillesand",
+            "age": 47,
+            "email": "even.tronstad.sagebakken@politiker.agderfk.no",
+            "phone": "95258086",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Fremskrittspartiet",
+        "partyShorthand": "FrP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Alf Erik Andersen",
+            "location": "Lindesnes",
+            "age": 51,
+            "email": "alferik.andersen@gmail.com",
+            "phone": "90516610",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Stian Storbukås",
+            "location": "Kristiansand",
+            "age": 46,
+            "email": "stian_storbukaas@hotmail.com",
+            "phone": "92445868",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Jan Erik Hogstad",
+            "location": "Flekkefjord",
+            "age": 47,
+            "email": "jhogstad@hotmail.com",
+            "phone": "90810059",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Høyre",
+        "partyShorthand": "H",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Amalie Gunnufsen",
+            "location": "Kristiansand",
+            "age": 28,
+            "email": "a-gunnuf@hotmail.com",
+            "phone": "99566610",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Hannah Benedicte Teigland",
+            "location": "Lindesnes",
+            "age": 54,
+            "email": "hannahte@online.no",
+            "phone": "91192792",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 3,
+            "name": "Espen Johnsen Saga",
+            "location": "Kristiansand",
+            "age": 43,
+            "email": "es@sagapartners.no",
+            "phone": null, // Blank in image
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Kristelig Folkeparti",
+        "partyShorthand": "KrF",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Jorunn Elisabet Gleditsch Lossius",
+            "location": "Lillesand",
+            "age": 44,
+            "email": "jorunn.lossius@politiker.agderfk.no",
+            "phone": "40105123",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Jørgen H. Kristiansen",
+            "location": "Kristiansand",
+            "age": 49,
+            "email": "post@jorgenk.no",
+            "phone": "92468673",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Rødt",
+        "partyShorthand": "R",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Laetif Akber",
+            "location": "Arendal",
+            "age": 47,
+            "email": "a.laetif@gmail.com",
+            "phone": "47314920",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Frida Graneng",
+            "location": "Lillesand",
+            "age": 21,
+            "email": null, // Blank in image
+            "phone": null, // Blank in image
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Senterpartiet",
+        "partyShorthand": "SP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Gro Anita Mykjåland",
+            "location": "Iveland",
+            "age": 48,
+            "email": "gam@stortinget.no",
+            "phone": "95821968",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Eivind Drivenes",
+            "location": "Vennesla",
+            "age": 55,
+            "email": "eivind.drivenes@vennesla-kommunestyre.no",
+            "phone": "47712598",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Sosialistisk Venstreparti",
+        "partyShorthand": "SV",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Mirell Høyer-Berntsen",
+            "location": "Arendal",
+            "age": 44,
+            "email": "mirell.hoyer-berntsen@sv.no",
+            "phone": "41453013",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Alexander Liane",
+            "location": "Vennesla",
+            "age": 30,
+            "email": "Alexander.Liane@fagforbundet.no",
+            "phone": "90247167",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Venstre",
+        "partyShorthand": "V",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Ingvild Wetrhus Thorsvik",
+            "location": "Lindesnes",
+            "age": 33,
+            "email": "ingvild.wetrhus.thorsvik@stortinget.no",
+            "phone": "46445506",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Arnt Gunnar Tønnessen",
+            "location": "Grimstad",
+            "age": 62,
+            "email": "arnt.gunnar.tonnessen@gmail.com",
+            "phone": "98206022",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Miljøpartiet de Grønne",
+        "partyShorthand": "MDG",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Hildegunn Marie Tønnessen Seip",
+            "location": "Kristiansand",
+            "age": 45,
+            "email": "hildegunn@mdg.no",
+            "phone": "98819111",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Tobias Oftedal Stokkeland",
+            "location": "Kristiansand",
+            "age": 26,
+            "email": "tobias@gronnungdom.no",
+            "phone": "46413870",
+            "hasRealisticChance": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "constituencyName": "Vestfold",
+    "parties": [
+      {
+        "partyName": "Arbeiderpartiet",
+        "partyShorthand": "AP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Truls Vasvik",
+            "location": "Larvik",
+            "age": 46,
+            "email": "truls.vasvik@stortinget.no",
+            "phone": "97717566",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Maria Aasen-Svendsrud",
+            "location": "Horten",
+            "age": 45,
+            "email": "maria-karine.aasen-svendsrud@stortinget.no",
+            "phone": "97665324",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Eivind Yrjan Stamnes",
+            "location": "Tønsberg",
+            "age": 26,
+            "email": "eivind.yrjan.stamnes@tonsberg.kommune.no",
+            "phone": "41231941",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Fremskrittspartiet",
+        "partyShorthand": "FrP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Morten Stordalen",
+            "location": "Tønsberg",
+            "age": 56,
+            "email": "morten.stordalen@stortinget.no",
+            "phone": "92262163",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Bjørn-Kristian Svendsrud",
+            "location": "Horten",
+            "age": 32,
+            "email": "b.svendsrud@vestfoldfylke.no",
+            "phone": "97665324", // Matches AP #2, confirmed from image
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Anne Grethe Hauan",
+            "location": "Tønsberg",
+            "age": 58,
+            "email": "agh@frp.no",
+            "phone": "40405353",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Høyre",
+        "partyShorthand": "H",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Erlend Larsen",
+            "location": "Sandefjord",
+            "age": 59,
+            "email": "erlend.larsen@stortinget.no",
+            "phone": "92237217",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Mathias Willassen Hanssen",
+            "location": "Tønsberg",
+            "age": 27,
+            "email": "mathias.willassen.hanssen@stortinget.no",
+            "phone": "46807928",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Rita Kilvær",
+            "location": "Larvik",
+            "age": 53,
+            "email": "rita.kilvaer@gmail.com",
+            "phone": "95721493",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Kristelig Folkeparti",
+        "partyShorthand": "KrF",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Christian Bredvei Gusland",
+            "location": "Larvik",
+            "age": 29,
+            "email": "cbgusland@icloud.com",
+            "phone": "91590488",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Stine Næss Askjer",
+            "location": "Tønsberg",
+            "age": 51,
+            "email": "stine.n.askjer@gmail.com",
+            "phone": "99160560",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Rødt",
+        "partyShorthand": "R",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Maren Njøs Kurdøl",
+            "location": "Holmestrand",
+            "age": 36,
+            "email": "maren.njos.kurdol@stortinget.no",
+            "phone": "95824866",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "André Heggheim",
+            "location": "Sandefjord",
+            "age": 38,
+            "email": "a.heggheim@gmail.com",
+            "phone": "93439907",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Senterpartiet",
+        "partyShorthand": "SP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Kathrine Kleveland",
+            "location": "Holmestrand",
+            "age": 58,
+            "email": "kathrine.kleveland@stortinget.no",
+            "phone": "92825162",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Per-Asbjørn Andvik",
+            "location": "Tønsberg",
+            "age": 63,
+            "email": "per-asbjorn.andvik@gjensidige.no",
+            "phone": "95745114",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Sosialistisk Venstreparti",
+        "partyShorthand": "SV",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Grete Wold",
+            "location": "Tønsberg",
+            "age": 57,
+            "email": "grete.wold@stortinget.no",
+            "phone": "95107574",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Aram Karim",
+            "location": "Tønsberg",
+            "age": 24,
+            "email": "aramkarim283@gmail.com",
+            "phone": "91861535",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Venstre",
+        "partyShorthand": "V",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Camilla Bilstad Johannesen",
+            "location": "Sandefjord",
+            "age": 39,
+            "email": "Camilla.johannesen@stortinget.no",
+            "phone": "96012902",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Lene Cathrine Albertsen",
+            "location": "Horten",
+            "age": 46,
+            "email": "lene@hocusfocus.no",
+            "phone": "92604275",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Miljøpartiet de Grønne",
+        "partyShorthand": "MDG",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Julie Estdahl Stuestøl",
+            "location": "Tønsberg",
+            "age": 41,
+            "email": "julie.estdahl.stuestol@mdg.no",
+            "phone": "93211265",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Lars Lønberg Henriksen",
+            "location": "Horten",
+            "age": 41,
+            "email": "larslonberg@hotmail.com",
+            "phone": null, // Blank in image
+            "hasRealisticChance": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "constituencyName": "Østfold",
+    "parties": [
+      {
+        "partyName": "Arbeiderpartiet",
+        "partyShorthand": "AP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Jon-Ivar Nygård",
+            "location": "Fredrikstad",
+            "age": 52,
+            "email": null, // Blank in image
+            "phone": null, // Blank in image
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Elise Waagen",
+            "location": "Sarpsborg",
+            "age": 35,
+            "email": "Elise.Waagen@stortinget.no",
+            "phone": null, // Blank in image
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Hashim Abdi",
+            "location": "Fredrikstad",
+            "age": 20,
+            "email": "hasab@fredrikstad.kommune.no",
+            "phone": "41788341",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 4,
+            "name": "Solveig Vitanza",
+            "location": "Halden",
+            "age": 42,
+            "email": "solveig.vitanza@stortinget.no",
+            "phone": null, // Blank in image
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 5,
+            "name": "Mette-Gro Karlsen",
+            "location": "Moss",
+            "age": 43,
+            "email": "mette_gro@yahoo.no",
+            "phone": "90522104",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Fremskrittspartiet",
+        "partyShorthand": "FrP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Erlend Wiborg",
+            "location": "Moss",
+            "age": 41,
+            "email": "erlend.wiborg@stortinget.no",
+            "phone": null, // Blank in image
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Bjørnar Laabak",
+            "location": "Fredrikstad",
+            "age": 64,
+            "email": "blaa@fredrikstad.kommune.no",
+            "phone": "92270315",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Julia B. Nordtug",
+            "location": "Sarpsborg",
+            "age": 33,
+            "email": "julia.nordtug@sarpsborg.com",
+            "phone": "46428102",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 4,
+            "name": "Cathrine Linnes",
+            "location": "Hvaler",
+            "age": 55,
+            "email": "clinnes@me.com",
+            "phone": "92459527",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 5,
+            "name": "Karianne Riiser",
+            "location": "Indre Østfold",
+            "age": 43,
+            "email": "karianne.riiser@online.no",
+            "phone": "93851300",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Høyre",
+        "partyShorthand": "H",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Tage Pettersen",
+            "location": "Moss",
+            "age": 52,
+            "email": "tage.pettersen@stortinget.no",
+            "phone": "90470753",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Elin Ileby",
+            "location": "Sarpsborg",
+            "age": 51,
+            "email": "elin.ileby@nakstad.no",
+            "phone": "99603824",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 3,
+            "name": "Erik Unaas",
+            "location": "Indre Østfold",
+            "age": 66,
+            "email": "erik@unaas.no",
+            "phone": "90025953",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 4,
+            "name": "Henriette Celine Staa Gaustad",
+            "location": "Fredrikstad",
+            "age": 30,
+            "email": "henriettegaustad@gmail.com",
+            "phone": "47371831",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Kristelig Folkeparti",
+        "partyShorthand": "KrF",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "David Hansen",
+            "location": "Halden",
+            "age": 46,
+            "email": "david1978hansen@gmail.com",
+            "phone": "90523113",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Bjørn Lande",
+            "location": "Sarpsborg",
+            "age": 56,
+            "email": "bjorn.lande.no@gmail.com",
+            "phone": "91396845",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Rødt",
+        "partyShorthand": "R",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Remi Sølvberg",
+            "location": "Moss",
+            "age": 48,
+            "email": "rodtremj@gmail.com",
+            "phone": "90092109",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Hannah Berg",
+            "location": "Fredrikstad",
+            "age": 33,
+            "email": "hannah.berg@live.no",
+            "phone": "91848394",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Senterpartiet",
+        "partyShorthand": "SP",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Ole André Myhrvold",
+            "location": "Indre Østfold",
+            "age": 46,
+            "email": "oam@stortinget.no",
+            "phone": "93243566",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Kjerstin Wøyen Funderud",
+            "location": "Våler",
+            "age": 54,
+            "email": "kjerstin.woyen.funderud@stortinget.no",
+            "phone": "95174972",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Sosialistisk Venstreparti",
+        "partyShorthand": "SV",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Åse Helen", // Surname likely missing in image
+            "location": "Indre Østfold",
+            "age": 48,
+            "email": "aase.hei@online.no",
+            "phone": "93433406",
+            "hasRealisticChance": true
+          },
+          {
+            "rank": 2,
+            "name": "Barham Azadi",
+            "location": "Moss",
+            "age": 39,
+            "email": null, // Blank in image
+            "phone": "40141312",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Venstre",
+        "partyShorthand": "V",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Olaf Thommessen",
+            "location": "Fredrikstad",
+            "age": 58,
+            "email": "olaf.thommessen@stemvenstre.no",
+            "phone": "97548585",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Rita Stetner",
+            "location": "Indre Østfold",
+            "age": 64,
+            "email": "rita.stetner@gmail.com",
+            "phone": "97553769",
+            "hasRealisticChance": false
+          }
+        ]
+      },
+      {
+        "partyName": "Miljøpartiet de Grønne",
+        "partyShorthand": "MDG",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Johan Kristian Rud",
+            "location": "Indre Østfold",
+            "age": null, // Blank in image
+            "email": null, // Blank in image
+            "phone": "97714838",
+            "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Benedicte Lund",
+            "location": "Moss",
+            "age": 59,
+            "email": "Benedicte.lund@moss.kommune.no",
+            "phone": "48058888",
+            "hasRealisticChance": false
+          }
+        ]
+      }
+    ]
+  }
+]
