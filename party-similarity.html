@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partilikhet & Sammenligning</title> <!-- ENDRET TITTEL -->
+    <!-- Sentrale CSS-filer -->
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Dedikert CSS-fil for denne siden -->
+    <link rel="stylesheet" href="css/party-similarity.css">
+</head>
+<body>
+    <!-- START: Standard Hamburgermeny HTML (lik på alle sider) -->
+    <div class="burger-menu" id="burgerMenu">
+        <div class="burger-bar"></div>
+        <div class="burger-bar"></div>
+        <div class="burger-bar"></div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="menu-header">
+            <h3>Meny</h3>
+            <button class="close-button" id="closeMenu">×</button>
+        </div>
+        <div class="menu-items" id="mobileMenuItems">
+            <!-- Lenker fylles dynamisk av navigation.js -->
+        </div>
+    </div>
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <!-- SLUTT: Standard Hamburgermeny HTML -->
+
+    <div class="container">
+        <!-- Standard Header -->
+        <header>
+           <div class="logo-container">
+                <a href="index.html">
+                    <img src="images/Logo.png" alt="Kreftforeningens logo" class="logo-image">
+                </a>
+            </div>
+            <div class="header-text">
+                <h1>Partilikhet & Sammenligning</h1> <!-- ENDRET TITTEL -->
+                <div class="header-subtitle">Visualisering av enighet mellom partiene og deres profil per saksområde</div> <!-- ENDRET SUBTITTEL -->
+            </div>
+            <div class="nav-links">
+                <!-- Desktop-lenker fylles dynamisk av navigation.js -->
+            </div>
+        </header>
+
+        <!-- Seksjon for Heatmap -->
+        <section class="heatmap-section">
+            <div class="similarity-introduction">
+                 <h2>Hvor enige er partiene med hverandre? (Heatmap)</h2>
+                 <p>Dette heatmapet viser graden av enighet mellom hvert par av partier, basert på saker der begge er helt enige (Nivå 2) i forhold til Kreftforeningens standpunkt. Hold musepekeren over en celle for å se den nøyaktige enighetsgraden.</p>
+            </div>
+            <div id="heatmap-container" class="heatmap-container-main">
+                 <!-- Plotly Heatmap genereres her av party-similarity.js -->
+                 <div class="heatmap-loader">
+                     Laster heatmap-data...
+                 </div>
+            </div>
+        </section>
+
+        <!-- Linjeskille -->
+        <hr class="section-divider">
+
+        <!-- ===== START: Ny seksjon for Radar Sammenligning ===== -->
+        <section class="radar-comparison-section">
+            <h2>Sammenlign Partiers Støtte per Saksområde (Radar)</h2>
+            <p>Velg to eller flere partier for å visualisere deres gjennomsnittlige støtte (skala 0-2) til Kreftforeningens politikk innenfor ulike saksområder i et radardiagram.</p>
+
+            <!-- Parti Velger (Checkboxes) -->
+            <div class="party-selector-radar">
+                <fieldset>
+                    <legend>Velg partier:</legend>
+                    <div id="radar-party-checkboxes" class="checkbox-grid">
+                        <!-- Checkboxes genereres av party-similarity.js -->
+                        <span class="loading-checkboxes">Laster partier...</span>
+                    </div>
+                </fieldset>
+                <!-- Knapp med tydeligere call-to-action -->
+                <button id="update-radar-chart-btn" class="button primary radar-button">Oppdater sammenligning</button>
+            </div>
+
+            <!-- Container for Radar Chart -->
+            <div id="radar-chart-container" class="radar-chart-container">
+                <!-- Plotly Radar Chart genereres her -->
+                <div class="radar-placeholder">Velg minst to partier og trykk "Oppdater sammenligning".</div>
+            </div>
+        </section>
+        <!-- ===== SLUTT: Ny seksjon for Radar Sammenligning ===== -->
+
+        <!-- Standard Footer -->
+        <footer>
+            Data basert på mandatfordeling etter Stortingsvalget 2021 og partienes program/uttalelser. Til bruk for informasjonsformål.
+        </footer>
+    </div>
+
+    <!-- Scripts lastes til slutt -->
+    <!-- Felles navigasjon -->
+    <script src="js/navigationConfig.js"></script>
+    <script src="js/navigation.js"></script>
+    <!-- Eksternt bibliotek for diagrammer -->
+    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+    <!-- Datainnlasting (Nødvendig for denne siden) -->
+    <script src="js/issues.js"></script>
+    <script src="js/partiesData.js"></script>
+    <!-- Sidespesifikt script -->
+    <script src="js/party-similarity.js"></script>
+
+</body>
+</html>
