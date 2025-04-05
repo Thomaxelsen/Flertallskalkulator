@@ -11,24 +11,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // *** NYTT: Oppslag for mandater per valgkrets (basert på image_f51c1f.png) ***
     const constituencyMandates = {
         "Østfold": 9,
-        "Akershus": 19,
-        "Oslo": 21,
+        "Akershus": 20,
+        "Oslo": 20,
         "Hedmark": 7,
         "Oppland": 6,
-        "Buskerud": 9,
-        "Vestfold": 8,
+        "Buskerud": 8,
+        "Vestfold": 7,
         "Telemark": 6,
         "Aust-Agder": 4,
         "Vest-Agder": 6,
-        "Rogaland": 15,
-        "Hordaland": 17,
+        "Rogaland": 14,
+        "Hordaland": 16,
         "Sogn og Fjordane": 4,
-        "Møre og Romsdal": 9,
+        "Møre og Romsdal": 8,
         "Sør-Trøndelag": 10,
-        "Nord-Trøndelag": 4,
-        "Nordland": 8, // Fra bildet
-        "Troms": 5,   // Fra bildet
-        "Finnmark": 2 // Fra bildet
+        "Nord-Trøndelag": 5,
+        "Nordland": 9, // Fra bildet
+        "Troms": 6,   // Fra bildet
+        "Finnmark": 4 // Fra bildet
         // Legg til flere her hvis 'candidates.json' inneholder flere/andre navn
     };
     // *** SLUTT PÅ NYTT OBJEKT ***
