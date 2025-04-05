@@ -109,7 +109,7 @@
             "rank": 1,
             "name": "Jorunn Elisabet Gleditsch Lossius",
             "location": "Lillesand",
-            "age": 44,
+            "age": 45,
             "email": "jorunn.lossius@politiker.agderfk.no",
             "phone": "40105123",
             "hasRealisticChance": false
@@ -4146,8 +4146,8 @@
             "name": "Line Marlene Haugen",
             "location": "Notodden",
             "age": 32,
-            "email": "linehaugen93@outlook.com",
-            "phone": "94896796",
+            "email": "linemhaugen93@outlook.com",
+            "phone": "94896793",
             "hasRealisticChance": true
           },
           {
@@ -4459,7 +4459,7 @@
             "rank": 1,
             "name": "Nils Einar Samuelsen",
             "location": "Lyngen",
-            "age": 46,
+            "age": 49,
             "email": "nils.samuelsen@tromsfylke.no",
             "phone": "90561332",
             "hasRealisticChance": false
@@ -4514,7 +4514,7 @@
           },
           {
             "rank": 2,
-            "name": "Ivar Børring Prestbakmo",
+            "name": "Ivar Bühring Prestbakmo",
             "location": "Salangen",
             "age": 56,
             "email": "ivar.b.prestbakmo@icloud.com",
@@ -4628,7 +4628,7 @@
             "location": "Lillesand",
             "age": 47,
             "email": "even.tronstad.sagebakken@politiker.agderfk.no",
-            "phone": "95258086",
+            "phone": "95258096",
             "hasRealisticChance": false
           }
         ]
@@ -4690,7 +4690,7 @@
           },
           {
             "rank": 3,
-            "name": "Espen Johnsen Saga",
+            "name": "Espen Jahnsen Saga",
             "location": "Kristiansand",
             "age": 43,
             "email": "es@sagapartners.no",
@@ -4729,7 +4729,7 @@
         "candidates": [
           {
             "rank": 1,
-            "name": "Laetif Akber",
+            "name": "Lætif Akber",
             "location": "Arendal",
             "age": 47,
             "email": "a.laetif@gmail.com",
@@ -4906,7 +4906,7 @@
           {
             "rank": 3,
             "name": "Anne Grethe Hauan",
-            "location": "Tønsberg",
+            "location": "Horten",
             "age": 58,
             "email": "agh@frp.no",
             "phone": "40405353",
@@ -5085,7 +5085,7 @@
             "name": "Lars Lønberg Henriksen",
             "location": "Horten",
             "age": 41,
-            "email": "larslonberg@hotmail.com",
+            "email": "larslonberg@gmail.com",
             "phone": null, // Blank in image
             "hasRealisticChance": false
           }
@@ -5123,7 +5123,7 @@
             "name": "Hashim Abdi",
             "location": "Fredrikstad",
             "age": 20,
-            "email": "hasab@fredrikstad.kommune.no",
+            "email": "hasabd@fredrikstad.kommune.no",
             "phone": "41788341",
             "hasRealisticChance": false
           },
@@ -5213,7 +5213,7 @@
           },
           {
             "rank": 2,
-            "name": "Elin Ileby",
+            "name": "Elin Ileby Nakstad",
             "location": "Sarpsborg",
             "age": 51,
             "email": "elin.ileby@nakstad.no",
@@ -5231,7 +5231,7 @@
           },
           {
             "rank": 4,
-            "name": "Henriette Celine Staa Gaustad",
+            "name": "Henriette Celine Støa Gaustad",
             "location": "Fredrikstad",
             "age": 30,
             "email": "henriettegaustad@gmail.com",
@@ -5273,7 +5273,7 @@
             "name": "Remi Sølvberg",
             "location": "Moss",
             "age": 48,
-            "email": "rodtremj@gmail.com",
+            "email": "rodtremi@gmail.com",
             "phone": "90092109",
             "hasRealisticChance": false
           },
@@ -5318,7 +5318,7 @@
         "candidates": [
           {
             "rank": 1,
-            "name": "Åse Helen", // Surname likely missing in image
+            "name": "Åse Heien", 
             "location": "Indre Østfold",
             "age": 48,
             "email": "aase.hei@online.no",
@@ -5351,10 +5351,10 @@
           },
           {
             "rank": 2,
-            "name": "Rita Stetner",
+            "name": "Rita Sletner",
             "location": "Indre Østfold",
             "age": 64,
-            "email": "rita.stetner@gmail.com",
+            "email": "rita.sletner@gmail.com",
             "phone": "97553769",
             "hasRealisticChance": false
           }
@@ -5370,7 +5370,7 @@
             "location": "Indre Østfold",
             "age": null, // Blank in image
             "email": null, // Blank in image
-            "phone": "97714838",
+            "phone": "48058888",
             "hasRealisticChance": false
           },
           {
@@ -5379,7 +5379,7 @@
             "location": "Moss",
             "age": 59,
             "email": "Benedicte.lund@moss.kommune.no",
-            "phone": "48058888",
+            "phone": "97714838",
             "hasRealisticChance": false
           }
         ]
