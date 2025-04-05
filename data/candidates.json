@@ -3544,29 +3544,29 @@
         ]
       },
       {
-        "partyName": "Miljøpartiet de Grønne",
-        "partyShorthand": "MDG",
-        "candidates": [ // Rows are blank in the image
-            {
-              "rank": 1,
-              "name": null,
-              "location": null,
-              "age": null,
-              "email": null,
-              "phone": null,
-              "hasRealisticChance": false
-            },
-            {
-              "rank": 2,
-              "name": null,
-              "location": null,
-              "age": null,
-              "email": null,
-              "phone": null,
-              "hasRealisticChance": false
-            }
-        ]
-      }
+        "partyName": "Miljøpartiet de Grønne",
+        "partyShorthand": "MDG",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Andreas Aukland",
+            "location": "Tysvær",
+            "age": 21,
+            "email": "andreas.aukland@mdg.no",
+            "phone": "48243242",
+            "hasRealisticChance": false 
+          },
+          {
+            "rank": 2,
+            "name": "Mia Hereid",
+            "location": "Karmøy",
+            "age": 46,
+            "email": "mia@hereidfoto.com",
+            "phone": "99647272",
+            "hasRealisticChance": false 
+          }
+        ]
+      }
     ]
   },
   {
@@ -3701,7 +3701,7 @@
         "candidates": [
           {
             "rank": 1,
-            "name": "Rita Tønning",
+            "name": "Rita Tonning",
             "location": "Sunnfjord",
             "age": 60,
             "email": "rita_tonning@msn.com",
@@ -3735,7 +3735,7 @@
           {
             "rank": 2,
             "name": "Aleksander Øren Heen",
-            "location": null, // Blank in image
+            "location": "Sogndal", 
             "age": 35,
             "email": "arhe@stortinget.no",
             "phone": "91134842",
@@ -3752,7 +3752,7 @@
             "name": "Hege Lothe",
             "location": "Gloppen",
             "age": 53,
-            "email": "hege.lothe@stortinget.no",
+            "email": "hege.lothe@gmail.com",
             "phone": "92648348",
             "hasRealisticChance": true
           },
@@ -3809,7 +3809,7 @@
             "name": "Mariel Eikeset Koren",
             "location": "Gloppen",
             "age": 37,
-            "email": "marielkoren@hotmail.com",
+            "email": "marielkoren@gmail.com",
             "phone": "90942503",
             "hasRealisticChance": false
           }
