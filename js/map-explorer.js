@@ -74,7 +74,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         if (!partiesMap) {
             console.error("Map Explorer: Failed to load parties data. Cannot proceed.");
-            // ... feilhåndtering ...
+             if (listContent) listContent.innerHTML = '<p>Kunne ikke laste partidata.</p>';
+             if (loader) loader.style.display = 'none';
             return;
         }
 
@@ -89,7 +90,8 @@ document.addEventListener('DOMContentLoaded', function() {
             initMapExplorer();
         } catch (error) {
             console.error("Map Explorer: Error loading initial data:", error);
-            // ... feilhåndtering ...
+             if (mapContainer && !map) { mapContainer.innerHTML = `<p>Kunne ikke laste kartdata.</p>`; }
+             if (listContent) { listContent.innerHTML = `<p>Kunne ikke laste kandidatdata.</p>`; }
         } finally {
             if (loader) loader.style.display = 'none';
         }
@@ -190,15 +192,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
         listContent.innerHTML = ''; // Tømmer innhold
 
-        // Sorter partiene (som før)
         const sortedParties = constituencyData.parties.sort((a, b) => {
-             // Bruker partyShorthand for å finne posisjon
              const partyAInfo = partiesMap[a.partyShorthand];
              const partyBInfo = partiesMap[b.partyShorthand];
              const posA = partyAInfo ? partyAInfo.position : Infinity;
              const posB = partyBInfo ? partyBInfo.position : Infinity;
             if (posA === posB) {
-                 const nameA = partyAInfo ? partyAInfo.name : (a.partyName || ''); // Fallback til partyName
+                 const nameA = partyAInfo ? partyAInfo.name : (a.partyName || '');
                  const nameB = partyBInfo ? partyBInfo.name : (b.partyName || '');
                  return nameA.localeCompare(nameB);
             }
@@ -209,30 +209,22 @@ document.addEventListener('DOMContentLoaded', function() {
         ul.className = 'candidate-list-by-party';
 
         sortedParties.forEach(partyData => {
-             // === ENDRING 1: Sjekk og bruk partyShorthand for oppslag ===
-             const partyKey = partyData.partyShorthand; // Bruk shorthand som nøkkel
+             const partyKey = partyData.partyShorthand;
              if (!partyData || typeof partyKey === 'undefined' || !partyKey) {
                  console.warn('Map Explorer: Skipping invalid party entry (missing partyShorthand):', partyData, 'in constituency:', constituencyName);
-                 return; // Hopp over denne
+                 return;
              }
 
-            const partyInfo = partiesMap[partyKey]; // Slå opp med shorthand
+            const partyInfo = partiesMap[partyKey];
 
             if (!partyInfo) {
-                 // Bruk partyName fra candidates.json som fallback hvis partyInfo ikke finnes
-                 console.warn(`Map Explorer: Party info not found in partiesMap using key (partyShorthand): ${partyKey}. Using partyName from candidates.json as fallback.`);
-                 // Lag et midlertidig partyInfo-objekt for visning
-                 const fallbackPartyInfo = {
-                    name: partyData.partyName || `Ukjent parti (${partyKey})`,
-                    logo: 'default.png', // Sett inn en standard logo-sti
-                    color: '#cccccc'     // Sett en standardfarge
-                 };
-                 displayPartyCandidates(ul, fallbackPartyInfo, partyData.candidates); // Kall hjelpefunksjon
-                 return; // Gå til neste parti
+                 console.warn(`Map Explorer: Party info not found in partiesMap using key (partyShorthand): ${partyKey}. Using partyName from candidates.json.`);
+                 const fallbackPartyInfo = { name: partyData.partyName || `Ukjent parti (${partyKey})`, color: '#cccccc' };
+                 displayPartyCandidates(ul, fallbackPartyInfo, partyData.candidates);
+                 return;
              }
-             // === SLUTT ENDRING 1 ===
 
-             displayPartyCandidates(ul, partyInfo, partyData.candidates); // Kall hjelpefunksjon
+             displayPartyCandidates(ul, partyInfo, partyData.candidates);
         });
 
         listContent.appendChild(ul);
@@ -240,34 +232,39 @@ document.addEventListener('DOMContentLoaded', function() {
          if (displayPanel) { displayPanel.scrollTop = 0; }
     }
 
-    // Hjelpefunksjon for å bygge HTML for ett parti og dets kandidater
+    // === OPPDATERT Hjelpefunksjon for å bygge HTML for ett parti og dets kandidater ===
     function displayPartyCandidates(mainUl, partyInfo, candidatesData) {
          const partyLi = document.createElement('li');
          partyLi.className = 'party-candidate-group';
 
+         // Partioverskrift UTEN logo
          const partyHeader = document.createElement('div');
          partyHeader.className = 'party-header';
          partyHeader.style.backgroundColor = partyInfo.color || '#ccc';
-         partyHeader.innerHTML = `
-             <img src="img/logoer/${partyInfo.logo || 'default.png'}" alt="${partyInfo.name} logo" class="party-logo-small">
-             <h3>${partyInfo.name}</h3>
-         `;
+         // Viser kun partinavnet i headeren
+         partyHeader.innerHTML = `<h3>${partyInfo.name}</h3>`;
          partyLi.appendChild(partyHeader);
 
+         // Liste for kandidatkort
          const candidateUl = document.createElement('ul');
-         candidateUl.className = 'candidates-in-group';
+         candidateUl.className = 'candidates-in-group'; // Bruker samme klasse som før, men innholdet i <li> blir kort
+
          if (Array.isArray(candidatesData)) {
              candidatesData.forEach(candidate => {
                  if (candidate && candidate.name) {
+                     // Lag et listeelement som skal styles som et kort
                      const candidateLi = document.createElement('li');
-                     candidateLi.className = 'candidate-item';
-                     // === ENDRING 2: Bruk hasRealisticChance ===
+                     // !!! NY KLASSE FOR KORT-STYLING !!!
+                     candidateLi.className = 'map-candidate-card';
+
+                     // Innhold i kortet (rangering, navn, stjerne)
                      candidateLi.innerHTML = `
                          <span class="candidate-rank">${candidate.rank || '?'}.</span>
                          <span class="candidate-name">${candidate.name}</span>
                          ${candidate.hasRealisticChance ? '<span class="realistic-chance-indicator" title="Vurdert til å ha realistisk sjanse for å komme inn">★</span>' : ''}
                      `;
-                     // === SLUTT ENDRING 2 ===
+                     // Klikk-lytter legges til i et senere steg
+
                      candidateUl.appendChild(candidateLi);
                  } else {
                      console.warn('Map Explorer: Skipping invalid candidate entry:', candidate, 'in party:', partyInfo.name);
@@ -279,6 +276,7 @@ document.addEventListener('DOMContentLoaded', function() {
          partyLi.appendChild(candidateUl);
          mainUl.appendChild(partyLi);
     }
+    // === SLUTT OPPDATERT HJELPEFUNKSJON ===
 
 
     // Kall hovedfunksjonen for å starte lasting av data
