@@ -17,46 +17,54 @@
 
     </head>
 <body>
-    <header class="site-header">
-        <h1><a href="index.html">Flertallskalkulator 2025</a></h1>
-        <div class="logo">
-            <a href="index.html"><img src="img/logoer/kf_logo.png" alt="Kreftforeningen Logo"></a>
-        </div>
-        <div id="mobileMenuIconContainer">
-             <button id="burgerMenu" class="burger-menu" aria-label="Åpne meny">
-                 <i class="fas fa-bars"></i>
-             </button>
-        </div>
-    </header>
-    <nav class="main-nav">
-        <ul class="nav-links"></ul>
-    </nav>
-    <div id="menuOverlay" class="menu-overlay"></div>
-    <div id="mobileMenu" class="mobile-menu">
-         <button id="closeMenu" class="close-menu" aria-label="Lukk meny">&times;</button>
-         </div>
-    <main>
-        <h2>Utforsk kandidater via valgkretskart</h2>
-        <p>Klikk på en valgkrets på kartet for å se kandidatlisten for den kretsen i panelet til høyre.</p>
+    <div class="burger-menu" id="burgerMenu">
+        <div class="burger-bar"></div>
+        <div class="burger-bar"></div>
+        <div class="burger-bar"></div>
+    </div>
 
-        <div class="map-layout">
-            <div id="map-container">
-                <div id="map-loader" class="map-loader" style="display: none;"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="menu-header">
+            <h3>Meny</h3>
+            <button class="close-button" id="closeMenu">×</button>
+        </div>
+        <div class="menu-items" id="mobileMenuItems">
+            </div>
+    </div>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <a href="index.html">
+                    <img src="img/logoer/kf_logo.png" alt="Kreftforeningens logo" class="logo-image">
+                </a>
+            </div>
+            <div class="header-text">
+                 <h1>Kartutforsker</h1>
+                <div class="header-subtitle">Valg 2025</div>
+            </div>
+            <div class="nav-links" id="desktopNavLinks">
                 </div>
-            <aside id="candidate-display-panel">
-                <h2>Velg valgkrets</h2>
-                <div id="candidate-list-content">
-                    <p>Klikk på en valgkrets på kartet for å se kandidatene.</p>
+        </header>
+        <main class="content-section"> <h2>Utforsk kandidater via valgkretskart</h2>
+            <p>Klikk på en valgkrets på kartet for å se kandidatlisten for den kretsen i panelet til høyre. Klikk på en kandidat i listen for mer informasjon.</p>
+
+            <div class="map-layout">
+                <div id="map-container">
+                    <div id="map-loader" class="map-loader" style="display: none;"></div>
                     </div>
-            </aside>
-        </div>
+                <aside id="candidate-display-panel">
+                    <h2>Velg valgkrets</h2>
+                    <div id="candidate-list-content">
+                        <p>Klikk på en valgkrets på kartet for å se kandidatene.</p>
+                        </div>
+                </aside>
+            </div>
         </main>
-
-    <footer>
-        <p>&copy; 2024 Kreftforeningen</p>
-    </footer>
-
-    <div id="candidate-modal" class="modal" style="display: none;">
+         <footer>
+            <p>&copy; 2024 Kreftforeningen</p> </footer>
+    </div> <div id="candidate-modal" class="modal" style="display: none;">
         <div class="modal-content">
             <span class="modal-close-button">&times;</span>
             <h3 id="modal-candidate-name">Kandidatnavn</h3>
@@ -67,8 +75,9 @@
             <p><strong>Telefon:</strong> <span id="modal-candidate-phone">Telefon</span></p>
         </div>
     </div>
-
     <script src="js/partiesData.js"></script>
     <script src="js/navigationConfig.js"></script>
-    <script src="js/navigation.js"></script> <script src="js/map-explorer.js"></script> </body>
+    <script src="js/navigation.js"></script> <script src="js/map-explorer.js"></script>
+
+</body>
 </html>
