@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kartutforsker - Kandidater 2025</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/map-explorer.css">
+    <style>
+        /* Nødvendig basis-høyde for kart-containeren */
+        #map-container { height: 600px; }
+    </style>
+</head>
+<body>
+    <div class="burger-menu" id="burgerMenu">
+        <div class="burger-bar"></div>
+        <div class="burger-bar"></div>
+        <div class="burger-bar"></div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="menu-header">
+            <h3>Meny</h3>
+            <button class="close-button" id="closeMenu">×</button>
+        </div>
+        <div class="menu-items" id="mobileMenuItems">
+            </div>
+    </div>
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="container">
+        <header>
+           <div class="logo-container">
+                 <a href="index.html">
+                    <img src="images/Logo.png" alt="Kreftforeningens logo" class="logo-image">
+                </a>
+           </div>
+            <div class="header-text">
+                <h1>Kartutforsker</h1>
+                <div class="header-subtitle">Utforsk kandidater via valgkretskart</div>
+            </div>
+            <div class="nav-links">
+                 </div>
+        </header>
+
+        <div class="map-layout">
+            <div id="map-container">
+                 <div class="map-loader">Laster kart...</div>
+            </div>
+            <div id="candidate-display-panel">
+                <h2>Valgkrets Kandidater</h2>
+                <p>Klikk på en valgkrets på kartet for å se kandidatene.</p>
+                <hr>
+                <div id="candidate-list-content">
+                    </div>
+            </div>
+        </div>
+
+        <footer>
+             Basert på kandidatdata for Stortingsvalget 2025. Kartdata: GeoJSON basert på Kartverket N5000.
+        </footer>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    <script src="js/navigationConfig.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/partiesData.js"></script>
+    <script src="js/map-explorer.js"></script>
+
+</body>
+</html>
