@@ -149,12 +149,79 @@ document.addEventListener('DOMContentLoaded', () => {
          }
     }
 
+ // Erstatt hele den eksisterende zoomAndShowCandidates-funksjonen med denne:
     function zoomAndShowCandidates(e) {
         const layer = e.target;
+        console.log("--- zoomAndShowCandidates START ---"); // Ny logg
+
+        // Tilbakestill stil på forrige valgte lag
         if (selectedLayer && selectedLayer !== layer && geoJsonLayer) {
-             try { geoJsonLayer.resetStyle(selectedLayer); }
-             catch (error) { console.warn("Could not reset style for previous layer:", error); }
+             try {
+                 console.log("Resetting style for previous layer");
+                 geoJsonLayer.resetStyle(selectedLayer);
+                 selectedLayer.getElement()?.classList.remove('constituency-selected');
+             } catch (error) {
+                 console.warn("Could not reset style for previous layer:", error);
+             }
         }
+
+        // Sett stil på nytt valgt lag
+        console.log("Setting style for selected layer");
+        layer.getElement()?.classList.add('constituency-selected');
+        // Sett stil direkte også for umiddelbar effekt (CSS kan overstyre, men dette sikrer noe)
+        layer.setStyle({ weight: 3, color: 'var(--kf-pink)', fillOpacity: 0.5 });
+        layer.bringToFront();
+        selectedLayer = layer;
+
+        // Hent OG NORMALISER navnet fra GeoJSON properties
+        let rawNameFromGeoJSON = null;
+        try {
+             rawNameFromGeoJSON = layer.feature.properties.valgdistriktsnavn;
+             console.log("Raw name from GeoJSON:", rawNameFromGeoJSON); // LOG 1: Hvilket navn fikk vi?
+        } catch(err) {
+             console.error("Error accessing layer.feature.properties.valgdistriktsnavn:", err);
+             if(listContent) listContent.innerHTML = "<p>Feil ved lesing av data fra kartlaget.</p>";
+             return; // Avslutt hvis vi ikke kan lese navnet
+        }
+
+
+        let nameToUse = rawNameFromGeoJSON; // Start med det rå navnet
+
+        // *** START: Navne-normalisering med MER LOGGING ***
+        if (nameToUse && typeof nameToUse === 'string') {
+            console.log("Checking for separator ' - ' in:", nameToUse); // LOG 2: Sjekker vi?
+            if (nameToUse.includes(' - ')) {
+                console.log("Separator ' - ' found."); // LOG 3: Fant vi den?
+                const parts = nameToUse.split(' - ');
+                const normalized = parts[0].trim();
+                console.log("Normalized part candidate:", normalized); // LOG 4: Hva ble første del?
+
+                // Sjekk om det normaliserte navnet finnes i mandatlisten vår
+                console.log("Checking if constituencyMandates has property:", `"${normalized}"`); // LOG 5: Sjekker vi riktig nøkkel?
+                if (constituencyMandates.hasOwnProperty(normalized)) {
+                    console.log(`Normalization successful! Using '${normalized}' instead of '${rawNameFromGeoJSON}'`); // LOG 6: Suksess!
+                    nameToUse = normalized; // Viktig: Overskriv med det normaliserte navnet
+                } else {
+                    console.warn(`Could not normalize '${rawNameFromGeoJSON}' reliably. Mandate key '${normalized}' not found. Using raw name.`); // LOG 7: Mislykket nøkkelsjekk
+                }
+            } else {
+                 console.log("Separator ' - ' NOT found in raw name."); // LOG 8: Fant ikke separator
+            }
+        } else {
+             console.warn("Raw name from GeoJSON is missing or not a string:", rawNameFromGeoJSON); // LOG 9: Ugyldig rå-navn
+        }
+        // *** SLUTT: Navne-normalisering med MER LOGGING ***
+
+
+        if (nameToUse) {
+             console.log("Map Explorer JS: Using final name for lookup:", nameToUse); // LOG 10: Endelig navn som brukes
+             displayCandidatesForConstituency(nameToUse); // Send det (potensielt normaliserte) navnet videre
+        } else {
+            console.error("Map Explorer JS: Could not determine a usable constituency name!", layer?.feature?.properties); // Logg hele properties ved feil
+            if(listContent) listContent.innerHTML = "<p>Kunne ikke identifisere valgkrets fra kartdata.</p>";
+        }
+        console.log("--- zoomAndShowCandidates END ---"); // Ny logg
+    }
 
         // Bruker nå CSS-klassen for valgt stil
          if (selectedLayer) selectedLayer.getElement()?.classList.remove('constituency-selected');
