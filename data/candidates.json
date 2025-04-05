@@ -12,7 +12,7 @@
             "location": "Arendal",
             "age": 44,
             "email": "tellef.inge.morland@stortinget.no",
-            "phone": null, // Mangler i bilde
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -144,7 +144,7 @@
             "location": "Lillesand",
             "age": 21,
             "email": null,
-            "phone": null, // Mangler i bilde
+            "phone": null, 
             "hasRealisticChance": false
           }
         ]
@@ -208,7 +208,7 @@
             "age": 33,
             "email": "ingvild.wetrhus.thorsvik@stortinget.no",
             "phone": "46445506",
-            "hasRealisticChance": false // Var ikke fet i opprinnelig bilde, antar fortsatt false
+            "hasRealisticChance": false 
           },
           {
             "rank": 2,
@@ -260,7 +260,7 @@
             "location": "Ullensaker",
             "age": 37,
             "email": null,
-            "phone": null, // Mangler i bilde
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -335,7 +335,7 @@
           {
             "rank": 2,
             "name": "Himanshu Gulati",
-            "location": "Skedsmo", // Skedsmo er nå Lillestrøm, men bruker det som står
+            "location": "Skedsmo", 
             "age": 36,
             "email": "himanshu.gulati@stortinget.no",
             "phone": "45429332",
@@ -344,9 +344,9 @@
           {
             "rank": 3,
             "name": "Liv Gustavsen",
-            "location": "Årnes", // Årnes er i Nes, bruker det som står
+            "location": "Årnes", 
             "age": 51,
-            "email": "liv.gustavsen@paperlife.no", // Korrigert epost fra bilde
+            "email": "liv.gustavsen@paperlife.no", 
             "phone": "92462743",
             "hasRealisticChance": true
           },
@@ -364,8 +364,8 @@
             "name": "Tom Staahle",
             "location": "Ullensaker",
             "age": 52,
-            "email": "tom@staahle.no", // Korrigert epost fra bilde
-            "phone": null, // Mangler i bilde
+            "email": "tom@staahle.no", 
+            "phone": null, 
             "hasRealisticChance": false
           },
           {
@@ -388,8 +388,8 @@
             "name": "Henrik Asheim",
             "location": "Bærum",
             "age": 41,
-            "email": null, // Mangler fortsatt
-            "phone": null, // Mangler i bilde
+            "email": null, 
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -398,7 +398,7 @@
             "location": "Eidsvoll",
             "age": 59,
             "email": "twt@stortinget.no",
-            "phone": null, // Mangler i bilde
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -425,7 +425,7 @@
             "location": "Lillestrøm",
             "age": 26,
             "email": "fylkesradsamferdsel@afk.no",
-            "phone": null, // Mangler i bilde
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -465,9 +465,9 @@
             "rank": 1,
             "name": "Ida Lindtveit Røse",
             "location": "Nordre Follo",
-            "age": 32,
+            "age": 31, 
             "email": "ida@afk.no",
-            "phone": null, // Mangler i bilde
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -491,7 +491,7 @@
             "location": "Moss",
             "age": 39,
             "email": "marie.sneve.martinussen@stortinget.no",
-            "phone": null, // Mangler i bilde
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -512,7 +512,7 @@
           {
             "rank": 1,
             "name": "Sigbjørn Gjelsvik",
-            "location": "Sørumsand", // Sørumsand er i Lillestrøm, bruker det som står
+            "location": "Sørumsand", 
             "age": 50,
             "email": "sigbjorn.gjelsvik@stortinget.no",
             "phone": "91161675",
@@ -521,7 +521,7 @@
           {
             "rank": 2,
             "name": "Else Marie Tveit Råby",
-            "location": "Hurum", // Hurum er i Asker, bruker det som står
+            "location": "Hurum", 
             "age": 42,
             "email": "emr@stortinget.no",
             "phone": "90827497",
@@ -572,7 +572,7 @@
             "location": "Bærum",
             "age": 49,
             "email": "abid.raja@stortinget.no",
-            "phone": null,
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -602,10 +602,10 @@
           {
             "rank": 1,
             "name": "Une Bastholm",
-            "location": "Oslo", // Oslo er ikke Akershus, men bruker det som står
+            "location": "Oslo", 
             "age": 39,
             "email": "une-aina.bastholm@stortinget.no",
-            "phone": null, // Mangler i bilde
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -634,7 +634,7 @@
             "location": "Drammen",
             "age": 42,
             "email": "masud.gharahkhani@stortinget.no",
-            "phone": null,
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -657,8 +657,8 @@
           },
           {
             "rank": 4,
-            "name": "Hilde Karin Voltmerhaus", // Navn korrigert fra bilde
-            "location": "Hønefoss", // Hønefoss er i Ringerike, bruker det som står
+            "name": "Hilde Karin Voltmerhaus", 
+            "location": "Hønefoss", 
             "age": 55,
             "email": "hilde.karin.voltmerhaus@ringerike.kommune.no",
             "phone": "47040989",
@@ -736,7 +736,7 @@
             "location": "Drammen",
             "age": 72,
             "email": "kristin.ormen.johnsen@usn.no",
-            "phone": "41515188", // Samme som nr. 2 i AP? Dobbeltsjekk bilde. Ja, det står det.
+            "phone": "41515188", 
             "hasRealisticChance": false
           },
           {
@@ -767,9 +767,9 @@
             "rank": 1,
             "name": "Ida Lindtveit Røse",
             "location": "Nordre Follo",
-            "age": 31, // alder 31 her, 32 i Akershus. Bilde sier 31. Korrigerer begge til 31.
+            "age": 31, 
             "email": "ida@afk.no",
-            "phone": null,
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -778,7 +778,7 @@
             "location": "Øvre Eiker",
             "age": 59,
             "email": "kjellg@bfk.no",
-            "phone": "40054064", // Mangler i bilde
+            "phone": "40054064", 
             "hasRealisticChance": false
           }
         ]
@@ -874,7 +874,7 @@
             "location": "Øvre Eiker",
             "age": 40,
             "email": "julie.vaagø@stemvenstre.no",
-            "phone": null, // Mangler i bilde
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -895,7 +895,7 @@
           {
             "rank": 1,
             "name": "Cathrin Janøy",
-            "location": "Mjøndalen", // Mjøndalen er i Drammen, bruker det som står
+            "location": "Mjøndalen", 
             "age": 42,
             "email": "pol.Cathrin.Janoy@drammen.kommune.no",
             "phone": "91656133",
@@ -903,11 +903,11 @@
           },
           {
             "rank": 2,
-            "name": "Anita Nesse Reisii", // Navn korrigert fra bilde
-            "location": "Svelvik", // Svelvik er i Drammen, bruker det som står
+            "name": "Anita Nesse Reisii", 
+            "location": "Svelvik", 
             "age": 32,
             "email": "anita.nroisli@gmail.com",
-            "phone": null, // Mangler i bilde
+            "phone": null, 
             "hasRealisticChance": false
           }
         ]
@@ -927,7 +927,7 @@
             "location": "Hammerfest",
             "age": 51,
             "email": "postmottak@nfd.dep.no",
-            "phone": null, // Mangler i bilde
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -936,7 +936,7 @@
             "location": "Lebesby",
             "age": 39,
             "email": "sigurd.kvammen.rafaelsen@stortinget.no",
-            "phone": null, // Mangler i bilde
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -954,7 +954,7 @@
             "location": "Alta",
             "age": 19,
             "email": null,
-            "phone": null, // Mangler i bilde
+            "phone": null, 
             "hasRealisticChance": false
           }
         ]
@@ -1086,7 +1086,7 @@
             "location": "Sør-Varanger",
             "age": 69,
             "email": "reiduka@hotmail.com",
-            "phone": null, // Mangler i bilde
+            "phone": null, 
             "hasRealisticChance": false
           }
         ]
@@ -1173,7 +1173,7 @@
             "location": "Hammerfest",
             "age": 42,
             "email": "Siren.Jensen.Ase@hammerfest.kommune.no",
-            "phone": null,
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -1182,7 +1182,7 @@
             "location": "Vadsø",
             "age": 49,
             "email": "royfriskila@savegazachildren.org",
-            "phone": "92571995", // Korrigert fra bilde
+            "phone": "92571995", 
             "hasRealisticChance": false
           }
         ]
@@ -1220,7 +1220,7 @@
             "location": "Tynset",
             "age": 29,
             "email": "even.eriksen@jd.dep.no",
-            "phone": null, // Mangler i bilde
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -1229,7 +1229,7 @@
             "location": "Hamar",
             "age": 63,
             "email": "fba@imdi.no",
-            "phone": null, // Mangler i bilde
+            "phone": null, 
             "hasRealisticChance": false
           }
         ]
@@ -1241,7 +1241,7 @@
           {
             "rank": 1,
             "name": "Tor André Johnsen",
-            "location": "Brumunddal", // Brumunddal er i Ringsaker, bruker det som står
+            "location": "Brumunddal", 
             "age": 56,
             "email": "toaj@stortinget.no",
             "phone": "91823933",
@@ -1358,7 +1358,7 @@
             "location": "Stange",
             "age": 46,
             "email": "trygve-slagsvold.vedum@stortinget.no",
-            "phone": null, // Mangler i bilde
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -1367,7 +1367,7 @@
             "location": "Elverum",
             "age": 31,
             "email": "emilie.enger.mehl@stortinget.no",
-            "phone": null, // Mangler i bilde
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -1482,7 +1482,7 @@
           },
           {
             "rank": 3,
-            "name": "Linda Merkesdal", // Mellomnavn Monsen mangler i dette bildet
+            "name": "Linda Merkesdal", 
             "location": "Voss",
             "age": 51,
             "email": "linda.monsen.merkesdal@stortinget.no",
@@ -1500,7 +1500,7 @@
           },
           {
             "rank": 5,
-            "name": "June Trendereld Gruer", // Navn korrigert fra bilde
+            "name": "June Trendereld Gruer", 
             "location": "Bergen",
             "age": 24,
             "email": "junegruer@gmail.com",
@@ -1588,12 +1588,12 @@
             "location": "Bergen",
             "age": 64,
             "email": "erna.solberg@stortinget.no",
-            "phone": null, // Mangler i bilde
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
             "rank": 2,
-            "name": "Ove Bernt Trellevik", // Navn korrigert fra bilde
+            "name": "Ove Bernt Trellevik", 
             "location": "Øygarden",
             "age": 58,
             "email": "Obt@stortinget.no",
@@ -1664,7 +1664,7 @@
             "rank": 1,
             "name": "Joel Ystebø",
             "location": "Bergen",
-            "age": 29, // Alder 29 her, bilde sier 23. Korrigerer til 23.
+            "age": 23, 
             "email": "joel@kristenmedia.no",
             "phone": "45454728",
             "hasRealisticChance": true
@@ -1695,7 +1695,7 @@
           },
           {
             "rank": 2,
-            "name": "Terje Kolbotn", // Navn korrigert fra bilde
+            "name": "Terje Kolbotn", 
             "location": "Ullensvang",
             "age": 73,
             "email": "terje.kollbotn@gmail.com",
@@ -1737,7 +1737,7 @@
             "name": "Marthe Hammer",
             "location": "Bergen",
             "age": 45,
-            "email": "marthe.hammer@vlfk.no", // Vestland Fylkeskommune
+            "email": "marthe.hammer@vlfk.no", 
             "phone": "97672203",
             "hasRealisticChance": true
           },
@@ -1771,7 +1771,7 @@
             "location": "Bergen",
             "age": 37,
             "email": "sveinung.rotevatn@stortinget.no",
-            "phone": null, // Mangler i bilde
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -1791,7 +1791,7 @@
         "candidates": [
           {
             "rank": 1,
-            "name": "Frøya S. Sjursæther", // Navn korrigert fra bilde
+            "name": "Frøya S. Sjursæther", 
             "location": "Bergen",
             "age": 18,
             "email": "froya@gronnungdom.no",
@@ -1857,7 +1857,7 @@
             "location": "Ålesund",
             "age": 47,
             "email": "syl@frp.no",
-            "phone": null, // Mangler i bilde
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -2066,11 +2066,11 @@
           },
           {
             "rank": 2,
-            "name": "Steinar Ørstenwik", // Navn korrigert fra bilde
+            "name": "Steinar Ørstenwik", 
             "location": "Ålesund",
             "age": 25,
             "email": null,
-            "phone": null, // Mangler i bilde
+            "phone": null, 
             "hasRealisticChance": false
           }
         ]
@@ -2099,7 +2099,7 @@
             "location": "Steinkjer",
             "age": 30,
             "email": "vebgo@trondelagfylke.no",
-            "phone": "41669779", // Korrigert fra bilde
+            "phone": "41669779", 
             "hasRealisticChance": true
           },
           {
@@ -2446,7 +2446,7 @@
           {
             "rank": 4,
             "name": "Maria Strand Munkhaug",
-            "location": "UH", // Unge Høyre
+            "location": "UH", 
             "age": 22,
             "email": "maria.strand.munkhaug@stortinget.no",
             "phone": "41202274",
@@ -2637,7 +2637,7 @@
           {
             "rank": 3,
             "name": "Linnea Lie Holen",
-            "location": "Åmot", // Åmot er i Nordre Land, bruker det som står
+            "location": "Åmot", 
             "age": 24,
             "email": "linnea.lie.holen@hotmail.com",
             "phone": "98548027",
@@ -2664,12 +2664,12 @@
             "location": "Gjøvik",
             "age": 59,
             "email": "finn.krokeide@stortinget.no",
-            "phone": "97639462", // Korrigert fra bilde
+            "phone": "97639462", 
             "hasRealisticChance": false
           },
           {
             "rank": 3,
-            "name": "Jul Tore Kittelsrud", // Navn korrigert fra bilde
+            "name": "Jul Tore Kittelsrud", 
             "location": "Gran",
             "age": 59,
             "email": "jultore@gmail.com",
@@ -2720,7 +2720,7 @@
             "name": "Jytte Sonne",
             "location": "Lillehammer",
             "age": 71,
-            "email": "jyttesonnesen@gmail.com", // Korrigert epost fra bilde
+            "email": "jyttesonnesen@gmail.com", 
             "phone": "98648420",
             "hasRealisticChance": false
           },
@@ -2750,7 +2750,7 @@
           },
           {
             "rank": 2,
-            "name": "Finn Olav Rolijordet", // Navn korrigert fra bilde
+            "name": "Finn Olav Rolijordet", 
             "location": "Gjøvik",
             "age": 68,
             "email": "finno@raudt.no",
@@ -2769,7 +2769,7 @@
             "location": "Dovre",
             "age": 60,
             "email": "bengt.fasteraune@stortinget.no",
-            "phone": "47465370", // Korrigert fra bilde
+            "phone": "47465370", 
             "hasRealisticChance": true
           },
           {
@@ -2826,7 +2826,7 @@
             "location": "Østre Toten",
             "age": 39,
             "email": "kristin@jess-bakken.com",
-            "phone": null, // Mangler i bilde
+            "phone": null, 
             "hasRealisticChance": false
           },
           {
@@ -2856,7 +2856,7 @@
           {
             "rank": 2,
             "name": "Marit Nythun Utheim",
-            "location": "Valdres", // Valdres er en region, ikke kommune. Bruker det som står.
+            "location": "Valdres", 
             "age": 62,
             "email": "maritnu@hotmail.com",
             "phone": "46912978",
@@ -2865,8 +2865,8 @@
         ]
       }
     ]
-  }
-    {
+  },
+  {
     "constituencyName": "Oslo",
     "parties": [
       {
@@ -2878,8 +2878,8 @@
             "name": "Jonas Gahr Støre",
             "location": "Oslo",
             "age": 64,
-            "email": null, // Blank in image
-            "phone": null, // Blank in image
+            "email": null, 
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -2888,7 +2888,7 @@
             "location": "Oslo",
             "age": 36,
             "email": "kamzy.gunaratnam@stortinget.no",
-            "phone": null, // Blank in image
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -2896,8 +2896,8 @@
             "name": "Jan Christian Vestre",
             "location": "Oslo",
             "age": 38,
-            "email": null, // Blank in image
-            "phone": null, // Blank in image
+            "email": null, 
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -2906,7 +2906,7 @@
             "location": "Oslo",
             "age": 28,
             "email": "agnes.viljugrein@gmail.com",
-            "phone": null, // Blank in image
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -2924,7 +2924,7 @@
             "location": "Oslo",
             "age": 55,
             "email": "trine.lise.sundnes@stortinget.no",
-            "phone": null, // Blank in image
+            "phone": null, 
             "hasRealisticChance": false
           },
           {
@@ -2940,9 +2940,9 @@
               "rank": 8,
               "name": "Malin Bye Sørensen",
               "location": "Oslo",
-              "age": null, // Blank in image
+              "age": null, 
               "email": "malinbye@gmail.com",
-              "phone": null, // Blank in image
+              "phone": null, 
               "hasRealisticChance": false
           }
         ]
@@ -2962,7 +2962,7 @@
           },
           {
             "rank": 2,
-            "name": "Simen Velle", // Korrigert rank
+            "name": "Simen Velle", 
             "location": "Oslo",
             "age": 24,
             "email": "simen.velle@fpu.no",
@@ -2971,11 +2971,11 @@
           },
            {
             "rank": 3,
-            "name": "Aina Stenersen", // Korrigert rank
+            "name": "Aina Stenersen", 
             "location": "Oslo",
             "age": 41,
-            "email": null, // Korrigert - Blank in image
-            "phone": null, // Blank in image
+            "email": null, 
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -2999,7 +2999,7 @@
             "location": "Oslo",
             "age": 49,
             "email": "ine-marie.eriksen.soreide@stortinget.no",
-            "phone": null, // Blank in image
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -3008,7 +3008,7 @@
             "location": "Oslo",
             "age": 47,
             "email": "nikolai.astrup@stortinget.no",
-            "phone": null, // Blank in image
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -3017,7 +3017,7 @@
             "location": "Oslo",
             "age": 49,
             "email": "mudassar.kapur@stortinget.no",
-            "phone": null, // Blank in image
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -3035,7 +3035,7 @@
             "location": "Oslo",
             "age": 28,
             "email": "olasven@hoyre.no",
-            "phone": null, // Blank in image
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -3110,7 +3110,7 @@
             "location": "Oslo",
             "age": 43,
             "email": "bjornar.moxnes@stortinget.no",
-            "phone": null, // Blank in image
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -3200,7 +3200,7 @@
             "location": "Oslo",
             "age": 44,
             "email": "guri.melby@stortinget.no",
-            "phone": null, // Blank in image
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -3209,7 +3209,7 @@
             "location": "Oslo",
             "age": 34,
             "email": "grunde.almeland@venstre.no",
-            "phone": null, // Blank in image
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -3217,7 +3217,7 @@
             "name": "Marit Kristine Vea",
             "location": "Oslo",
             "age": 39,
-            "email": null, // Blank in image
+            "email": null, 
             "phone": "97723431",
             "hasRealisticChance": false
           }
@@ -3229,11 +3229,11 @@
         "candidates": [
            {
             "rank": 1,
-            "name": "Arild Hermstad", // Korrigert - data finnes
+            "name": "Arild Hermstad", 
             "location": "Oslo",
             "age": 57,
             "email": "arild.hermstad@mdg.no",
-            "phone": null, // Blank in image
+            "phone": null, 
             "hasRealisticChance": false
           },
           {
@@ -3242,16 +3242,16 @@
             "location": "Oslo",
             "age": 34,
             "email": "ingrid.liland@mdg.no",
-            "phone": null, // Blank in image
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
             "rank": 3,
-            "name": "Margit Martinsen Bye", // Korrigert - data finnes
+            "name": "Margit Martinsen Bye", 
             "location": "Oslo",
             "age": 22,
             "email": "margit@mdg.no",
-            "phone": null, // Blank in image
+            "phone": null, 
             "hasRealisticChance": false
           }
         ]
@@ -3270,8 +3270,8 @@
             "name": "Andreas Bjelland Eriksen",
             "location": "Stavanger",
             "age": 33,
-            "email": null, // Blank in image
-            "phone": null, // Blank in image
+            "email": null, 
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -3544,29 +3544,29 @@
         ]
       },
       {
-        "partyName": "Miljøpartiet de Grønne",
-        "partyShorthand": "MDG",
-        "candidates": [
-          {
-            "rank": 1,
-            "name": "Andreas Aukland",
-            "location": "Tysvær",
-            "age": 21,
-            "email": "andreas.aukland@mdg.no",
-            "phone": "48243242",
-            "hasRealisticChance": false 
-          },
-          {
-            "rank": 2,
-            "name": "Mia Hereid",
-            "location": "Karmøy",
-            "age": 46,
-            "email": "mia@hereidfoto.com",
-            "phone": "99647272",
-            "hasRealisticChance": false 
-          }
-        ]
-      }
+        "partyName": "Miljøpartiet de Grønne",
+        "partyShorthand": "MDG",
+        "candidates": [
+          {
+            "rank": 1,
+            "name": "Andreas Aukland",
+            "location": "Tysvær",
+            "age": 21,
+            "email": "andreas.aukland@mdg.no",
+            "phone": "48243242",
+            "hasRealisticChance": false 
+          },
+          {
+            "rank": 2,
+            "name": "Mia Hereid",
+            "location": "Karmøy",
+            "age": 46,
+            "email": "mia@hereidfoto.com",
+            "phone": "99647272",
+            "hasRealisticChance": false 
+          }
+        ]
+      }
     ]
   },
   {
@@ -3579,10 +3579,10 @@
           {
             "rank": 1,
             "name": "Torbjørn Vereide",
-            "location": null, // Blank in image
+            "location": null, 
             "age": 36,
             "email": "torbjorn.vereide@stortinget.no",
-            "phone": null, // Blank in image
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -3599,7 +3599,7 @@
             "name": "Frida Hegranes Selvik",
             "location": "Kinn",
             "age": 20,
-            "email": null, // Blank in image
+            "email": null, 
             "phone": "95124542",
             "hasRealisticChance": false
           }
@@ -3615,7 +3615,7 @@
             "location": "Nordfjordeid",
             "age": 28,
             "email": "stig-even.lillestol@fpu.no",
-            "phone": null, // Blank in image
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -3761,7 +3761,7 @@
             "name": "Alice Vie",
             "location": "Askvoll",
             "age": 36,
-            "email": null, // Blank in image
+            "email": null, 
             "phone": "95770087",
             "hasRealisticChance": false
           }
@@ -3777,7 +3777,7 @@
             "location": "Stad",
             "age": 53,
             "email": "alfred.jens.bjorlo@stortinget.no",
-            "phone": "480 82 652", // Using formatting from image
+            "phone": "480 82 652", 
             "hasRealisticChance": true
           },
           {
@@ -3786,7 +3786,7 @@
             "location": "Fjaler",
             "age": 51,
             "email": "gunhildalis18@gmail.com",
-            "phone": "976 53 785", // Using formatting from image
+            "phone": "976 53 785", 
             "hasRealisticChance": false
           }
         ]
@@ -3829,8 +3829,8 @@
             "name": "Trond Giske",
             "location": "Trondheim",
             "age": 58,
-            "email": null, // Blank in image
-            "phone": null, // Blank in image
+            "email": null, 
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -3980,7 +3980,7 @@
             "location": "Trondheim",
             "age": 46,
             "email": "hege.bae.nyholt@stortinget.no",
-            "phone": null, // Blank in image
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -4104,7 +4104,7 @@
             "name": "Terje Aasland",
             "location": "Skien",
             "age": 60,
-            "email": null, // Blank in image
+            "email": null, 
             "phone": "47701242",
             "hasRealisticChance": true
           },
@@ -4352,8 +4352,8 @@
             "name": "Cecilie Myrseth",
             "location": "Tromsø",
             "age": 40,
-            "email": null, // Blank in image
-            "phone": null, // Blank in image
+            "email": null, 
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -4371,7 +4371,7 @@
             "location": "Harstad",
             "age": 43,
             "email": "tom.einar.karlsen@stortinget.no",
-            "phone": null, // Blank in image
+            "phone": null, 
             "hasRealisticChance": false
           },
           {
@@ -4379,7 +4379,7 @@
             "name": "Hilde Anita Nyvoll",
             "location": "Nordreisa",
             "age": 48,
-            "email": "hilde.nyvoll@nordreis", // Incomplete in image, using as is
+            "email": "hilde.nyvoll@nordreis", 
             "phone": "91807130",
             "hasRealisticChance": false
           }
@@ -4395,7 +4395,7 @@
             "location": "Harstad",
             "age": 54,
             "email": "per-willy.amundsen@stortinget.no",
-            "phone": null, // Blank in image
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -4428,7 +4428,7 @@
             "location": "Tromsø",
             "age": 32,
             "email": "erlend.svardal.boe@stortinget.no",
-            "phone": null, // Blank in image
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -4694,7 +4694,7 @@
             "location": "Kristiansand",
             "age": 43,
             "email": "es@sagapartners.no",
-            "phone": null, // Blank in image
+            "phone": null, 
             "hasRealisticChance": false
           }
         ]
@@ -4741,8 +4741,8 @@
             "name": "Frida Graneng",
             "location": "Lillesand",
             "age": 21,
-            "email": null, // Blank in image
-            "phone": null, // Blank in image
+            "email": null, 
+            "phone": null, 
             "hasRealisticChance": false
           }
         ]
@@ -4867,7 +4867,7 @@
             "location": "Horten",
             "age": 45,
             "email": "maria-karine.aasen-svendsrud@stortinget.no",
-            "phone": "97665324",
+            "phone": null,
             "hasRealisticChance": true
           },
           {
@@ -4900,7 +4900,7 @@
             "location": "Horten",
             "age": 32,
             "email": "b.svendsrud@vestfoldfylke.no",
-            "phone": "97665324", // Matches AP #2, confirmed from image
+            "phone": "97665324", 
             "hasRealisticChance": true
           },
           {
@@ -5086,7 +5086,7 @@
             "location": "Horten",
             "age": 41,
             "email": "larslonberg@gmail.com",
-            "phone": null, // Blank in image
+            "phone": null, 
             "hasRealisticChance": false
           }
         ]
@@ -5105,8 +5105,8 @@
             "name": "Jon-Ivar Nygård",
             "location": "Fredrikstad",
             "age": 52,
-            "email": null, // Blank in image
-            "phone": null, // Blank in image
+            "email": null, 
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -5115,7 +5115,7 @@
             "location": "Sarpsborg",
             "age": 35,
             "email": "Elise.Waagen@stortinget.no",
-            "phone": null, // Blank in image
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -5133,7 +5133,7 @@
             "location": "Halden",
             "age": 42,
             "email": "solveig.vitanza@stortinget.no",
-            "phone": null, // Blank in image
+            "phone": null, 
             "hasRealisticChance": false
           },
           {
@@ -5157,7 +5157,7 @@
             "location": "Moss",
             "age": 41,
             "email": "erlend.wiborg@stortinget.no",
-            "phone": null, // Blank in image
+            "phone": null, 
             "hasRealisticChance": true
           },
           {
@@ -5330,7 +5330,7 @@
             "name": "Barham Azadi",
             "location": "Moss",
             "age": 39,
-            "email": null, // Blank in image
+            "email": null, 
             "phone": "40141312",
             "hasRealisticChance": false
           }
@@ -5368,8 +5368,8 @@
             "rank": 1,
             "name": "Johan Kristian Rud",
             "location": "Indre Østfold",
-            "age": null, // Blank in image
-            "email": null, // Blank in image
+            "age": null, 
+            "email": null, 
             "phone": "48058888",
             "hasRealisticChance": false
           },
