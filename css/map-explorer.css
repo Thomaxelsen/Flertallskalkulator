@@ -1,132 +1,196 @@
-/* css/map-explorer.css */
-
+/* Generell layout for kartutforsker-siden */
 .map-layout {
     display: flex;
-    flex-wrap: wrap; /* Kan wrappe på mindre skjermer */
-    gap: 30px;
+    gap: 20px;
     margin-top: 20px;
+    align-items: flex-start;
 }
 
+/* Kartcontainer */
 #map-container {
-    flex: 2; /* Kartet tar mer plass */
-    min-width: 300px; /* Minimumsbredde for kartet */
-    min-height: 500px; /* Sørg for nok høyde */
+    flex: 3;
+    min-width: 300px;
+    height: 600px;
     border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    position: relative; /* For loader */
-    background-color: #f9f9f9; /* Lys grå bakgrunn mens kartet laster */
+    border-radius: 5px;
+    position: relative;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.map-loader {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #666;
-    font-size: 1.2rem;
+/* Lasteindikator */
+#map-loader {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    border: 5px solid #f3f3f3; border-top: 5px solid var(--kf-blue, #3498db);
+    border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite;
+    z-index: 1000; display: none;
 }
+@keyframes spin { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
 
+/* Panel for kandidatvisning */
 #candidate-display-panel {
-    flex: 1; /* Panelet tar mindre plass */
-    min-width: 280px; /* Minimumsbredde for panelet */
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    max-height: 600px; /* Samme høyde som kart, legg til scroll */
+    flex: 2;
+    min-width: 280px;
+    max-height: 600px;
     overflow-y: auto;
+    background-color: #f7f7f7; /* Litt lysere grå bakgrunn for panelet? */
+    padding: 0; /* Fjerner generell padding, styres av innhold */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
-
 #candidate-display-panel h2 {
-    margin-top: 0;
-    margin-bottom: 15px;
-    color: var(--kf-blue);
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
-    font-size: 1.4rem;
-}
-#candidate-display-panel hr {
-    border: 0;
-    border-top: 1px solid #eee;
-    margin: 15px 0;
+    margin: 0; /* Fjerner margin */
+    padding: 15px 15px 10px 15px; /* Legger til padding */
+    border-bottom: 2px solid var(--kf-blue, #3498db);
+    font-size: 1.3em; color: var(--kf-deep-blue, #003366);
+    background-color: #fff; /* Hvit bakgrunn for tittelområdet */
+    border-radius: 5px 5px 0 0; /* Runder av topphjørner */
+    position: sticky; /* Gjør tittel sticky */
+    top: 0;
+    z-index: 10; /* Over party headers */
 }
 
+/* Styling for listen som inneholder partigrupper */
+.candidate-list-by-party { list-style-type: none; padding: 0; margin: 0; }
 
-#candidate-list-content .party-header {
-    font-weight: bold;
-    margin-top: 15px;
-    margin-bottom: 8px; /* Mer luft under header */
-    padding-bottom: 5px; /* Padding under */
-    border-bottom: 1px dotted #ccc;
+
+/* === START: Oppdatert Styling for Partigruppe og Header === */
+.party-candidate-group {
+    margin-bottom: 0; /* Ingen ekstra marg mellom grupper */
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    overflow: visible;
+}
+
+.party-header {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 1.1rem; /* Litt større partinavn */
+    padding: 10px 15px; /* Justert padding */
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+    /* background-color settes av JS */
+    position: sticky; /* Gjør header sticky */
+    top: 62px; /* Juster denne verdien basert på høyden til H2 + padding */
+    z-index: 5; /* Lavere enn H2, men over kortene */
+    /* Trenger kanskje en egen bakgrunn hvis panelet er gjennomsiktig? */
+    /* box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Skygge under sticky header */
 }
-#candidate-list-content .party-header .party-icon {
-    width: 20px; /* Juster størrelse */
-    height: 20px;
-    font-size: 11px;
-    flex-shrink: 0; /* Ikke la ikonet krympe */
-     /* Sørg for at basisstil (rund, sentrert tekst) finnes i styles.css */
+.party-header h3 {
+    margin: 0;
+    font-size: 1.1em; /* Tilbake til litt mindre? */
+    font-weight: 600; /* Litt mindre bold */
+}
+/* === SLUTT: Oppdatert Styling for Partigruppe og Header === */
+
+
+/* Leaflet interaksjonsstiler */
+.leaflet-interactive:hover {}
+.constituency-highlight { weight: 3 !important; color: '#666' !important; fillOpacity: 0.8 !important; }
+.constituency-selected { fillColor: '#add8e6' !important; fillOpacity: 0.9 !important; }
+
+
+/* Responsivt design for mindre skjermer */
+@media (max-width: 850px) {
+    .map-layout { flex-direction: column; }
+    #map-container { height: 400px; min-width: auto; width: 100%; margin-bottom: 15px; }
+    #candidate-display-panel { flex: none; width: 100%; max-height: 500px; box-sizing: border-box; padding: 0;} /* Fjernet padding her også */
+    #candidate-display-panel h2 { border-radius: 0; } /* Fjerner avrunding på mobil */
+    .party-header { top: 57px; /* Juster for mobil tittelhøyde */ }
 }
 
-#candidate-list-content ul {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 15px 0; /* Litt luft under hver liste */
+
+/* ----- START: Ny CSS for Kandidatkort (inspirert av candidates.html) ----- */
+
+/* Liste-container for kortene */
+.candidates-in-group {
+    list-style-type: none;
+    padding: 10px 15px 10px 15px; /* Padding rundt kortene */
+    margin: 0;
+    background-color: transparent; /* La panel-bakgrunn skinne gjennom */
 }
 
-#candidate-list-content li {
-    padding: 6px 0 6px 5px; /* Litt mer padding */
-    border-bottom: 1px solid #f5f5f5;
-    font-size: 0.95rem; /* Litt større */
-    line-height: 1.4;
-}
-#candidate-list-content li:last-child {
-    border-bottom: none;
-}
-
-#candidate-list-content .realistic-chance-indicator {
-    color: var(--kf-green);
-    font-weight: bold;
-    font-size: 0.8em;
-    margin-left: 8px; /* Mer synlig */
-    display: inline-block; /* For å sikre margin */
-    background-color: rgba(0, 168, 163, 0.1); /* Lett bakgrunn */
-    padding: 1px 4px;
-    border-radius: 3px;
-}
-
-/* Styling for Leaflet kartlag (kan tilpasses) */
-.leaflet-interactive { /* Generell klasse for klikkbare lag */
+/* Selve kortet */
+.map-candidate-card {
+    background-color: #ffffff; /* Hvit bakgrunn */
+    border-left: 1px solid #e0e0e0; /* Definerte kanter */
+    border-right: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+    border-top: 4px solid transparent; /* Partifarge settes av JS */
+    border-radius: 0 0 5px 5px; /* Avrundede bunnhjørner */
+    padding: 12px 15px; /* Mer intern padding */
+    margin-bottom: 12px; /* Mer luft mellom kort */
     cursor: pointer;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    display: flex;
+    align-items: flex-start; /* Justerer til toppen */
+    gap: 12px; /* Økt gap */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.07); /* Tydeligere skygge */
+    position: relative; /* For evt. absolutt posisjonering internt */
 }
 
-.constituency-highlight { /* Stil ved mouseover */
-    fill-opacity: 0.8;
-    /* stroke-width: 2; */
-    /* stroke: #555; */
+.map-candidate-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.12); /* Mer skygge på hover */
+    transform: translateY(-2px); /* Løfter kortet litt */
 }
 
-.constituency-selected { /* Stil for klikket lag */
-    stroke-width: 3 !important; /* Bruk !important for å overstyre evt. resetStyle */
-    stroke: var(--kf-pink) !important; /* Bruk en tydelig farge */
-    stroke-opacity: 1 !important;
-    fill-opacity: 0.5 !important;
+/* Container for rangering */
+.card-rank-container {
+    padding-top: 2px;
 }
 
-/* Responsivitet */
-@media (max-width: 850px) { /* Justert breakpoint */
-    .map-layout {
-        flex-direction: column;
-    }
-    #map-container {
-        min-height: 400px; /* Juster høyde for mobil */
-        height: 50vh; /* Relativ høyde */
-    }
-     #candidate-display-panel {
-         max-height: none; /* Fjern høydebegrensning på panel */
-     }
+/* Container for navn og sted */
+.card-details-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3px; /* Litt mer luft */
 }
+
+/* Container for stjerne */
+.card-star-container {
+    margin-left: auto;
+    padding-left: 10px;
+    padding-top: 1px;
+}
+
+/* Styling av innhold i kort */
+.map-candidate-card .candidate-rank {
+    font-weight: 700;
+    color: #333; /* Mørkere farge */
+    font-size: 1.2em; /* Større */
+    line-height: 1.1;
+    min-width: 1.3em; /* Sikrer litt plass */
+    text-align: center;
+}
+
+.map-candidate-card .candidate-name {
+    color: var(--kf-deep-blue, #003366);
+    font-weight: 600;
+    font-size: 1.05em; /* Litt større navn */
+    line-height: 1.3;
+}
+
+.map-candidate-card .candidate-location {
+    font-size: 0.85em;
+    color: #555;
+    line-height: 1.2;
+}
+
+.map-candidate-card .realistic-chance-indicator {
+    color: var(--kf-gold, #E6A23C);
+    font-size: 1.4em; /* Enda større stjerne */
+    line-height: 1;
+}
+/* ----- SLUTT: Ny CSS for Kandidatkort ----- */
+
+
+/* ----- CSS for Modal (Uendret) ----- */
+.modal { position: fixed; z-index: 1001; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); }
+.modal-content { background-color: #fefefe; margin: 10% auto; padding: 25px 30px; border: 1px solid #ccc; width: 80%; max-width: 500px; border-radius: 8px; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+.modal-close-button { color: #aaa; position: absolute; top: 10px; right: 15px; font-size: 28px; font-weight: bold; line-height: 1; }
+.modal-close-button:hover, .modal-close-button:focus { color: black; text-decoration: none; cursor: pointer; }
+.modal-content h3 { margin-top: 0; color: var(--kf-deep-blue, #003366); border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px; font-size: 1.4em; }
+.modal-content p { margin-bottom: 12px; line-height: 1.6; color: #333; font-size: 0.95em; }
+.modal-content p strong { display: inline-block; min-width: 60px; color: #111; margin-right: 8px; }
+/* ----- Slutt CSS for Modal ----- */
