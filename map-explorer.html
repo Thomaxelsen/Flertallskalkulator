@@ -15,24 +15,26 @@
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
             crossorigin=""></script>
 
-    <style>
-        /* Midlertidig stil for å gi map-container en definert høyde */
-        #map-container {
-            height: 600px; /* Juster etter behov */
-            /* Fjernet width: 100%; da flexbox styrer dette */
-        }
-    </style>
-</head>
+    </head>
 <body>
     <header class="site-header">
-        <h1>Valg 2025 Kartutforsker</h1>
+        <h1><a href="index.html">Flertallskalkulator 2025</a></h1>
         <div class="logo">
             <a href="index.html"><img src="img/logoer/kf_logo.png" alt="Kreftforeningen Logo"></a>
         </div>
+        <div id="mobileMenuIconContainer">
+             <button id="burgerMenu" class="burger-menu" aria-label="Åpne meny">
+                 <i class="fas fa-bars"></i>
+             </button>
+        </div>
     </header>
     <nav class="main-nav">
-        </nav>
-
+        <ul class="nav-links"></ul>
+    </nav>
+    <div id="menuOverlay" class="menu-overlay"></div>
+    <div id="mobileMenu" class="mobile-menu">
+         <button id="closeMenu" class="close-menu" aria-label="Lukk meny">&times;</button>
+         </div>
     <main>
         <h2>Utforsk kandidater via valgkretskart</h2>
         <p>Klikk på en valgkrets på kartet for å se kandidatlisten for den kretsen i panelet til høyre.</p>
@@ -48,8 +50,7 @@
                     </div>
             </aside>
         </div>
-
-    </main>
+        </main>
 
     <footer>
         <p>&copy; 2024 Kreftforeningen</p>
@@ -64,12 +65,10 @@
             <p><strong>Sted:</strong> <span id="modal-candidate-location">Sted</span></p>
             <p><strong>E-post:</strong> <span id="modal-candidate-email">E-post</span></p>
             <p><strong>Telefon:</strong> <span id="modal-candidate-phone">Telefon</span></p>
-            </div>
+        </div>
     </div>
+
     <script src="js/partiesData.js"></script>
     <script src="js/navigationConfig.js"></script>
-    <script src="js/navigation.js"></script>
-    <script src="js/map-explorer.js"></script>
-
-</body>
+    <script src="js/navigation.js"></script> <script src="js/map-explorer.js"></script> </body>
 </html>
