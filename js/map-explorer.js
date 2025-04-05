@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (featureCollectionData && featureCollectionData.features) {
             console.log(`Map Explorer JS: Adding GeoJSON layer with ${featureCollectionData.features.length} features...`);
             geoJsonLayer = L.geoJSON(featureCollectionData, {
-                style: styleFeature, // Bruker fortsatt forenklet stil for testing
+                style: styleFeature, // Bruker forenklet stil for testing
                 onEachFeature: onEachFeature
             }).addTo(map);
 
@@ -159,7 +159,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Bruker nå CSS-klassen for valgt stil
          if (selectedLayer) selectedLayer.getElement()?.classList.remove('constituency-selected');
          layer.getElement()?.classList.add('constituency-selected');
-         layer.setStyle({ weight: 3 }); // Kan justere stil her også om ønskelig
+         // Sett stil direkte også for umiddelbar effekt (CSS kan overstyre, men dette sikrer noe)
+         layer.setStyle({ weight: 3, color: 'var(--kf-pink)', fillOpacity: 0.5 });
          layer.bringToFront();
         selectedLayer = layer;
 
@@ -175,7 +176,6 @@ document.addEventListener('DOMContentLoaded', () => {
                  constituencyName = normalized; // Viktig: Overskriv med det normaliserte navnet
             } else {
                 console.warn(`Could not normalize '${constituencyName}' reliably based on mandate keys, using raw name.`);
-                // Behold det originale navnet hvis normaliseringen feiler "sanity check"
             }
         }
         // *** SLUTT: Navne-normalisering ***
