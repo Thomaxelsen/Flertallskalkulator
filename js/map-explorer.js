@@ -1,4 +1,4 @@
-// js/map-explorer.js (Versjon 5 - Håndterer navn som "Nordland - Nordlánnda")
+// js/map-explorer.js (Versjon 6 - Mer robust navne-normalisering)
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Map Explorer JS: DOM loaded.");
@@ -11,14 +11,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let geoJsonLayer = null; // Leaflet GeoJSON layer instance
     let selectedLayer = null; // Holder styr på valgt kartlag
 
-    // Mandatdata (basert på image_f51c1f.png)
+    // Mandatdata
      const constituencyMandates = {
         "Østfold": 9,"Akershus": 19,"Oslo": 21,"Hedmark": 7,"Oppland": 6,
         "Buskerud": 9,"Vestfold": 8,"Telemark": 6,"Aust-Agder": 4,
         "Vest-Agder": 6,"Rogaland": 15,"Hordaland": 17,"Sogn og Fjordane": 4,
         "Møre og Romsdal": 9,"Sør-Trøndelag": 10,"Nord-Trøndelag": 4,
         "Nordland": 8,"Troms": 5,"Finnmark": 2
-        // ^-- Sørg for at disse navnene matcher navnene i candidates.json
     };
 
     // DOM-element referanser
@@ -81,7 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Kart Initialisering ---
     function initMapExplorer() {
         if (!mapContainer) { console.error("Map container not found"); return; }
-        // Fjernet: mapContainer.innerHTML = ''; // Vi lar feilmelding stå hvis fetch feilet
         if (map) { map.remove(); map = null; }
 
         console.log("Map Explorer JS: Initializing Leaflet map...");
@@ -105,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (featureCollectionData && featureCollectionData.features) {
             console.log(`Map Explorer JS: Adding GeoJSON layer with ${featureCollectionData.features.length} features...`);
             geoJsonLayer = L.geoJSON(featureCollectionData, {
-                style: styleFeature, // Bruker forenklet stil
+                style: styleFeature, // Bruker fortsatt forenklet stil
                 onEachFeature: onEachFeature
             }).addTo(map);
 
@@ -117,8 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } else {
             console.error("Map Explorer JS: GeoJSON data is missing, invalid, or structure is unexpected.", geoJsonData);
-             // Setter feilmelding KUN hvis kartet ikke allerede er initialisert
-             if (mapContainer && !map) { // Sjekk om map-objektet finnes
+             if (mapContainer && !map) {
                  mapContainer.innerHTML = `<p class="error" style="padding: 20px;">GeoJSON-data mangler, er ugyldig eller har uventet struktur.</p>`;
              } else {
                   console.error("GeoJSON data missing/invalid AFTER map init - check data source.");
@@ -130,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Bruker FORENKLET stil for feilsøking
     function styleFeature(feature) {
-        // console.log("Styling feature:", feature?.properties?.valgdistriktsnavn || 'Ukjent'); // Behold gjerne denne for å se at den kjører
+        // console.log("Styling feature:", feature?.properties?.valgdistriktsnavn || 'Ukjent');
         return {
             fillColor: 'red', weight: 2, opacity: 1, color: 'black', fillOpacity: 0.7
         };
@@ -155,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
          }
     }
 
-    // Denne funksjonen inkluderer navne-normaliseringen
+    // Denne funksjonen inkluderer den MER ROBUSTE navne-normaliseringen
     function zoomAndShowCandidates(e) {
         const layer = e.target;
 
@@ -166,29 +163,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (selectedLayer) selectedLayer.getElement()?.classList.remove('constituency-selected');
          layer.getElement()?.classList.add('constituency-selected');
-         // Sett stil direkte for klikk også (kan justeres mer i CSS)
-         layer.setStyle({ weight: 3, color: 'var(--kf-pink)', fillOpacity: 0.5 });
+         layer.setStyle({ weight: 3, color: 'var(--kf-pink)', fillOpacity: 0.5 }); // Stil for klikk
          layer.bringToFront();
         selectedLayer = layer;
 
         // Hent OG NORMALISER navnet fra GeoJSON properties
         let constituencyName = layer.feature.properties.valgdistriktsnavn;
+        const rawNameFromGeoJSON = constituencyName; // Behold rå-navnet for logging
 
-        // *** START: Navne-normalisering ***
-        if (constituencyName && constituencyName.includes(' - ')) {
+        // *** START: Mer Robust Navne-normalisering ***
+        // Alltid prøv å normalisere hvis " - " finnes
+        if (constituencyName && typeof constituencyName === 'string' && constituencyName.includes(' - ')) {
             const normalized = constituencyName.split(' - ')[0].trim();
-            if (constituencyMandates.hasOwnProperty(normalized)) {
-                 console.log(`Normalizing name from '${constituencyName}' to '${normalized}'`);
-                 constituencyName = normalized;
-            } else {
-                console.warn(`Could not normalize '${constituencyName}' reliably. Mandate key '${normalized}' not found. Using raw name.`);
-            }
+            console.log(`Normalizing name from '${constituencyName}' to '${normalized}' (Removed hasOwnProperty check)`);
+            // Bruk ALLTID den normaliserte hvis separatoren finnes
+            constituencyName = normalized;
         }
-        // *** SLUTT: Navne-normalisering ***
+        // *** SLUTT: Mer Robust Navne-normalisering ***
+
 
         if (constituencyName) {
-             console.log("Map Explorer JS: Using final name for lookup:", constituencyName);
-             displayCandidatesForConstituency(constituencyName);
+             console.log(`Map Explorer JS: Using final name for lookup: '${constituencyName}' (original was '${rawNameFromGeoJSON}')`); // Logg begge for klarhet
+             displayCandidatesForConstituency(constituencyName); // Send det normaliserte navnet videre
         } else {
             console.error("Map Explorer JS: Could not determine a usable constituency name!", layer?.feature?.properties);
             if(listContent) listContent.innerHTML = "<p>Kunne ikke identifisere valgkrets fra kartdata.</p>";
@@ -196,6 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Vis Kandidater for Valgt Krets ---
+    // Denne funksjonen bruker det (potensielt normaliserte) navnet
     function displayCandidatesForConstituency(constituencyName) {
         if (!displayPanel || !listContent) { console.error("Display panel or list content element not found!"); return; }
         const constituencyData = allCandidatesData.find(c => c.constituencyName === constituencyName);
