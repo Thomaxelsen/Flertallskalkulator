@@ -3,71 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kartutforsker - Kandidater 2025</title>
+    <title>Kartutforsker - Valg 2025</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
           integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
           crossorigin=""/>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/map-explorer.css">
-    <style>
-        /* Nødvendig basis-høyde for kart-containeren */
-        #map-container { height: 600px; }
-    </style>
-</head>
-<body>
-    <div class="burger-menu" id="burgerMenu">
-        <div class="burger-bar"></div>
-        <div class="burger-bar"></div>
-        <div class="burger-bar"></div>
-    </div>
-    <div class="mobile-menu" id="mobileMenu">
-        <div class="menu-header">
-            <h3>Meny</h3>
-            <button class="close-button" id="closeMenu">×</button>
-        </div>
-        <div class="menu-items" id="mobileMenuItems">
-            </div>
-    </div>
-    <div class="menu-overlay" id="menuOverlay"></div>
-    <div class="container">
-        <header>
-           <div class="logo-container">
-                 <a href="index.html">
-                    <img src="images/Logo.png" alt="Kreftforeningens logo" class="logo-image">
-                </a>
-           </div>
-            <div class="header-text">
-                <h1>Kartutforsker</h1>
-                <div class="header-subtitle">Utforsk kandidater via valgkretskart</div>
-            </div>
-            <div class="nav-links">
-                 </div>
-        </header>
-
-        <div class="map-layout">
-            <div id="map-container">
-                 <div class="map-loader">Laster kart...</div>
-            </div>
-            <div id="candidate-display-panel">
-                <h2>Valgkrets Kandidater</h2>
-                <p>Klikk på en valgkrets på kartet for å se kandidatene.</p>
-                <hr>
-                <div id="candidate-list-content">
-                    </div>
-            </div>
-        </div>
-
-        <footer>
-             Basert på kandidatdata for Stortingsvalget 2025. Kartdata: GeoJSON basert på Kartverket N5000.
-        </footer>
-    </div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
             crossorigin=""></script>
+
+    <style>
+        /* Midlertidig stil for å gi map-container en definert høyde */
+        #map-container {
+            height: 600px; /* Juster etter behov */
+            /* Fjernet width: 100%; da flexbox styrer dette */
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <h1>Valg 2025 Kartutforsker</h1>
+        <div class="logo">
+            <a href="index.html"><img src="img/logoer/kf_logo.png" alt="Kreftforeningen Logo"></a>
+        </div>
+    </header>
+    <nav class="main-nav">
+        </nav>
+
+    <main>
+        <h2>Utforsk kandidater via valgkretskart</h2>
+        <p>Klikk på en valgkrets på kartet for å se kandidatlisten for den kretsen i panelet til høyre.</p>
+
+        <div class="map-layout">
+            <div id="map-container">
+                <div id="map-loader" class="map-loader" style="display: none;"></div>
+                </div>
+            <aside id="candidate-display-panel">
+                <h2>Velg valgkrets</h2>
+                <div id="candidate-list-content">
+                    <p>Klikk på en valgkrets på kartet for å se kandidatene.</p>
+                    </div>
+            </aside>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Kreftforeningen</p>
+    </footer>
+
+    <div id="candidate-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="modal-close-button">&times;</span>
+            <h3 id="modal-candidate-name">Kandidatnavn</h3>
+            <p><strong>Parti:</strong> <span id="modal-candidate-party">Partinavn</span></p>
+            <p><strong>Alder:</strong> <span id="modal-candidate-age">Alder</span></p>
+            <p><strong>Sted:</strong> <span id="modal-candidate-location">Sted</span></p>
+            <p><strong>E-post:</strong> <span id="modal-candidate-email">E-post</span></p>
+            <p><strong>Telefon:</strong> <span id="modal-candidate-phone">Telefon</span></p>
+            </div>
+    </div>
+    <script src="js/partiesData.js"></script>
     <script src="js/navigationConfig.js"></script>
     <script src="js/navigation.js"></script>
-    <script src="js/partiesData.js"></script>
     <script src="js/map-explorer.js"></script>
 
 </body>
