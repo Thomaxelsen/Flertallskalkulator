@@ -257,7 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Card Creation (uendret fra forrige versjon) ---
     function createCandidateCard(candidate, partyInfo) { /* ... uendret ... */
         const card = document.createElement('div');
-        card.className = 'candidate-card';
+        card.className = `candidate-card party-${partyInfo.classPrefix || partyInfo.shorthand.toLowerCase()}`;
         if (candidate.hasRealisticChance) {
             card.classList.add('realistic-chance');
         }
