@@ -1,0 +1,120 @@
+/* css/map-explorer.css */
+
+.map-layout {
+    display: flex;
+    flex-wrap: wrap; /* Kan wrappe på mindre skjermer */
+    gap: 30px;
+    margin-top: 20px;
+}
+
+#map-container {
+    flex: 2; /* Kartet tar mer plass */
+    min-width: 300px; /* Minimumsbredde for kartet */
+    min-height: 500px; /* Sørg for nok høyde */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    position: relative; /* For loader */
+    background-color: #f9f9f9; /* Lys grå bakgrunn mens kartet laster */
+}
+
+.map-loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #666;
+    font-size: 1.2rem;
+}
+
+
+#candidate-display-panel {
+    flex: 1; /* Panelet tar mindre plass */
+    min-width: 280px; /* Minimumsbredde for panelet */
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    max-height: 70vh; /* Begrens høyde og legg til scroll */
+    overflow-y: auto;
+}
+
+#candidate-display-panel h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: var(--kf-blue);
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    font-size: 1.4rem;
+}
+
+#candidate-list-content .party-header {
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    padding-bottom: 3px;
+    border-bottom: 1px dotted #ccc;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+#candidate-list-content .party-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+}
+
+
+#candidate-list-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#candidate-list-content li {
+    padding: 5px 0;
+    border-bottom: 1px solid #f5f5f5;
+    font-size: 0.9rem;
+}
+#candidate-list-content li:last-child {
+    border-bottom: none;
+}
+
+#candidate-list-content .realistic-chance-indicator {
+    color: var(--kf-green);
+    font-weight: bold;
+    font-size: 0.8em;
+    margin-left: 5px;
+}
+
+
+/* Styling for Leaflet kartlag (kan tilpasses) */
+.leaflet-interactive { /* Generell klasse for klikkbare lag */
+    cursor: pointer;
+}
+
+.constituency-highlight {
+    fill-opacity: 0.8;
+    /* stroke-width: 2; */
+    /* stroke: #555; */
+}
+
+.constituency-selected {
+    stroke-width: 3;
+    stroke: var(--kf-pink); /* Bruk en tydelig farge */
+    stroke-opacity: 1;
+    fill-opacity: 0.5;
+}
+
+/* Responsivitet */
+@media (max-width: 768px) {
+    .map-layout {
+        flex-direction: column;
+    }
+    #map-container {
+        min-height: 400px; /* Juster høyde for mobil */
+    }
+     #candidate-display-panel {
+         max-height: none; /* Fjern høydebegrensning på panel */
+     }
+}
