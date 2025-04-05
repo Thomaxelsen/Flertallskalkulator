@@ -3279,8 +3279,8 @@
             "name": "Ruth Mariann Hop",
             "location": "Karmøy",
             "age": 50,
-            "email": "ruth.mariann.hop@hotmail.com",
-            "phone": "95898879",
+            "email": "ruth_mariann_hop@hotmail.com",
+            "phone": "95889879",
             "hasRealisticChance": true
           },
           {
@@ -3288,7 +3288,7 @@
             "name": "Julia Eikeland",
             "location": "AUF",
             "age": 24,
-            "email": "julia.eikeland@hotmail.com",
+            "email": "julia.eikeland@rogfk.no",
             "phone": "45222049",
             "hasRealisticChance": true
           },
@@ -3296,7 +3296,7 @@
             "rank": 4,
             "name": "Morten Sandanger",
             "location": "Sandnes",
-            "age": 57,
+            "age": 28,
             "email": "morten.sandanger@fellesforbundet.no",
             "phone": "45402983",
             "hasRealisticChance": true
@@ -3348,8 +3348,8 @@
             "name": "Rune Midtun",
             "location": "Karmøy",
             "age": 51,
-            "email": "rune.midtun@3gmail.com", // Using as is from image
-            "phone": "95060895",
+            "email": "rune.midtun73@gmail.com", 
+            "phone": "99608495",
             "hasRealisticChance": true
           },
           {
@@ -3441,7 +3441,7 @@
             "name": "Hadle Rasmus Bjuland",
             "location": "Hå",
             "age": 24,
-            "email": "hrb@krf.no",
+            "email": "hbj@krf.no",
             "phone": "90363690",
             "hasRealisticChance": false
           }
