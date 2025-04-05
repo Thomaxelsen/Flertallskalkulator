@@ -115,10 +115,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Kart Styling og Interaksjon ---
-    function styleFeature(feature) {
-        return { fillColor: '#9ecae1', weight: 1, opacity: 1, color: 'white', fillOpacity: 0.6 };
-    }
+  function styleFeature(feature) {
+    console.log("Styling feature:", feature?.properties?.valgdistriktsnavn || 'Ukjent'); // Legg til logging
+    return {
+        fillColor: 'red',    // En sterk farge
+        weight: 2,         // Tydelig kantlinje
+        opacity: 1,
+        color: 'black',    // Kontrasterende kantfarge
+        fillOpacity: 0.7   // Ganske ugjennomsiktig
+    };
+}
 
     function onEachFeature(feature, layer) {
         // Viktig sjekk: Har denne featuren et navn vi kan bruke?
