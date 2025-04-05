@@ -259,7 +259,7 @@
             "name": "Tonje Brenna",
             "location": "Ullensaker",
             "age": 37,
-            "email": null
+            "email": null,
             "phone": null, // Mangler i bilde
             "hasRealisticChance": true
           },
