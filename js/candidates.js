@@ -290,13 +290,36 @@ document.addEventListener('DOMContentLoaded', () => {
         return card;
     }
 
-    // --- Modal for Candidate Details (uendret) ---
-     function showCandidateDetails(candidate, partyInfo) { /* ... uendret ... */
-        const modal = document.getElementById('candidate-detail-modal');
-        const content = document.getElementById('candidate-detail-content');
-        if (!modal || !content) return;
-        content.innerHTML = `<h3>...</h3><p>...</p> ...`; // Fyll inn som før
-        modal.style.display = 'block';
+   // --- Modal for Candidate Details (KORRIGERT VERSJON) ---
+     function showCandidateDetails(candidate, partyInfo) {
+         const modal = document.getElementById('candidate-detail-modal');
+         const content = document.getElementById('candidate-detail-content');
+         if (!modal || !content) {
+              console.error("Modal or modal content not found!");
+              return;
+         }
+
+         // Bygg HTML-innholdet for modalen
+         content.innerHTML = `
+             <h3>
+                 <div class="party-icon icon-${partyInfo.classPrefix || 'default'}" style="background-color: ${partyInfo.color || '#ccc'}">
+                     ${candidate.partyShorthand?.charAt(0) || '?'}
+                 </div>
+                 ${candidate.name} (${candidate.partyShorthand})
+             </h3>
+             <p><strong>Rangering:</strong> ${candidate.rank}. plass</p>
+             <p><strong>Parti:</strong> ${partyInfo.name}</p>
+             <p><strong>Valgkrets:</strong> ${candidate.constituencyName}</p>
+             ${candidate.age ? `<p><strong>Alder:</strong> ${candidate.age}</p>` : ''}
+             ${candidate.location ? `<p><strong>Fra:</strong> ${candidate.location}</p>` : ''}
+             <p><strong>Realistisk sjanse:</strong> ${candidate.hasRealisticChance ? 'Ja' : 'Nei'}</p>
+             ${candidate.email ? `<p><strong>E-post:</strong> <a href="mailto:${candidate.email}">${candidate.email}</a></p>` : ''}
+              ${candidate.phone ? `<p><strong>Telefon:</strong> <a href="tel:${candidate.phone}">${candidate.phone}</a></p>` : ''}
+             <p style="font-size: 0.8em; color: #777; margin-top: 15px;">Husk personvern ved bruk av kontaktinformasjon.</p>
+         `;
+
+         modal.style.display = 'block'; // Viser modalen
+         // modal.classList.add('active'); // Alternativ hvis du bruker 'active' klasse for å vise
      }
 
     // --- Helper Functions (uendret) ---
