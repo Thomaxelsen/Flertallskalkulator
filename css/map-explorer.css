@@ -78,9 +78,9 @@
 
 /* Styling for partioverskriften */
 .party-header {
-    display: flex; /* Selv om logo er borte, kan være nyttig */
+    display: flex;
     align-items: center;
-    padding: 10px 12px; /* Justert padding */
+    padding: 10px 12px;
     color: white; /* Antar lys tekst på farget bakgrunn */
     /* background-color settes dynamisk via JS */
 }
@@ -93,95 +93,93 @@
 
 
 /* Leaflet interaksjonsstiler */
-.leaflet-interactive:hover {
-    /* Standard hover kan defineres her, men highlightFeature i JS overstyrer ofte */
-}
-
-.constituency-highlight {
-    weight: 3 !important;
-    color: '#666' !important;
-    fillOpacity: 0.8 !important;
-}
-
-.constituency-selected {
-    /* weight: 4 !important; */ /* Kan justeres */
-    /* color: '#f00' !important; */ /* Eksempel: Rød kant for valgt */
-    fillColor: '#add8e6' !important; /* Lys blå fyll for valgt */
-    fillOpacity: 0.9 !important;
-}
+.leaflet-interactive:hover {}
+.constituency-highlight { weight: 3 !important; color: '#666' !important; fillOpacity: 0.8 !important; }
+.constituency-selected { fillColor: '#add8e6' !important; fillOpacity: 0.9 !important; }
 
 
 /* Responsivt design for mindre skjermer */
 @media (max-width: 850px) {
-    .map-layout {
-        flex-direction: column; /* Stabler elementene vertikalt */
-    }
-
-    #map-container {
-        height: 400px; /* Reduserer høyden på kartet */
-        min-width: auto; /* Fjerner min-width */
-        width: 100%; /* Tar full bredde */
-        margin-bottom: 15px; /* Legger til mellomrom under kartet */
-    }
-
-    #candidate-display-panel {
-        flex: none; /* Fjerner flex-egenskapen */
-        width: 100%; /* Tar full bredde */
-        max-height: 500px; /* Justerer maks høyde */
-        box-sizing: border-box; /* Sikrer at padding ikke øker total bredde */
-    }
+    .map-layout { flex-direction: column; }
+    #map-container { height: 400px; min-width: auto; width: 100%; margin-bottom: 15px; }
+    #candidate-display-panel { flex: none; width: 100%; max-height: 500px; box-sizing: border-box; }
 }
 
 
-/* ----- Ny CSS for Kandidatkort i Kartutforsker ----- */
+/* ----- CSS for Kandidatkort i Kartutforsker ----- */
+.candidates-in-group { list-style-type: none; padding: 0 12px 12px 12px; margin: 0; background-color: #fff; }
+.map-candidate-card { background-color: #f9f9f9; border: 1px solid #eee; border-radius: 4px; padding: 8px 12px; margin-bottom: 6px; transition: background-color 0.2s ease, box-shadow 0.2s ease; display: flex; align-items: center; gap: 8px; /* cursor: pointer; - Aktiveres i neste steg */ }
+/* .map-candidate-card:hover { background-color: #eef4ff; border-color: #d1e0ff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); } */
+.map-candidate-card .candidate-rank { font-weight: bold; color: #555; min-width: 1.5em; text-align: right; }
+.map-candidate-card .candidate-name { flex-grow: 1; color: #333; font-size: 0.95em; }
+.map-candidate-card .realistic-chance-indicator { color: var(--kf-gold, #ffc107); font-size: 1.1em; margin-left: auto; padding-left: 5px; }
 
-/* Style selve listen inne i partigruppen for å fjerne standard listestiler */
-.candidates-in-group {
-    list-style-type: none; /* Fjerner kulepunkter */
-    padding: 0 12px 12px 12px; /* Padding under header og på sidene */
-    margin: 0;
-    background-color: #fff; /* Hvit bakgrunn for kandidatlisten */
+
+/* ----- Ny CSS for Modal ----- */
+
+.modal {
+  /* display: none; /* Styres av inline style fra JS */
+  position: fixed; /* Står fast på skjermen */
+  z-index: 1001; /* Legger seg øverst */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Scroll hvis innholdet blir for langt */
+  background-color: rgba(0,0,0,0.5); /* Mørk gjennomsiktig bakgrunn */
 }
 
-.map-candidate-card {
-    background-color: #f9f9f9; /* Lys bakgrunn */
-    border: 1px solid #eee;
-    border-radius: 4px;
-    padding: 8px 12px; /* Litt padding */
-    margin-bottom: 6px; /* Mellomrom mellom kort */
-    /* cursor: pointer; /* Kommentert ut til klikk-funksjon er lagt til */
-    transition: background-color 0.2s ease, box-shadow 0.2s ease;
-    display: flex; /* Bruk flexbox for enkel layout */
-    align-items: center; /* Sentrer elementer vertikalt */
-    gap: 8px; /* Mellomrom mellom elementer i kortet */
+.modal-content {
+  background-color: #fefefe; /* Hvit bakgrunn for selve boksen */
+  margin: 10% auto; /* 10% fra toppen, sentrert horisontalt */
+  padding: 25px 30px;
+  border: 1px solid #ccc;
+  width: 80%; /* Relativ bredde */
+  max-width: 500px; /* Men ikke bredere enn 500px */
+  border-radius: 8px;
+  position: relative; /* For å posisjonere lukkeknappen */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-/* Hover-effekt kommentert ut til klikk-funksjon er lagt til
-.map-candidate-card:hover {
-    background-color: #eef4ff;
-    border-color: #d1e0ff;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-*/
-
-.map-candidate-card .candidate-rank {
-    font-weight: bold;
-    color: #555;
-    min-width: 1.5em; /* Litt fast bredde for rangering */
-    text-align: right;
+.modal-close-button {
+  color: #aaa;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 1;
 }
 
-.map-candidate-card .candidate-name {
-    flex-grow: 1; /* Navnet tar opp resterende plass */
-    color: #333; /* Standard mørk tekstfarge */
-    font-size: 0.95em; /* Litt mindre font for å spare plass */
+.modal-close-button:hover,
+.modal-close-button:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-.map-candidate-card .realistic-chance-indicator {
-    color: var(--kf-gold, #ffc107); /* Bruker fargevariabel */
-    font-size: 1.1em; /* Justert størrelse */
-    margin-left: auto; /* Skyver stjernen til høyre */
-    padding-left: 5px; /* Litt luft før stjernen */
+/* Styling for innholdet i modalen */
+.modal-content h3 {
+    margin-top: 0;
+    color: var(--kf-deep-blue, #003366); /* Bruker fargevariabel */
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    font-size: 1.4em;
 }
 
-/* ----- Slutt Ny CSS ----- */
+.modal-content p {
+    margin-bottom: 12px;
+    line-height: 1.6;
+    color: #333;
+    font-size: 0.95em;
+}
+
+.modal-content p strong {
+    display: inline-block; /* Gir litt bedre kontroll */
+    min-width: 60px; /* Sørger for litt justering */
+    color: #111;
+    margin-right: 8px;
+}
+
+/* ----- Slutt Ny CSS for Modal ----- */
