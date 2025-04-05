@@ -2364,7 +2364,7 @@
             "name": "Kari Baadstrand Sandnes",
             "location": "Vestvågøy",
             "age": 55,
-            "email": "kani.sandnes@helse-nord.no",
+            "email": "kari.sandnes@helse-nord.no",
             "phone": "41224994",
             "hasRealisticChance": false
           }
@@ -2517,10 +2517,10 @@
           },
           {
             "rank": 2,
-            "name": "Trine Fagerli",
+            "name": "Trine Fagervik",
             "location": "Leirfjord",
             "age": 42,
-            "email": "fagervikatiltie@gmail.com",
+            "email": "fagervikalitle@gmail.com",
             "phone": "97066633",
             "hasRealisticChance": false
           },
@@ -2569,7 +2569,7 @@
             "location": "Steigen",
             "age": 25,
             "email": "tarjei.svalbjorg@venstre.no",
-            "phone": "96890727",
+            "phone": "98690727",
             "hasRealisticChance": false
           },
           {
@@ -2655,7 +2655,7 @@
             "location": "Østre Toten",
             "age": 58,
             "email": "larsrem@hotmail.com",
-            "phone": "46828962",
+            "phone": "46828967",
             "hasRealisticChance": true
           },
           {
@@ -2664,12 +2664,12 @@
             "location": "Gjøvik",
             "age": 59,
             "email": "finn.krokeide@stortinget.no",
-            "phone": "97639463", // Korrigert fra bilde
+            "phone": "97639462", // Korrigert fra bilde
             "hasRealisticChance": false
           },
           {
             "rank": 3,
-            "name": "Jul Tore Kittelssrød", // Navn korrigert fra bilde
+            "name": "Jul Tore Kittelsrud", // Navn korrigert fra bilde
             "location": "Gran",
             "age": 59,
             "email": "jultore@gmail.com",
@@ -2904,7 +2904,7 @@
             "rank": 4,
             "name": "Agnes Nærland Viljugrein",
             "location": "Oslo",
-            "age": 24,
+            "age": 28,
             "email": "agnes.viljugrein@gmail.com",
             "phone": null, // Blank in image
             "hasRealisticChance": true
@@ -2956,27 +2956,27 @@
             "name": "Tor Mikkel Vara",
             "location": "Oslo",
             "age": 60,
-            "email": "tmm-wara.no", // Incomplete in image, using as is
+            "email": "tmw@wara.no",
             "phone": "91702191",
             "hasRealisticChance": true
           },
           {
             "rank": 2,
-            "name": "Aina Stenersen", // Korrigert rank
-            "location": "Oslo",
-            "age": 41,
-            "email": null, // Korrigert - Blank in image
-            "phone": null, // Blank in image
-            "hasRealisticChance": true
-          },
-          {
-            "rank": 3,
             "name": "Simen Velle", // Korrigert rank
             "location": "Oslo",
             "age": 24,
             "email": "simen.velle@fpu.no",
             "phone": "40621476",
             "hasRealisticChance": false
+          },
+           {
+            "rank": 3,
+            "name": "Aina Stenersen", // Korrigert rank
+            "location": "Oslo",
+            "age": 41,
+            "email": null, // Korrigert - Blank in image
+            "phone": null, // Blank in image
+            "hasRealisticChance": true
           },
           {
             "rank": 4,
@@ -2997,7 +2997,7 @@
             "rank": 1,
             "name": "Ine Marie Eriksen Søreide",
             "location": "Oslo",
-            "age": 48,
+            "age": 49,
             "email": "ine-marie.eriksen.soreide@stortinget.no",
             "phone": null, // Blank in image
             "hasRealisticChance": true
@@ -3034,7 +3034,7 @@
             "name": "Ola Svenneby",
             "location": "Oslo",
             "age": 28,
-            "email": "ola@svenneby.no",
+            "email": "olasven@hoyre.no",
             "phone": null, // Blank in image
             "hasRealisticChance": true
           },
@@ -3042,7 +3042,7 @@
             "rank": 6,
             "name": "Heidi Nordby Lunde",
             "location": "Oslo",
-            "age": 51,
+            "age": 52,
             "email": "hnl@stortinget.no",
             "phone": "40019747",
             "hasRealisticChance": true
@@ -3167,7 +3167,7 @@
             "location": "Oslo",
             "age": 41,
             "email": "sunniva.eidsvoll@oslobystyre.no",
-            "phone": "95938000",
+            "phone": "99630600",
             "hasRealisticChance": true
           },
           {
@@ -3176,16 +3176,16 @@
             "location": "Oslo",
             "age": 31,
             "email": "andreas-sjalg.unneland@stortinget.no",
-            "phone": "93862054",
+            "phone": "93883464",
             "hasRealisticChance": true
           },
           {
             "rank": 4,
-            "name": "Oslo Brynild Ellingsen", // Using name as is from image
+            "name": "Cato Brunvand Ellingsen", 
             "location": "Oslo",
             "age": 53,
             "email": "cbe@online.no",
-            "phone": "93032227",
+            "phone": "93032297",
             "hasRealisticChance": false
           }
         ]
@@ -3227,23 +3227,23 @@
         "partyName": "Miljøpartiet de Grønne",
         "partyShorthand": "MDG",
         "candidates": [
-          {
-            "rank": 1,
-            "name": "Ingrid Liland",
-            "location": "Oslo",
-            "age": 34,
-            "email": "ingrid.liland@mdg.no",
-            "phone": null, // Blank in image
-            "hasRealisticChance": true
-          },
            {
-            "rank": 2,
+            "rank": 1,
             "name": "Arild Hermstad", // Korrigert - data finnes
             "location": "Oslo",
             "age": 57,
             "email": "arild.hermstad@mdg.no",
             "phone": null, // Blank in image
             "hasRealisticChance": false
+          },
+          {
+            "rank": 2,
+            "name": "Ingrid Liland",
+            "location": "Oslo",
+            "age": 34,
+            "email": "ingrid.liland@mdg.no",
+            "phone": null, // Blank in image
+            "hasRealisticChance": true
           },
           {
             "rank": 3,
