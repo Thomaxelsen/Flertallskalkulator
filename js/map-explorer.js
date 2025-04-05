@@ -9,37 +9,37 @@ document.addEventListener('DOMContentLoaded', function() {
     let geoJsonLayer = null;
     let selectedLayer = null;
 
-    // Mapping fra GeoJSON-navn (slik de står i valgdistrikter.geojson)
-    // til standardnavn (slik de brukes i candidates.json og constituencyMandates)
-    // NØKLER HER ER FULLT KORRIGERT BASERT PÅ ALLE DEBUG-LOGGER
+    // Mapping fra GeoJSON-navn til standardnavn
     const geoJsonNameMapping = {
-        "Nordland – Nordlánnda": "Nordland",           // Korrigert
-        "Troms – Romsa – Tromssa": "Troms",          // Korrigert med fullt navn
-        "Finnmark – Finnmárku – Finmarkku": "Finnmark" // Korrigert med fullt navn
+        "Nordland – Nordlánnda": "Nordland",
+        "Troms – Romsa – Tromssa": "Troms",
+        "Finnmark – Finnmárku – Finmarkku": "Finnmark"
     };
 
-    // Hardkodet mandattall per valgkrets (basert på standardiserte navn)
-     const constituencyMandates = {
+    // === START: OPPDATERT MANDATFORDELING ===
+    // Tall hentet fra bildet image_e58d97.png (kolonne "Ny fordeling")
+    const constituencyMandates = {
         "Østfold": 9,
-        "Akershus": 19,
-        "Oslo": 21,
+        "Akershus": 20,    // Fra 19
+        "Oslo": 20,        // Fra 21/20
         "Hedmark": 7,
         "Oppland": 6,
-        "Buskerud": 9,
-        "Vestfold": 8,
+        "Buskerud": 8,     // Fra 9/8
+        "Vestfold": 7,     // Fra 8/7
         "Telemark": 6,
         "Aust-Agder": 4,
         "Vest-Agder": 6,
-        "Rogaland": 15,
-        "Hordaland": 17,
+        "Rogaland": 14,    // Fra 15/14
+        "Hordaland": 16,   // Fra 17/16
         "Sogn og Fjordane": 4,
-        "Møre og Romsdal": 9,
+        "Møre og Romsdal": 8, // Fra 9/8
         "Sør-Trøndelag": 10,
-        "Nord-Trøndelag": 4,
-        "Nordland": 8,  // Standardnavn brukt her
-        "Troms": 5,    // Standardnavn brukt her
-        "Finnmark": 2  // Standardnavn brukt her
+        "Nord-Trøndelag": 5, // Fra 4
+        "Nordland": 9,     // Fra 8
+        "Troms": 6,        // Fra 5
+        "Finnmark": 4      // Fra 2/5
     };
+    // === SLUTT: OPPDATERT MANDATFORDELING ===
 
 
     // DOM element referanser
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return await response.json();
         } catch (error) {
             console.error(`Could not fetch ${url}:`, error);
-            throw error; // Kast feilen videre
+            throw error;
         }
     }
 
@@ -69,7 +69,6 @@ document.addEventListener('DOMContentLoaded', function() {
     async function loadData() {
         if (loader) loader.style.display = 'block';
 
-        // Vent på at partiesData er lastet (fra partiesData.js) eller hent på nytt
         if (typeof partiesDataLoaded === 'undefined' || !window.partiesData) {
             console.log("Map Explorer: partiesData not ready, waiting or fetching...");
             const partiesPromise = new Promise((resolve, reject) => {
@@ -110,7 +109,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
         try {
-            // Last kandidatdata og GeoJSON parallelt
             const [candidates, geoJson] = await Promise.all([
                 loadJson('data/candidates.json'),
                 loadJson(geoJsonPath)
@@ -246,23 +244,11 @@ document.addEventListener('DOMContentLoaded', function() {
          layer.bringToFront();
          selectedLayer = layer;
 
-        // ------ START: KORRIGERT MAPPING-LOGIKK ------
-
-        // Hent rå-navnet fra GeoJSON slik det står i filen
         const rawNameFromGeoJSON = layer.feature.properties.valgdistriktsnavn;
-
-        // Bruk mapping-objektet for å finne det standardiserte navnet
-        // Hvis navnet ikke finnes i mappingen (for vanlige valgkretser), bruk rå-navnet direkte
         let lookupName = geoJsonNameMapping[rawNameFromGeoJSON] || rawNameFromGeoJSON;
-
-        // Bruk 'lookupName' som det endelige navnet for videre oppslag
         const constituencyName = lookupName;
 
-        // ------ SLUTT: KORRIGERT MAPPING-LOGIKK ------
-
-
         if (constituencyName) {
-             // Standard logglinje
              console.log(`Map Explorer JS: Using lookup name: '${constituencyName}' (original GeoJSON name was '${rawNameFromGeoJSON}')`);
              displayCandidatesForConstituency(constituencyName, rawNameFromGeoJSON);
         } else {
@@ -283,11 +269,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         const constituencyData = allCandidatesData.find(c => c.constituencyName === constituencyName);
+        // Henter det OPPDATERTE mandattallet fra det oppdaterte objektet
         const mandateCount = constituencyMandates[constituencyName];
 
         const panelTitle = displayPanel?.querySelector('h2');
          if (panelTitle) {
-            // Vis standardnavnet (f.eks. "Nordland") og mandattall
+            // Viser standardnavnet og det NYE mandattallet
             panelTitle.textContent = `${constituencyName} ${typeof mandateCount === 'number' ? '(' + mandateCount + ' mandater)' : '(mandattall ukjent)'}`;
          } else {
              console.warn("Map Explorer: Panel title element (h2) not found.");
@@ -296,7 +283,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (!constituencyData || !constituencyData.parties || constituencyData.parties.length === 0) {
             console.warn(`Map Explorer: No candidate data found for constituency: ${constituencyName}`);
-            // Bruk standardnavnet i feilmeldingen også
             listContent.innerHTML = `<p>Fant ingen kandidatdata for ${constituencyName}.</p>`;
             return;
         }
