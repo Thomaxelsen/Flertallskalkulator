@@ -108,14 +108,32 @@
 
 /* ----- CSS for Kandidatkort i Kartutforsker ----- */
 .candidates-in-group { list-style-type: none; padding: 0 12px 12px 12px; margin: 0; background-color: #fff; }
-.map-candidate-card { background-color: #f9f9f9; border: 1px solid #eee; border-radius: 4px; padding: 8px 12px; margin-bottom: 6px; transition: background-color 0.2s ease, box-shadow 0.2s ease; display: flex; align-items: center; gap: 8px; /* cursor: pointer; - Aktiveres i neste steg */ }
-/* .map-candidate-card:hover { background-color: #eef4ff; border-color: #d1e0ff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); } */
+
+.map-candidate-card {
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    cursor: pointer; /* AKTIVERT: Indikerer klikkbarhet */
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.map-candidate-card:hover { /* AKTIVERT: Hover-effekt */
+    background-color: #eef4ff;
+    border-color: #d1e0ff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
 .map-candidate-card .candidate-rank { font-weight: bold; color: #555; min-width: 1.5em; text-align: right; }
 .map-candidate-card .candidate-name { flex-grow: 1; color: #333; font-size: 0.95em; }
 .map-candidate-card .realistic-chance-indicator { color: var(--kf-gold, #ffc107); font-size: 1.1em; margin-left: auto; padding-left: 5px; }
 
 
-/* ----- Ny CSS for Modal ----- */
+/* ----- CSS for Modal ----- */
 
 .modal {
   /* display: none; /* Styres av inline style fra JS */
@@ -182,4 +200,4 @@
     margin-right: 8px;
 }
 
-/* ----- Slutt Ny CSS for Modal ----- */
+/* ----- Slutt CSS for Modal ----- */
