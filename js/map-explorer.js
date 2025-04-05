@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Mapping fra GeoJSON-navn (slik de står i valgdistrikter.geojson)
     // til standardnavn (slik de brukes i candidates.json og constituencyMandates)
+    // !! VIKTIG: Nøklene her MÅ være 100% identiske med det som logges fra GeoJSON !!
     const geoJsonNameMapping = {
         "Nordland - Nordlánnda": "Nordland",
         "Troms - Romsa": "Troms",
@@ -265,9 +266,17 @@ document.addEventListener('DOMContentLoaded', function() {
          layer.bringToFront();
          selectedLayer = layer; // Oppdater valgt lag
 
-        // --- START: NY MAPPING-LOGIKK ---
+        // ------ START: DEBUGGING AV MAPPING ------
+
         // Hent rå-navnet fra GeoJSON slik det står i filen
         const rawNameFromGeoJSON = layer.feature.properties.valgdistriktsnavn;
+
+        // -- DEBUGGING LOGS -- START
+        // Logg navnet fra GeoJSON nøyaktig slik det leses
+        console.log(`DEBUG: Rått navn fra GeoJSON: >>${rawNameFromGeoJSON}<< (Lengde: ${rawNameFromGeoJSON?.length})`);
+        // Logg nøklene som faktisk finnes i mapping-objektet
+        console.log(`DEBUG: Nøkler i geoJsonNameMapping:`, Object.keys(geoJsonNameMapping));
+        // -- DEBUGGING LOGS -- END
 
         // Bruk mapping-objektet for å finne det standardiserte navnet
         // Hvis navnet ikke finnes i mappingen (for vanlige valgkretser), bruk rå-navnet direkte
@@ -275,10 +284,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Bruk 'lookupName' som det endelige navnet for videre oppslag
         const constituencyName = lookupName;
-        // --- SLUTT: NY MAPPING-LOGIKK ---
+
+        // Logg resultatet etter forsøk på mapping
+        console.log(`DEBUG: Navn brukt etter mapping/fallback: >>${constituencyName}<<`);
+
+        // ------ SLUTT: DEBUGGING AV MAPPING ------
+
 
         if (constituencyName) {
-             console.log(`Map Explorer JS: Using lookup name: '${constituencyName}' (original GeoJSON name was '${rawNameFromGeoJSON}')`);
+             // Oppdatert logg for klarhet
+             console.log(`Map Explorer JS: Sender navn til display-funksjon: '${constituencyName}' (original GeoJSON: '${rawNameFromGeoJSON}')`);
              // Vis kandidater for valgkretsen
              displayCandidatesForConstituency(constituencyName, rawNameFromGeoJSON); // Send med begge navnene
         } else {
@@ -333,17 +348,30 @@ document.addEventListener('DOMContentLoaded', function() {
             const partyBInfo = partiesMap[b.partyId];
             const posA = partyAInfo ? partyAInfo.position : Infinity;
             const posB = partyBInfo ? partyBInfo.position : Infinity;
+            // Fallback til alfabetisk sortering hvis posisjon er lik eller mangler
+            if (posA === posB) {
+                 const nameA = partyAInfo ? partyAInfo.name : '';
+                 const nameB = partyBInfo ? partyBInfo.name : '';
+                 return nameA.localeCompare(nameB);
+            }
             return posA - posB;
         });
+
 
         // Bygg HTML for kandidatlisten
         const ul = document.createElement('ul');
         ul.className = 'candidate-list-by-party'; // Bruk en klasse for styling
 
         sortedParties.forEach(partyData => {
+             // !!! VIKTIG SJEKK for Problem 2 !!!
+             if (!partyData || typeof partyData.partyId === 'undefined') {
+                 console.warn('Map Explorer: Skipping invalid party entry in candidates.json (missing partyId):', partyData, 'in constituency:', constituencyName);
+                 return; // Hopp over denne ugyldige partioppføringen
+             }
+
             const partyInfo = partiesMap[partyData.partyId];
             if (!partyInfo) {
-                console.warn(`Map Explorer: Party info not found for partyId: ${partyData.partyId}`);
+                console.warn(`Map Explorer: Party info not found in partiesMap for partyId: ${partyData.partyId}`);
                 return; // Hopp over partier vi ikke har info om
             }
 
@@ -364,16 +392,25 @@ document.addEventListener('DOMContentLoaded', function() {
             // Liste over kandidater for dette partiet
              const candidateUl = document.createElement('ul');
              candidateUl.className = 'candidates-in-group';
-             partyData.candidates.forEach(candidate => {
-                 const candidateLi = document.createElement('li');
-                 candidateLi.className = 'candidate-item';
-                 candidateLi.innerHTML = `
-                     <span class="candidate-rank">${candidate.rank}.</span>
-                     <span class="candidate-name">${candidate.name}</span>
-                     ${candidate.realistic_chance ? '<span class="realistic-chance-indicator" title="Vurdert til å ha realistisk sjanse for å komme inn">★</span>' : ''}
-                 `;
-                 candidateUl.appendChild(candidateLi);
-             });
+              // Sjekk om candidates faktisk er en liste
+             if (Array.isArray(partyData.candidates)) {
+                  partyData.candidates.forEach(candidate => {
+                       if (candidate && candidate.name) { // Sjekk at kandidatobjektet og navn finnes
+                            const candidateLi = document.createElement('li');
+                            candidateLi.className = 'candidate-item';
+                            candidateLi.innerHTML = `
+                                <span class="candidate-rank">${candidate.rank || '?'}.</span>
+                                <span class="candidate-name">${candidate.name}</span>
+                                ${candidate.realistic_chance ? '<span class="realistic-chance-indicator" title="Vurdert til å ha realistisk sjanse for å komme inn">★</span>' : ''}
+                            `;
+                            candidateUl.appendChild(candidateLi);
+                         } else {
+                              console.warn('Map Explorer: Skipping invalid candidate entry:', candidate, 'in party:', partyInfo.name);
+                         }
+                  });
+             } else {
+                  console.warn(`Map Explorer: 'candidates' property is not an array for party: ${partyInfo.name}`, partyData);
+             }
             partyLi.appendChild(candidateUl);
 
 
