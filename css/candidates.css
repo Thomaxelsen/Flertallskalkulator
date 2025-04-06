@@ -1,6 +1,6 @@
-/* css/candidates.css (Version 3 - Med mandater og SV gradient) */
+/* css/candidates.css (Version 5 - Justert bildevisning + ramme) */
 
-/* Filterseksjon */
+/* Filterseksjon (uendret) */
 .candidate-filters {
     display: flex;
     flex-wrap: wrap;
@@ -15,8 +15,14 @@
 
 .candidate-filters .filter-group {
     flex: 1;
-    min-width: 180px; /* Gir litt pusterom */
+    min-width: 180px;
 }
+/* --- NYTT: Økt min-width for view-mode select --- */
+.candidate-filters .filter-group:has(#view-mode-select) {
+    min-width: 200px;
+}
+/* --- SLUTT NYTT --- */
+
 .candidate-filters .filter-group label {
     display: block;
     margin-bottom: 8px;
@@ -25,8 +31,7 @@
     font-size: 0.9rem;
 }
 
-/* Gjenbruk dropdown-stil fra styles.css hvis mulig, ellers definer her */
-.filter-dropdown {
+.filter-dropdown { /* Stil for alle dropdowns */
     width: 100%;
     padding: 10px 12px;
     border-radius: 8px;
@@ -36,17 +41,17 @@
     cursor: pointer;
 }
 
-/* Gjenbruk toggle-stil fra styles.css */
+/* Toggle-knapper (som før) */
 .toggle-group {
-    padding-bottom: 10px; /* Justering for align-items: flex-end */
+    padding-bottom: 10px;
 }
 .toggle-label input[type="checkbox"] {
     margin-right: 8px;
 }
 
-/* Søkefelt */
+/* Søkefelt (som før) */
 .search-group {
-    flex: 1.5; /* Gi litt mer plass til søkefeltet */
+    flex: 1.5;
     min-width: 220px;
 }
 .search-input {
@@ -57,38 +62,40 @@
     font-size: 0.95rem;
 }
 
-/* Telleverk */
+/* Telleverk (som før) */
 .count-group {
-    flex-basis: 100%; /* Ta full bredde på mindre skjermer */
+    flex-basis: 100%;
     text-align: right;
     color: #555;
     font-size: 0.9rem;
     padding-top: 10px;
-    min-width: 150px; /* For å unngå for mye klemming */
-    flex-grow: 0; /* Ikke la den vokse */
+    min-width: 150px;
+    flex-grow: 0;
 }
 @media (min-width: 768px) {
     .count-group {
-        flex-basis: auto; /* Tillat å dele linje på større skjermer */
-         padding-bottom: 10px; /* Match align-items: flex-end */
+        flex-basis: auto;
+         padding-bottom: 10px;
     }
 }
-
 #candidate-count {
     font-weight: bold;
 }
 
-/* Rutenett for kandidatkort */
-.candidate-grid {
+
+/* === Styling for Standardvisning (Rutenett og Kort) === */
+
+/* Rutenett for standard kandidatkort (som før) */
+#candidate-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Juster minmax etter behov */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
-    margin-top: 20px;
-    min-height: 200px; /* For å vise loader/melding */
-    position: relative; /* For loader */
+    margin-top: 10px; /* Mindre luft etter H3 */
+    min-height: 200px;
+    position: relative;
 }
 
-.candidate-grid .loader {
+#candidate-grid .loader, #featured-candidates-grid .loader { /* Felles loader-stil */
     position: absolute;
     top: 50px;
     left: 50%;
@@ -97,258 +104,152 @@
     color: #666;
 }
 
-.candidate-grid .no-results {
-    grid-column: 1 / -1; /* Ta all plass i gridet */
+#candidate-grid .no-results, #featured-candidates-grid .no-results { /* Felles "ingen resultater"-stil */
+    grid-column: 1 / -1;
     text-align: center;
     padding: 40px 20px;
     color: #777;
     font-style: italic;
 }
 
-/* Stil for Valgkrets-separator (Med plass til mandattall) */
+/* Stil for Valgkrets-separator (BRUKES NÅ I BEGGE VISNINGER) */
 .constituency-separator {
-    grid-column: 1 / -1; /* Spenn over alle kolonner */
-    display: flex; /* Bruk flexbox for å justere innhold */
-    justify-content: space-between; /* Plasser navn til venstre, mandater til høyre */
-    align-items: baseline; /* Juster bunnlinjen */
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
     font-size: 1.3rem;
     font-weight: bold;
-    color: var(--kf-blue); /* Bruker en farge fra paletten din */
-    padding: 15px 5px 10px 5px; /* Litt padding på sidene også */
-    margin-top: 25px; /* God avstand over */
-    margin-bottom: 5px; /* Litt luft før første kort i kretsen */
-    border-bottom: 2px solid var(--kf-purple); /* Tydelig linje under */
+    color: var(--kf-blue);
+    padding: 15px 5px 10px 5px;
+    margin-top: 25px;
+    margin-bottom: 5px;
+    border-bottom: 2px solid var(--kf-purple);
 }
 .constituency-separator .mandate-count {
-    font-size: 0.9rem; /* Mindre skrift for mandattall */
-    font-weight: normal; /* Normal vekt */
-    color: #555; /* Dusere farge */
+    font-size: 0.9rem;
+    font-weight: normal;
+    color: #555;
 }
-/* Unngå dobbel margin for den aller første separatoren */
-.candidate-grid .constituency-separator:first-child {
+/* Første separator i et grid skal ha mindre margin over */
+#candidate-grid .constituency-separator:first-of-type,
+#featured-candidates-grid .constituency-separator:first-of-type {
     margin-top: 5px;
 }
 
 
-/* Styling for individuelle kandidatkort */
+/* Standard kandidatkort (som før, inkl SV-gradient kant) */
 .candidate-card {
     background-color: white;
     border-radius: 10px;
-    padding: 0; /* Fjern padding her, legges på innholdet */
+    padding: 0;
     box-shadow: 0 3px 10px rgba(0,0,0,0.07);
     border: 1px solid #eee;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     display: flex;
     flex-direction: column;
     min-height: 150px;
-    overflow: hidden; /* Viktig for border-top */
-    position: relative; /* For border-top */
-    /* Definerer CSS-variabel for partifarge */
-    --party-color: #ccc; /* Default grå farge */
+    overflow: hidden;
+    position: relative;
+    --party-color: #ccc; /* Default farge */
 }
 
-/* Standard toppstripe (Bruker background-color) */
 .candidate-card::before {
-    content: '';
-    display: block;
-    height: 6px; /* Høyde på fargekanten */
-    background-color: var(--party-color); /* Bruker variabelen satt i JS */
-    background-image: none; /* Sørg for at det ikke er gradient som default */
-    margin-bottom: 10px; /* Avstand mellom kant og header */
+    content: ''; display: block; height: 6px;
+    background-color: var(--party-color);
+    background-image: none; margin-bottom: 10px;
 }
-
-/* *** Spesifikk overstyring for SV sin toppstripe *** */
 .candidate-card.party-sv::before {
-    background-image: linear-gradient(to right, #439539, #eb2e2d); /* Grønn til Rød gradient */
-    background-color: transparent; /* Fjern solid farge for SV */
+    background-image: linear-gradient(to right, #439539, #eb2e2d);
+    background-color: transparent;
 }
-
 .candidate-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 6px 15px rgba(0,0,0,0.1);
 }
-
-/* Fremheving av kandidater med realistisk sjanse */
-.candidate-card.realistic-chance {
-    /* Kan evt. legge til mer styling her, f.eks. en annen skygge */
-    /* border-left fjernet, bruker toppkant nå */
-}
-
-/* Kort Header */
+.candidate-card.realistic-chance { /* Ingen spesiell stil pt. */ }
 .candidate-card .card-header {
-    display: flex;
-    align-items: flex-start; /* Juster til toppen */
-    padding: 0 15px 8px 15px; /* Padding kun på header */
-    border-bottom: 1px solid #f0f0f0;
-    gap: 10px;
+    display: flex; align-items: flex-start; padding: 0 15px 8px 15px;
+    border-bottom: 1px solid #f0f0f0; gap: 10px;
 }
-
 .candidate-card .candidate-rank {
-    font-size: 1.6rem; /* Litt større */
-    font-weight: bold;
-    color: var(--party-color); /* Bruker partiets farge */
-    line-height: 1.2;
-    padding-top: 2px; /* Finjustering */
-    min-width: 30px;
-    text-align: center;
+    font-size: 1.6rem; font-weight: bold; color: var(--party-color);
+    line-height: 1.2; padding-top: 2px; min-width: 30px; text-align: center;
 }
-
-/* Container for navn og partinavn */
-.candidate-card .candidate-header-info {
-     flex-grow: 1;
-     display: flex;
-     flex-direction: column; /* Navn over parti */
+.candidate-card .candidate-header-info { flex-grow: 1; display: flex; flex-direction: column; }
+.candidate-card .candidate-name { font-size: 1.1rem; font-weight: 600; color: #333; line-height: 1.3; margin-bottom: 2px; }
+.candidate-card .party-name-header { font-size: 0.85rem; color: #666; font-weight: 500; }
+.candidate-card .party-icon { /* Henter basisstil fra styles.css */
+    width: 32px; height: 32px; font-size: 16px; flex-shrink: 0;
 }
-
-.candidate-card .candidate-name {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #333;
-    line-height: 1.3;
-    margin-bottom: 2px; /* Litt luft */
-}
-
-/* Stil for partinavn i header */
-.candidate-card .party-name-header {
-    font-size: 0.85rem;
-    color: #666;
-    font-weight: 500;
-}
-
-
-/* Ikon (Litt større) */
-.candidate-card .party-icon {
-    width: 32px; /* Økt størrelse */
-    height: 32px;
-    font-size: 16px; /* Økt størrelse */
-    flex-shrink: 0;
-    /* Sørg for at basisstil for .party-icon finnes i styles.css */
-    /* (inkludert border-radius, display:flex, align-items, justify-content etc) */
-}
-
-/* Kort Body */
-.candidate-card .card-body {
-    font-size: 0.9rem;
-    color: #555;
-    flex-grow: 1;
-    padding: 10px 15px; /* Padding på body */
-}
-
-.candidate-card .candidate-meta {
-    margin-top: 8px; /* Litt mer avstand */
-    color: #777;
-    font-size: 0.85rem;
-    display: flex; /* Holder alder og sted på linje */
-    flex-wrap: wrap; /* Tillater wrapping hvis trangt */
-    gap: 5px;
-}
-.candidate-card .candidate-location {
-     /* Kan legge til et ikon her hvis ønskelig */
-}
-
-
-/* Kort Footer */
-.candidate-card .card-footer {
-    margin-top: auto;
-    padding: 5px 15px 10px 15px; /* Padding på footer */
-    font-size: 0.8rem;
-    color: #888;
-    text-align: right;
-}
-
-/* Badge */
+.candidate-card .card-body { font-size: 0.9rem; color: #555; flex-grow: 1; padding: 10px 15px; }
+.candidate-card .candidate-meta { margin-top: 8px; color: #777; font-size: 0.85rem; display: flex; flex-wrap: wrap; gap: 5px; }
+.candidate-card .card-footer { margin-top: auto; padding: 5px 15px 10px 15px; font-size: 0.8rem; color: #888; text-align: right; }
 .candidate-card .realistic-badge {
-    display: inline-block;
-    background-color: var(--kf-green); /* Bruker en grønnfarge fra paletten */
-    color: white;
-    padding: 2px 6px;
-    border-radius: 10px;
-    font-size: 0.7rem;
-    font-weight: bold;
+    display: inline-block; background-color: var(--kf-green); color: white;
+    padding: 2px 6px; border-radius: 10px; font-size: 0.7rem; font-weight: bold;
 }
 
-/* Detaljmodal (uendret) */
-#candidate-detail-modal .quote-modal-content { max-width: 450px; }
-#candidate-detail-content h3 { margin-bottom: 15px; color: var(--kf-blue); display: flex; align-items: center; gap: 10px; }
-#candidate-detail-content p { margin-bottom: 8px; line-height: 1.5; }
-#candidate-detail-content strong { color: #333; }
-#candidate-detail-content a { color: var(--kf-blue); text-decoration: none; }
-#candidate-detail-content a:hover { text-decoration: underline; }
 
+/* === Styling for Utvalgte Kandidater (Bildekort-visning) === */
 
-/* Responsivitet */
-@media (max-width: 768px) {
-    .candidate-filters { gap: 15px; }
-     .candidate-filters .filter-group { min-width: calc(50% - 10px); }
-      .candidate-filters .search-group { min-width: 100%; }
-       .candidate-filters .count-group { text-align: left; }
-    .candidate-grid { grid-template-columns: 1fr; gap: 15px; }
-    /* Juster separator for mobil */
-     .constituency-separator {
-        font-size: 1.1rem; /* Mindre font på mobil */
-        margin-top: 20px;
-        flex-direction: column; /* Stable navn og mandater */
-        align-items: flex-start; /* Venstrejuster */
-        gap: 2px; /* Mindre gap */
-    }
-    .constituency-separator .mandate-count {
-        font-size: 0.8rem; /* Enda litt mindre */
-    }
-     .constituency-separator:first-child { margin-top: 0; }
-    .candidate-card .candidate-name { font-size: 1rem; }
-}
-/* === START: Styling for Utvalgte Kandidater (Bildekort-visning) === */
-
-/* Container for rutenettet med utvalgte kandidater */
+/* Rutenettet for bildekortene */
 #featured-candidates-grid {
     display: grid;
-    /* Juster minmax for ønsket størrelse og antall bilder per rad */
-    /* 180px gir ganske små bilder, øk evt. til 200px, 250px etc. */
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 20px; /* Luft mellom bildene */
-    position: relative; /* For loader */
-    min-height: 150px; /* Høyde mens det laster */
-    margin-top: 20px; /* Luft under H2-tittelen */
+    /* Justert minmax for bredere bilder, ca 16:9 */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px; /* Økt gap litt */
+    position: relative;
+    min-height: 150px;
+    margin-top: 20px;
 }
 
-/* Laster-spinner spesifikt for featured grid */
-#featured-candidates-grid .loader {
-     position: absolute;
-     top: 50px;
-     left: 50%;
-     transform: translateX(-50%);
-     font-size: 1.1rem;
-     color: #666;
-}
-
-/* Selve bildekortet */
+/* Selve bildekortet - containeren */
 .featured-candidate-card {
-    display: block; /* Gjør at den tar opp grid-plassen */
-    border-radius: 8px; /* Litt avrundede hjørner */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Skygge */
-    overflow: hidden; /* Viktig for å holde bildet innenfor rundede hjørner */
-    cursor: pointer; /* Indikerer klikkbarhet */
-    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Animasjon for hover */
-    aspect-ratio: 3 / 4; /* Høyde/bredde-forhold - juster f.eks. til 1 / 1 for kvadratisk */
-    background-color: #f0f0f0; /* Bakgrunn hvis bildet mangler */
-    border: 1px solid #ddd; /* Tynn ramme */
+    display: block;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    /* Setter sideforhold - 16:9 er standard widescreen */
+    aspect-ratio: 16 / 9;
+    background-color: #f0f0f0; /* Vises hvis bildet ikke fyller helt */
+    box-sizing: border-box; /* Sikrer at rammen ikke øker størrelsen */
+
+    /* Ramme med CSS-variabel for farge */
+    --card-party-color: #ccc; /* Default grå ramme */
+    border: 3px solid var(--card-party-color);
+}
+
+/* Spesialramme for SV */
+.featured-candidate-card.party-sv {
+    border-image-source: linear-gradient(to right, #439539, #eb2e2d); /* Grønn til Rød */
+    border-image-slice: 1;
+    border-width: 3px;
+    border-style: solid;
+    /* Fallback (hvis border-image ikke støttes) eller for eldre nettlesere */
+    border-color: var(--card-party-color);
 }
 
 /* Hover-effekt for bildekortet */
 .featured-candidate-card:hover {
-    transform: scale(1.04); /* Forstørr bildet litt */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Litt mer skygge */
+    transform: scale(1.03); /* Litt større ved hover */
+    box-shadow: 0 7px 15px rgba(0, 0, 0, 0.18);
 }
 
 /* Bildet inni kortet */
 .featured-candidate-card img {
-    display: block; /* Fjerner evt. ekstra bunnmarg */
-    width: 100%; /* Fyll kortets bredde */
-    height: 100%; /* Fyll kortets høyde */
-    object-fit: cover; /* Zoom og beskjær bildet for å fylle, uten forvrengning */
+    display: block;
+    width: 100%;
+    height: 100%;
+    /* Endret til contain for å vise hele bildet */
+    object-fit: contain;
+    /* Legger bakgrunnsfarge på selve bildet også for å fylle tomrom */
+    background-color: #f8f9fa; /* Lysere grå bakgrunn */
 }
 
-/* Placeholder for manglende bilde */
+/* Placeholder for manglende bilde (uendret) */
 .featured-candidate-card .image-placeholder {
     display: flex;
     align-items: center;
@@ -362,29 +263,39 @@
     box-sizing: border-box;
 }
 
-/* Valgfri: Skillelinje mellom featured og regular view */
-/* Stilen ligger allerede i styles.css, men hvis du vil ha annen margin: */
-/*
-#featured-candidates-view hr.section-divider {
-    margin: 40px 0 30px 0;
-}
-*/
+/* === SLUTT: Styling for Utvalgte Kandidater === */
 
-/* Responsivitet for bildekort-grid */
+
+/* Detaljmodal (uendret) */
+#candidate-detail-modal .quote-modal-content { max-width: 450px; }
+#candidate-detail-content h3 { margin-bottom: 15px; color: var(--kf-blue); display: flex; align-items: center; gap: 10px; }
+#candidate-detail-content p { margin-bottom: 8px; line-height: 1.5; }
+#candidate-detail-content strong { color: #333; }
+#candidate-detail-content a { color: var(--kf-blue); text-decoration: none; }
+#candidate-detail-content a:hover { text-decoration: underline; }
+
+
+/* Responsivitet (uendret fra før, men gjelder nå begge grids) */
 @media (max-width: 768px) {
+    .candidate-filters { gap: 15px; }
+     .candidate-filters .filter-group { min-width: calc(50% - 10px); }
+      .candidate-filters .search-group { min-width: 100%; }
+       .candidate-filters .count-group { text-align: left; }
+    /* Standard grid på mobil */
+    #candidate-grid { grid-template-columns: 1fr; gap: 15px; }
+    /* Utvalgte grid på mobil */
     #featured-candidates-grid {
-        /* Kanskje færre kolonner eller mindre bilder på mobil */
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Litt større min-bredde på mobil */
         gap: 15px;
     }
-}
-
-@media (max-width: 480px) {
-    #featured-candidates-grid {
-        /* Enda færre/mindre på små skjermer */
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-        gap: 10px;
+    /* Felles separator på mobil */
+     .constituency-separator {
+        font-size: 1.1rem; margin-top: 20px; flex-direction: column;
+        align-items: flex-start; gap: 2px;
     }
+    .constituency-separator .mandate-count { font-size: 0.8rem; }
+     #candidate-grid .constituency-separator:first-of-type,
+     #featured-candidates-grid .constituency-separator:first-of-type { margin-top: 0; }
+    /* Standard kort på mobil */
+    .candidate-card .candidate-name { font-size: 1rem; }
 }
-
-/* === SLUTT: Styling for Utvalgte Kandidater === */
