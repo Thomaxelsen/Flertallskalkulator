@@ -72,7 +72,7 @@
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     /* --- ENDRET: Bredere sideforhold --- */
-    aspect-ratio: 3 / 1; /* Prøver et mye bredere format */
+    aspect-ratio: 2.7 / 1; /* Prøver et mye bredere format */
     background-color: #f0f0f0;
     box-sizing: border-box;
     --card-party-color: #ccc; /* Default grå ramme */
