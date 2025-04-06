@@ -1,4 +1,4 @@
-/* css/party-profile.css (OPPDATERT FOR 2x2 GRID + KANDIDATER) */
+/* css/party-profile.css (Version 2.1 - Med 2x2 Grid, Kandidater, og Fixes) */
 
 /* Container for partivelger */
 .party-selector-profile {
@@ -30,6 +30,14 @@
     min-height: 600px; /* Minimumshøyde for layouten */
     position: relative; /* For placeholder */
 }
+/* Vis grid-innholdet når aktiv */
+.profile-content-grid:not(.active) > .profile-box {
+    display: none;
+}
+.profile-content-grid.active > .profile-box {
+    display: flex; /* Eller 'block' hvis det passer bedre */
+}
+
 
 /* Stil for hver boks i rutenettet */
 .profile-box {
@@ -48,7 +56,8 @@
     flex-grow: 1; /* Tar tilgjengelig plass */
     display: flex;
     flex-direction: column;
-     overflow-y: auto; /* Tillat scroll hvis innholdet er høyt */
+    overflow: hidden; /* Viktig: Hindrer dobbel scrollbar */
+    /* Intern scrolling styres av elementer inni her */
 }
 
 /* Placeholder før parti er valgt */
@@ -59,21 +68,22 @@
     padding: 50px 0;
     font-size: 1.1rem;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%;
+    top: 0; left: 0; right: 0; bottom: 0; /* Dekker hele griden */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--light-bg); /* Match bakgrunn */
+    z-index: 20;
+    border-radius: 12px;
+    margin: 0; /* Nullstill margin */
 }
-.full-grid-placeholder {
-     grid-column: 1 / -1; /* Dekker hele gridden */
-     grid-row: 1 / -1;
-     background: rgba(255, 255, 255, 0.8); /* Lett overlay */
-     z-index: 20; /* Over andre bokser */
-     border-radius: 12px;
-     display: flex;
-     align-items: center;
-     justify-content: center;
+/* Skjul placeholder når innhold vises */
+.profile-content-grid.active + .profile-placeholder,
+.profile-content-grid.active ~ .profile-placeholder,
+.profile-content-grid .full-grid-placeholder {
+    display: none;
 }
+
 
 /* Generell loader for bokser */
 .profile-box .loader {
@@ -83,6 +93,11 @@
     color: #888;
     margin: auto; /* Sentrerer i flex container */
 }
+.profile-box .loader.error p {
+    color: var(--fail-color);
+    font-weight: bold;
+}
+
 
 /* Tittel inni bokser (f.eks. for Kandidater) */
 .box-title {
@@ -103,223 +118,195 @@
         grid-template-rows: auto auto auto auto; /* Stabler boksene */
     }
     .profile-placeholder {
-         position: static; /* Ikke absolutt lenger */
-         transform: none;
-         width: 100%;
-         grid-column: auto; /* Tilbakestill grid span */
-         grid-row: auto;
-         margin-bottom: 20px;
+        position: relative; /* Tilbake til normal flyt */
+        height: 200px; /* Gi litt fast høyde */
+        margin-bottom: 20px;
     }
-     .full-grid-placeholder {
-         /* Sørg for at den fortsatt vises som den skal */
-         grid-column: 1 / -1;
-         grid-row: 1 / -1;
-         position: absolute; /* Behøver kanskje absolutt likevel? Test */
-         background: white;
-         padding: 30px;
-     }
 }
 /* ===== SLUTT: 2x2 Grid Layout ===== */
 
 
-/* ===== START: Saker Boks (Topp-Venstre) ===== */
+/* ===== START: Saker Boks (Topp-Venstre) FIXES ===== */
 .box-issues .profile-inner-content {
-    /* Ingen spesiell padding/margin utover standard .profile-inner-content */
+    /* La denne boksen få intern scroll hvis innholdet er for høyt */
+    max-height: 65vh; /* Maks høyde, juster etter behov */
+    overflow: hidden; /* Overflow styres av .issue-list */
 }
 
 /* Gjenbruk stiler fra party-overview.css for faner og lister */
-.profile-issues-section { margin-top: 0; } /* Fjerner topp-margin */
-.profile-issues-section h3 { font-size: 1.3rem; margin: 0 0 20px 0; padding-bottom: 10px; border-bottom: 1px solid #eee; }
-.profile-issues-section .issues-tabs { margin-bottom: 15px; }
-.profile-issues-section .tab-button { font-size: 0.8rem; padding: 6px 4px; } /* Litt mindre faner */
-.profile-issues-section .tab-content { max-height: none; } /* La den ta plassen den trenger */
-.profile-issues-section .issue-list { padding: 0; max-height: none; /* Fjern max-height her også */ flex-grow: 1; overflow-y: auto; /* La den scrolle internt */}
+.profile-issues-section { margin-top: 0; display: flex; flex-direction: column; flex-grow: 1; overflow: hidden; } /* Fjerner topp-margin og lar den fylle */
+.profile-issues-section h3 { font-size: 1.3rem; margin: 0 0 20px 0; padding-bottom: 10px; border-bottom: 1px solid #eee; flex-shrink: 0; }
+.profile-issues-section .issues-tabs { margin-bottom: 15px; flex-shrink: 0; }
+.profile-issues-section .tab-button { font-size: 0.8rem; padding: 6px 4px; flex-shrink: 0;} /* Litt mindre faner */
+.profile-issues-section .tab-content { max-height: none; display: none; flex-grow: 1; overflow-y: auto; padding-right: 10px; /* Plass til scrollbar */}
+.profile-issues-section .tab-content.active { display: block; }
+.profile-issues-section .issue-list { padding: 0; margin: 0; list-style-type: none; /* overflow-y: auto; Fjernet, satt på parent */}
 .profile-issues-section .issue-item { font-size: 0.9rem; padding: 8px 10px; margin-bottom: 6px;}
 .profile-issues-section .issue-area { font-size: 0.8rem; }
 .profile-issues-section .issue-quote { font-size: 0.85rem; margin-top: 5px; padding: 6px 8px;}
 .profile-issues-section .no-issues { padding: 15px; font-size: 0.9rem; }
+
+/* Fargekoding for sakselementer (lagt til) */
+.profile-issues-section .agree-item { background-color: rgba(40, 167, 69, 0.08); border-left: 4px solid #28a745; }
+.profile-issues-section .partial-item { background-color: rgba(255, 193, 7, 0.08); border-left: 4px solid #ffc107; }
+.profile-issues-section .disagree-item { background-color: rgba(220, 53, 69, 0.08); border-left: 4px solid #dc3545; }
+
+/* Scrollbar styling for issue list */
+.profile-issues-section .tab-content::-webkit-scrollbar { width: 6px; }
+.profile-issues-section .tab-content::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 3px;}
+.profile-issues-section .tab-content::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px;}
+.profile-issues-section .tab-content::-webkit-scrollbar-thumb:hover { background: #aaa; }
+
 /* ===== SLUTT: Saker Boks ===== */
 
 
-/* ===== START: Kandidat Boks (Topp-Høyre) ===== */
+/* ===== START: Kandidat Boks (Topp-Høyre) FIXES ===== */
 .box-candidates {
-    /* Trenger relativ posisjon for overlay */
     position: relative;
-    overflow: hidden; /* Viktig for overlay-effekt */
+    overflow: hidden;
 }
 .box-candidates .profile-inner-content {
-    /* Tillat scroll internt hvis innholdet blir for høyt */
-    overflow-y: auto;
+    max-height: 65vh; /* Samme maks høyde som saker */
+    overflow: hidden; /* Overflow styres av grid-area */
 }
 
-
-/* Kandidatfiltre (ligner .candidate-filters) */
+/* Kandidatfiltre (som før) */
 .profile-candidate-filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px 15px; /* Litt mindre gap */
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 1px dashed #ddd;
-    align-items: flex-end;
-    flex-shrink: 0; /* Ikke krymp */
+    display: flex; flex-wrap: wrap; gap: 10px 15px; margin-bottom: 20px;
+    padding-bottom: 15px; border-bottom: 1px dashed #ddd; align-items: flex-end; flex-shrink: 0;
 }
-.profile-candidate-filters .filter-group {
-    flex: 1;
-    min-width: 150px;
-}
-.profile-candidate-filters label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 500;
-    color: #555;
-    font-size: 0.85rem;
-}
-.profile-candidate-filters .filter-dropdown {
-    width: 100%;
-    padding: 8px 10px; /* Mindre padding */
-    font-size: 0.9rem;
-}
-.profile-candidate-filters .count-group {
-    flex-basis: 100%;
-    text-align: right;
-    color: #666;
-    font-size: 0.85rem;
-    padding-top: 5px;
-    padding-bottom: 0;
-    min-width: auto;
-    flex-grow: 0;
-}
-@media (min-width: 576px) {
-    .profile-candidate-filters .count-group {
-        flex-basis: auto;
-    }
-}
+.profile-candidate-filters .filter-group { flex: 1; min-width: 150px; }
+.profile-candidate-filters label { display: block; margin-bottom: 5px; font-weight: 500; color: #555; font-size: 0.85rem; }
+.profile-candidate-filters .filter-dropdown { width: 100%; padding: 8px 10px; font-size: 0.9rem; }
+.profile-candidate-filters .count-group { flex-basis: 100%; text-align: right; color: #666; font-size: 0.85rem; padding-top: 5px; padding-bottom: 0; min-width: auto; flex-grow: 0; }
+@media (min-width: 576px) { .profile-candidate-filters .count-group { flex-basis: auto; } }
 #profile-candidate-count { font-weight: bold; }
 
 
-/* Kandidat Grid (gjenbruker .candidate-grid fra candidates.css) */
+/* Kandidat Grid Area (for scroll og klasse-bytte) */
 .profile-candidate-grid-area {
-    /* Klassen .candidate-grid brukes for selve grid-layoutet */
-     flex-grow: 1; /* Tar resten av plassen */
-     overflow-y: auto; /* Scroll internt */
-     padding-right: 5px; /* Litt plass til scrollbar */
-     margin-right: -5px; /* Kompenser for padding */
+    flex-grow: 1;
+    overflow-y: auto; /* Scroll internt */
+    padding: 5px 10px 5px 5px; /* Litt padding rundt */
+    margin: 0 -10px 0 -5px; /* Kompenser for padding */
+    position: relative; /* For loader */
+    /* Scrollbar styling */
+    scrollbar-width: thin; scrollbar-color: #ccc #f1f1f1;
 }
-/* Juster kortstørrelse etc. om nødvendig */
-.profile-candidate-grid-area .candidate-card {
-    min-height: auto; /* La høyden bestemmes av innhold */
+.profile-candidate-grid-area::-webkit-scrollbar { width: 6px; }
+.profile-candidate-grid-area::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 3px;}
+.profile-candidate-grid-area::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px;}
+.profile-candidate-grid-area::-webkit-scrollbar-thumb:hover { background: #aaa; }
+
+
+/* Normal visning (bruker .candidate-grid fra candidates.css) */
+.profile-candidate-grid-area.candidate-grid {
+     display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 15px;
 }
+/* Featured visning */
+.profile-candidate-grid-area.featured-view {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px;
+}
+/* Felles for grid */
 .profile-candidate-grid-area .constituency-separator {
-     font-size: 1.1rem; /* Mindre separator */
-     padding: 10px 0 8px 0;
-     margin-top: 15px;
-     margin-bottom: 5px;
+    grid-column: 1 / -1; /* Sørg for at separator tar full bredde */
+    font-size: 1.1rem; padding: 10px 0 8px 0; margin-top: 15px; margin-bottom: 5px;
+}
+.profile-candidate-grid-area .loader {
+    grid-column: 1 / -1; /* Sentrer loader i grid */
+}
+.profile-candidate-grid-area .no-results {
+     grid-column: 1 / -1; /* Sentrer melding */
+     text-align: center; padding: 20px; color: #888; font-style: italic;
 }
 
+/* Selve bildekortet (kopiert/tilpasset fra candidates.css .featured-candidate-card) */
+.profile-candidate-grid-area.featured-view .featured-candidate-card {
+    display: block; border-radius: 6px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    overflow: hidden; cursor: pointer; transition: all 0.2s ease;
+    aspect-ratio: 1 / 1.2; background-color: #f0f0f0; box-sizing: border-box;
+    --card-party-color: #ccc; border: 2px solid var(--card-party-color); position: relative;
+}
+.profile-candidate-grid-area.featured-view .featured-candidate-card:hover {
+    transform: scale(1.05); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); border-color: var(--kf-pink);
+}
+.profile-candidate-grid-area.featured-view .featured-candidate-card img {
+    display: block; width: 100%; height: 100%; object-fit: cover; background-color: #f8f9fa;
+}
+.profile-candidate-grid-area.featured-view .featured-candidate-card .image-placeholder {
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; height: 100%; color: #888; font-size: 0.8rem;
+    text-align: center; padding: 5px; box-sizing: border-box;
+}
 
-/* Kandidat Detalj Overlay Panel */
+/* Sørg for at korttyper skjules/vises korrekt */
+.profile-candidate-grid-area.featured-view .candidate-card { display: none; }
+.profile-candidate-grid-area:not(.featured-view) .featured-candidate-card { display: none; }
+/* Sørg for at vanlig kort vises når :not(.featured-view) */
+.profile-candidate-grid-area:not(.featured-view) .candidate-card { display: flex; } /* Eller hva enn original display var */
+
+
+/* Kandidat Detalj Overlay Panel (som før) */
 .candidate-detail-panel-overlay {
-    position: absolute; /* Posisjonert relativt til .box-candidates */
-    top: 0;
-    right: -100%; /* Start utenfor skjermen til høyre */
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.98); /* Nesten helt hvit */
-    backdrop-filter: blur(3px);
-    z-index: 30; /* Over kandidatlisten */
-    transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Slide-effekt */
-    display: flex;
-    flex-direction: column;
-    border-left: 1px solid #ddd;
+    position: absolute; top: 0; right: -100%; width: 100%; height: 100%;
+    background-color: rgba(255, 255, 255, 0.98); backdrop-filter: blur(3px);
+    z-index: 30; transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: flex; flex-direction: column; border-left: 1px solid #ddd;
     box-shadow: -5px 0 15px rgba(0,0,0,0.1);
 }
-.candidate-detail-panel-overlay.active {
-    right: 0; /* Skyv inn i synsfeltet */
-}
-
+.candidate-detail-panel-overlay.active { right: 0; }
 .overlay-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    border-bottom: 1px solid #eee;
-    background-color: #f8f9fa;
-    flex-shrink: 0; /* Ikke krymp header */
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 15px 20px; border-bottom: 1px solid #eee; background-color: #f8f9fa; flex-shrink: 0;
 }
-.overlay-header h4 {
-    margin: 0;
-    font-size: 1.2rem;
-    color: var(--kf-blue);
-}
+.overlay-header h4 { margin: 0; font-size: 1.2rem; color: var(--kf-blue); }
 .close-overlay-button {
-    font-size: 26px;
-    font-weight: bold;
-    color: #888;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0 5px;
-    line-height: 1;
+    font-size: 26px; font-weight: bold; color: #888; background: none; border: none;
+    cursor: pointer; padding: 0 5px; line-height: 1;
 }
-.close-overlay-button:hover {
-    color: #333;
-}
-
-.overlay-content {
-    flex-grow: 1; /* Tar resten av plassen */
-    overflow-y: auto; /* Scrollbart innhold */
-    padding: 25px;
-}
-/* Gjenbruk stiler fra .candidate-detail-panel (candidates.css) her */
+.close-overlay-button:hover { color: #333; }
+.overlay-content { flex-grow: 1; overflow-y: auto; padding: 25px; }
+/* Stiler for innhold i overlay (gjenbruk fra candidates.css) */
 .overlay-content .detail-image-container { text-align: center; margin-bottom: 20px; }
 .overlay-content .detail-image { max-width: 160px; border-radius: 6px; }
-.overlay-content .image-placeholder-panel { width: 160px; height: 160px; margin: 0 auto; font-size: 0.85rem; }
-.overlay-content .detail-header { gap: 10px; margin-bottom: 12px; padding-bottom: 8px;}
-.overlay-content .detail-header h3 { font-size: 1.3rem; }
-.overlay-content .detail-header .party-icon { width: 32px; height: 32px; font-size: 14px; }
-.overlay-content .detail-info p { font-size: 0.9rem; margin-bottom: 8px; }
-.overlay-content .detail-info strong { min-width: 80px; font-size: 0.9rem; }
-.overlay-content .privacy-notice-panel { font-size: 0.75rem; margin-top: 15px; padding-top: 8px;}
-
+.overlay-content .image-placeholder-panel { width: 160px; height: 160px; margin: 0 auto; font-size: 0.85rem; border: 1px dashed #ccc; background-color: #f0f4f8; display: flex; align-items: center; justify-content: center; color: #999;}
+.overlay-content .detail-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #eee;}
+.overlay-content .detail-header h3 { flex-grow: 1; font-size: 1.3rem; }
+.overlay-content .detail-header .party-icon { width: 32px; height: 32px; font-size: 14px; flex-shrink: 0; }
+.overlay-content .detail-info p { font-size: 0.9rem; margin-bottom: 8px; line-height: 1.5; color: #444;}
+.overlay-content .detail-info strong { display: inline-block; min-width: 80px; color: #222; font-weight: 600; margin-right: 5px;}
+.overlay-content .detail-info a { color: var(--kf-blue); text-decoration: none; }
+.overlay-content .detail-info a:hover { text-decoration: underline; }
+.overlay-content .privacy-notice-panel { font-size: 0.75rem; color: #888; margin-top: 15px; text-align: center; border-top: 1px dashed #ddd; padding-top: 8px;}
 /* ===== SLUTT: Kandidat Boks ===== */
 
 
-/* ===== START: Chart Bokser (Bunn) ===== */
+/* ===== START: Chart Bokser (Bunn) --- */
 .box-stance-chart .profile-inner-content,
 .box-area-chart .profile-inner-content {
-    padding-top: 0; /* Fjerner padding over diagrammet hvis tittelen er der */
-    align-items: center; /* Sentrer diagrammet */
+    padding-top: 0;
+    align-items: center;
+    overflow-y: hidden; /* Ikke scroll internt i chart-boksen */
+    justify-content: center; /* Sentrer innhold vertikalt om mulig */
 }
 
 .box-stance-chart .chart-container,
 .box-area-chart .chart-container {
-    border: none;
-    padding: 0;
-    background-color: transparent;
-    box-shadow: none;
-    width: 100%;
+    border: none; padding: 0; background-color: transparent;
+    box-shadow: none; width: 100%;
+    flex-grow: 1; /* La chart ta plassen */
+    display: flex; /* Hjelper Plotly med størrelse */
+    flex-direction: column;
 }
 .box-stance-chart h3,
 .box-area-chart h3 {
-    text-align: center;
-    font-size: 1.1rem;
-    margin-bottom: 15px;
-    color: var(--kf-blue);
-    font-weight: 500;
+    text-align: center; font-size: 1.1rem; margin-bottom: 15px;
+    color: var(--kf-blue); font-weight: 500; flex-shrink: 0;
 }
-/* Sørg for at Plotly-divene tar plassen */
 #plotly-stance-chart,
 #plotly-area-chart {
-    width: 100% !important; /* Overstyr evt inline stiler */
-    height: auto !important;
+    width: 100% !important; height: auto !important;
     min-height: 300px; /* Juster etter behov */
+    flex-grow: 1; /* La selve plot-div ta plassen */
 }
-
 /* ===== SLUTT: Chart Bokser ===== */
-
-
-/* Eksisterende .profile-header, .profile-charts etc. kan fjernes eller justeres */
-/* ... (fjern eller juster gamle stiler for header, charts, issues section hvis de ikke lenger er i bruk på samme måte) ... */
-
-/* Sørg for at basis-stil for .candidate-card er tilgjengelig (fra candidates.css) */
