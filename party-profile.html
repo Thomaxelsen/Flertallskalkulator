@@ -4,34 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Partiprofil - Detaljert analyse</title>
-    <!-- Sentrale CSS-filer -->
     <link rel="stylesheet" href="css/styles.css">
-    <!-- Ny, dedikert CSS-fil for denne siden -->
     <link rel="stylesheet" href="css/party-profile.css">
+    <link rel="stylesheet" href="css/candidates.css">
 </head>
 <body>
-    <!-- START: HTML-struktur for Hamburgermeny (Skal være lik på alle sider) -->
     <div class="burger-menu" id="burgerMenu">
         <div class="burger-bar"></div>
         <div class="burger-bar"></div>
         <div class="burger-bar"></div>
     </div>
-
     <div class="mobile-menu" id="mobileMenu">
         <div class="menu-header">
             <h3>Meny</h3>
             <button class="close-button" id="closeMenu">×</button>
         </div>
-        <div class="menu-items" id="mobileMenuItems">
-            <!-- Lenker fylles dynamisk av navigation.js -->
-        </div>
+        <div class="menu-items" id="mobileMenuItems"></div>
     </div>
-
     <div class="menu-overlay" id="menuOverlay"></div>
-    <!-- SLUTT: HTML-struktur for Hamburgermeny -->
-
     <div class="container">
-        <!-- Standard Header -->
         <header>
            <div class="logo-container">
                 <a href="index.html">
@@ -40,46 +31,88 @@
             </div>
             <div class="header-text">
                 <h1>Partiprofil</h1>
-                <div class="header-subtitle">Detaljert analyse av støtte til Kreftforeningens politikk</div>
+                <div class="header-subtitle">Detaljert analyse av partiets politikk og kandidater</div>
             </div>
-            <div class="nav-links">
-                <!-- Desktop-lenker fylles dynamisk av navigation.js -->
-            </div>
+            <div class="nav-links"></div>
         </header>
 
-        <!-- VELGER FOR PARTI -->
         <div class="party-selector-profile">
             <label for="party-select">Velg parti for å se detaljert profil:</label>
             <select id="party-select" class="filter-dropdown">
                 <option value="">Velg parti...</option>
-                <!-- Partier fylles inn dynamisk av party-profile.js -->
-            </select>
+                </select>
         </div>
 
-        <!-- CONTAINER FOR PROFILINNHOLD -->
-        <main id="profile-content" class="profile-container">
-            <!-- Innhold genereres dynamisk av party-profile.js -->
-            <div class="profile-placeholder">
+        <main id="profile-content" class="profile-content-grid">
+
+            <div class="profile-placeholder full-grid-placeholder">
                 <p>Velg et parti fra menyen over for å se detaljer.</p>
             </div>
-        </main>
 
-        <!-- Standard Footer -->
+            <div class="profile-box box-issues">
+                <div id="profile-issues-content" class="profile-inner-content">
+                    <div class="loader">Laster saker...</div>
+                </div>
+            </div>
+
+            <div class="profile-box box-candidates">
+                 <div class="profile-inner-content">
+                    <h3 class="box-title">Partiets Kandidater 2025</h3>
+                    <div class="profile-candidate-filters">
+                        <div class="filter-group">
+                            <label for="candidate-view-mode-select">Visning:</label>
+                            <select id="candidate-view-mode-select" class="filter-dropdown">
+                                <option value="normal" selected>Normal visning</option>
+                                <option value="featured">Kun utvalgte</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="candidate-constituency-filter">Valgkrets:</label>
+                            <select id="candidate-constituency-filter" class="filter-dropdown">
+                                <option value="all">Alle Valgkretser</option>
+                                </select>
+                        </div>
+                         <div class="filter-group count-group">
+                             <span id="profile-candidate-count">0</span> kandidater vises.
+                         </div>
+                    </div>
+                    <div id="profile-candidate-grid" class="candidate-grid profile-candidate-grid-area">
+                         <div class="loader">Laster kandidater...</div>
+                    </div>
+                 </div>
+                 <aside id="profile-candidate-detail-overlay" class="candidate-detail-panel-overlay">
+                     <div class="overlay-header">
+                         <h4>Kandidatinformasjon</h4>
+                         <button class="close-overlay-button" id="close-candidate-overlay">×</button>
+                     </div>
+                     <div class="overlay-content" id="profile-candidate-detail-content">
+                         </div>
+                 </aside>
+            </div>
+
+            <div class="profile-box box-stance-chart">
+                <div id="profile-stance-chart-content" class="profile-inner-content">
+                     <div class="loader">Laster diagram...</div>
+                </div>
+            </div>
+
+            <div class="profile-box box-area-chart">
+                 <div id="profile-area-chart-content" class="profile-inner-content">
+                     <div class="loader">Laster diagram...</div>
+                 </div>
+            </div>
+
+        </main>
         <footer>
             Data basert på mandatfordeling etter Stortingsvalget 2021 og partienes program/uttalelser. Til bruk for informasjonsformål.
         </footer>
     </div>
 
-    <!-- Scripts lastes til slutt for bedre ytelse -->
-    <!-- Felles navigasjon -->
     <script src="js/navigationConfig.js"></script>
     <script src="js/navigation.js"></script>
-    <!-- Eksternt bibliotek for diagrammer -->
     <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
-    <!-- Datainnlasting (Nødvendig for denne siden) -->
     <script src="js/issues.js"></script>
     <script src="js/partiesData.js"></script>
-    <!-- Sidespesifikt script for partiprofil -->
     <script src="js/party-profile.js"></script>
 
 </body>
