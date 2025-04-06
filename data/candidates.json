@@ -357,7 +357,7 @@
             "age": 51,
             "email": "anette.elseth@gmail.com",
             "phone": "99202583",
-            "hasRealisticChance": false
+            "hasRealisticChance": true
           },
           {
             "rank": 5,
@@ -366,7 +366,7 @@
             "age": 52,
             "email": "tom@staahle.no", 
             "phone": null, 
-            "hasRealisticChance": false
+            "hasRealisticChance": true
           },
           {
             "rank": 6,
@@ -468,7 +468,7 @@
             "age": 31, 
             "email": "ida@afk.no",
             "phone": null, 
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -737,7 +737,7 @@
             "age": 72,
             "email": "kristin.ormen.johnsen@usn.no",
             "phone": "41515188", 
-            "hasRealisticChance": false
+            "hasRealisticChance": true
           },
           {
             "rank": 4,
@@ -770,7 +770,7 @@
             "age": 31, 
             "email": "ida@afk.no",
             "phone": null, 
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -794,7 +794,7 @@
             "age": 33,
             "email": "linn-elise.ohn.mehlen@stortinget.no",
             "phone": "98623040",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -851,7 +851,7 @@
             "age": 61,
             "email": "kathy.lie@stortinget.no",
             "phone": "91146138",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -875,7 +875,7 @@
             "age": 40,
             "email": "julie.vaagø@stemvenstre.no",
             "phone": null, 
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -899,7 +899,7 @@
             "age": 42,
             "email": "pol.Cathrin.Janoy@drammen.kommune.no",
             "phone": "91656133",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -937,7 +937,7 @@
             "age": 39,
             "email": "sigurd.kvammen.rafaelsen@stortinget.no",
             "phone": null, 
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 3,
@@ -979,7 +979,7 @@
             "age": 67,
             "email": "terje@scanvulk.no",
             "phone": "91810596",
-            "hasRealisticChance": false
+            "hasRealisticChance": true
           },
           {
             "rank": 3,
@@ -1021,7 +1021,7 @@
             "age": 26,
             "email": "hegec@bjorkmanns.no",
             "phone": "46945239",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -1126,7 +1126,7 @@
             "age": 53,
             "email": "tore.grotte@alta.kommune.no",
             "phone": "97743222",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -1150,7 +1150,7 @@
             "age": 57,
             "email": "noodt@venstre.no",
             "phone": "40729188",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -1174,7 +1174,7 @@
             "age": 42,
             "email": "Siren.Jensen.Ase@hammerfest.kommune.no",
             "phone": null, 
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -1335,7 +1335,7 @@
             "age": 64,
             "email": "svein.birger.orsnes@innlandetfylke.no",
             "phone": "47504180",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -1368,7 +1368,7 @@
             "age": 31,
             "email": "emilie.enger.mehl@stortinget.no",
             "phone": null, 
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 3,
@@ -1392,7 +1392,7 @@
             "age": 31,
             "email": "amund.heggelund@sv.no",
             "phone": "47677967",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -1667,7 +1667,7 @@
             "age": 23, 
             "email": "joel@kristenmedia.no",
             "phone": "45454728",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -1990,7 +1990,7 @@
             "age": 52,
             "email": "geir-inge.lien@stortinget.no",
             "phone": "91184000",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -2014,7 +2014,7 @@
             "age": 46,
             "email": "linekarlsvik9@gmail.com",
             "phone": "90596254",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -2109,7 +2109,7 @@
             "age": 39,
             "email": "stian.sagvold@fellesforbundet.org",
             "phone": "46543246",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           }
         ]
       },
@@ -2214,7 +2214,7 @@
             "age": 39,
             "email": "Havard.Krogstad-Wiborg@steinkjer.kommune.no",
             "phone": "98857632",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -2247,7 +2247,7 @@
             "age": 38,
             "email": "siv@sp.no",
             "phone": "98818537",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           }
         ]
       },
@@ -2262,7 +2262,7 @@
             "age": 54,
             "email": "gudrun.lidal@stjordal.kommune.no",
             "phone": "92263047",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -2465,7 +2465,7 @@
             "age": 52,
             "email": "linhau@nfk.no",
             "phone": "93265777",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -2489,7 +2489,7 @@
             "age": 52,
             "email": "geir-asbjorn.jorgensen@stortinget.no",
             "phone": "94015235",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -2746,7 +2746,7 @@
             "age": 59,
             "email": "turid.thomassen@gmail.com",
             "phone": "90510362",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -2803,7 +2803,7 @@
             "age": 42,
             "email": "anne.lise.fredlund@sv.no",
             "phone": "97755141",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -2967,7 +2967,7 @@
             "age": 24,
             "email": "simen.velle@fpu.no",
             "phone": "40621476",
-            "hasRealisticChance": false
+            "hasRealisticChance": true
           },
            {
             "rank": 3,
@@ -2976,7 +2976,7 @@
             "age": 41,
             "email": null, 
             "phone": null, 
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 4,
@@ -3234,7 +3234,7 @@
             "age": 57,
             "email": "arild.hermstad@mdg.no",
             "phone": null, 
-            "hasRealisticChance": false
+            "hasRealisticChance": true
           },
           {
             "rank": 2,
@@ -3243,7 +3243,7 @@
             "age": 34,
             "email": "ingrid.liland@mdg.no",
             "phone": null, 
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 3,
@@ -3458,7 +3458,7 @@
             "age": 38,
             "email": "mimir.kristjansson@stortinget.no",
             "phone": "93269961",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -3754,7 +3754,7 @@
             "age": 53,
             "email": "hege.lothe@gmail.com",
             "phone": "92648348",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -3778,7 +3778,7 @@
             "age": 53,
             "email": "alfred.jens.bjorlo@stortinget.no",
             "phone": "480 82 652", 
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -4053,7 +4053,7 @@
             "age": 26,
             "email": "lars.brandsas@venstre.no",
             "phone": "48207631",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -4253,7 +4253,7 @@
             "age": 53,
             "email": "aslaug.sem-jacobsen@stortinget.no",
             "phone": "92023316",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -4277,7 +4277,7 @@
             "age": 26,
             "email": "vildebergnilsen@gmail.com",
             "phone": "95490065",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -4486,7 +4486,7 @@
             "age": 53,
             "email": "hanstenv@online.no",
             "phone": "99331705",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -4510,7 +4510,7 @@
             "age": 36,
             "email": "sandra.borch@stortinget.no",
             "phone": "48123712",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -4558,7 +4558,7 @@
             "age": 30,
             "email": "even.aronsen@venstre.no",
             "phone": "97697691",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -4710,7 +4710,7 @@
             "age": 44,
             "email": "jorunn.lossius@politiker.agderfk.no",
             "phone": "40105123",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -4806,7 +4806,7 @@
             "age": 33,
             "email": "ingvild.wetrhus.thorsvik@stortinget.no",
             "phone": "46445506",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -5006,7 +5006,7 @@
             "age": 58,
             "email": "kathrine.kleveland@stortinget.no",
             "phone": "92825162",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -5030,7 +5030,7 @@
             "age": 57,
             "email": "grete.wold@stortinget.no",
             "phone": "95107574",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
@@ -5125,7 +5125,7 @@
             "age": 20,
             "email": "hasabd@fredrikstad.kommune.no",
             "phone": "41788341",
-            "hasRealisticChance": false
+            "hasRealisticChance": true
           },
           {
             "rank": 4,
@@ -5299,7 +5299,7 @@
             "age": 46,
             "email": "oam@stortinget.no",
             "phone": "93243566",
-            "hasRealisticChance": true
+            "hasRealisticChance": false
           },
           {
             "rank": 2,
