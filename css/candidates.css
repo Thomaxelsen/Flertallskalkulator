@@ -1,6 +1,6 @@
-/* css/candidates.css (Version 6 - Justert bildeformat 3:1) */
+/* css/candidates.css (Version 7 - Inkluderer modal-fiks) */
 
-/* Filterseksjon (uendret) */
+/* === Eksisterende stiler fra din originale fil === */
 .candidate-filters {
     display: flex;
     flex-wrap: wrap;
@@ -51,7 +51,6 @@
 .candidate-card .realistic-badge { display: inline-block; background-color: var(--kf-green); color: white; padding: 2px 6px; border-radius: 10px; font-size: 0.7rem; font-weight: bold; }
 
 /* === Styling for Utvalgte Kandidater (Bildekort-visning) === */
-
 /* Rutenettet for bildekortene */
 #featured-candidates-grid {
     display: grid;
@@ -62,7 +61,6 @@
     min-height: 150px;
     margin-top: 20px;
 }
-
 /* Selve bildekortet - containeren */
 .featured-candidate-card {
     display: block;
@@ -78,7 +76,6 @@
     --card-party-color: #ccc; /* Default grå ramme */
     border: 3px solid var(--card-party-color);
 }
-
 /* Spesialramme for SV (uendret) */
 .featured-candidate-card.party-sv {
     border-image-source: linear-gradient(to right, #439539, #eb2e2d);
@@ -87,13 +84,11 @@
     border-style: solid;
     border-color: var(--card-party-color); /* Fallback */
 }
-
 /* Hover-effekt (uendret) */
 .featured-candidate-card:hover {
     transform: scale(1.03);
     box-shadow: 0 7px 15px rgba(0, 0, 0, 0.18);
 }
-
 /* Bildet inni kortet */
 .featured-candidate-card img {
     display: block;
@@ -104,7 +99,6 @@
     /* --- BEHOLDT: bakgrunn for tomrom --- */
     background-color: #f8f9fa; /* Lys grå bakgrunn for eventuelt tomrom */
 }
-
 /* Placeholder for manglende bilde (uendret) */
 .featured-candidate-card .image-placeholder {
     display: flex; align-items: center; justify-content: center;
@@ -113,15 +107,74 @@
 }
 /* === SLUTT: Styling for Utvalgte Kandidater === */
 
-/* Detaljmodal (uendret) */
-#candidate-detail-modal .quote-modal-content { max-width: 450px; }
-#candidate-detail-content h3 { margin-bottom: 15px; color: var(--kf-blue); display: flex; align-items: center; gap: 10px; }
-#candidate-detail-content p { margin-bottom: 8px; line-height: 1.5; }
-#candidate-detail-content strong { color: #333; }
-#candidate-detail-content a { color: var(--kf-blue); text-decoration: none; }
-#candidate-detail-content a:hover { text-decoration: underline; }
 
-/* Responsivitet (justert for featured grid) */
+/* === START: NYE REGLER FOR KANDIDAT-MODAL (Popup) === */
+
+/* Styling spesifikt for modalen på candidates-siden */
+#candidate-detail-modal .quote-modal-content {
+    max-width: 450px; /* Behold eksisterende maks bredde */
+
+    /* Tillat vertikal scrolling ved behov */
+    overflow-y: auto;
+
+    /* Sørg for nok padding nederst */
+    padding-bottom: 25px; /* Juster verdien ved behov */
+
+    /* Sett en maks høyde for å unngå at modalen blir *for* høy */
+    max-height: 85vh; /* Maks 85% av visningshøyden */
+}
+
+/* Sørg for at scrolling også fungerer i hover-modus (selv om det er mindre sannsynlig her) */
+#candidate-detail-modal.hover-mode .quote-modal-content {
+    overflow-y: auto;
+    max-height: 85vh;
+    padding-bottom: 20px;
+}
+
+
+/* Styling for innholdet i modalen (#candidate-detail-content) */
+#candidate-detail-content h3 {
+    margin-bottom: 15px;
+    color: var(--kf-blue);
+    display: flex;
+    align-items: center; /* Vertikal sentrering */
+    gap: 10px;
+    line-height: 1.3; /* Bedre linjehøyde for navn som brytes */
+}
+
+#candidate-detail-content p {
+    margin-bottom: 10px; /* Litt mer luft */
+    line-height: 1.5;
+}
+#candidate-detail-content p:last-of-type {
+    margin-bottom: 0; /* Fjern bunnmargin på siste før notis */
+}
+
+#candidate-detail-content strong { /* Fremhev feltnavn */
+    color: #333;
+}
+#candidate-detail-content a { /* Lenker (epost/tlf) */
+    color: var(--kf-blue);
+    text-decoration: none;
+}
+#candidate-detail-content a:hover {
+    text-decoration: underline;
+}
+
+/* Ny klasse for personvern-teksten (erstatter inline style) */
+#candidate-detail-content .privacy-notice {
+    font-size: 0.8em;
+    color: #777;
+    margin-top: 15px; /* Luft over */
+    text-align: center;
+    border-top: 1px dashed #eee; /* Diskret skillelinje */
+    padding-top: 10px; /* Luft under skillelinjen */
+}
+
+/* === SLUTT: NYE REGLER FOR KANDIDAT-MODAL === */
+
+
+/* Responsivitet (justert for featured grid og mobil modal) */
 @media (max-width: 768px) {
     .candidate-filters { gap: 15px; }
     .candidate-filters .filter-group { min-width: calc(50% - 10px); }
@@ -141,4 +194,25 @@
     .constituency-separator .mandate-count { font-size: 0.8rem; }
     #candidate-grid .constituency-separator:first-of-type, #featured-candidates-grid .constituency-separator:first-of-type { margin-top: 0; }
     .candidate-card .candidate-name { font-size: 1rem; }
+
+    /* Mobil modal justeringer */
+     #candidate-detail-modal .quote-modal-content {
+        margin: 5% auto; /* Mindre margin på mobil */
+        padding: 20px; /* Litt mindre padding */
+        padding-bottom: 20px; /* Juster bunn-padding for mobil */
+        max-height: 90vh; /* Kan ta litt mer høyde på mobil */
+    }
+     #candidate-detail-content h3 {
+        font-size: 1.1rem; /* Mindre tittel */
+    }
+     #candidate-detail-content p {
+        font-size: 0.9rem; /* Litt mindre tekst */
+        margin-bottom: 8px;
+    }
+     #candidate-detail-content .privacy-notice {
+         font-size: 0.75em;
+         margin-top: 12px;
+         padding-top: 8px;
+    }
+
 }
