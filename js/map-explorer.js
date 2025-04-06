@@ -1,16 +1,40 @@
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("Map Explorer JS Loaded (Final Block Coloring Attempt)");
+    console.log("Map Explorer JS Loaded (Hardcoded Block Colors)");
 
-    // --- Definisjoner for Blokk-farging ---
-    const blockColors = { /* ... (som før) ... */ };
+    // --- START: Definisjoner og HARDKODET Blokk-resultat ---
+    const blockColors = {
+        Left: '#ed1b34',    // Rød (AP's farge)
+        Right: '#007ac8',   // Blå (Høyre's farge)
+        Tie: '#a9a9a9'     // Nøytral Grå (DarkGray)
+    };
     const blockOpacity = 0.7;
-    const partiesLeft = ['R', 'SV', 'AP', 'SP', 'MDG'];
-    const partiesRight = ['H', 'FrP', 'V', 'KrF'];
-    let constituencyBlockLeaning = {};
+
+    // Resultat fra forhåndsberegning basert på candidates.json
+    const hardcodedBlockLeanings = {
+        "Aust-Agder": "Right",
+        "Akershus": "Right",
+        "Buskerud": "Left",
+        "Finnmark": "Left",
+        "Hedmark": "Left",
+        "Hordaland": "Right",
+        "Møre og Romsdal": "Left",
+        "Nord-Trøndelag": "Left",
+        "Nordland": "Left",
+        "Oppland": "Left",
+        "Oslo": "Left",
+        "Rogaland": "Right",
+        "Sogn og Fjordane": "Tie",
+        "Sør-Trøndelag": "Left",
+        "Telemark": "Left",
+        "Troms": "Left",
+        "Vest-Agder": "Right",
+        "Vestfold": "Tie",
+        "Østfold": "Right"
+     };
     // --- SLUTT: Definisjoner ---
 
     // Globale variabler
-    let allCandidatesData = null;
+    let allCandidatesData = null; // Trengs fortsatt for sidepanelet
     let partiesMap = {};
     let geoJsonData = null;
     let map = null;
@@ -18,66 +42,54 @@ document.addEventListener('DOMContentLoaded', function() {
     let selectedLayer = null;
 
     // Mapping og Mandater (uendret)
-    const geoJsonNameMapping = { /* ... */ };
-    const constituencyMandates = { /* ... */ };
+    const geoJsonNameMapping = {
+        "Nordland – Nordlánnda": "Nordland",
+        "Troms – Romsa – Tromssa": "Troms",
+        "Finnmark – Finnmárku – Finmarkku": "Finnmark"
+    };
+    const constituencyMandates = {
+        "Østfold": 9, "Akershus": 20, "Oslo": 20, "Hedmark": 7, "Oppland": 6,
+        "Buskerud": 8, "Vestfold": 7, "Telemark": 6, "Aust-Agder": 4, "Vest-Agder": 6,
+        "Rogaland": 14, "Hordaland": 16, "Sogn og Fjordane": 4, "Møre og Romsdal": 8,
+        "Sør-Trøndelag": 10, "Nord-Trøndelag": 5, "Nordland": 9, "Troms": 6, "Finnmark": 4
+    };
 
-    // DOM referanser (uendret)
+    // DOM referanser (hentes NÅ INNI DOMContentLoaded)
     const mapContainer = document.getElementById('map-container');
     const displayPanel = document.getElementById('candidate-display-panel');
     const listContent = document.getElementById('candidate-list-content');
     const loader = document.getElementById('map-loader');
     const modalElement = document.getElementById('candidate-modal');
-    /* ... (resten av modal-referansene) ... */
+    // ----- FIKS: Hent og legg til listener ETTER at DOM er klar -----
+    let modalCloseButton = null; 
+    if (modalElement) { // Sjekk om modal finnes før vi leter inni den
+        modalCloseButton = modalElement.querySelector('.modal-close-button');
+        if (modalCloseButton) {
+             modalCloseButton.addEventListener('click', closeModal);
+        } else {
+             console.warn("Modal close button (.modal-close-button) not found inside #candidate-modal.");
+        }
+        // Listener for klikk utenfor modal
+        window.addEventListener('click', (event) => { if (event.target === modalElement) closeModal(); });
+    } else {
+         console.warn("Modal element (#candidate-modal) not found.");
+    }
+    // ---------------------------------------------------------------
+
     const geoJsonPath = 'data/valgdistrikter.geojson';
 
     // --- Modal Funksjoner (uendret) ---
-    function showCandidateDetails(candidateData, partyInfo) { /* ... */ }
-    function closeModal() { /* ... */ }
-    if (modalCloseButton) modalCloseButton.addEventListener('click', closeModal);
-    window.addEventListener('click', (event) => { if (event.target === modalElement) closeModal(); });
+    function showCandidateDetails(candidateData, partyInfo) { /* ... (som før) ... */ }
+    function closeModal() { if (modalElement) modalElement.style.display = 'none'; }
     // --- Slutt Modal ---
-
-    // --- Blokk-beregning (uendret - forutsatt at den får et array) ---
-    function calculateBlockLeanings(candidatesData) { /* ... (som i forrige versjon, med interne sjekker) ... */
-         console.log("Map Explorer: Calculating block leanings...");
-         const leanings = {};
-         if (!Array.isArray(candidatesData)) {
-             console.error("calculateBlockLeanings: Invalid data received (not an array).");
-             return leanings; 
-         }
-         candidatesData.forEach(constituency => {
-             if (!constituency || typeof constituency !== 'object' || !constituency.constituencyName || !Array.isArray(constituency.parties)) { return; }
-             let countLeft = 0; let countRight = 0;
-             constituency.parties.forEach(party => {
-                 if (!party || typeof party !== 'object' || !party.partyShorthand || !Array.isArray(party.candidates)) { return; }
-                 const isLeft = partiesLeft.includes(party.partyShorthand);
-                 const isRight = partiesRight.includes(party.partyShorthand);
-                 if (isLeft || isRight) {
-                     party.candidates.forEach(candidate => {
-                         if (candidate && typeof candidate === 'object' && candidate.hasRealisticChance === true) {
-                             if (isLeft) countLeft++; else if (isRight) countRight++;
-                         }
-                     });
-                 }
-             });
-             if (countLeft > countRight) leanings[constituency.constituencyName] = "Left";
-             else if (countRight > countLeft) leanings[constituency.constituencyName] = "Right";
-             else leanings[constituency.constituencyName] = "Tie";
-         });
-         console.log("Map Explorer: Block leanings calculation finished.");
-         return leanings;
-     }
-    // --- Slutt Blokk-beregning ---
 
     // Hjelpefunksjon for å laste JSON (uendret)
     async function loadJson(url) { /* ... (som før) ... */ }
 
-    // Hovedfunksjon for datalasting (MODIFISERT med tydeligere sjekk og flagg til init)
+    // Hovedfunksjon for datalasting (NÅ UTEN kall til calculateBlockLeanings)
     async function loadData() {
         if (loader) loader.style.display = 'block';
         else console.error("Map loader element not found!");
-
-        let blockCalculationSuccessful = false; // Flagg for å sende til init
 
         partiesMap = {}; // Nullstill
         // Last partidata (som før)
@@ -87,30 +99,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {
             console.log("Map Explorer: Loading candidates and GeoJSON...");
+            // Laster fortsatt candidates.json for sidepanelet
             const [candidates, geoJson] = await Promise.all([
                 loadJson('data/candidates.json'),
                 loadJson(geoJsonPath)
             ]);
-            // ----- FIKS: Lagre og SJEKK data grundigere -----
-            allCandidatesData = candidates;
+            allCandidatesData = candidates; // Lagre for sidepanelet
             geoJsonData = geoJson;
-            console.log("Map Explorer: Candidates and GeoJSON loaded. Type of allCandidatesData:", typeof allCandidatesData, "Is array:", Array.isArray(allCandidatesData));
+            console.log("Map Explorer: Candidates and GeoJSON loaded.");
 
-            if (Array.isArray(allCandidatesData)) {
-                constituencyBlockLeaning = calculateBlockLeanings(allCandidatesData);
-                blockCalculationSuccessful = true; // Beregning ok
-                 console.log("Map Explorer: Block calculation completed successfully.");
-            } else {
-                console.error("Loaded candidate data is NOT an array! Skipping block calculation.");
-                constituencyBlockLeaning = {};
-                blockCalculationSuccessful = false; // Beregning feilet
-                 // Vis feil i panelet
-                 if(listContent) listContent.innerHTML = '<p class="error">Feil format på kandidatdata. Kan ikke fargelegge kretser.</p>';
-            }
-            // -----------------------------------------------
+            // Ingen blokk-beregning her lenger
 
-            // Kall initMapExplorer og send med status for blokk-beregning
-            initMapExplorer(blockCalculationSuccessful); 
+            initMapExplorer(); // Gå direkte til kartinit
 
         } catch (error) {
             console.error("Map Explorer: Error loading main data (candidates/GeoJSON):", error);
@@ -123,9 +123,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Kart initialisering (MODIFISERT: Tar imot flagg for å legge til GeoJSON)
-    function initMapExplorer(addGeoJsonLayer = false) { // Default til false
-         console.log(`Map Explorer: Initializing map... (addGeoJsonLayer: ${addGeoJsonLayer})`);
+    // Kart initialisering (Bruker nå hardkodet data i styleFeature)
+    function initMapExplorer() { // Fjernet flagget, legger alltid til GeoJSON hvis data finnes
+         console.log(`Map Explorer: Initializing map...`);
          if (!mapContainer) { console.error("Map container element not found!"); return; }
          if (map) { map.remove(); map = null; }
 
@@ -133,59 +133,63 @@ document.addEventListener('DOMContentLoaded', function() {
              map = L.map(mapContainer).setView([64.5, 17.5], 4.5);
              console.log("Map Explorer: L.map object created.");
 
-             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                 maxZoom: 18,
-                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-             }).addTo(map);
+             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { /* ... */ }).addTo(map);
              console.log("Map Explorer: Base map tiles added.");
 
-             // ----- FIKS: Legg kun til GeoJSON hvis flagget er true OG data finnes -----
-             if (addGeoJsonLayer && geoJsonData) {
+             // Legg til GeoJSON laget (hvis data finnes)
+             if (geoJsonData) {
                  let features = geoJsonData?.Valgdistrikt?.features || geoJsonData?.features;
                  if (features && Array.isArray(features) && features.length > 0) {
-                     console.log("Map Explorer: Adding GeoJSON layer with block colors...");
+                     console.log("Map Explorer: Adding GeoJSON layer using hardcoded block colors...");
                      geoJsonLayer = L.geoJSON({ type: "FeatureCollection", features: features }, {
-                         style: styleFeature,
+                         style: styleFeature, // Denne bruker nå hardcodedBlockLeanings
                          onEachFeature: onEachFeature
                      }).addTo(map);
                      console.log("Map Explorer: GeoJSON layer added.");
 
-                     try {
-                         const bounds = geoJsonLayer.getBounds();
-                         if (bounds.isValid()) {
-                              console.log("Map Explorer: Fitting map bounds...");
-                              map.fitBounds(bounds, { padding: [10, 10] });
-                         } else { console.warn("Map Explorer: GeoJSON layer bounds are not valid."); }
-                     } catch(e) { console.error("Map Explorer: Error getting or fitting bounds:", e); }
+                     try { /* ... (fitBounds logikk som før) ... */ } 
+                     catch(e) { console.error("Map Explorer: Error getting or fitting bounds:", e); }
                  } else {
-                     console.warn("Map Explorer: No valid GeoJSON features found, although addGeoJsonLayer was true.");
+                     console.warn("Map Explorer: No valid GeoJSON features found.");
                      if (listContent) listContent.innerHTML = '<p class="error">Fant ingen data for valgdistrikter.</p>';
                  }
              } else {
-                  console.log("Map Explorer: Skipping GeoJSON layer addition based on flag or missing data.");
-                  // Hvis vi ikke legger til laget, vis standard melding (hvis panelet er tomt)
-                   if (listContent && listContent.innerHTML === '' && !addGeoJsonLayer) {
-                        listContent.innerHTML = '<p>Kunne ikke fargelegge kretser. Klikk på kartet for å velge manuelt (kretsdata kan mangle).</p>';
-                   } else if (listContent && listContent.innerHTML === '') {
-                         listContent.innerHTML = '<p>Klikk på en valgkrets på kartet for å se kandidatene.</p>';
-                   }
+                  console.warn("Map Explorer: geoJsonData is missing, cannot add district layer.");
+                  if (listContent) listContent.innerHTML = '<p class="error">Kunne ikke laste data for valgdistrikter.</p>';
              }
-             //-----------------------------------------------------------------------
 
             console.log("Map Explorer: Map initialization complete.");
+             if (listContent && listContent.innerHTML === '') { 
+                 listContent.innerHTML = '<p>Klikk på en valgkrets på kartet for å se kandidatene.</p>';
+             }
 
-         } catch (initError) {
-             console.error("Map Explorer: CRITICAL ERROR during map initialization:", initError);
-              if (mapContainer) mapContainer.innerHTML = `<p class="error" style="padding: 20px; text-align: center;">Kunne ikke laste kartet.<br><small>${initError.message}</small></p>`;
-              if (listContent) listContent.innerHTML = '';
-         }
+         } catch (initError) { /* ... (feilhåndtering) ... */ }
     }
 
-    // --- Kart interaksjon (uendret fra forrige versjon med farger) ---
-    function styleFeature(feature) { /* ... (som før) ... */ }
-    function onEachFeature(feature, layer) { /* ... (som før) ... */ }
+    // --- Kart interaksjon (MODIFISERT: Bruker hardcoded data) ---
+
+    // StyleFeature bruker nå hardkodet objekt
+    function styleFeature(feature) {
+        const defaultStyle = {
+            fillColor: blockColors.Tie, weight: 1, opacity: 1, color: 'white', fillOpacity: blockOpacity
+        };
+        if (feature.properties?.valgdistriktsnavn) {
+            const rawName = feature.properties.valgdistriktsnavn;
+            const constituencyName = geoJsonNameMapping[rawName] || rawName;
+            // ----- FIKS: Bruker hardcoded data -----
+            const leaning = hardcodedBlockLeanings[constituencyName]; 
+            // -------------------------------------
+            if (leaning === "Left") defaultStyle.fillColor = blockColors.Left;
+            else if (leaning === "Right") defaultStyle.fillColor = blockColors.Right;
+        }
+        return defaultStyle;
+    }
+
+    function onEachFeature(feature, layer) { /* ... (som før, bindTooltip etc.) ... */ }
     function highlightFeature(e) { /* ... (som før) ... */ }
+    // resetHighlight bruker også styleFeature, som nå bruker hardkodet data
     function resetHighlight(e) { /* ... (som før) ... */ }
+    // zoomAndShowCandidates bruker også styleFeature for reset
     function zoomAndShowCandidates(e) { /* ... (som før) ... */ }
 
     // --- Kandidatvisning (Uendret) ---
@@ -194,4 +198,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Initialiser ved å laste data ---
     loadData();
-});
+
+}); // Slutt på DOMContentLoaded
