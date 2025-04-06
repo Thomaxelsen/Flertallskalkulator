@@ -216,3 +216,15 @@
     }
 
 }
+/* === Legg til nederst i css/candidates.css === */
+
+/* Styling for hint-tekst under H2/H3 */
+.interaction-hint {
+    font-size: 0.9rem; /* Litt mindre enn vanlig tekst */
+    color: #666;      /* Litt dus farge */
+    margin-top: -5px; /* Plasser den nærmere overskriften over */
+    margin-bottom: 15px; /* Luft ned til rutenettet */
+    font-style: italic;
+}
+
+/* === SLUTT TILLEGG === */
