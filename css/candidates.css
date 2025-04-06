@@ -1,17 +1,7 @@
-/* css/candidates.css (Version 7 - Inkluderer modal-fiks) */
+/* css/candidates.css (Version 8 - 3-kolonne layout med sidepanel) */
 
-/* === Eksisterende stiler fra din originale fil === */
-.candidate-filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-bottom: 30px;
-    background-color: white;
-    border-radius: 12px;
-    padding: 20px 25px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-    align-items: flex-end;
-}
+/* Filterseksjon (uendret) */
+.candidate-filters { display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 30px; background-color: white; border-radius: 12px; padding: 20px 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); align-items: flex-end; }
 .candidate-filters .filter-group { flex: 1; min-width: 180px; }
 .candidate-filters .filter-group:has(#view-mode-select) { min-width: 200px; }
 .candidate-filters .filter-group label { display: block; margin-bottom: 8px; font-weight: 500; color: #444; font-size: 0.9rem; }
@@ -24,21 +14,170 @@
 @media (min-width: 768px) { .count-group { flex-basis: auto; padding-bottom: 10px; } }
 #candidate-count { font-weight: bold; }
 
-/* === Styling for Standardvisning === */
-#candidate-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 10px; min-height: 200px; position: relative; }
-#candidate-grid .loader, #featured-candidates-grid .loader { position: absolute; top: 50px; left: 50%; transform: translateX(-50%); font-size: 1.2rem; color: #666; }
-#candidate-grid .no-results, #featured-candidates-grid .no-results { grid-column: 1 / -1; text-align: center; padding: 40px 20px; color: #777; font-style: italic; }
+/* --- NY Layout Wrapper --- */
+.content-layout-wrapper {
+    display: flex; /* Standard = mobil, stables under hverandre */
+    flex-direction: column;
+    gap: 30px; /* Avstand mellom hovedinnhold og (potensielt) panel */
+}
 
-/* Valgkrets-separator (felles) */
+.main-content-area {
+    width: 100%; /* Tar full bredde på mobil */
+}
+
+/* --- Styling for Detaljpanel (Desktop) --- */
+.candidate-detail-panel {
+    display: none; /* Skjult som standard (mobil) */
+    background-color: #fdfdff; /* Litt lysere enn body */
+    border: 1px solid #e0e5ec;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 50, 135, 0.07);
+    /* Høyde og scrolling: */
+    max-height: calc(100vh - 180px); /* Begrens høyde (juster 180px etter header/footer/margin) */
+    overflow-y: auto;
+    /* Posisjonering for sticky: */
+    position: sticky;
+    top: 20px; /* Avstand fra toppen av viewport */
+}
+
+.candidate-detail-panel .panel-content {
+    padding: 25px;
+}
+
+.candidate-detail-panel .placeholder-text {
+    text-align: center;
+    padding: 40px 20px;
+    color: #777;
+}
+.candidate-detail-panel .placeholder-text h3 {
+    color: var(--kf-blue);
+    margin-bottom: 10px;
+}
+
+/* Innhold i detaljpanelet */
+.candidate-detail-panel .detail-image-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.candidate-detail-panel .detail-image {
+    max-width: 180px; /* Juster størrelse etter ønske */
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border: 3px solid white;
+}
+.candidate-detail-panel .image-placeholder-panel {
+    width: 180px;
+    height: 180px; /* Omtrentlig størrelse */
+    margin: 0 auto;
+    background-color: #f0f4f8;
+    border: 1px dashed #ccc;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.candidate-detail-panel .detail-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.candidate-detail-panel .detail-header h3 {
+    flex-grow: 1;
+    margin: 0;
+    font-size: 1.4rem;
+    color: var(--kf-blue);
+    line-height: 1.3;
+}
+.candidate-detail-panel .detail-header .party-icon {
+    width: 36px; height: 36px; font-size: 16px; flex-shrink: 0;
+}
+
+.candidate-detail-panel .detail-info p {
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #444;
+}
+.candidate-detail-panel .detail-info strong {
+    display: inline-block;
+    min-width: 90px; /* Gir litt justering */
+    color: #222;
+    font-weight: 600;
+    margin-right: 5px;
+}
+.candidate-detail-panel .detail-info a {
+    color: var(--kf-blue);
+    text-decoration: none;
+}
+.candidate-detail-panel .detail-info a:hover {
+    text-decoration: underline;
+}
+
+.candidate-detail-panel .privacy-notice-panel {
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 20px;
+    text-align: center;
+    border-top: 1px dashed #ddd;
+    padding-top: 10px;
+}
+
+/* --- Desktop Layout (f.eks. bredere enn 1024px) --- */
+@media (min-width: 1024px) {
+    .content-layout-wrapper {
+        display: flex;
+        flex-direction: row; /* Side om side */
+        align-items: flex-start; /* Juster toppen */
+        gap: 30px;
+    }
+
+    .main-content-area {
+        flex: 2; /* Tar 2/3 av tilgjengelig plass */
+        min-width: 0; /* Viktig for flexbox */
+    }
+
+    .candidate-detail-panel {
+        display: block; /* Vis panelet */
+        flex: 1; /* Tar 1/3 av tilgjengelig plass */
+        min-width: 300px; /* Minimumsbredde */
+        max-width: 400px; /* Maksimumsbredde (juster etter ønske) */
+    }
+
+    /* Skjul mobil-modalen på desktop */
+    #candidate-detail-modal {
+        display: none !important;
+    }
+}
+
+/* Styling for Liste/Grid Views (som før, med justeringer) */
+#candidate-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; /* Litt mindre gap/min */ margin-top: 10px; position: relative; } /* min-height fjernet */
+#featured-candidates-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; /* Økt gap for bilder */ position: relative; margin-top: 10px; } /* min-height fjernet */
+
+#candidate-grid .loader, #featured-candidates-grid .loader { position: absolute; top: 50px; left: 50%; transform: translateX(-50%); font-size: 1.1rem; color: #777; } /* Litt mindre */
+#candidate-grid .no-results, #featured-candidates-grid .no-results { grid-column: 1 / -1; text-align: center; padding: 30px 20px; color: #888; font-style: italic; font-size: 1rem;}
+
+.interaction-hint { font-size: 0.9rem; color: #666; margin-top: -5px; margin-bottom: 15px; font-style: italic; } /* Styling for hint-tekst */
+
+/* Valgkrets-separator (som før) */
 .constituency-separator { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: baseline; font-size: 1.3rem; font-weight: bold; color: var(--kf-blue); padding: 15px 5px 10px 5px; margin-top: 25px; margin-bottom: 5px; border-bottom: 2px solid var(--kf-purple); }
 .constituency-separator .mandate-count { font-size: 0.9rem; font-weight: normal; color: #555; }
 #candidate-grid .constituency-separator:first-of-type, #featured-candidates-grid .constituency-separator:first-of-type { margin-top: 5px; }
 
-/* Standard kandidatkort (uendret) */
-.candidate-card { background-color: white; border-radius: 10px; padding: 0; box-shadow: 0 3px 10px rgba(0,0,0,0.07); border: 1px solid #eee; transition: transform 0.2s ease, box-shadow 0.2s ease; display: flex; flex-direction: column; min-height: 150px; overflow: hidden; position: relative; --party-color: #ccc; }
+/* Standard kandidatkort (som før) */
+.candidate-card { background-color: white; border-radius: 10px; padding: 0; box-shadow: 0 3px 10px rgba(0,0,0,0.07); border: 1px solid #eee; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; display: flex; flex-direction: column; min-height: 150px; overflow: hidden; position: relative; --party-color: #ccc; cursor: pointer; }
 .candidate-card::before { content: ''; display: block; height: 6px; background-color: var(--party-color); background-image: none; margin-bottom: 10px; }
 .candidate-card.party-sv::before { background-image: linear-gradient(to right, #439539, #eb2e2d); background-color: transparent; }
-.candidate-card:hover { transform: translateY(-4px); box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
+.candidate-card:hover { transform: translateY(-4px); box-shadow: 0 6px 15px rgba(0,0,0,0.1); border-color: #bbb; }
 .candidate-card .card-header { display: flex; align-items: flex-start; padding: 0 15px 8px 15px; border-bottom: 1px solid #f0f0f0; gap: 10px; }
 .candidate-card .candidate-rank { font-size: 1.6rem; font-weight: bold; color: var(--party-color); line-height: 1.2; padding-top: 2px; min-width: 30px; text-align: center; }
 .candidate-card .candidate-header-info { flex-grow: 1; display: flex; flex-direction: column; }
@@ -50,181 +189,45 @@
 .candidate-card .card-footer { margin-top: auto; padding: 5px 15px 10px 15px; font-size: 0.8rem; color: #888; text-align: right; }
 .candidate-card .realistic-badge { display: inline-block; background-color: var(--kf-green); color: white; padding: 2px 6px; border-radius: 10px; font-size: 0.7rem; font-weight: bold; }
 
-/* === Styling for Utvalgte Kandidater (Bildekort-visning) === */
-/* Rutenettet for bildekortene */
-#featured-candidates-grid {
-    display: grid;
-    /* Justert minmax for bredere bilder */
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Økt min-bredde */
-    gap: 25px; /* Økt gap */
-    position: relative;
-    min-height: 150px;
-    margin-top: 20px;
+/* --- NY Stil for valgt kort --- */
+.candidate-card.selected-detail,
+.featured-candidate-card.selected-detail {
+    border-color: var(--kf-pink);
+    box-shadow: 0 4px 12px rgba(230, 60, 140, 0.2);
+    transform: translateY(-2px); /* Liten indikasjon */
 }
-/* Selve bildekortet - containeren */
-.featured-candidate-card {
-    display: block;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    /* --- ENDRET: Bredere sideforhold --- */
-    aspect-ratio: 2.7 / 1; /* Prøver et mye bredere format */
-    background-color: #f0f0f0;
-    box-sizing: border-box;
-    --card-party-color: #ccc; /* Default grå ramme */
-    border: 3px solid var(--card-party-color);
-}
-/* Spesialramme for SV (uendret) */
-.featured-candidate-card.party-sv {
-    border-image-source: linear-gradient(to right, #439539, #eb2e2d);
-    border-image-slice: 1;
-    border-width: 3px;
-    border-style: solid;
-    border-color: var(--card-party-color); /* Fallback */
-}
-/* Hover-effekt (uendret) */
-.featured-candidate-card:hover {
-    transform: scale(1.03);
-    box-shadow: 0 7px 15px rgba(0, 0, 0, 0.18);
-}
-/* Bildet inni kortet */
-.featured-candidate-card img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    /* --- BEHOLDT: contain viser hele bildet --- */
-    object-fit: contain;
-    /* --- BEHOLDT: bakgrunn for tomrom --- */
-    background-color: #f8f9fa; /* Lys grå bakgrunn for eventuelt tomrom */
-}
-/* Placeholder for manglende bilde (uendret) */
-.featured-candidate-card .image-placeholder {
-    display: flex; align-items: center; justify-content: center;
-    width: 100%; height: 100%; color: #888; font-size: 0.9rem;
-    text-align: center; padding: 10px; box-sizing: border-box;
-}
-/* === SLUTT: Styling for Utvalgte Kandidater === */
-
-
-/* === START: NYE REGLER FOR KANDIDAT-MODAL (Popup) === */
-
-/* Styling spesifikt for modalen på candidates-siden */
-#candidate-detail-modal .quote-modal-content {
-    max-width: 450px; /* Behold eksisterende maks bredde */
-
-    /* Tillat vertikal scrolling ved behov */
-    overflow-y: auto;
-
-    /* Sørg for nok padding nederst */
-    padding-bottom: 25px; /* Juster verdien ved behov */
-
-    /* Sett en maks høyde for å unngå at modalen blir *for* høy */
-    max-height: 85vh; /* Maks 85% av visningshøyden */
-}
-
-/* Sørg for at scrolling også fungerer i hover-modus (selv om det er mindre sannsynlig her) */
-#candidate-detail-modal.hover-mode .quote-modal-content {
-    overflow-y: auto;
-    max-height: 85vh;
-    padding-bottom: 20px;
+.candidate-card.selected-detail:hover,
+.featured-candidate-card.selected-detail:hover {
+    transform: translateY(-2px); /* Ikke mer hover-effekt når valgt */
 }
 
 
-/* Styling for innholdet i modalen (#candidate-detail-content) */
-#candidate-detail-content h3 {
-    margin-bottom: 15px;
-    color: var(--kf-blue);
-    display: flex;
-    align-items: center; /* Vertikal sentrering */
-    gap: 10px;
-    line-height: 1.3; /* Bedre linjehøyde for navn som brytes */
-}
-
-#candidate-detail-content p {
-    margin-bottom: 10px; /* Litt mer luft */
-    line-height: 1.5;
-}
-#candidate-detail-content p:last-of-type {
-    margin-bottom: 0; /* Fjern bunnmargin på siste før notis */
-}
-
-#candidate-detail-content strong { /* Fremhev feltnavn */
-    color: #333;
-}
-#candidate-detail-content a { /* Lenker (epost/tlf) */
-    color: var(--kf-blue);
-    text-decoration: none;
-}
-#candidate-detail-content a:hover {
-    text-decoration: underline;
-}
-
-/* Ny klasse for personvern-teksten (erstatter inline style) */
-#candidate-detail-content .privacy-notice {
-    font-size: 0.8em;
-    color: #777;
-    margin-top: 15px; /* Luft over */
-    text-align: center;
-    border-top: 1px dashed #eee; /* Diskret skillelinje */
-    padding-top: 10px; /* Luft under skillelinjen */
-}
-
-/* === SLUTT: NYE REGLER FOR KANDIDAT-MODAL === */
+/* Utvalgte Kandidater Kort (som før) */
+.featured-candidate-card { display: block; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); overflow: hidden; cursor: pointer; transition: all 0.2s ease; aspect-ratio: 2.7 / 1; background-color: #f0f0f0; box-sizing: border-box; --card-party-color: #ccc; border: 3px solid var(--card-party-color); }
+.featured-candidate-card.party-sv { border-image-source: linear-gradient(to right, #439539, #eb2e2d); border-image-slice: 1; border-width: 3px; border-style: solid; border-color: var(--card-party-color); }
+.featured-candidate-card:hover { transform: scale(1.03); box-shadow: 0 7px 15px rgba(0, 0, 0, 0.18); border-color: var(--kf-pink); } /* Endret hover border */
+.featured-candidate-card img { display: block; width: 100%; height: 100%; object-fit: contain; background-color: #f8f9fa; }
+.featured-candidate-card .image-placeholder { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; color: #888; font-size: 0.9rem; text-align: center; padding: 10px; box-sizing: border-box; }
 
 
-/* Responsivitet (justert for featured grid og mobil modal) */
-@media (max-width: 768px) {
+/* Responsivitet for mobil/nettbrett (beholder modal) */
+@media (max-width: 1023px) {
+    /* Eksisterende mobil-stiler for filter, grid, kort beholdes */
     .candidate-filters { gap: 15px; }
     .candidate-filters .filter-group { min-width: calc(50% - 10px); }
-    .candidate-filters .search-group { min-width: 100%; }
-    .candidate-filters .count-group { text-align: left; }
     #candidate-grid { grid-template-columns: 1fr; gap: 15px; }
-    /* Utvalgte grid på mobil - kanskje bare 1 kolonne? */
-    #featured-candidates-grid {
-        grid-template-columns: 1fr; /* Én kolonne på mindre skjermer */
-        gap: 20px; /* Øker gap litt for stabling */
-        max-width: 500px; /* Begrenser bredden på mobil */
-        margin-left: auto;
-        margin-right: auto;
-    }
-    /* Felles separator på mobil */
+    #featured-candidates-grid { grid-template-columns: 1fr; gap: 20px; max-width: 500px; margin-left: auto; margin-right: auto; }
     .constituency-separator { font-size: 1.1rem; margin-top: 20px; flex-direction: column; align-items: flex-start; gap: 2px; }
     .constituency-separator .mandate-count { font-size: 0.8rem; }
-    #candidate-grid .constituency-separator:first-of-type, #featured-candidates-grid .constituency-separator:first-of-type { margin-top: 0; }
-    .candidate-card .candidate-name { font-size: 1rem; }
 
-    /* Mobil modal justeringer */
-     #candidate-detail-modal .quote-modal-content {
-        margin: 5% auto; /* Mindre margin på mobil */
-        padding: 20px; /* Litt mindre padding */
-        padding-bottom: 20px; /* Juster bunn-padding for mobil */
-        max-height: 90vh; /* Kan ta litt mer høyde på mobil */
+    /* Sikrer at modalen brukes (og panelet er skjult) */
+    .candidate-detail-panel {
+        display: none !important; /* Viktig: Skjul panelet helt */
     }
-     #candidate-detail-content h3 {
-        font-size: 1.1rem; /* Mindre tittel */
+    #candidate-detail-modal {
+        display: none; /* Standard skjult, JS viser ved klikk */
     }
-     #candidate-detail-content p {
-        font-size: 0.9rem; /* Litt mindre tekst */
-        margin-bottom: 8px;
+     #candidate-detail-modal .quote-modal-content { /* Sørger for at modal-stiler for mobil er ok */
+        margin: 5% auto; padding: 20px; padding-bottom: 20px; max-height: 90vh; width: 90%; max-width: 500px;
     }
-     #candidate-detail-content .privacy-notice {
-         font-size: 0.75em;
-         margin-top: 12px;
-         padding-top: 8px;
-    }
-
 }
-/* === Legg til nederst i css/candidates.css === */
-
-/* Styling for hint-tekst under H2/H3 */
-.interaction-hint {
-    font-size: 0.9rem; /* Litt mindre enn vanlig tekst */
-    color: #666;      /* Litt dus farge */
-    margin-top: -5px; /* Plasser den nærmere overskriften over */
-    margin-bottom: 15px; /* Luft ned til rutenettet */
-    font-style: italic;
-}
-
-/* === SLUTT TILLEGG === */
