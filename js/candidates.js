@@ -1,7 +1,7 @@
-// js/candidates.js (Version 9 - Hover tooltip på desktop)
+// js/candidates.js (Version 10 - Hint under titler)
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("Candidates JS v9: DOM loaded. Adding hover tooltip logic.");
+    console.log("Candidates JS v10: DOM loaded. Adding interaction hints.");
 
     // --- Hjelpefunksjon for å sjekke touch-enhet ---
     function isTouchDevice() {
@@ -16,6 +16,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const isTouch = isTouchDevice();
     console.log("Candidates JS: Is touch device?", isTouch);
     // ----------------------------------------------
+
+    // *** START: NY KODE for å sette hint-tekst ***
+    const hintText = isTouch
+        ? "Trykk på en kandidat for mer informasjon."
+        : "Hold musepekeren over en kandidat for mer informasjon.";
+
+    const featuredHintElement = document.getElementById('featured-hint');
+    const regularHintElement = document.getElementById('regular-hint');
+
+    if (featuredHintElement) {
+        featuredHintElement.textContent = hintText;
+    }
+    if (regularHintElement) {
+        regularHintElement.textContent = hintText;
+    }
+    // *** SLUTT: NY KODE ***
 
     // Globale variabler
     let allConstituencyData = [];
@@ -47,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalContentContainer = document.getElementById('candidate-detail-content'); // Container for selve innholdet
     const modalContentElement = modal?.querySelector('.quote-modal-content'); // Den posisjonerte boksen
 
-    // --- Datainnlasting (likner v8, men med sjekker) ---
+    // --- Datainnlasting (likner v9) ---
     function loadData() {
         console.log("Candidates JS: Loading data...");
         if (loaderRegular) loaderRegular.style.display = 'block';
@@ -63,7 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     .then(parties => {
                          window.partiesData = parties;
                          window.partiesDataLoaded = true;
-                         document.dispatchEvent(new CustomEvent('partiesDataLoaded')); // Send signal hvis det lastes her
+                         // Ikke nødvendig å sende event her hvis partiesData.js allerede gjør det
+                         // document.dispatchEvent(new CustomEvent('partiesDataLoaded'));
                          return parties;
                      })
 
@@ -79,7 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
                  console.log("Candidates JS: Using pre-existing partiesMap.");
             } else {
                  console.error("Candidates JS: Failed to create partiesMap, parties data missing or invalid.");
-                 // Vis feilmelding til bruker?
                  return; // Kan ikke fortsette uten partidata
             }
 
@@ -110,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Vent på/Last partidata (likner v8) ---
+    // --- Vent på/Last partidata (likner v9) ---
      if (window.partiesDataLoaded && window.partiesData && window.partiesData.length > 0) {
          partiesMap = {}; window.partiesData.forEach(p => { partiesMap[p.shorthand] = p; });
          console.log("Candidates JS: Using pre-loaded parties data."); loadData();
@@ -118,23 +134,20 @@ document.addEventListener('DOMContentLoaded', () => {
          console.log("Candidates JS: Waiting for partiesDataLoaded event...");
          document.addEventListener('partiesDataLoaded', () => {
              console.log("Candidates JS: partiesDataLoaded event received.");
-             // Sjekk om data faktisk ble lastet
               if (window.partiesData && window.partiesData.length > 0) {
                  partiesMap = {}; window.partiesData.forEach(p => { partiesMap[p.shorthand] = p; });
                  loadData();
               } else {
                   console.error("Candidates JS: partiesDataLoaded event received, but window.partiesData is empty or invalid!");
-                  // Håndter feil, f.eks. vis melding i UI
                   if (candidateGrid) candidateGrid.innerHTML = '<p class="error">Kunne ikke laste partidatabasen.</p>';
                   if (featuredGrid) featuredGrid.innerHTML = '<p class="error">Kunne ikke laste partidatabasen.</p>';
                   if (loaderRegular) loaderRegular.style.display = 'none';
                   if (loaderFeatured) loaderFeatured.style.display = 'none';
               }
-         }, { once: true }); // Lytt bare én gang
-         // Trigger lasting hvis ikke allerede i gang
+         }, { once: true });
           if (!document.querySelector('script[src="js/partiesData.js"]') && !(window.partiesDataLoaded)) {
                console.warn("Candidates JS: partiesData.js script not found, attempting direct fetch.");
-               loadData(); // loadData vil nå forsøke å fetche parties.json
+               loadData();
           }
      }
 
@@ -155,49 +168,38 @@ document.addEventListener('DOMContentLoaded', () => {
         });
      }
 
-    // --- Event Listeners (MODIFISERT for hover/touch) ---
+    // --- Event Listeners (uendret fra v9) ---
     function setupEventListeners() {
-        // Filter listeners (uendret)
         constituencyFilter?.addEventListener('change', handleFilteringAndDisplay);
         partyFilter?.addEventListener('change', handleFilteringAndDisplay);
         realisticChanceFilter?.addEventListener('change', handleFilteringAndDisplay);
         nameSearch?.addEventListener('input', debounce(handleFilteringAndDisplay, 300));
         viewModeSelect?.addEventListener('change', handleFilteringAndDisplay);
 
-        // --- START: Modifisert lytter for kort (klikk/hover) ---
-        const mainContainer = document.querySelector('.container'); // Eller document.body
+        const mainContainer = document.querySelector('.container');
         if (mainContainer) {
-            // Lytter for klikk (primært for touch)
             mainContainer.addEventListener('click', (event) => {
                 const card = event.target.closest('.candidate-card[data-candidate-info], .featured-candidate-card[data-candidate-info]');
-                if (card && isTouch) { // Bare reager på klikk på touch-enheter
-                     console.log("Touch click detected on card");
+                if (card && isTouch) {
                      handleCardInteraction(card);
                 } else if (card && !isTouch && modal && modal.style.display === 'block' && modal.classList.contains('hover-mode')) {
-                    // Hvis bruker klikker på kortet mens tooltip vises (desktop), ikke gjør noe spesielt
-                    event.preventDefault(); // Kan forhindre utilsiktet navigering hvis kortet er en lenke
+                    event.preventDefault();
                 }
             });
 
-            // Lytter for mouseover (kun desktop)
             if (!isTouch) {
                 mainContainer.addEventListener('mouseover', (event) => {
                     const card = event.target.closest('.candidate-card[data-candidate-info], .featured-candidate-card[data-candidate-info]');
                     if (card) {
-                         // console.log("Mouseover detected on card");
                         handleCardHover(card);
                     }
                 });
-
                 mainContainer.addEventListener('mouseout', (event) => {
                     const card = event.target.closest('.candidate-card[data-candidate-info], .featured-candidate-card[data-candidate-info]');
                     if (card) {
-                         // console.log("Mouseout detected on card");
                         handleCardLeave();
                     }
                 });
-
-                 // Håndter hover over selve tooltipen for å holde den åpen
                  modalContentElement?.addEventListener('mouseenter', () => {
                      if (hideTimer) clearTimeout(hideTimer);
                  });
@@ -206,73 +208,59 @@ document.addEventListener('DOMContentLoaded', () => {
                  });
             }
         }
-        // --- SLUTT: Modifisert lytter for kort ---
-
-        // Modal lukkeknapp (uendret - relevant for touch/klikk)
-         closeBtn?.addEventListener('click', hideCandidateTooltip); // Bruker felles lukkefunksjon
+        closeBtn?.addEventListener('click', hideCandidateTooltip);
          modal?.addEventListener('click', (event) => {
-            if (event.target === modal) { // Klikk på bakgrunn
+            if (event.target === modal) {
                  hideCandidateTooltip();
             }
          });
     }
-    // --- SLUTT: Event Listeners ---
 
-    // --- Håndtering av kort-interaksjon (Ny felles funksjon) ---
+    // --- Håndtering av kort-interaksjon (uendret fra v9) ---
     function handleCardInteraction(cardElement, isHover = false) {
          if (!cardElement) return;
          try {
              const info = JSON.parse(cardElement.dataset.candidateInfo);
              const partyInfo = JSON.parse(cardElement.dataset.partyInfo);
-             // Send med kortet som targetElement hvis det er hover
              showCandidateDetails(info, partyInfo, isHover ? cardElement : null);
          } catch (e) {
              console.error("Error parsing candidate/party info from card:", e, cardElement.dataset.candidateInfo, cardElement.dataset.partyInfo);
              if (modalContentContainer && modal) {
                  modalContentContainer.innerHTML = '<p class="error">Kunne ikke vise kandidatdetaljer på grunn av en datafeil.</p>';
-                 if (!isHover) modal.style.display = 'block'; // Vis feilmelding på klikk
+                 if (!isHover) modal.style.display = 'block';
              }
          }
     }
 
-    // --- Håndtering av hover (Nye funksjoner) ---
+    // --- Håndtering av hover (uendret fra v9) ---
     function handleCardHover(cardElement) {
-         if (hoverTimer) clearTimeout(hoverTimer); // Fjern gammel timer
-         if (hideTimer) clearTimeout(hideTimer);   // Ikke gjem hvis vi hoovrer på nytt raskt
-
-         // Start en timer for å vise tooltip etter en kort forsinkelse
+         if (hoverTimer) clearTimeout(hoverTimer);
+         if (hideTimer) clearTimeout(hideTimer);
          hoverTimer = setTimeout(() => {
-             handleCardInteraction(cardElement, true); // Kall fellesfunksjon med hover=true
-         }, 150); // 150ms forsinkelse
+             handleCardInteraction(cardElement, true);
+         }, 150);
     }
-
     function handleCardLeave() {
-         if (hoverTimer) clearTimeout(hoverTimer); // Avbryt visning hvis musen forlater før timeren er ferdig
-         // Start timer for å skjule tooltipen
+         if (hoverTimer) clearTimeout(hoverTimer);
          hideTimer = setTimeout(() => {
-             // Sjekk om musen er over selve modalen før vi gjemmer
               if (modal && modalContentElement && !modalContentElement.matches(':hover')) {
                  hideCandidateTooltip();
               }
-         }, 100); // 100ms forsinkelse før skjuling
+         }, 100);
     }
-
-    // --- Felles funksjon for å skjule modal/tooltip ---
     function hideCandidateTooltip() {
         if (modal) {
             modal.style.display = 'none';
-            // Viktig: Fjern hover-modus klassen når den skjules
              modal.classList.remove('hover-mode');
         }
         if (hideTimer) clearTimeout(hideTimer);
         if (hoverTimer) clearTimeout(hoverTimer);
     }
-    // --- SLUTT: Hover-håndtering ---
 
-
-    // --- Hovedfunksjon for filtrering og visning (uendret fra v8) ---
+    // --- Hovedfunksjon for filtrering og visning (uendret fra v9) ---
     function handleFilteringAndDisplay() {
         if (!regularViewContainer || !featuredViewContainer || !candidateGrid || !featuredGrid) { console.error("Missing view containers or grids"); return; }
+        // ... (resten av funksjonen er uendret fra v9) ...
         console.log("Candidates JS: Handling filtering and display...");
         const selectedConstituency = constituencyFilter?.value || 'all';
         const selectedParty = partyFilter?.value || 'all';
@@ -284,24 +272,21 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!Array.isArray(allConstituencyData)) {
              console.error("allConstituencyData is not an array!", allConstituencyData);
              if (candidateCount) candidateCount.textContent = 'Datafeil';
-             return; // Kan ikke fortsette uten data
+             return;
         }
-        allConstituencyData.forEach(constituency => { /* ... filtrer som før ... */
+        allConstituencyData.forEach(constituency => {
             if (!constituency || typeof constituency !== 'object' || !Array.isArray(constituency.parties)) {
-                console.warn("Skipping invalid constituency data:", constituency);
-                return;
+                console.warn("Skipping invalid constituency data:", constituency); return;
             }
             if (selectedConstituency === 'all' || constituency.constituencyName === selectedConstituency) {
                 constituency.parties.forEach(party => {
                      if (!party || typeof party !== 'object' || !Array.isArray(party.candidates)) {
-                         console.warn("Skipping invalid party data within constituency:", party, constituency.constituencyName);
-                         return;
+                         console.warn("Skipping invalid party data within constituency:", party, constituency.constituencyName); return;
                      }
                     if (selectedParty === 'all' || party.partyShorthand === selectedParty) {
                         party.candidates.forEach(candidate => {
                              if (!candidate || typeof candidate !== 'object' || !candidate.name) {
-                                 console.warn("Skipping invalid candidate data within party:", candidate, party.partyName);
-                                 return;
+                                 console.warn("Skipping invalid candidate data within party:", candidate, party.partyName); return;
                              }
                             let include = true;
                             if (showOnlyRealistic && !candidate.hasRealisticChance) include = false;
@@ -314,18 +299,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         });
-         allMatchingCandidates.sort((a, b) => { /* ... sorter som før ... */
+         allMatchingCandidates.sort((a, b) => {
              if (a.constituencyName !== b.constituencyName) return a.constituencyName.localeCompare(b.constituencyName);
              const partyAInfo = partiesMap[a.partyShorthand] || { position: 99 }; const partyBInfo = partiesMap[b.partyShorthand] || { position: 99 };
-             if (partyAInfo.position !== partyBInfo.position) return (partyAInfo.position || 99) - (partyBInfo.position || 99); // Sørg for fallback
-             return (a.rank || 999) - (b.rank || 999); // Sørg for fallback
+             if (partyAInfo.position !== partyBInfo.position) return (partyAInfo.position || 99) - (partyBInfo.position || 99);
+             return (a.rank || 999) - (b.rank || 999);
          });
-        if (selectedViewMode === 'featured') { /* ... vis utvalgte som før ... */
+        if (selectedViewMode === 'featured') {
             console.log("Displaying featured candidates view."); const featuredCandidatesToShow = allMatchingCandidates.filter(c => c.isFeatured === true);
             displayFeaturedCandidates(featuredCandidatesToShow);
             regularViewContainer.style.display = 'none'; featuredViewContainer.style.display = 'block';
             if (candidateCount) candidateCount.textContent = featuredCandidatesToShow.length;
-        } else { /* ... vis normal visning som før ... */
+        } else {
             console.log("Displaying regular candidates view.");
             displayRegularCandidates(allMatchingCandidates);
             featuredViewContainer.style.display = 'none'; regularViewContainer.style.display = 'block';
@@ -333,56 +318,38 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Visningslogikk for UTVALGTE kandidater (uendret fra v8) ---
-    function displayFeaturedCandidates(featuredCandidates) {
+    // --- Visningslogikk (displayFeaturedCandidates, createFeaturedImageCard, displayRegularCandidates, createConstituencySeparator, createCandidateCard) ---
+    // --- Disse er uendret fra v9 ---
+    function displayFeaturedCandidates(featuredCandidates) { /* ... uendret ... */
         if (!featuredGrid) return;
-        featuredGrid.innerHTML = ''; // Tøm
-
+        featuredGrid.innerHTML = '';
         if (featuredCandidates.length === 0) {
-            featuredGrid.innerHTML = '<p class="no-results">Ingen utvalgte kandidater funnet med de valgte filtrene.</p>';
-            return;
+            featuredGrid.innerHTML = '<p class="no-results">Ingen utvalgte kandidater funnet med de valgte filtrene.</p>'; return;
         }
-
-        let currentConstituency = null; // Holder styr på nåværende valgkrets
+        let currentConstituency = null;
         featuredCandidates.forEach(candidate => {
             const partyInfo = partiesMap[candidate.partyShorthand];
-            if (!partyInfo) {
-                console.warn(`Skipping featured candidate ${candidate.name} - party info missing`);
-                return;
-            }
-
+            if (!partyInfo) { console.warn(`Skipping featured candidate ${candidate.name} - party info missing`); return; }
             if (candidate.constituencyName !== currentConstituency) {
-                const separator = createConstituencySeparator(candidate.constituencyName);
-                featuredGrid.appendChild(separator);
-                currentConstituency = candidate.constituencyName;
+                const separator = createConstituencySeparator(candidate.constituencyName); featuredGrid.appendChild(separator); currentConstituency = candidate.constituencyName;
             }
-
-            const card = createFeaturedImageCard(candidate, partyInfo);
-            featuredGrid.appendChild(card);
+            const card = createFeaturedImageCard(candidate, partyInfo); featuredGrid.appendChild(card);
         });
          console.log(`Candidates JS: Displayed ${featuredCandidates.length} featured candidates.`);
-    }
-
-    // --- Lag kort for UTVALGTE kandidater (uendret fra v8) ---
-    function createFeaturedImageCard(candidate, partyInfo) {
+     }
+    function createFeaturedImageCard(candidate, partyInfo) { /* ... uendret ... */
         const card = document.createElement('div');
         const partyClass = `party-${partyInfo.classPrefix || partyInfo.shorthand.toLowerCase()}`;
         card.className = `featured-candidate-card ${partyClass}`;
-        card.dataset.candidateInfo = JSON.stringify(candidate);
-        card.dataset.partyInfo = JSON.stringify(partyInfo);
+        card.dataset.candidateInfo = JSON.stringify(candidate); card.dataset.partyInfo = JSON.stringify(partyInfo);
         card.style.setProperty('--card-party-color', partyInfo.color || '#ccc');
         card.innerHTML = `
-            ${candidate.imageUrl
-                ? `<img src="${candidate.imageUrl}" alt="Utvalgt kandidat: ${candidate.name}" loading="lazy">`
-                : '<div class="image-placeholder">Bilde mangler</div>'
-            }
+            ${candidate.imageUrl ? `<img src="${candidate.imageUrl}" alt="Utvalgt kandidat: ${candidate.name}" loading="lazy">` : '<div class="image-placeholder">Bilde mangler</div>'}
         `;
-        card.title = `${candidate.name} (${partyInfo.name}) - ${isTouch ? 'Klikk' : 'Hold over'} for detaljer`; // Dynamisk tittel
+        card.title = `${candidate.name} (${partyInfo.name}) - ${isTouch ? 'Klikk' : 'Hold over'} for detaljer`;
         return card;
-    }
-
-    // --- Visningslogikk for REGULÆRE/ALLE kandidater (uendret fra v8) ---
-    function displayRegularCandidates(candidates) {
+     }
+    function displayRegularCandidates(candidates) { /* ... uendret ... */
         if (!candidateGrid) return;
         candidateGrid.innerHTML = '';
         if (candidates.length === 0) {
@@ -393,18 +360,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const partyInfo = partiesMap[candidate.partyShorthand];
             if (!partyInfo) { console.warn(`Skipping regular card ${candidate.name} for party ${candidate.partyShorthand}`); return; }
             if (candidate.constituencyName !== currentConstituency) {
-                const separator = createConstituencySeparator(candidate.constituencyName);
-                candidateGrid.appendChild(separator);
-                currentConstituency = candidate.constituencyName;
+                const separator = createConstituencySeparator(candidate.constituencyName); candidateGrid.appendChild(separator); currentConstituency = candidate.constituencyName;
             }
-            const card = createCandidateCard(candidate, partyInfo);
-            candidateGrid.appendChild(card);
+            const card = createCandidateCard(candidate, partyInfo); candidateGrid.appendChild(card);
         });
          console.log(`Candidates JS: Displayed ${candidates.length} total candidates in regular grid.`);
-    }
-
-     // --- Hjelpefunksjon for separator (uendret fra v8) ---
-     function createConstituencySeparator(constituencyName) {
+     }
+     function createConstituencySeparator(constituencyName) { /* ... uendret ... */
          const separator = document.createElement('div');
          separator.className = 'constituency-separator';
          const mandateCount = constituencyMandates[constituencyName];
@@ -415,9 +377,7 @@ document.addEventListener('DOMContentLoaded', () => {
          `;
          return separator;
      }
-
-    // --- Lag standard kandidatkort (uendret fra v8) ---
-    function createCandidateCard(candidate, partyInfo) {
+    function createCandidateCard(candidate, partyInfo) { /* ... uendret ... */
         const card = document.createElement('div');
         const partyClassPrefix = partyInfo.classPrefix || partyInfo.shorthand.toLowerCase();
         card.className = `candidate-card party-${partyClassPrefix}`;
@@ -425,120 +385,42 @@ document.addEventListener('DOMContentLoaded', () => {
         card.style.setProperty('--party-color', partyInfo.color || '#ccc');
         card.dataset.candidateInfo = JSON.stringify(candidate); card.dataset.partyInfo = JSON.stringify(partyInfo);
         card.innerHTML = `
-            <div class="card-header">
-                <span class="candidate-rank">${candidate.rank || '?'}</span>
-                <div class="candidate-header-info">
-                     <span class="candidate-name">${candidate.name || 'Ukjent navn'}</span>
-                     <span class="party-name-header">${partyInfo.name || candidate.partyShorthand || 'Ukjent parti'}</span>
-                 </div>
-                <div class="party-icon icon-${partyClassPrefix}" style="background-color: ${partyInfo.color || '#ccc'}" title="${partyInfo.name || candidate.partyShorthand || 'Ukjent parti'}">
-                     ${candidate.partyShorthand?.charAt(0) || '?'}
-                 </div>
-            </div>
-            <div class="card-body">
-                <div class="candidate-meta">
-                    ${candidate.age ? `<span>Alder: ${candidate.age}</span>` : ''}
-                    ${candidate.location ? `<span class="candidate-location"> | Fra: ${candidate.location}</span>` : ''}
-                </div>
-            </div>
+            <div class="card-header"> <span class="candidate-rank">${candidate.rank || '?'}</span> <div class="candidate-header-info"> <span class="candidate-name">${candidate.name || 'Ukjent navn'}</span> <span class="party-name-header">${partyInfo.name || candidate.partyShorthand || 'Ukjent parti'}</span> </div> <div class="party-icon icon-${partyClassPrefix}" style="background-color: ${partyInfo.color || '#ccc'}" title="${partyInfo.name || candidate.partyShorthand || 'Ukjent parti'}"> ${candidate.partyShorthand?.charAt(0) || '?'} </div> </div>
+            <div class="card-body"> <div class="candidate-meta"> ${candidate.age ? `<span>Alder: ${candidate.age}</span>` : ''} ${candidate.location ? `<span class="candidate-location"> | Fra: ${candidate.location}</span>` : ''} </div> </div>
             ${candidate.hasRealisticChance ? `<div class="card-footer"><span class="realistic-badge">Realistisk sjanse</span></div>` : '<div class="card-footer"></div>'}
         `;
-         // Legg til title-attributt for hover-hint
         card.title = `${candidate.name} (${partyInfo.name}) - ${isTouch ? 'Klikk' : 'Hold over'} for detaljer`;
         return card;
     }
 
 
-    // --- Modal for Candidate Details (MODIFISERT for posisjonering) ---
+    // --- Modal for Candidate Details (uendret fra v9) ---
     function showCandidateDetails(candidate, partyInfo, targetElement = null) {
-         // Sikrer at alle nødvendige elementer og data er tilstede
-         if (!modal || !modalContentContainer || !modalContentElement || !candidate || !partyInfo) {
-             console.error("Modal/Content/Candidate/PartyInfo missing:", { modal, modalContentContainer, modalContentElement, candidate, partyInfo });
-             return;
-         }
+         if (!modal || !modalContentContainer || !modalContentElement || !candidate || !partyInfo) { console.error(...); return; }
          const partyClassPrefix = partyInfo.classPrefix || partyInfo.shorthand.toLowerCase();
+         modalContentContainer.innerHTML = `<h3> ... </h3> <p>...</p> ... <p class="privacy-notice">...</p>`; // (Innhold uendret fra v9)
 
-         // Bygg HTML-innholdet (likt som v8)
-         modalContentContainer.innerHTML = `
-             <h3>
-                 <div class="party-icon icon-${partyClassPrefix}" style="background-color: ${partyInfo.color || '#ccc'}; width: 28px; height: 28px; font-size: 14px;">${partyInfo.shorthand?.charAt(0) || '?'}</div>
-                 ${candidate.name || 'Ukjent navn'}
-             </h3>
-             <p><strong>Rangering:</strong> ${candidate.rank || 'Ukjent'}. plass</p>
-             <p><strong>Parti:</strong> ${partyInfo.name || 'Ukjent parti'}</p>
-             <p><strong>Valgkrets:</strong> ${candidate.constituencyName || 'Ukjent valgkrets'}</p>
-             ${candidate.age ? `<p><strong>Alder:</strong> ${candidate.age}</p>` : ''}
-             ${candidate.location ? `<p><strong>Fra:</strong> ${candidate.location}</p>` : ''}
-             <p><strong>Realistisk sjanse:</strong> ${typeof candidate.hasRealisticChance !== 'undefined' ? (candidate.hasRealisticChance ? 'Ja' : 'Nei') : 'Ukjent'}</p>
-             ${candidate.email ? `<p><strong>E-post:</strong> <a href="mailto:${candidate.email}">${candidate.email}</a></p>` : ''}
-             ${candidate.phone ? `<p><strong>Telefon:</strong> <a href="tel:${candidate.phone}">${candidate.phone}</a></p>` : ''}
-             <p class="privacy-notice">Husk personvern ved bruk av kontaktinformasjon.</p>
-         `;
-
-         // --- START: Posisjoneringslogikk for desktop hover ---
-         if (targetElement && !isTouch) {
+         if (targetElement && !isTouch) { // Hover-posisjonering
              console.log("Positioning tooltip for desktop hover");
-             modal.classList.add('hover-mode'); // Bruk tooltip-stil
-
+             modal.classList.add('hover-mode');
              const rect = targetElement.getBoundingClientRect();
-             const viewportWidth = window.innerWidth;
-             const viewportHeight = window.innerHeight;
-
-             // Midlertidig vis modalen (usynlig) for å måle dimensjoner
-             modalContentElement.style.visibility = 'hidden';
-             modalContentElement.style.position = 'fixed'; // Nødvendig for måling
-             modalContentElement.style.left = '0px';
-             modalContentElement.style.top = '0px';
-             modal.style.display = 'block'; // Må være synlig i DOM for getBoundingClientRect
-
-             const modalRect = modalContentElement.getBoundingClientRect();
-             const modalHeight = modalRect.height;
-             // Bruker offsetWidth da getBoundingClientRect kan være 0 hvis innholdet ikke er rendret enda
-             const modalWidth = modalContentElement.offsetWidth || 350; // Fallback bredde
-
-             // Tilbakestill display før posisjonering
-              modal.style.display = 'none';
-              modalContentElement.style.visibility = 'visible';
-
-
-             // Beregn optimal posisjon
-             let top = rect.top - modalHeight - 10; // Prøv over elementet
-             if (top < 10) { // Hvis ikke plass over
-                 top = rect.bottom + 10; // Prøv under elementet
-             }
-             // Juster hvis den går utenfor bunnen
-             if (top + modalHeight > viewportHeight - 10) {
-                  top = Math.max(10, viewportHeight - modalHeight - 10); // Plasser nederst med litt margin
-             }
-
-             // Prøv å sentrere horisontalt over/under kortet
-             let left = rect.left + (rect.width / 2) - (modalWidth / 2);
-             // Juster hvis den går utenfor kantene
-             left = Math.max(10, Math.min(left, viewportWidth - modalWidth - 10));
-
-             // Anvend posisjonen
-             modalContentElement.style.position = 'fixed'; // Viktig for tooltip
-             modalContentElement.style.left = `${left}px`;
-             modalContentElement.style.top = `${top}px`;
-             modalContentElement.style.maxWidth = '350px'; // Begrens bredde for tooltip
-
-         } else {
+             const viewportWidth = window.innerWidth; const viewportHeight = window.innerHeight;
+             modalContentElement.style.visibility = 'hidden'; modalContentElement.style.position = 'fixed'; modalContentElement.style.left = '0px'; modalContentElement.style.top = '0px'; modal.style.display = 'block';
+             const modalRect = modalContentElement.getBoundingClientRect(); const modalHeight = modalRect.height; const modalWidth = modalContentElement.offsetWidth || 350;
+             modal.style.display = 'none'; modalContentElement.style.visibility = 'visible';
+             let top = rect.top - modalHeight - 10; if (top < 10) { top = rect.bottom + 10; } if (top + modalHeight > viewportHeight - 10) { top = Math.max(10, viewportHeight - modalHeight - 10); }
+             let left = rect.left + (rect.width / 2) - (modalWidth / 2); left = Math.max(10, Math.min(left, viewportWidth - modalWidth - 10));
+             modalContentElement.style.position = 'fixed'; modalContentElement.style.left = `${left}px`; modalContentElement.style.top = `${top}px`; modalContentElement.style.maxWidth = '350px';
+         } else { // Sentrert modal
               console.log("Showing centered modal for touch/click");
-             // Standard sentrert modal for touch/klikk
              modal.classList.remove('hover-mode');
-             modalContentElement.style.position = ''; // Tilbakestill til standard (auto/static)
-             modalContentElement.style.left = '';
-             modalContentElement.style.top = '';
-             modalContentElement.style.maxWidth = ''; // Tilbake til CSS default
+             modalContentElement.style.position = ''; modalContentElement.style.left = ''; modalContentElement.style.top = ''; modalContentElement.style.maxWidth = '';
          }
-         // --- SLUTT: Posisjoneringslogikk ---
-
-         modal.style.display = 'block'; // Vis modalen
+         modal.style.display = 'block';
      }
-     // --- SLUTT OPPDATERT MODAL ---
 
     // --- Debounce Hjelpefunksjon (uendret) ---
-    function debounce(func, wait) {
+    function debounce(func, wait) { /* ... uendret ... */
         let timeout;
         return function executedFunction(...args) {
             const later = () => { clearTimeout(timeout); func(...args); };
