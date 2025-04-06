@@ -1,7 +1,7 @@
-// js/candidates.js (Version 11.1 - Rettet manglende innhold i kort IGJEN)
+// js/candidates.js (Version 11.2 - Viser placeholder-bilder i panelet)
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("Candidates JS v11.1: DOM loaded. Correcting card content AGAIN.");
+    console.log("Candidates JS v11.2: DOM loaded. Implementing placeholder images in panel.");
 
     // --- Hjelpefunksjon for å sjekke touch-enhet ---
     function isTouchDevice() {
@@ -58,19 +58,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
      // --- Funksjon for å vise i Sidepanel ---
      function displayCandidateInPanel(candidate, partyInfo) {
-         if (!detailPanelContent || !candidate || !partyInfo) return; const partyClassPrefix = partyInfo.classPrefix || partyInfo.shorthand.toLowerCase();
+         if (!detailPanelContent || !candidate || !partyInfo) return;
+         const partyClassPrefix = partyInfo.classPrefix || partyInfo.shorthand.toLowerCase();
+
+         // ---------- START ENDRING HER ----------
+         const imageHtml = candidate.imageUrl
+            ? `<img src="${candidate.imageUrl}" alt="${candidate.name || 'Kandidatbilde'}" class="detail-image">`
+            : `<img
+                 src="images/candidates/placeholder-${partyInfo.shorthand.toLowerCase()}.png"
+                 alt="Placeholder-bilde for ${partyInfo.name || 'partiet'}"
+                 class="detail-image placeholder-image"
+                 onerror="this.onerror=null; this.src='images/placeholder-generic.png'; console.warn('Placeholder missing for ${partyInfo.shorthand}, using generic.');"
+               >`;
+         // Antar en generisk fallback 'placeholder-generic.png' hvis partispesifikk mangler.
+         // Du kan endre onerror til f.eks. å vise tekst: onerror="this.outerHTML='<div class=\\'image-placeholder-panel\\'>Bilde mangler</div>';"
+
+         // Oppdatert HTML-struktur med den nye imageHtml-variabelen:
          detailPanelContent.innerHTML = `
-             <div class="detail-image-container"> ${candidate.imageUrl ? `<img src="${candidate.imageUrl}" alt="${candidate.name}" class="detail-image">` : '<div class="image-placeholder-panel">Bilde ikke tilgjengelig</div>'} </div>
-             <div class="detail-header"> <div class="party-icon icon-${partyClassPrefix}" style="background-color: ${partyInfo.color || '#ccc'};">${partyInfo.shorthand?.charAt(0) || '?'}</div> <h3>${candidate.name || '?'}</h3> </div>
-             <div class="detail-info"> <p><strong>Rangering:</strong> ${candidate.rank || '?'}. plass</p> <p><strong>Parti:</strong> ${partyInfo.name || '?'}</p> <p><strong>Valgkrets:</strong> ${candidate.constituencyName || '?'}</p> ${candidate.age ? `<p><strong>Alder:</strong> ${candidate.age}</p>` : ''} ${candidate.location ? `<p><strong>Fra:</strong> ${candidate.location}</p>` : ''} <p><strong>Realistisk sjanse:</strong> ${typeof candidate.hasRealisticChance !== 'undefined' ? (candidate.hasRealisticChance ? 'Ja' : 'Nei') : '?'}</p> ${candidate.email ? `<p><strong>E-post:</strong> <a href="mailto:${candidate.email}">${candidate.email}</a></p>` : ''} ${candidate.phone ? `<p><strong>Telefon:</strong> <a href="tel:${candidate.phone}">${candidate.phone}</a></p>` : ''} </div>
+             <div class="detail-image-container">
+                 ${imageHtml}
+             </div>
+             <div class="detail-header">
+                 <div class="party-icon icon-${partyClassPrefix}" style="background-color: ${partyInfo.color || '#ccc'};">${partyInfo.shorthand?.charAt(0) || '?'}</div>
+                 <h3>${candidate.name || '?'}</h3>
+             </div>
+             <div class="detail-info">
+                 <p><strong>Rangering:</strong> ${candidate.rank || '?'}. plass</p>
+                 <p><strong>Parti:</strong> ${partyInfo.name || '?'}</p>
+                 <p><strong>Valgkrets:</strong> ${candidate.constituencyName || '?'}</p>
+                 ${candidate.age ? `<p><strong>Alder:</strong> ${candidate.age}</p>` : ''}
+                 ${candidate.location ? `<p><strong>Fra:</strong> ${candidate.location}</p>` : ''}
+                 <p><strong>Realistisk sjanse:</strong> ${typeof candidate.hasRealisticChance !== 'undefined' ? (candidate.hasRealisticChance ? 'Ja' : 'Nei') : '?'}</p>
+                 ${candidate.email ? `<p><strong>E-post:</strong> <a href="mailto:${candidate.email}">${candidate.email}</a></p>` : ''}
+                 ${candidate.phone ? `<p><strong>Telefon:</strong> <a href="tel:${candidate.phone}">${candidate.phone}</a></p>` : ''}
+             </div>
              <p class="privacy-notice-panel">Husk personvern ved bruk av kontaktinformasjon.</p>
          `;
+         // ---------- SLUTT ENDRING HER ----------
+
         if (detailPanel) detailPanel.scrollTop = 0;
      }
 
      // --- Funksjon for å vise i Modal (Mobil) ---
+     // Ingen endringer her, da modalen ikke ser ut til å vise hovedbilde
      function displayCandidateInModal(candidate, partyInfo) {
-         if (!modal || !modalContentContainer || !candidate || !partyInfo) return; const partyClassPrefix = partyInfo.classPrefix || partyInfo.shorthand.toLowerCase();
+         if (!modal || !modalContentContainer || !candidate || !partyInfo) return;
+         const partyClassPrefix = partyInfo.classPrefix || partyInfo.shorthand.toLowerCase();
          modalContentContainer.innerHTML = `
              <h3> <div class="party-icon icon-${partyClassPrefix}" style="background-color: ${partyInfo.color || '#ccc'}; width: 28px; height: 28px; font-size: 14px;">${partyInfo.shorthand?.charAt(0) || '?'}</div> ${candidate.name || '?'} </h3>
              <p><strong>Rangering:</strong> ${candidate.rank || '?'}. plass</p> <p><strong>Parti:</strong> ${partyInfo.name || '?'}</p> <p><strong>Valgkrets:</strong> ${candidate.constituencyName || '?'}</p> ${candidate.age ? `<p><strong>Alder:</strong> ${candidate.age}</p>` : ''} ${candidate.location ? `<p><strong>Fra:</strong> ${candidate.location}</p>` : ''} <p><strong>Realistisk sjanse:</strong> ${typeof candidate.hasRealisticChance !== 'undefined' ? (candidate.hasRealisticChance ? 'Ja' : 'Nei') : '?'}</p> ${candidate.email ? `<p><strong>E-post:</strong> <a href="mailto:${candidate.email}">${candidate.email}</a></p>` : ''} ${candidate.phone ? `<p><strong>Telefon:</strong> <a href="tel:${candidate.phone}">${candidate.phone}</a></p>` : ''}
