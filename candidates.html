@@ -5,103 +5,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kandidatutforsker - Stortingsvalget 2025</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/candidates.css">
-</head>
+    <link rel="stylesheet" href="css/candidates.css"> </head>
 <body>
     <div class="burger-menu" id="burgerMenu">
-        <div class="burger-bar"></div>
-        <div class="burger-bar"></div>
-        <div class="burger-bar"></div>
+        <div class="burger-bar"></div> <div class="burger-bar"></div> <div class="burger-bar"></div>
     </div>
     <div class="mobile-menu" id="mobileMenu">
-        <div class="menu-header">
-            <h3>Meny</h3>
-            <button class="close-button" id="closeMenu">×</button>
-        </div>
-        <div class="menu-items" id="mobileMenuItems">
-            </div>
+        <div class="menu-header"> <h3>Meny</h3> <button class="close-button" id="closeMenu">×</button> </div>
+        <div class="menu-items" id="mobileMenuItems"></div>
     </div>
     <div class="menu-overlay" id="menuOverlay"></div>
     <div class="container">
         <header>
-           <div class="logo-container">
-                <a href="index.html">
-                    <img src="images/Logo.png" alt="Kreftforeningens logo" class="logo-image">
-                </a>
-            </div>
-            <div class="header-text">
-                <h1>Kandidatutforsker</h1>
-                <div class="header-subtitle">Oversikt over listekandidater 2025</div>
-            </div>
-            <div class="nav-links">
-                </div>
+            <div class="logo-container"> <a href="index.html"> <img src="images/Logo.png" alt="Kreftforeningens logo" class="logo-image"> </a> </div>
+            <div class="header-text"> <h1>Kandidatutforsker</h1> <div class="header-subtitle">Oversikt over listekandidater 2025</div> </div>
+            <div class="nav-links"></div>
         </header>
 
         <div class="candidate-filters">
-
-            <div class="filter-group">
-                <label for="view-mode-select">Visningsmodus:</label>
-                <select id="view-mode-select" class="filter-dropdown">
-                    <option value="normal" selected>Normal visning</option>
-                    <option value="featured">Kun utvalgte kandidater</option>
-                </select>
-            </div>
-            <div class="filter-group">
-                <label for="constituency-filter">Velg Valgkrets:</label>
-                <select id="constituency-filter" class="filter-dropdown">
-                    <option value="all">Alle Valgkretser</option>
-                    </select>
-            </div>
-            <div class="filter-group">
-                <label for="party-filter">Velg Parti:</label>
-                <select id="party-filter" class="filter-dropdown">
-                    <option value="all">Alle Partier</option>
-                     </select>
-            </div>
-            <div class="filter-group toggle-group">
-                <label for="realistic-chance-filter" class="toggle-label">
-                    <input type="checkbox" id="realistic-chance-filter">
-                    <span>Vis kun kandidater med realistisk sjanse</span>
-                </label>
-            </div>
-            <div class="filter-group search-group">
-                 <label for="name-search">Søk på navn:</label>
-                 <input type="text" id="name-search" placeholder="Skriv inn navn..." class="search-input">
-            </div>
-            <div class="filter-group count-group">
-                <span id="candidate-count">Laster...</span> kandidater vises.
-            </div>
-        </div>
-        <div id="featured-candidates-view" style="display: none;">
-             <h2>Utvalgte Kandidater</h2>
-             <div id="featured-candidates-grid" class="featured-candidates-grid">
-                 <div class="loader">Laster utvalgte kandidater...</div>
-             </div>
-             <hr class="section-divider">
+            <div class="filter-group"> <label for="view-mode-select">Visningsmodus:</label> <select id="view-mode-select" class="filter-dropdown"> <option value="normal" selected>Normal visning</option> <option value="featured">Kun utvalgte kandidater</option> </select> </div>
+            <div class="filter-group"> <label for="constituency-filter">Velg Valgkrets:</label> <select id="constituency-filter" class="filter-dropdown"> <option value="all">Alle Valgkretser</option> </select> </div>
+            <div class="filter-group"> <label for="party-filter">Velg Parti:</label> <select id="party-filter" class="filter-dropdown"> <option value="all">Alle Partier</option> </select> </div>
+            <div class="filter-group toggle-group"> <label for="realistic-chance-filter" class="toggle-label"> <input type="checkbox" id="realistic-chance-filter"> <span>Vis kun kandidater med realistisk sjanse</span> </label> </div>
+            <div class="filter-group search-group"> <label for="name-search">Søk på navn:</label> <input type="text" id="name-search" placeholder="Skriv inn navn..." class="search-input"> </div>
+            <div class="filter-group count-group"> <span id="candidate-count">Laster...</span> kandidater vises. </div>
         </div>
 
-        <div id="regular-candidates-view">
-            <h3>Alle Kandidater</h3>
-            <div id="candidate-grid" class="candidate-grid">
-                <div class="loader">Laster kandidater...</div>
+        <div class="content-layout-wrapper">
+
+            <div class="main-content-area">
+                <div id="featured-candidates-view" style="display: none;">
+                    <h2>Utvalgte Kandidater</h2>
+                    <p class="interaction-hint" id="featured-hint"></p>
+                    <div id="featured-candidates-grid" class="featured-candidates-grid">
+                        <div class="loader">Laster utvalgte kandidater...</div>
+                    </div>
+                    <hr class="section-divider">
+                </div>
+
+                <div id="regular-candidates-view">
+                    <h3>Alle Kandidater</h3>
+                    <p class="interaction-hint" id="regular-hint"></p>
+                    <div id="candidate-grid" class="candidate-grid">
+                        <div class="loader">Laster kandidater...</div>
+                    </div>
+                </div>
+            </div>
+
+            <aside id="candidate-detail-panel" class="candidate-detail-panel">
+                <div class="panel-content">
+                    <div class="placeholder-text">
+                        <h3>Kandidatinformasjon</h3>
+                        <p>Velg en kandidat fra listen til venstre for å se detaljer.</p>
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+        <div id="candidate-detail-modal" class="quote-modal">
+            <div class="quote-modal-content">
+                <span class="close-modal" id="close-candidate-modal">×</span>
+                <div id="candidate-detail-content">
+                    </div>
             </div>
         </div>
 
-         <div id="candidate-detail-modal" class="quote-modal">
-             <div class="quote-modal-content">
-                 <span class="close-modal" id="close-candidate-modal">×</span>
-                 <div id="candidate-detail-content"></div>
-             </div>
-         </div>
-
-        <footer>
-            Kandidatdata for Stortingsvalget 2025. Til bruk for informasjonsformål. Vær obs på personvern ved bruk av kontaktinfo.
-        </footer>
+        <footer> Kandidatdata for Stortingsvalget 2025... </footer>
     </div>
 
     <script src="js/navigationConfig.js"></script>
     <script src="js/navigation.js"></script>
     <script src="js/partiesData.js"></script>
-    <script src="js/candidates.js"></script>
-</body>
+    <script src="js/candidates.js"></script> </body>
 </html>
