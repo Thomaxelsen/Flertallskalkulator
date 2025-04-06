@@ -93,7 +93,7 @@
 /* Responsivt design for mindre skjermer */
 @media (max-width: 850px) {
     .map-layout { flex-direction: column; }
-    #map-container { height: 400px; min-width: auto; width: 100%; margin-bottom: 15px; }
+    #map-container { height: 400px !important; min-width: auto; width: 100%; margin-bottom: 15px; }
     #candidate-display-panel { flex: none; width: 100%; max-height: 500px; box-sizing: border-box; padding: 0;} /* Fjernet padding her også */
     #candidate-display-panel h2 { border-radius: 0; } /* Fjerner avrunding på mobil */
     .party-header { top: 57px; /* Juster for mobil tittelhøyde */ }
