@@ -15,14 +15,16 @@
             "phone": null, 
             "hasRealisticChance": true
           },
-          {
+         {
             "rank": 2,
             "name": "Ramani Konstanse Cornels Nordli",
             "location": "Arendal",
             "age": 26,
             "email": "ramaninordli@gmail.com",
             "phone": "41669132",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+            "imageUrl": "images/candidates/Nordli_AustAgder.png"
           },
           {
             "rank": 3,
@@ -79,7 +81,9 @@
             "age": 29,
             "email": "hvonpoppe@gmail.com",
             "phone": "95169325",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+            "imageUrl": "images/candidates/Poppe_AustAgder.png"
           },
           {
             "rank": 2,
@@ -88,7 +92,9 @@
             "age": 28,
             "email": "amalie.kollstrand@gmail.com",
             "phone": "48099596",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+            "imageUrl": "images/candidates/Kollstrand_AustAgder.png"
           },
           {
             "rank": 3,
@@ -234,14 +240,16 @@
             "phone": "98819111",
             "hasRealisticChance": false
           },
-          {
+         {
             "rank": 2,
             "name": "Tobias Oftedal Stokkeland",
             "location": "Kristiansand",
             "age": 26,
             "email": "tobias@gronnungdom.no",
             "phone": "46413870",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+            "imageUrl": "images/candidates/Stokkeland_AustAgder.png"
           }
         ]
       }
@@ -315,7 +323,9 @@
             "age": 27,
             "email": "tobias.hangaard.linge@stortinget.no",
             "phone": "95113100",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+            "imageUrl": "images/candidates/Linge_Akershus.png"
           }
         ]
       },
@@ -359,14 +369,16 @@
             "phone": "99202583",
             "hasRealisticChance": true
           },
-          {
+         {
             "rank": 5,
             "name": "Tom Staahle",
             "location": "Ullensaker",
             "age": 52,
             "email": "tom@staahle.no", 
             "phone": null, 
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+            "imageUrl": "images/candidates/Staahle_Akershus.png"
           },
           {
             "rank": 6,
@@ -375,7 +387,9 @@
             "age": 29,
             "email": "tonje.lavik@politiker.asker.no",
             "phone": "94337870",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+            "imageUrl": "images/candidates/Pederssen_Akershus.png"
           }
         ]
       },
@@ -426,7 +440,9 @@
             "age": 26,
             "email": "fylkesradsamferdsel@afk.no",
             "phone": null, 
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+            "imageUrl": "images/candidates/Snortheim_Akershus.png"
           },
           {
             "rank": 6,
@@ -542,14 +558,16 @@
             "phone": "93286489",
             "hasRealisticChance": true
           },
-          {
+         {
             "rank": 2,
             "name": "Balder Alvær Olafsen",
             "location": "Bærum",
             "age": 27,
             "email": "baldero@afk.no",
             "phone": "47462520",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+            "imageUrl": "images/candidates/Olafsen_Akershus.png"
           },
           {
             "rank": 3,
@@ -575,14 +593,16 @@
             "phone": null, 
             "hasRealisticChance": true
           },
-          {
+         {
             "rank": 2,
             "name": "Ane Breivik",
             "location": "Bærum",
             "age": 26,
             "email": "ane@venstre.no",
             "phone": "99462495", 
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+            "imageUrl": "images/candidates/Breivik_Akershus.png"
           },
           {
             "rank": 3,
@@ -637,14 +657,16 @@
             "phone": null, 
             "hasRealisticChance": true
           },
-          {
+         {
             "rank": 2,
             "name": "Solveig Vestenfor",
             "location": "Ål",
             "age": 51,
             "email": "Solveig.Vestenfor@aal.kommune.no",
             "phone": "98873422",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+            "imageUrl": "images/candidates/Vestenfor_Buskerud.png"
           },
           {
             "rank": 3,
@@ -746,7 +768,9 @@
             "age": 26,
             "email": "simenmur@gmail.com",
             "phone": "92064973",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+            "imageUrl": "images/candidates/Murud_Buskerud.png"
           },
           {
             "rank": 5,
@@ -794,7 +818,9 @@
             "age": 33,
             "email": "linn-elise.ohn.mehlen@stortinget.no",
             "phone": "98623040",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+            "imageUrl": "images/candidates/Mehlen_Buskerud.png"
           },
           {
             "rank": 2,
@@ -811,14 +837,16 @@
         "partyName": "Senterpartiet",
         "partyShorthand": "SP",
         "candidates": [
-          {
+         {
             "rank": 1,
             "name": "Sigrid Simensen Ilsøy",
             "location": "Hol",
             "age": 46,
             "email": "Sigrid.Simensen.Ilsoy@hol.kommune.no",
             "phone": "99014915",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+            "imageUrl": "images/candidates/Ilsøy_Buskerud.png"
           },
           {
             "rank": 2,
@@ -988,7 +1016,9 @@
             "age": 19,
             "email": "tonje-martine.nerdal@fpu.no",
             "phone": "90407266",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+            "imageUrl": "images/candidates/Nerdal_Finnmark.png"
           },
           {
             "rank": 4,
@@ -1014,14 +1044,16 @@
         "partyName": "Høyre",
         "partyShorthand": "H",
         "candidates": [
-          {
+         {
             "rank": 1,
             "name": "Hege Christin Bjørkmann",
             "location": "Alta",
             "age": 26,
             "email": "hegec@bjorkmanns.no",
             "phone": "46945239",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+            "imageUrl": "images/candidates/Bjørkmann_Finnmark.png"
           },
           {
             "rank": 2,
@@ -1078,7 +1110,9 @@
             "age": 67,
             "email": "halljo@online.no",
             "phone": "91129113",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+            "imageUrl": "images/candidates/Strifeldt_Finnmark.png"
           },
           {
             "rank": 2,
@@ -1150,7 +1184,9 @@
             "age": 57,
             "email": "noodt@venstre.no",
             "phone": "40729188",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+            "imageUrl": "images/candidates/Noodt_Finnmark.png"
           },
           {
             "rank": 2,
@@ -1217,11 +1253,13 @@
           {
             "rank": 3,
             "name": "Even Eriksen",
-            "location": "Tynset",
+            "location": "Trysil",
             "age": 29,
             "email": "even.eriksen@jd.dep.no",
             "phone": null, 
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+            "imageUrl": "images/candidates/Eriksen_Hedmark.png"
           },
           {
             "rank": 4,
@@ -1296,7 +1334,9 @@
             "age": 43,
             "email": "Kristianhovde@yahoo.no",
             "phone": "91839457",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+            "imageUrl": "images/candidates/Hovde_Hedmark.png"
           }
         ]
       },
@@ -1335,7 +1375,9 @@
             "age": 64,
             "email": "svein.birger.orsnes@innlandetfylke.no",
             "phone": "47504180",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+            "imageUrl": "images/candidates/Ørsnes_Hedmark.png"
           },
           {
             "rank": 2,
@@ -1392,7 +1434,9 @@
             "age": 31,
             "email": "amund.heggelund@sv.no",
             "phone": "47677967",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Heggelund_Hedmark.png"
           },
           {
             "rank": 2,
@@ -1487,7 +1531,9 @@
             "age": 51,
             "email": "linda.monsen.merkesdal@stortinget.no",
             "phone": "95964714",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Merkesdal_Hordaland.png"
           },
           {
             "rank": 4,
@@ -1514,7 +1560,9 @@
             "age": 22,
             "email": "uakselsen@gmail.com",
             "phone": "90662813",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Akselsen_Hordaland.png"
           }
         ]
       },
@@ -1547,7 +1595,9 @@
             "age": 24,
             "email": "martin.jonsterhaug@bergen.kommune.no",
             "phone": "91603820",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Jonsterhaug_Hordaland.png"
           },
           {
             "rank": 4,
@@ -1625,7 +1675,9 @@
             "age": 27,
             "email": "lisemay.saele@gmail.com",
             "phone": "48127770",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Sæle_Hordaland.png"
           },
           {
             "rank": 6,
@@ -1739,7 +1791,9 @@
             "age": 45,
             "email": "marthe.hammer@vlfk.no", 
             "phone": "97672203",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Hammer_Hordaland.png"
           },
           {
             "rank": 2,
@@ -1796,7 +1850,9 @@
             "age": 18,
             "email": "froya@gronnungdom.no",
             "phone": "40206210",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Sjursæther_Hordaland.png"
           },
           {
             "rank": 2,
@@ -1876,7 +1932,9 @@
             "age": 22,
             "email": "joakim.tangen@fpu.no",
             "phone": "96207113",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Tangen_MøreogRomsdal.png"
           },
           {
             "rank": 4,
@@ -1885,7 +1943,9 @@
             "age": 55,
             "email": "anne.marie.fiksdal@mrfylke.no",
             "phone": "45393303",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Fiksdal_MøreogRomsdal.png"
           },
           {
             "rank": 5,
@@ -1909,7 +1969,9 @@
             "age": 39,
             "email": "monica.molvaer@gmail.com",
             "phone": "97501202",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Molvær_MøreogRomsdal.png"
           },
           {
             "rank": 2,
@@ -2014,7 +2076,9 @@
             "age": 46,
             "email": "linekarlsvik9@gmail.com",
             "phone": "90596254",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Karlsvik_MøreogRomsdal.png"
           },
           {
             "rank": 2,
@@ -2091,7 +2155,9 @@
             "age": 54,
             "email": "benes@trondelagfylke.no",
             "phone": "48254674",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Estil_NordTrøndelag.png"
           },
           {
             "rank": 2,
@@ -2100,7 +2166,9 @@
             "age": 30,
             "email": "vebgo@trondelagfylke.no",
             "phone": "41669779", 
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Gorseth_NordTrøndelag.png"
           },
           {
             "rank": 3,
@@ -2124,7 +2192,9 @@
             "age": 26,
             "email": "mats.henriksen@fpu.no",
             "phone": "92117774",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Henriksen_NordTrøndelag.png"
           },
           {
             "rank": 2,
@@ -2157,7 +2227,9 @@
             "age": 55,
             "email": "palei@trondelagfylke.no",
             "phone": "90527323",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Eiden_NordTrøndelag.png"
           },
           {
             "rank": 2,
@@ -2357,7 +2429,9 @@
             "age": 33,
             "email": "oystein.mathisen@stortinget.no",
             "phone": "92064910",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Mathisen_Nordland.png"
           },
           {
             "rank": 4,
@@ -2399,7 +2473,9 @@
             "age": 30,
             "email": "kassandrapetsas@hotmail.com",
             "phone": "98460927",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Petsa_Nordland.png"
           },
           {
             "rank": 4,
@@ -2513,7 +2589,9 @@
             "age": 34,
             "email": "bebe@stortinget.no",
             "phone": "41769781",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Bentzen_Nordland.png"
           },
           {
             "rank": 2,
@@ -2546,7 +2624,9 @@
             "age": 54,
             "email": "ctorseth@gmail.com",
             "phone": "98416875",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Torset_Nordland.png"
           },
           {
             "rank": 2,
@@ -2632,7 +2712,9 @@
             "age": 54,
             "email": "anne.hagenborg@sondre-land.kommune.no",
             "phone": "99036540",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Hagenborg_Oppland.png"
           },
           {
             "rank": 3,
@@ -2641,7 +2723,9 @@
             "age": 24,
             "email": "linnea.lie.holen@hotmail.com",
             "phone": "98548027",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Holen_Oppland.png"
           }
         ]
       },
@@ -2665,7 +2749,9 @@
             "age": 59,
             "email": "finn.krokeide@stortinget.no",
             "phone": "97639462", 
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Krokeide_Oppland.png"
           },
           {
             "rank": 3,
@@ -2803,7 +2889,9 @@
             "age": 42,
             "email": "anne.lise.fredlund@sv.no",
             "phone": "97755141",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Fredlund_Oppland.png"
           },
           {
             "rank": 2,
@@ -2907,7 +2995,9 @@
             "age": 28,
             "email": "agnes.viljugrein@gmail.com",
             "phone": null, 
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Viljugrein_Oslo.png"
           },
           {
             "rank": 5,
@@ -2934,7 +3024,9 @@
             "age": 39,
             "email": "Farukh.qureshi@kriminalomsorg.no",
             "phone": "47391608",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Qureshi_Oslo.png"
           },
           {
               "rank": 8,
@@ -3168,7 +3260,9 @@
             "age": 41,
             "email": "sunniva.eidsvoll@oslobystyre.no",
             "phone": "99630600",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Eidsvoll_Oslo.png"
           },
           {
             "rank": 3,
@@ -3252,7 +3346,9 @@
             "age": 22,
             "email": "margit@mdg.no",
             "phone": null, 
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Bye_Oslo.png"
           }
         ]
       }
@@ -3290,7 +3386,9 @@
             "age": 24,
             "email": "julia.eikeland@rogfk.no",
             "phone": "45222049",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Eikeland_Rogaland.png"
           },
           {
             "rank": 4,
@@ -3323,7 +3421,9 @@
             "age": 36,
             "email": "Kristoffer.sivertsen@stavanger.kommune.no",
             "phone": "47602843",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Sivertsen_Rogaland.png"
           },
           {
             "rank": 2,
@@ -3410,7 +3510,9 @@
             "age": 22,
             "email": "sannarana@lyse.net",
             "phone": "47860097",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Rana_Rogaland.png"
           },
           {
             "rank": 5,
@@ -3530,7 +3632,9 @@
             "age": 38,
             "email": "kjartan.lunde@venstre.no",
             "phone": "95709534",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Lunde_Rogaland.png"
           },
           {
             "rank": 2,
@@ -3616,7 +3720,9 @@
             "age": 28,
             "email": "stig-even.lillestol@fpu.no",
             "phone": null, 
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Lillestøl_SognogFjordane.png"
           },
           {
             "rank": 2,
@@ -3739,7 +3845,9 @@
             "age": 35,
             "email": "arhe@stortinget.no",
             "phone": "91134842",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Heen_SognogFjordane.png"
           }
         ]
       },
@@ -3787,7 +3895,9 @@
             "age": 51,
             "email": "gunhildalis18@gmail.com",
             "phone": "976 53 785", 
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Stang_SognogFjordane.png"
           }
         ]
       },
@@ -3840,7 +3950,9 @@
             "age": 49,
             "email": "anniken.refseth@styrke.no",
             "phone": "91653736",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Refseth_SørTrøndelag.png"
           },
           {
             "rank": 3,
@@ -3882,7 +3994,9 @@
             "age": 51,
             "email": "lillsa@trondelagfylke.no",
             "phone": "91644419",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Sandaune_SørTrøndelag.png"
           },
           {
             "rank": 2,
@@ -3924,7 +4038,9 @@
             "age": 44,
             "email": "henki@trondelagfylke.no",
             "phone": "41215444",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Kjerulf_SørTrøndelag.png"
           },
           {
             "rank": 3,
@@ -4053,7 +4169,9 @@
             "age": 26,
             "email": "lars.brandsas@venstre.no",
             "phone": "48207631",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Brandsås_SørTrøndelag.png"
           },
           {
             "rank": 2,
@@ -4148,7 +4266,9 @@
             "age": 32,
             "email": "linemhaugen93@outlook.com",
             "phone": "94896793",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Haugen_Telemark.png"
           },
           {
             "rank": 3,
@@ -4181,7 +4301,9 @@
             "age": 37,
             "email": "Helene.rosholt@hotmail.com",
             "phone": "99777117",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Røsholt_Telemark.png"
           },
           {
             "rank": 3,
@@ -4277,7 +4399,9 @@
             "age": 26,
             "email": "vildebergnilsen@gmail.com",
             "phone": "95490065",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Berg-Nilsen_Telemark.png"
           },
           {
             "rank": 2,
@@ -4372,7 +4496,9 @@
             "age": 43,
             "email": "tom.einar.karlsen@stortinget.no",
             "phone": null, 
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Karlsen_Troms.png"
           },
           {
             "rank": 4,
@@ -4405,7 +4531,9 @@
             "age": 30,
             "email": "kristian.eilertsen@tromsfylke.no",
             "phone": "90214524",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Eilertsen_Troms.png"
           },
           {
             "rank": 3,
@@ -4486,7 +4614,9 @@
             "age": 53,
             "email": "hanstenv@online.no",
             "phone": "99331705",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Stenvaag_Troms.png"
           },
           {
             "rank": 2,
@@ -4534,7 +4664,9 @@
             "age": 53,
             "email": "pal.julius.skogholt@tromso.kommune.no",
             "phone": "97077457",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Skogholt_Troms.png"
           },
           {
             "rank": 2,
@@ -4611,7 +4743,9 @@
             "age": 30,
             "email": "kai.steffen.ostensen@politiker.agderfk.no",
             "phone": "45414793",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Østensen_VestAgder.png"
           },
           {
             "rank": 2,
@@ -4644,7 +4778,9 @@
             "age": 51,
             "email": "alferik.andersen@gmail.com",
             "phone": "90516610",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Andersen_VestAgder.png"
           },
           {
             "rank": 2,
@@ -4677,7 +4813,9 @@
             "age": 28,
             "email": "a-gunnuf@hotmail.com",
             "phone": "99566610",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Gunnufsen_VestAgder.png"
           },
           {
             "rank": 2,
@@ -4686,7 +4824,9 @@
             "age": 54,
             "email": "hannahte@online.no",
             "phone": "91192792",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Teigland_VestAgder.png"
           },
           {
             "rank": 3,
@@ -4877,7 +5017,9 @@
             "age": 26,
             "email": "eivind.yrjan.stamnes@tonsberg.kommune.no",
             "phone": "41231941",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Stamnes_Vestfold.png"
           }
         ]
       },
@@ -4901,7 +5043,9 @@
             "age": 32,
             "email": "b.svendsrud@vestfoldfylke.no",
             "phone": "97665324", 
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Svendsrud_Vestfold.png"
           },
           {
             "rank": 3,
@@ -4934,7 +5078,9 @@
             "age": 27,
             "email": "mathias.willassen.hanssen@stortinget.no",
             "phone": "46807928",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Hanssen_Vestfold.png"
           },
           {
             "rank": 3,
@@ -4982,7 +5128,9 @@
             "age": 36,
             "email": "maren.njos.kurdol@stortinget.no",
             "phone": "95824866",
-            "hasRealisticChance": false
+            "hasRealisticChance": false,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Kurdøl_Vestfold.png"
           },
           {
             "rank": 2,
@@ -5125,7 +5273,9 @@
             "age": 20,
             "email": "hasabd@fredrikstad.kommune.no",
             "phone": "41788341",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Abdi_Østfold.png"
           },
           {
             "rank": 4,
@@ -5176,7 +5326,9 @@
             "age": 33,
             "email": "julia.nordtug@sarpsborg.com",
             "phone": "46428102",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Nordtug_Østfold.png"
           },
           {
             "rank": 4,
@@ -5218,7 +5370,9 @@
             "age": 51,
             "email": "elin.ileby@nakstad.no",
             "phone": "99603824",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Nakstad_Østfold.png"
           },
           {
             "rank": 3,
@@ -5323,7 +5477,9 @@
             "age": 48,
             "email": "aase.hei@online.no",
             "phone": "93433406",
-            "hasRealisticChance": true
+            "hasRealisticChance": true,
+            "isFeatured": true,
+    "imageUrl": "images/candidates/Heien_Østfold.png"
           },
           {
             "rank": 2,
