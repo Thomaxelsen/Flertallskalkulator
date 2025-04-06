@@ -1,57 +1,47 @@
-// js/candidates.js (Version 3 - Med mandater per valgkrets)
+// js/candidates.js (Version 5 - Med veksling mellom standard- og bildekortvisning)
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("Candidates JS: DOM loaded.");
+    console.log("Candidates JS v5: DOM loaded.");
 
-    // Globale variabler for data og tilstand
-    let allCandidatesData = [];
-    let partiesMap = {}; // { shorthand: { name, color, classPrefix, ... } }
-    let constituenciesList = [];
-
-    // *** NYTT: Oppslag for mandater per valgkrets (basert på image_f51c1f.png) ***
-    const constituencyMandates = {
-        "Østfold": 9,
-        "Akershus": 20,
-        "Oslo": 20,
-        "Hedmark": 7,
-        "Oppland": 6,
-        "Buskerud": 8,
-        "Vestfold": 7,
-        "Telemark": 6,
-        "Aust-Agder": 4,
-        "Vest-Agder": 6,
-        "Rogaland": 14,
-        "Hordaland": 16,
-        "Sogn og Fjordane": 4,
-        "Møre og Romsdal": 8,
-        "Sør-Trøndelag": 10,
-        "Nord-Trøndelag": 5,
-        "Nordland": 9, // Fra bildet
-        "Troms": 6,   // Fra bildet
-        "Finnmark": 4 // Fra bildet
-        // Legg til flere her hvis 'candidates.json' inneholder flere/andre navn
+    // Globale variabler
+    let allConstituencyData = [];
+    let partiesMap = {};
+    const constituencyMandates = { // Beholdt fra forrige versjon
+        "Østfold": 9, "Akershus": 20, "Oslo": 20, "Hedmark": 7, "Oppland": 6,
+        "Buskerud": 8, "Vestfold": 7, "Telemark": 6, "Aust-Agder": 4, "Vest-Agder": 6,
+        "Rogaland": 14, "Hordaland": 16, "Sogn og Fjordane": 4, "Møre og Romsdal": 8,
+        "Sør-Trøndelag": 10, "Nord-Trøndelag": 5, "Nordland": 9, "Troms": 6, "Finnmark": 4
     };
-    // *** SLUTT PÅ NYTT OBJEKT ***
-
 
     // DOM-element referanser
     const constituencyFilter = document.getElementById('constituency-filter');
     const partyFilter = document.getElementById('party-filter');
     const realisticChanceFilter = document.getElementById('realistic-chance-filter');
     const nameSearch = document.getElementById('name-search');
-    const candidateGrid = document.getElementById('candidate-grid');
     const candidateCount = document.getElementById('candidate-count');
-    const loader = candidateGrid ? candidateGrid.querySelector('.loader') : null;
 
-    // --- Datainnlasting (uendret) ---
+    // --- NYE/OPPDATERTE Referanser ---
+    const featuredToggle = document.getElementById('featured-toggle'); // Den nye checkboxen
+
+    const regularViewContainer = document.getElementById('regular-candidates-view');
+    const candidateGrid = document.getElementById('candidate-grid'); // Standard grid
+    const loaderRegular = candidateGrid ? candidateGrid.querySelector('.loader') : null;
+
+    const featuredViewContainer = document.getElementById('featured-candidates-view');
+    const featuredGrid = document.getElementById('featured-candidates-grid'); // Ny grid for bildekort
+    const loaderFeatured = featuredGrid ? featuredGrid.querySelector('.loader') : null;
+    // --- Slutt nye/oppdaterte referanser ---
+
+    const modal = document.getElementById('candidate-detail-modal');
+    const closeBtn = document.getElementById('close-candidate-modal');
+    const modalContent = document.getElementById('candidate-detail-content');
+
+
+    // --- Datainnlasting (lik forrige versjon) ---
     function loadData() {
         console.log("Candidates JS: Loading data...");
-        if (!loader) {
-            console.error("Candidates JS: Loader element not found.");
-            candidateGrid.innerHTML = '<p class="error">Kritisk feil: Kan ikke vise lasteindikator.</p>';
-            return;
-        }
-        loader.style.display = 'block';
+        if (loaderRegular) loaderRegular.style.display = 'block';
+        if (loaderFeatured) loaderFeatured.style.display = 'block'; // Vis begge loadere
 
         Promise.all([
             fetch('data/candidates.json')
@@ -60,9 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 ? Promise.resolve(window.partiesData)
                 : fetch('data/parties.json').then(response => response.ok ? response.json() : Promise.reject('Failed to load parties.json'))
         ])
-        .then(([candidates, parties]) => {
+        .then(([candidatesConstituencies, parties]) => {
             console.log("Candidates JS: Data fetched successfully.");
-            allCandidatesData = candidates;
+            allConstituencyData = candidatesConstituencies;
 
             if (Object.keys(partiesMap).length === 0) {
                 parties.forEach(p => { partiesMap[p.shorthand] = p; });
@@ -73,35 +63,38 @@ document.addEventListener('DOMContentLoaded', () => {
                  console.log("Candidates JS: Using pre-loaded partiesMap.");
             }
 
-            if (!Array.isArray(allCandidatesData)) {
-                throw new Error("Candidates data is not an array.");
+            if (!Array.isArray(allConstituencyData)) {
+                throw new Error("Candidates constituency data is not an array.");
             }
 
-            const constituencyNames = [...new Set(allCandidatesData.map(c => c.constituencyName))].sort();
-            const uniquePartyShorthands = [...new Set(allCandidatesData.flatMap(c => c.parties.map(p => p.partyShorthand)))];
-             const partiesInCandidates = uniquePartyShorthands
+            const allConstituencyNames = [...new Set(allConstituencyData.map(c => c.constituencyName))].sort();
+            const allUniquePartyShorthands = [...new Set(allConstituencyData.flatMap(c => c.parties.map(p => p.partyShorthand)))];
+             const partiesInCandidates = allUniquePartyShorthands
                 .map(sh => partiesMap[sh])
                 .filter(Boolean)
                 .sort((a, b) => (a.position || 99) - (b.position || 99));
 
-            populateConstituencyFilter(constituencyNames);
+            populateConstituencyFilter(allConstituencyNames);
             populatePartyFilter(partiesInCandidates);
             setupEventListeners();
-            filterAndDisplayCandidates();
+            handleFilteringAndDisplay(); // Kall hovedfunksjonen ved start
         })
         .catch(error => {
             console.error("Candidates JS: Error loading data:", error);
-            if (candidateGrid) {
-                 candidateGrid.innerHTML = `<p class="error">Kunne ikke laste kandidatdata: ${error.message}. Prøv å laste siden på nytt.</p>`;
-            }
+            const errorMsg = `<p class="error">Kunne ikke laste kandidatdata: ${error.message}. Prøv å laste siden på nytt.</p>`;
+            if (candidateGrid) candidateGrid.innerHTML = errorMsg;
+            if (featuredGrid) featuredGrid.innerHTML = errorMsg;
+            if (featuredViewContainer) featuredViewContainer.style.display = 'none'; // Skjul ved feil
+            if (regularViewContainer) regularViewContainer.style.display = 'block'; // Vis standard (med feilmelding)
         })
         .finally(() => {
              setTimeout(() => {
-                if(loader) loader.style.display = 'none';
-            }, 100);
+                if(loaderRegular) loaderRegular.style.display = 'none';
+                if(loaderFeatured) loaderFeatured.style.display = 'none';
+            }, 150);
         });
     }
-     // Vent på partidata (uendret)
+     // Vent på partidata (som før)
      if (window.partiesDataLoaded) {
          partiesMap = {};
          window.partiesData.forEach(p => { partiesMap[p.shorthand] = p; });
@@ -128,6 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Populate Filters (uendret) ---
     function populateConstituencyFilter(constituencies) { /* ... uendret ... */
         if (!constituencyFilter) return;
+        constituencyFilter.querySelectorAll('option:not([value="all"])').forEach(o => o.remove());
         constituencies.forEach(name => {
             const option = document.createElement('option');
             option.value = name;
@@ -146,16 +140,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
      }
 
-    // --- Event Listeners (uendret) ---
-    function setupEventListeners() { /* ... uendret ... */
-        constituencyFilter?.addEventListener('change', filterAndDisplayCandidates);
-        partyFilter?.addEventListener('change', filterAndDisplayCandidates);
-        realisticChanceFilter?.addEventListener('change', filterAndDisplayCandidates);
-        nameSearch?.addEventListener('input', debounce(filterAndDisplayCandidates, 300));
+    // --- Event Listeners (Oppdatert) ---
+    function setupEventListeners() {
+        // Eksisterende filtre kaller nå hovedfunksjonen
+        constituencyFilter?.addEventListener('change', handleFilteringAndDisplay);
+        partyFilter?.addEventListener('change', handleFilteringAndDisplay);
+        realisticChanceFilter?.addEventListener('change', handleFilteringAndDisplay);
+        nameSearch?.addEventListener('input', debounce(handleFilteringAndDisplay, 300));
 
-        candidateGrid.addEventListener('click', (event) => {
-             const card = event.target.closest('.candidate-card[data-candidate-info]');
-             if (card) {
+        // --- NY: Listener for den nye checkboxen ---
+        featuredToggle?.addEventListener('change', handleFilteringAndDisplay);
+        // --- SLUTT NY ---
+
+        // Felles event listener for detaljmodal (som før)
+        document.body.addEventListener('click', (event) => {
+             const card = event.target.closest('.candidate-card[data-candidate-info], .featured-candidate-card[data-candidate-info]');
+             if (card && modal && modalContent) {
                  try {
                      const info = JSON.parse(card.dataset.candidateInfo);
                      const partyInfo = JSON.parse(card.dataset.partyInfo);
@@ -164,23 +164,33 @@ document.addEventListener('DOMContentLoaded', () => {
              }
          });
 
-         const modal = document.getElementById('candidate-detail-modal');
-         const closeBtn = document.getElementById('close-candidate-modal');
-         closeBtn?.addEventListener('click', () => modal.style.display = 'none');
+         // Lukkeknapp modal (som før)
+         closeBtn?.addEventListener('click', () => { if (modal) modal.style.display = 'none'; });
          modal?.addEventListener('click', (event) => { if (event.target === modal) modal.style.display = 'none'; });
     }
 
-    // --- Filtering Logic (uendret) ---
-    function filterAndDisplayCandidates() { /* ... uendret ... */
-        if (!candidateGrid) return;
-        console.log("Candidates JS: Filtering candidates...");
+    // --- Hovedfunksjon for filtrering og visning (Oppdatert) ---
+    function handleFilteringAndDisplay() {
+        // Sjekk om nødvendige elementer finnes
+        if (!regularViewContainer || !featuredViewContainer || !candidateGrid || !featuredGrid) {
+             console.error("Error: One or more view containers or grids are missing.");
+             return;
+        }
+        console.log("Candidates JS: Handling filtering and display...");
+
+        // Hent filterverdier
         const selectedConstituency = constituencyFilter?.value || 'all';
         const selectedParty = partyFilter?.value || 'all';
         const showOnlyRealistic = realisticChanceFilter?.checked || false;
         const searchTerm = nameSearch?.value.toLowerCase().trim() || '';
+        const showOnlyFeatured = featuredToggle?.checked || false; // Les av den nye checkboxen
 
-        let filteredCandidates = [];
-        allCandidatesData.forEach(constituency => {
+        console.log(`Filters - Constituency: ${selectedConstituency}, Party: ${selectedParty}, Realistic: ${showOnlyRealistic}, Featured: ${showOnlyFeatured}, Search: "${searchTerm}"`);
+
+        let allMatchingCandidates = [];
+
+        // Filtrer kandidater basert på valgrets, parti, sjanse og søk (som før)
+        allConstituencyData.forEach(constituency => {
             if (selectedConstituency === 'all' || constituency.constituencyName === selectedConstituency) {
                 constituency.parties.forEach(party => {
                     if (selectedParty === 'all' || party.partyShorthand === selectedParty) {
@@ -188,8 +198,14 @@ document.addEventListener('DOMContentLoaded', () => {
                             let include = true;
                             if (showOnlyRealistic && !candidate.hasRealisticChance) include = false;
                             if (searchTerm && !candidate.name.toLowerCase().includes(searchTerm)) include = false;
+
                             if (include) {
-                                filteredCandidates.push({ ...candidate, constituencyName: constituency.constituencyName, partyShorthand: party.partyShorthand, partyName: party.partyName });
+                                allMatchingCandidates.push({
+                                    ...candidate,
+                                    constituencyName: constituency.constituencyName,
+                                    partyShorthand: party.partyShorthand,
+                                    partyName: party.partyName
+                                });
                             }
                         });
                     }
@@ -197,7 +213,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        filteredCandidates.sort((a, b) => {
+         // Sorter *alle* matchende kandidater FØR vi evt. deler dem opp
+         allMatchingCandidates.sort((a, b) => {
              if (a.constituencyName !== b.constituencyName) return a.constituencyName.localeCompare(b.constituencyName);
              const partyAInfo = partiesMap[a.partyShorthand] || { position: 99 };
              const partyBInfo = partiesMap[b.partyShorthand] || { position: 99 };
@@ -205,57 +222,111 @@ document.addEventListener('DOMContentLoaded', () => {
              return a.rank - b.rank;
          });
 
-        displayCandidates(filteredCandidates);
+
+        // --- NY LOGIKK: Velg visning basert på toggle ---
+        if (showOnlyFeatured) {
+            console.log("Displaying featured candidates view.");
+            // Filtrer ut KUN de utvalgte fra de som allerede matchet filtrene
+            const featuredCandidatesToShow = allMatchingCandidates.filter(c => c.isFeatured === true);
+
+            displayFeaturedCandidates(featuredCandidatesToShow); // Vis bildekortene
+            regularViewContainer.style.display = 'none'; // Skjul standardvisning
+            featuredViewContainer.style.display = 'block'; // Vis utvalgt-visning
+            if (candidateCount) candidateCount.textContent = featuredCandidatesToShow.length; // Oppdater teller
+
+        } else {
+            console.log("Displaying regular candidates view.");
+            // Vis ALLE som matchet filtrene i standardvisningen
+            displayRegularCandidates(allMatchingCandidates); // Vis standardkortene
+            featuredViewContainer.style.display = 'none'; // Skjul utvalgt-visning
+            regularViewContainer.style.display = 'block'; // Vis standardvisning
+            if (candidateCount) candidateCount.textContent = allMatchingCandidates.length; // Oppdater teller
+        }
+        // --- SLUTT PÅ NY LOGIKK ---
     }
 
-    // --- Display Logic (MODIFISERT med mandattall i separator) ---
-    function displayCandidates(candidates) {
+    // --- Visningslogikk for UTVALGTE kandidater (Oppdatert) ---
+    function displayFeaturedCandidates(featuredCandidates) {
+        if (!featuredGrid) return;
+        featuredGrid.innerHTML = ''; // Tøm
+
+        if (featuredCandidates.length === 0) {
+            featuredGrid.innerHTML = '<p class="no-results">Ingen utvalgte kandidater funnet med de valgte filtrene.</p>';
+            return;
+        }
+
+        featuredCandidates.forEach(candidate => {
+            const partyInfo = partiesMap[candidate.partyShorthand];
+            if (partyInfo) {
+                // Bruker den nye funksjonen for å lage bildekort
+                const card = createFeaturedImageCard(candidate, partyInfo);
+                featuredGrid.appendChild(card);
+            } else {
+                console.warn(`Skipping featured candidate ${candidate.name} - party info missing for ${candidate.partyShorthand}`);
+            }
+        });
+         console.log(`Candidates JS: Displayed ${featuredCandidates.length} featured candidates.`);
+    }
+
+    // --- NY: Lag kort for UTVALGTE kandidater (som viser bildet) ---
+    function createFeaturedImageCard(candidate, partyInfo) {
+        const card = document.createElement('div');
+        // Bruk en generell klasse + evt. partiklasse
+        card.className = `featured-candidate-card party-${partyInfo.classPrefix || partyInfo.shorthand.toLowerCase()}`;
+        card.dataset.candidateInfo = JSON.stringify(candidate); // Viktig for modal
+        card.dataset.partyInfo = JSON.stringify(partyInfo);     // Viktig for modal
+
+        // Selve innholdet er kun bildet (eller placeholder)
+        card.innerHTML = `
+            ${candidate.imageUrl
+                ? `<img src="${candidate.imageUrl}" alt="Utvalgt kandidat: ${candidate.name}" loading="lazy">` // Bruk lazy loading
+                : '<div class="image-placeholder">Bilde mangler</div>'
+            }
+        `;
+        // Legg til tittel-attributt for tilgjengelighet/info ved hover
+        card.title = `${candidate.name} (${partyInfo.name}) - Klikk for detaljer`;
+
+        return card;
+    }
+
+
+    // --- Visningslogikk for REGULÆRE/ALLE kandidater (lik forrige versjon) ---
+    function displayRegularCandidates(candidates) {
         if (!candidateGrid) return;
         candidateGrid.innerHTML = ''; // Tøm
 
         if (candidates.length === 0) {
             candidateGrid.innerHTML = '<p class="no-results">Ingen kandidater funnet med de valgte filtrene.</p>';
-            if (candidateCount) candidateCount.textContent = '0';
             return;
         }
 
-        if (candidateCount) candidateCount.textContent = candidates.length;
-
         let currentConstituency = null;
-
         candidates.forEach(candidate => {
             const partyInfo = partiesMap[candidate.partyShorthand];
             if (!partyInfo) {
-                 console.warn(`Skipping candidate card for ${candidate.name} because party info for ${candidate.partyShorthand} is missing.`);
+                 console.warn(`Skipping regular candidate card for ${candidate.name} - party info missing for ${candidate.partyShorthand}`);
                  return;
             }
-
-            // Sjekk om valgkretsen har endret seg
             if (candidate.constituencyName !== currentConstituency) {
                 const separator = document.createElement('div');
                 separator.className = 'constituency-separator';
-
-                // *** NYTT: Hent mandattall og legg til i teksten ***
                 const mandateCount = constituencyMandates[candidate.constituencyName];
                 const mandateText = typeof mandateCount === 'number' ? `(${mandateCount} mandater)` : '(mandattall ukjent)';
                 separator.innerHTML = `
                     <span class="constituency-name">${candidate.constituencyName}</span>
                     <span class="mandate-count">${mandateText}</span>
                 `;
-                // *** SLUTT PÅ NYTT INNHOLD ***
-
                 candidateGrid.appendChild(separator);
                 currentConstituency = candidate.constituencyName;
             }
-
             const card = createCandidateCard(candidate, partyInfo);
             candidateGrid.appendChild(card);
         });
-         console.log(`Candidates JS: Displayed ${candidates.length} candidates with separators.`);
+         console.log(`Candidates JS: Displayed ${candidates.length} total candidates in regular grid.`);
     }
 
-    // --- Card Creation (uendret fra forrige versjon) ---
-    function createCandidateCard(candidate, partyInfo) { /* ... uendret ... */
+    // --- Lag standard kandidatkort (uendret) ---
+    function createCandidateCard(candidate, partyInfo) {
         const card = document.createElement('div');
         card.className = `candidate-card party-${partyInfo.classPrefix || partyInfo.shorthand.toLowerCase()}`;
         if (candidate.hasRealisticChance) {
@@ -290,17 +361,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return card;
     }
 
-   // --- Modal for Candidate Details (KORRIGERT VERSJON) ---
+   // --- Modal for Candidate Details (Oppdatert for å håndtere manglende extraInfoPoints) ---
      function showCandidateDetails(candidate, partyInfo) {
-         const modal = document.getElementById('candidate-detail-modal');
-         const content = document.getElementById('candidate-detail-content');
-         if (!modal || !content) {
+         if (!modal || !modalContent) {
               console.error("Modal or modal content not found!");
               return;
          }
-
-         // Bygg HTML-innholdet for modalen
-         content.innerHTML = `
+         // Fjerner logikk for extraInfoPoints siden de er i bildet
+         modalContent.innerHTML = `
              <h3>
                  <div class="party-icon icon-${partyInfo.classPrefix || 'default'}" style="background-color: ${partyInfo.color || '#ccc'}">
                      ${candidate.partyShorthand?.charAt(0) || '?'}
@@ -317,13 +385,11 @@ document.addEventListener('DOMContentLoaded', () => {
               ${candidate.phone ? `<p><strong>Telefon:</strong> <a href="tel:${candidate.phone}">${candidate.phone}</a></p>` : ''}
              <p style="font-size: 0.8em; color: #777; margin-top: 15px;">Husk personvern ved bruk av kontaktinformasjon.</p>
          `;
-
-         modal.style.display = 'block'; // Viser modalen
-         // modal.classList.add('active'); // Alternativ hvis du bruker 'active' klasse for å vise
+         modal.style.display = 'block';
      }
 
-    // --- Helper Functions (uendret) ---
-    function debounce(func, wait) { /* ... uendret ... */
+    // --- Debounce Hjelpefunksjon (uendret) ---
+    function debounce(func, wait) {
         let timeout;
         return function executedFunction(...args) {
             const later = () => { clearTimeout(timeout); func(...args); };
