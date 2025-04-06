@@ -1,12 +1,12 @@
-// js/candidates.js (Version 5 - Med veksling mellom standard- og bildekortvisning)
+// js/candidates.js (Version 6 - Bruker rullemeny for visningsmodus)
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("Candidates JS v5: DOM loaded.");
+    console.log("Candidates JS v6: DOM loaded.");
 
-    // Globale variabler
+    // Globale variabler (uendret)
     let allConstituencyData = [];
     let partiesMap = {};
-    const constituencyMandates = { // Beholdt fra forrige versjon
+    const constituencyMandates = {
         "Østfold": 9, "Akershus": 20, "Oslo": 20, "Hedmark": 7, "Oppland": 6,
         "Buskerud": 8, "Vestfold": 7, "Telemark": 6, "Aust-Agder": 4, "Vest-Agder": 6,
         "Rogaland": 14, "Hordaland": 16, "Sogn og Fjordane": 4, "Møre og Romsdal": 8,
@@ -20,28 +20,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const nameSearch = document.getElementById('name-search');
     const candidateCount = document.getElementById('candidate-count');
 
-    // --- NYE/OPPDATERTE Referanser ---
-    const featuredToggle = document.getElementById('featured-toggle'); // Den nye checkboxen
+    // --- NY: Referanse til rullemeny for visningsmodus ---
+    const viewModeSelect = document.getElementById('view-mode-select');
+    // --- SLUTT NY ---
 
     const regularViewContainer = document.getElementById('regular-candidates-view');
-    const candidateGrid = document.getElementById('candidate-grid'); // Standard grid
+    const candidateGrid = document.getElementById('candidate-grid');
     const loaderRegular = candidateGrid ? candidateGrid.querySelector('.loader') : null;
 
     const featuredViewContainer = document.getElementById('featured-candidates-view');
-    const featuredGrid = document.getElementById('featured-candidates-grid'); // Ny grid for bildekort
+    const featuredGrid = document.getElementById('featured-candidates-grid');
     const loaderFeatured = featuredGrid ? featuredGrid.querySelector('.loader') : null;
-    // --- Slutt nye/oppdaterte referanser ---
 
     const modal = document.getElementById('candidate-detail-modal');
     const closeBtn = document.getElementById('close-candidate-modal');
     const modalContent = document.getElementById('candidate-detail-content');
 
 
-    // --- Datainnlasting (lik forrige versjon) ---
+    // --- Datainnlasting (uendret fra v5) ---
     function loadData() {
         console.log("Candidates JS: Loading data...");
         if (loaderRegular) loaderRegular.style.display = 'block';
-        if (loaderFeatured) loaderFeatured.style.display = 'block'; // Vis begge loadere
+        if (loaderFeatured) loaderFeatured.style.display = 'block';
 
         Promise.all([
             fetch('data/candidates.json')
@@ -77,15 +77,15 @@ document.addEventListener('DOMContentLoaded', () => {
             populateConstituencyFilter(allConstituencyNames);
             populatePartyFilter(partiesInCandidates);
             setupEventListeners();
-            handleFilteringAndDisplay(); // Kall hovedfunksjonen ved start
+            handleFilteringAndDisplay();
         })
         .catch(error => {
             console.error("Candidates JS: Error loading data:", error);
             const errorMsg = `<p class="error">Kunne ikke laste kandidatdata: ${error.message}. Prøv å laste siden på nytt.</p>`;
             if (candidateGrid) candidateGrid.innerHTML = errorMsg;
             if (featuredGrid) featuredGrid.innerHTML = errorMsg;
-            if (featuredViewContainer) featuredViewContainer.style.display = 'none'; // Skjul ved feil
-            if (regularViewContainer) regularViewContainer.style.display = 'block'; // Vis standard (med feilmelding)
+            if (featuredViewContainer) featuredViewContainer.style.display = 'none';
+            if (regularViewContainer) regularViewContainer.style.display = 'block';
         })
         .finally(() => {
              setTimeout(() => {
@@ -142,14 +142,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Event Listeners (Oppdatert) ---
     function setupEventListeners() {
-        // Eksisterende filtre kaller nå hovedfunksjonen
+        // Eksisterende filtre
         constituencyFilter?.addEventListener('change', handleFilteringAndDisplay);
         partyFilter?.addEventListener('change', handleFilteringAndDisplay);
         realisticChanceFilter?.addEventListener('change', handleFilteringAndDisplay);
         nameSearch?.addEventListener('input', debounce(handleFilteringAndDisplay, 300));
 
-        // --- NY: Listener for den nye checkboxen ---
-        featuredToggle?.addEventListener('change', handleFilteringAndDisplay);
+        // --- NY: Listener for den nye RULLEMENYEN ---
+        viewModeSelect?.addEventListener('change', handleFilteringAndDisplay);
         // --- SLUTT NY ---
 
         // Felles event listener for detaljmodal (som før)
@@ -171,7 +171,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Hovedfunksjon for filtrering og visning (Oppdatert) ---
     function handleFilteringAndDisplay() {
-        // Sjekk om nødvendige elementer finnes
         if (!regularViewContainer || !featuredViewContainer || !candidateGrid || !featuredGrid) {
              console.error("Error: One or more view containers or grids are missing.");
              return;
@@ -183,13 +182,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedParty = partyFilter?.value || 'all';
         const showOnlyRealistic = realisticChanceFilter?.checked || false;
         const searchTerm = nameSearch?.value.toLowerCase().trim() || '';
-        const showOnlyFeatured = featuredToggle?.checked || false; // Les av den nye checkboxen
+        // --- NY: Les av rullemeny i stedet for checkbox ---
+        const selectedViewMode = viewModeSelect?.value || 'normal'; // Hent verdien ('normal' eller 'featured')
+        // --- SLUTT NY ---
 
-        console.log(`Filters - Constituency: ${selectedConstituency}, Party: ${selectedParty}, Realistic: ${showOnlyRealistic}, Featured: ${showOnlyFeatured}, Search: "${searchTerm}"`);
+        console.log(`Filters - Constituency: ${selectedConstituency}, Party: ${selectedParty}, Realistic: ${showOnlyRealistic}, ViewMode: ${selectedViewMode}, Search: "${searchTerm}"`);
 
         let allMatchingCandidates = [];
 
-        // Filtrer kandidater basert på valgrets, parti, sjanse og søk (som før)
+        // Filtrer kandidater (som før)
         allConstituencyData.forEach(constituency => {
             if (selectedConstituency === 'all' || constituency.constituencyName === selectedConstituency) {
                 constituency.parties.forEach(party => {
@@ -213,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-         // Sorter *alle* matchende kandidater FØR vi evt. deler dem opp
+         // Sorter alle matchende (som før)
          allMatchingCandidates.sort((a, b) => {
              if (a.constituencyName !== b.constituencyName) return a.constituencyName.localeCompare(b.constituencyName);
              const partyAInfo = partiesMap[a.partyShorthand] || { position: 99 };
@@ -223,32 +224,30 @@ document.addEventListener('DOMContentLoaded', () => {
          });
 
 
-        // --- NY LOGIKK: Velg visning basert på toggle ---
-        if (showOnlyFeatured) {
+        // --- OPPDATERT LOGIKK: Velg visning basert på rullemenyens verdi ---
+        if (selectedViewMode === 'featured') { // Sjekk verdien fra rullemenyen
             console.log("Displaying featured candidates view.");
-            // Filtrer ut KUN de utvalgte fra de som allerede matchet filtrene
             const featuredCandidatesToShow = allMatchingCandidates.filter(c => c.isFeatured === true);
 
-            displayFeaturedCandidates(featuredCandidatesToShow); // Vis bildekortene
-            regularViewContainer.style.display = 'none'; // Skjul standardvisning
-            featuredViewContainer.style.display = 'block'; // Vis utvalgt-visning
-            if (candidateCount) candidateCount.textContent = featuredCandidatesToShow.length; // Oppdater teller
+            displayFeaturedCandidates(featuredCandidatesToShow);
+            regularViewContainer.style.display = 'none';
+            featuredViewContainer.style.display = 'block';
+            if (candidateCount) candidateCount.textContent = featuredCandidatesToShow.length;
 
-        } else {
+        } else { // Default er 'normal' visning
             console.log("Displaying regular candidates view.");
-            // Vis ALLE som matchet filtrene i standardvisningen
-            displayRegularCandidates(allMatchingCandidates); // Vis standardkortene
-            featuredViewContainer.style.display = 'none'; // Skjul utvalgt-visning
-            regularViewContainer.style.display = 'block'; // Vis standardvisning
-            if (candidateCount) candidateCount.textContent = allMatchingCandidates.length; // Oppdater teller
+            displayRegularCandidates(allMatchingCandidates);
+            featuredViewContainer.style.display = 'none';
+            regularViewContainer.style.display = 'block';
+            if (candidateCount) candidateCount.textContent = allMatchingCandidates.length;
         }
-        // --- SLUTT PÅ NY LOGIKK ---
+        // --- SLUTT PÅ OPPDATERT LOGIKK ---
     }
 
-    // --- Visningslogikk for UTVALGTE kandidater (Oppdatert) ---
+    // --- Visningslogikk for UTVALGTE kandidater (uendret fra v5) ---
     function displayFeaturedCandidates(featuredCandidates) {
         if (!featuredGrid) return;
-        featuredGrid.innerHTML = ''; // Tøm
+        featuredGrid.innerHTML = '';
 
         if (featuredCandidates.length === 0) {
             featuredGrid.innerHTML = '<p class="no-results">Ingen utvalgte kandidater funnet med de valgte filtrene.</p>';
@@ -258,7 +257,6 @@ document.addEventListener('DOMContentLoaded', () => {
         featuredCandidates.forEach(candidate => {
             const partyInfo = partiesMap[candidate.partyShorthand];
             if (partyInfo) {
-                // Bruker den nye funksjonen for å lage bildekort
                 const card = createFeaturedImageCard(candidate, partyInfo);
                 featuredGrid.appendChild(card);
             } else {
@@ -268,32 +266,26 @@ document.addEventListener('DOMContentLoaded', () => {
          console.log(`Candidates JS: Displayed ${featuredCandidates.length} featured candidates.`);
     }
 
-    // --- NY: Lag kort for UTVALGTE kandidater (som viser bildet) ---
+    // --- Lag kort for UTVALGTE kandidater (bildekort - uendret fra v5) ---
     function createFeaturedImageCard(candidate, partyInfo) {
         const card = document.createElement('div');
-        // Bruk en generell klasse + evt. partiklasse
         card.className = `featured-candidate-card party-${partyInfo.classPrefix || partyInfo.shorthand.toLowerCase()}`;
-        card.dataset.candidateInfo = JSON.stringify(candidate); // Viktig for modal
-        card.dataset.partyInfo = JSON.stringify(partyInfo);     // Viktig for modal
-
-        // Selve innholdet er kun bildet (eller placeholder)
+        card.dataset.candidateInfo = JSON.stringify(candidate);
+        card.dataset.partyInfo = JSON.stringify(partyInfo);
         card.innerHTML = `
             ${candidate.imageUrl
-                ? `<img src="${candidate.imageUrl}" alt="Utvalgt kandidat: ${candidate.name}" loading="lazy">` // Bruk lazy loading
+                ? `<img src="${candidate.imageUrl}" alt="Utvalgt kandidat: ${candidate.name}" loading="lazy">`
                 : '<div class="image-placeholder">Bilde mangler</div>'
             }
         `;
-        // Legg til tittel-attributt for tilgjengelighet/info ved hover
         card.title = `${candidate.name} (${partyInfo.name}) - Klikk for detaljer`;
-
         return card;
     }
 
-
-    // --- Visningslogikk for REGULÆRE/ALLE kandidater (lik forrige versjon) ---
+    // --- Visningslogikk for REGULÆRE/ALLE kandidater (uendret fra v5) ---
     function displayRegularCandidates(candidates) {
         if (!candidateGrid) return;
-        candidateGrid.innerHTML = ''; // Tøm
+        candidateGrid.innerHTML = '';
 
         if (candidates.length === 0) {
             candidateGrid.innerHTML = '<p class="no-results">Ingen kandidater funnet med de valgte filtrene.</p>';
@@ -325,7 +317,7 @@ document.addEventListener('DOMContentLoaded', () => {
          console.log(`Candidates JS: Displayed ${candidates.length} total candidates in regular grid.`);
     }
 
-    // --- Lag standard kandidatkort (uendret) ---
+    // --- Lag standard kandidatkort (uendret fra v5) ---
     function createCandidateCard(candidate, partyInfo) {
         const card = document.createElement('div');
         card.className = `candidate-card party-${partyInfo.classPrefix || partyInfo.shorthand.toLowerCase()}`;
@@ -361,13 +353,12 @@ document.addEventListener('DOMContentLoaded', () => {
         return card;
     }
 
-   // --- Modal for Candidate Details (Oppdatert for å håndtere manglende extraInfoPoints) ---
+   // --- Modal for Candidate Details (uendret fra v5) ---
      function showCandidateDetails(candidate, partyInfo) {
          if (!modal || !modalContent) {
               console.error("Modal or modal content not found!");
               return;
          }
-         // Fjerner logikk for extraInfoPoints siden de er i bildet
          modalContent.innerHTML = `
              <h3>
                  <div class="party-icon icon-${partyInfo.classPrefix || 'default'}" style="background-color: ${partyInfo.color || '#ccc'}">
