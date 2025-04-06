@@ -38,6 +38,14 @@
         </header>
 
         <div class="candidate-filters">
+
+            <div class="filter-group">
+                <label for="view-mode-select">Visningsmodus:</label>
+                <select id="view-mode-select" class="filter-dropdown">
+                    <option value="normal" selected>Normal visning</option>
+                    <option value="featured">Kun utvalgte kandidater</option>
+                </select>
+            </div>
             <div class="filter-group">
                 <label for="constituency-filter">Velg Valgkrets:</label>
                 <select id="constituency-filter" class="filter-dropdown">
@@ -56,13 +64,6 @@
                     <span>Vis kun kandidater med realistisk sjanse</span>
                 </label>
             </div>
-
-            <div class="filter-group toggle-group">
-                <label for="featured-toggle" class="toggle-label">
-                    <input type="checkbox" id="featured-toggle">
-                    <span>Vis kun utvalgte kandidater</span>
-                </label>
-            </div>
             <div class="filter-group search-group">
                  <label for="name-search">Søk på navn:</label>
                  <input type="text" id="name-search" placeholder="Skriv inn navn..." class="search-input">
@@ -76,20 +77,24 @@
              <div id="featured-candidates-grid" class="featured-candidates-grid">
                  <div class="loader">Laster utvalgte kandidater...</div>
              </div>
-             <hr class="section-divider"> </div>
+             <hr class="section-divider">
+        </div>
+
         <div id="regular-candidates-view">
-            <h3>Alle Kandidater</h3> <div id="candidate-grid" class="candidate-grid">
+            <h3>Alle Kandidater</h3>
+            <div id="candidate-grid" class="candidate-grid">
                 <div class="loader">Laster kandidater...</div>
             </div>
         </div>
-        <div id="candidate-detail-modal" class="quote-modal">
+
+         <div id="candidate-detail-modal" class="quote-modal">
              <div class="quote-modal-content">
                  <span class="close-modal" id="close-candidate-modal">×</span>
-                 <div id="candidate-detail-content">
-                     </div>
+                 <div id="candidate-detail-content"></div>
              </div>
          </div>
-         <footer>
+
+        <footer>
             Kandidatdata for Stortingsvalget 2025. Til bruk for informasjonsformål. Vær obs på personvern ved bruk av kontaktinfo.
         </footer>
     </div>
