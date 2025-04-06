@@ -297,3 +297,94 @@
      .constituency-separator:first-child { margin-top: 0; }
     .candidate-card .candidate-name { font-size: 1rem; }
 }
+/* === START: Styling for Utvalgte Kandidater (Bildekort-visning) === */
+
+/* Container for rutenettet med utvalgte kandidater */
+#featured-candidates-grid {
+    display: grid;
+    /* Juster minmax for ønsket størrelse og antall bilder per rad */
+    /* 180px gir ganske små bilder, øk evt. til 200px, 250px etc. */
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px; /* Luft mellom bildene */
+    position: relative; /* For loader */
+    min-height: 150px; /* Høyde mens det laster */
+    margin-top: 20px; /* Luft under H2-tittelen */
+}
+
+/* Laster-spinner spesifikt for featured grid */
+#featured-candidates-grid .loader {
+     position: absolute;
+     top: 50px;
+     left: 50%;
+     transform: translateX(-50%);
+     font-size: 1.1rem;
+     color: #666;
+}
+
+/* Selve bildekortet */
+.featured-candidate-card {
+    display: block; /* Gjør at den tar opp grid-plassen */
+    border-radius: 8px; /* Litt avrundede hjørner */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Skygge */
+    overflow: hidden; /* Viktig for å holde bildet innenfor rundede hjørner */
+    cursor: pointer; /* Indikerer klikkbarhet */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Animasjon for hover */
+    aspect-ratio: 3 / 4; /* Høyde/bredde-forhold - juster f.eks. til 1 / 1 for kvadratisk */
+    background-color: #f0f0f0; /* Bakgrunn hvis bildet mangler */
+    border: 1px solid #ddd; /* Tynn ramme */
+}
+
+/* Hover-effekt for bildekortet */
+.featured-candidate-card:hover {
+    transform: scale(1.04); /* Forstørr bildet litt */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Litt mer skygge */
+}
+
+/* Bildet inni kortet */
+.featured-candidate-card img {
+    display: block; /* Fjerner evt. ekstra bunnmarg */
+    width: 100%; /* Fyll kortets bredde */
+    height: 100%; /* Fyll kortets høyde */
+    object-fit: cover; /* Zoom og beskjær bildet for å fylle, uten forvrengning */
+}
+
+/* Placeholder for manglende bilde */
+.featured-candidate-card .image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: #888;
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* Valgfri: Skillelinje mellom featured og regular view */
+/* Stilen ligger allerede i styles.css, men hvis du vil ha annen margin: */
+/*
+#featured-candidates-view hr.section-divider {
+    margin: 40px 0 30px 0;
+}
+*/
+
+/* Responsivitet for bildekort-grid */
+@media (max-width: 768px) {
+    #featured-candidates-grid {
+        /* Kanskje færre kolonner eller mindre bilder på mobil */
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    #featured-candidates-grid {
+        /* Enda færre/mindre på små skjermer */
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 10px;
+    }
+}
+
+/* === SLUTT: Styling for Utvalgte Kandidater === */
