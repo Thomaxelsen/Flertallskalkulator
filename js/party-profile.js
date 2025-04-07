@@ -1,453 +1,369 @@
-// js/party-profile.js
+// js/party-profile.js (Version 2.2 - Bruker klasser fra candidates.css for grid)
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("Party Profile: DOM loaded. Waiting for data...");
+    console.log("Party Profile v2.2: DOM loaded. Waiting for data..."); // Oppdatert versjonsnummer
 
-    // Globale variabler for å holde data
+    // Globale variabler
     let issuesData = [];
     let partiesData = [];
-    let partiesMap = {}; // Map for raskt oppslag <shorthand, partyObject>
+    let candidatesData = [];
+    let partiesMap = {};
+    let candidatesMapByParty = {};
+    let constituencyMandates = {};
+    let allConstituencyNames = [];
 
-    // Flagg for å vite når data er klar
+    // Flagg for datastatus
     let issuesReady = false;
     let partiesReady = false;
+    let candidatesReady = false;
+
+    // Referanser til DOM-elementer
+    const profileContentGrid = document.getElementById('profile-content');
+    const partySelect = document.getElementById('party-select');
+    const placeholderDiv = document.querySelector('.profile-placeholder');
+    const issuesBoxContent = document.getElementById('profile-issues-content');
+    const candidatesBox = document.querySelector('.box-candidates');
+    const candidatesBoxContent = candidatesBox?.querySelector('.profile-inner-content');
+    const stanceChartBoxContent = document.getElementById('profile-stance-chart-content');
+    const areaChartBoxContent = document.getElementById('profile-area-chart-content');
+    const candidateViewModeSelect = document.getElementById('candidate-view-mode-select');
+    const candidateConstituencyFilter = document.getElementById('candidate-constituency-filter');
+    const candidateCountSpan = document.getElementById('profile-candidate-count');
+    const candidateGrid = document.getElementById('profile-candidate-grid');
+    const candidateGridArea = document.querySelector('.profile-candidate-grid-area'); // For å bytte klasse
+    const candidateOverlay = document.getElementById('profile-candidate-detail-overlay');
+    const candidateOverlayContent = document.getElementById('profile-candidate-detail-content');
+    const closeOverlayButton = document.getElementById('close-candidate-overlay');
 
     // --- Datainnlasting og Initialisering ---
 
-    // Sjekk om data allerede er lastet globalt
-    if (window.issues && window.issues.length > 0) {
-        console.log("Party Profile: Issues data found globally.");
-        issuesData = window.issues;
-        issuesReady = true;
-    }
-    if (window.partiesDataLoaded && window.partiesData && window.partiesData.length > 0) {
-        console.log("Party Profile: Parties data found globally.");
-        partiesData = window.partiesData;
-        partiesReady = true;
-    }
+    function loadAllData() {
+        console.log("Party Profile v2.2: Loading all data...");
+        const issuesPromise = fetch('data/issues.json').then(r => r.ok ? r.json() : Promise.reject('Issues fetch failed'));
+        const partiesPromise = fetch('data/parties.json').then(r => r.ok ? r.json() : Promise.reject('Parties fetch failed'));
+        const candidatesPromise = fetch('data/candidates.json').then(r => r.ok ? r.json() : Promise.reject('Candidates fetch failed'));
+        const mandatesPromise = fetch('data/constituency_mandates.json')
+            .then(r => r.ok ? r.json() : {})
+             .catch(() => ({}));
 
-    // Lytt etter at data blir lastet hvis ikke klar
-    document.addEventListener('issuesDataLoaded', () => {
-        if (!issuesReady) {
-            console.log("Party Profile: 'issuesDataLoaded' event received.");
-            issuesData = window.issues || [];
-            if (issuesData.length > 0) issuesReady = true;
-            else console.error("Party Profile: Issues data loaded, but is empty!");
-            checkAndInitialize();
-        }
-    });
+        Promise.all([issuesPromise, partiesPromise, candidatesPromise, mandatesPromise])
+            .then(([issues, parties, candidates, mandates]) => {
+                console.log("Party Profile v2.2: All data fetched.");
+                issuesData = issues;
+                partiesData = parties;
+                candidatesData = candidates;
+                constituencyMandates = mandates;
 
-    document.addEventListener('partiesDataLoaded', () => {
-        if (!partiesReady) {
-            console.log("Party Profile: 'partiesDataLoaded' event received.");
-            partiesData = window.partiesData || [];
-             if (partiesData.length > 0) partiesReady = true;
-             else console.error("Party Profile: Parties data loaded, but is empty!");
-            checkAndInitialize();
-        }
-    });
+                issuesReady = true;
+                partiesReady = true;
+                candidatesReady = true;
 
-    // Hjelpefunksjon for å starte når alt er klart
-    function checkAndInitialize() {
-        if (issuesReady && partiesReady) {
-            console.log("Party Profile: Both issues and parties ready. Initializing.");
-            // Lag parti-map for raskere oppslag
-            partiesData.forEach(p => partiesMap[p.shorthand] = p);
-            initializeProfilePage();
-        } else {
-             console.log(`Party Profile: Still waiting... Issues: ${issuesReady}, Parties: ${partiesReady}`);
-             // Hvis en mangler, forsikre at laste-scriptene kjører
-             if (!issuesReady && typeof loadIssuesData === 'function') {
-                // console.log("Triggering issues load"); loadIssuesData(); // Kan være nødvendig i noen scenarioer
-             }
-              if (!partiesReady && typeof loadPartiesData === 'function') {
-                 // console.log("Triggering parties load"); loadPartiesData(); // Sikrer at partiesData.js funksjonen kjøres
-             } else if (!partiesReady && !document.querySelector('script[src="js/partiesData.js"]')) {
-                 // Fallback hvis partiesData.js ikke er inkludert/funksjonen ikke finnes
-                  fetch('data/parties.json').then(r=>r.json()).then(data => {
-                     window.partiesData = data; window.partiesDataLoaded = true; document.dispatchEvent(new CustomEvent('partiesDataLoaded'));
-                 }).catch(e => console.error("PP Fallback fetch parties failed", e));
-             }
-        }
+                processInitialData();
+                initializeProfilePage();
+            })
+            .catch(error => {
+                console.error("Party Profile v2.2: Failed to load required data:", error);
+                if (profileContentGrid) {
+                    profileContentGrid.innerHTML = '<div class="profile-placeholder error full-grid-placeholder"><p>Kunne ikke laste all nødvendig data. Prøv å laste siden på nytt.</p></div>';
+                }
+            });
     }
 
-    // Kalles når data er klar - setter opp dropdown og lytter
+    function processInitialData() {
+        partiesData.forEach(p => partiesMap[p.shorthand] = p);
+        candidatesMapByParty = {};
+        let uniqueConstituencyNames = new Set();
+        candidatesData.forEach(constituency => {
+            uniqueConstituencyNames.add(constituency.constituencyName);
+            constituency.parties.forEach(party => {
+                if (!candidatesMapByParty[party.partyShorthand]) {
+                    candidatesMapByParty[party.partyShorthand] = [];
+                }
+                party.candidates.forEach(candidate => {
+                    candidatesMapByParty[party.partyShorthand].push({
+                        ...candidate,
+                        constituencyName: constituency.constituencyName,
+                        partyShorthand: party.partyShorthand,
+                        partyName: party.partyName || partiesMap[party.partyShorthand]?.name || party.partyShorthand
+                    });
+                });
+            });
+        });
+        allConstituencyNames = [...uniqueConstituencyNames].sort();
+        console.log("Party Profile v2.2: Initial data processed.");
+    }
+
     function initializeProfilePage() {
-        const partySelect = document.getElementById('party-select');
-        if (!partySelect) {
-            console.error("Party select dropdown (#party-select) not found!");
-            return;
-        }
+        if (!partySelect || !profileContentGrid || !placeholderDiv) {
+             console.error("Party Profile v2.2: Essential elements missing, cannot initialize."); return;
+         }
+        placeholderDiv.style.display = 'flex';
+        profileContentGrid.classList.remove('active');
 
-        // Fjern eventuell gammel lytter før vi legger til ny
         partySelect.removeEventListener('change', handlePartySelection);
-
-        // Tøm dropdown (unntatt placeholder)
         partySelect.querySelectorAll('option:not([value=""])').forEach(o => o.remove());
-
-        // Fyll partivelger, sortert etter posisjon
         const sortedParties = [...partiesData].sort((a, b) => (a.position || 99) - (b.position || 99));
         sortedParties.forEach(party => {
-            const option = document.createElement('option');
-            option.value = party.shorthand;
-            option.textContent = party.name;
-            partySelect.appendChild(option);
+             if (candidatesMapByParty[party.shorthand] && candidatesMapByParty[party.shorthand].length > 0) {
+                const option = document.createElement('option'); option.value = party.shorthand; option.textContent = party.name; partySelect.appendChild(option);
+             } else { console.warn(`Party Profile v2.2: Skipping party ${party.shorthand} in dropdown - no candidate data found.`); }
         });
-
-        // Legg til lytter for valg
         partySelect.addEventListener('change', handlePartySelection);
 
-        console.log("Party Profile: Page initialized, dropdown populated.");
+        if (candidateViewModeSelect) candidateViewModeSelect.addEventListener('change', () => handleCandidateFiltering(partySelect.value));
+        if (candidateConstituencyFilter) candidateConstituencyFilter.addEventListener('change', () => handleCandidateFiltering(partySelect.value));
+        if (closeOverlayButton) closeOverlayButton.addEventListener('click', closeCandidateDetailOverlay);
+        if (candidateGrid) { candidateGrid.addEventListener('click', handleCandidateCardClick); }
+
+        console.log("Party Profile v2.2: Page initialized.");
     }
 
-    // Kjører sjekk med en gang i tilfelle data var klar
-    checkAndInitialize();
-
+    loadAllData();
 
     // --- Kjernefunksjoner ---
-
-    // Kalles når brukeren velger et parti i dropdown
     function handlePartySelection() {
-        const selectedShorthand = this.value;
-        const profileContent = document.getElementById('profile-content');
-        if (!profileContent) {
-            console.error("Profile content container (#profile-content) not found!");
-            return;
-        }
+         const selectedShorthand = this.value;
+         if (!selectedShorthand) { placeholderDiv.style.display = 'flex'; profileContentGrid.classList.remove('active'); clearBoxContent(issuesBoxContent); clearBoxContent(candidatesBoxContent, true); clearBoxContent(stanceChartBoxContent); clearBoxContent(areaChartBoxContent); return; }
+         placeholderDiv.style.display = 'none'; profileContentGrid.classList.add('active');
+         showLoader(issuesBoxContent); showLoader(candidateGrid);
+         showLoader(stanceChartBoxContent); showLoader(areaChartBoxContent);
+         console.log(`Party Profile v2.2: Party selected: ${selectedShorthand}. Rendering profile...`);
 
-        // Nullstill hvis "Velg parti..." er valgt
-        if (!selectedShorthand) {
-            profileContent.innerHTML = `<div class="profile-placeholder"><p>Velg et parti fra menyen over for å se detaljer.</p></div>`;
-            return;
-        }
-
-        // Vis en enkel loader
-        profileContent.innerHTML = `<div class="profile-placeholder"><p>Laster profil for ${partiesMap[selectedShorthand]?.name || selectedShorthand}...</p></div>`;
-        profileContent.style.opacity = '0.5'; // Gjør litt transparent mens den laster
-
-        // Bruk setTimeout for å la nettleseren rendre loaderen før potensiell tung prosessering
-        setTimeout(() => {
-            try {
-                 displayPartyProfile(selectedShorthand);
-                 profileContent.style.opacity = '1'; // Vis innholdet
-            } catch(error) {
-                 console.error("Error displaying party profile:", error);
-                 profileContent.innerHTML = `<div class="profile-placeholder error"><p>Beklager, en feil oppstod under lasting av profilen. Prøv igjen senere.</p><p><small>${error.message}</small></p></div>`;
-                 profileContent.style.opacity = '1';
-            }
-        }, 50); // 50ms er vanligvis nok
+         setTimeout(() => {
+             try {
+                 const partyInfo = partiesMap[selectedShorthand]; if (!partyInfo) throw new Error(`Party info not found for ${selectedShorthand}`);
+                 const partyIssueData = processPartyIssueData(selectedShorthand);
+                 renderIssuesBox(partyIssueData.issuesByLevel, partyIssueData.stanceCounts);
+                 renderStanceChartBox(partyIssueData.stanceCounts, partyInfo);
+                 renderAreaChartBox(partyIssueData.sortedAreas, partyInfo);
+                 initializeCandidatesBox(selectedShorthand);
+             } catch(error) { console.error("Error displaying party profile:", error); showError(issuesBoxContent, error.message); showError(candidatesBoxContent, error.message); showError(stanceChartBoxContent, error.message); showError(areaChartBoxContent, error.message); }
+         }, 50);
     }
 
-    // Analyserer all issue-data for ETT spesifikt parti
-    function processPartyData(partyShorthand) {
-        // Initialiser et objekt for å holde partiets profildata
-        const partyProfile = {
-            shorthand: partyShorthand,
-            info: partiesMap[partyShorthand] || {}, // Partiets grunninfo (navn, farge, seter etc.)
-            stanceCounts: { level2: 0, level1: 0, level0: 0, total: 0 }, // Teller for hver standpunkttype
-            issuesByLevel: { level2: [], level1: [], level0: [] }, // Lister med saker for hver standpunkttype
-            scoresByArea: {} // Objekt for å holde score per saksområde
-        };
-
-        // Sikkerhetssjekk hvis partiet mot formodning ikke finnes i mapen
-        if (!partyProfile.info.shorthand) {
-            console.warn(`Party Profile: Could not find complete party info for ${partyShorthand} in partiesMap.`);
-            partyProfile.info = { shorthand: partyShorthand, name: partyShorthand }; // Fallback
-        }
-
-        const areasTemp = {}; // Midlertidig objekt for å samle data per område
-
-        // Gå gjennom alle saker i datasettet
-        issuesData.forEach(issue => {
-            partyProfile.stanceCounts.total++; // Øk totalt antall saker sjekket
-            let level = 0; // Standard: Anta ingen støtte hvis ikke annet er spesifisert
-            let quote = null; // Standard: Ingen sitat
-
-            // Sjekk om det finnes et standpunkt for dette partiet i denne saken
-            if (issue.partyStances && issue.partyStances[partyShorthand]) {
-                const stance = issue.partyStances[partyShorthand];
-                level = stance.level ?? 0; // Bruk 0 hvis level er undefined/null
-                quote = stance.quote;
-            }
-
-            // Oppdater tellinger basert på nivå
-            if (level === 2) partyProfile.stanceCounts.level2++;
-            else if (level === 1) partyProfile.stanceCounts.level1++;
-            else partyProfile.stanceCounts.level0++;
-
-            // Lag et objekt med nødvendig info om saken for listevisning
-            const issueDetails = { id: issue.id, name: issue.name, area: issue.area, quote: quote };
-            // Legg saken til i riktig liste basert på nivå
-            if (level === 2) partyProfile.issuesByLevel.level2.push(issueDetails);
-            else if (level === 1) partyProfile.issuesByLevel.level1.push(issueDetails);
-            else partyProfile.issuesByLevel.level0.push(issueDetails);
-
-            // Hvis saken har et definert område, samle data for område-score
-            if (issue.area) {
-                if (!areasTemp[issue.area]) {
-                    // Initialiser hvis dette er første sak i området
-                    areasTemp[issue.area] = { totalPoints: 0, count: 0 };
-                }
-                // Legg til nivå-poeng (0, 1 eller 2) og øk telleren for antall saker
-                areasTemp[issue.area].totalPoints += level;
-                areasTemp[issue.area].count++;
-            }
-        });
-
-        // Beregn endelig score per område etter å ha gått gjennom alle saker
-        for (const areaName in areasTemp) {
-            const areaData = areasTemp[areaName];
-            partyProfile.scoresByArea[areaName] = {
-                totalPoints: areaData.totalPoints,
-                count: areaData.count,
-                // Regn ut gjennomsnittlig score (mellom 0 og 2)
-                averageScore: areaData.count > 0 ? (areaData.totalPoints / areaData.count) : 0
-            };
-        }
-
-        // Sorter områdedata alfabetisk på navn for konsistent visning i radar chart
-         const sortedAreaEntries = Object.entries(partyProfile.scoresByArea)
-                                        .sort((a, b) => a[0].localeCompare(b[0]));
-         // Lag et format Plotly forstår bedre for radar chart (liste med objekter)
-         partyProfile.sortedAreas = sortedAreaEntries.map(([areaName, data]) => ({ name: areaName, score: data.averageScore }));
-
-        // Returner det ferdigbehandlede profilobjektet
-        return partyProfile;
-    }
-
-    // Bygger og viser HTML-innholdet for det valgte partiets profil
-    function displayPartyProfile(partyShorthand) {
-        // 1. Behandle data for det valgte partiet
-        const profileData = processPartyData(partyShorthand);
-        const profileContent = document.getElementById('profile-content');
-        if (!profileContent) return; // Dobbeltsjekk at container finnes
-
-        // 2. Tøm eksisterende innhold
-        profileContent.innerHTML = '';
-
-        // 3. Lag Header-delen av profilen
-        const headerDiv = document.createElement('div');
-        headerDiv.className = 'profile-header';
-        const party = profileData.info; // Hent partiinfo fra profildata
-        // Bruker CSS-klasser fra styles.css og party-profile.css
-        headerDiv.innerHTML = `
-            <div class="party-icon icon-${party.classPrefix || party.shorthand.toLowerCase()}" style="background-color: ${party.color || '#ccc'}">
-                ${party.shorthand?.charAt(0) || '?'}
-            </div>
-            <h2>${party.name || partyShorthand}</h2>
-            <div class="party-seat-count">${party.seats != null ? party.seats : '?'}</div>
-        `;
-        profileContent.appendChild(headerDiv);
-
-        // 4. Lag seksjon for diagrammer
-        const chartsDiv = document.createElement('div');
-        chartsDiv.className = 'profile-charts';
-        // Legg til plassholdere (divs) hvor Plotly skal tegne diagrammene
-        chartsDiv.innerHTML = `
-            <div class="chart-container">
-                <h3>Fordeling av Standpunkt</h3>
-                <div id="plotly-stance-chart"></div>
-            </div>
-            <div class="chart-container">
-                <h3>Gjennomsnittlig Støtte per Saksområde</h3>
-                <div id="plotly-area-chart"></div>
-            </div>
-        `;
-        profileContent.appendChild(chartsDiv);
-
-        // 5. Kall Plotly-funksjoner for å tegne diagrammene
-        // Sender med nødvendig data (tellinger for kakediagram, områdescore for radar)
-        createStanceChart(profileData.stanceCounts, profileData.info);
-        createAreaChart(profileData.sortedAreas, profileData.info);
-
-        // 6. Lag seksjon for saksdetaljer (med faner)
+    // --- RENDER-FUNKSJONER ---
+    function renderIssuesBox(issuesByLevel, stanceCounts) {
+        clearBoxContent(issuesBoxContent);
+        if (!issuesBoxContent) return;
         const issuesDiv = document.createElement('div');
         issuesDiv.className = 'profile-issues-section';
-        // Bygg HTML for faneknapper og innholds-divs (som starter skjult, unntatt den første)
         issuesDiv.innerHTML = `
             <h3>Detaljert Saksoversikt</h3>
             <div class="issues-tabs">
-                 <button class="tab-button active" data-tab="level2">Full enighet (${profileData.stanceCounts.level2})</button>
-                 <button class="tab-button" data-tab="level1">Delvis enighet (${profileData.stanceCounts.level1})</button>
-                 <button class="tab-button" data-tab="level0">Ingen støtte (${profileData.stanceCounts.level0})</button>
+                 <button class="tab-button active" data-tab="level2">Full enighet (${stanceCounts.level2})</button>
+                 <button class="tab-button" data-tab="level1">Delvis enighet (${stanceCounts.level1})</button>
+                 <button class="tab-button" data-tab="level0">Ingen støtte (${stanceCounts.level0})</button>
             </div>
              <div class="tab-content active" id="tab-content-level2">
-                ${generateIssueListHTML(profileData.issuesByLevel.level2, 'agree')}
+                ${generateIssueListHTML(issuesByLevel.level2, 'agree')}
             </div>
             <div class="tab-content" id="tab-content-level1">
-                 ${generateIssueListHTML(profileData.issuesByLevel.level1, 'partial')}
+                 ${generateIssueListHTML(issuesByLevel.level1, 'partial')}
              </div>
              <div class="tab-content" id="tab-content-level0">
-                 ${generateIssueListHTML(profileData.issuesByLevel.level0, 'disagree')}
+                 ${generateIssueListHTML(issuesByLevel.level0, 'disagree')}
             </div>
         `;
-        profileContent.appendChild(issuesDiv);
-
-        // 7. Aktiver fane-funksjonalitet for den nettopp opprettede seksjonen
+        issuesBoxContent.appendChild(issuesDiv);
         setupProfileTabs(issuesDiv);
-        console.log(`Party Profile: Displayed profile for ${partyShorthand}`);
+    }
+    function renderStanceChartBox(stanceCounts, partyInfo) {
+         clearBoxContent(stanceChartBoxContent); if (!stanceChartBoxContent) return;
+         const chartContainer = document.createElement('div'); chartContainer.className = 'chart-container';
+         chartContainer.innerHTML = `<h3>Fordeling av Standpunkt</h3><div id="plotly-stance-chart"></div>`;
+         stanceChartBoxContent.appendChild(chartContainer); createStanceChart(stanceCounts, partyInfo);
+    }
+    function renderAreaChartBox(sortedAreasData, partyInfo) {
+         clearBoxContent(areaChartBoxContent); if (!areaChartBoxContent) return;
+         const chartContainer = document.createElement('div'); chartContainer.className = 'chart-container';
+         chartContainer.innerHTML = `<h3>Gj.snitt Støtte per Saksområde</h3><div id="plotly-area-chart"></div>`;
+         areaChartBoxContent.appendChild(chartContainer); createAreaChart(sortedAreasData, partyInfo);
+    }
+    function initializeCandidatesBox(partyShorthand) {
+         clearBoxContent(candidatesBoxContent, true); if (!candidatesBoxContent || !candidateGrid) return;
+         populateCandidateConstituencyFilter(partyShorthand); handleCandidateFiltering(partyShorthand);
     }
 
+    // --- Funksjoner for Kandidathåndtering ---
+    function populateCandidateConstituencyFilter(partyShorthand) {
+         if (!candidateConstituencyFilter) return;
+         candidateConstituencyFilter.querySelectorAll('option:not([value="all"])').forEach(o => o.remove()); candidateConstituencyFilter.value = 'all';
+         const partyCandidates = candidatesMapByParty[partyShorthand] || [];
+         const relevantConstituencies = [...new Set(partyCandidates.map(c => c.constituencyName))].sort();
+         relevantConstituencies.forEach(name => { const option = document.createElement('option'); option.value = name; option.textContent = name; candidateConstituencyFilter.appendChild(option); });
+         console.log(`Party Profile v2.2: Populated constituency filter for ${partyShorthand}`);
+    }
 
-    // --- Plotly Diagram Funksjoner ---
+    function handleCandidateFiltering(partyShorthand) {
+        if (!candidateGrid || !candidateCountSpan || !candidateViewModeSelect || !candidateConstituencyFilter || !candidateGridArea) { console.error("Party Profile v2.2: Missing elements for candidate filtering."); return; }
+        if (!partyShorthand || !candidatesMapByParty[partyShorthand]) { candidateGrid.innerHTML = '<p class="no-results">Velg et parti først.</p>'; candidateCountSpan.textContent = '0'; return; }
 
-    // Lager kake/doughnut-diagram for standpunktfordeling
-    function createStanceChart(stanceCounts, partyInfo) {
-        const plotDivId = 'plotly-stance-chart'; // ID for div hvor diagrammet skal tegnes
-        const data = [{
-            // Data for diagrammet: verdier og etiketter
-            values: [stanceCounts.level2, stanceCounts.level1, stanceCounts.level0],
-            labels: ['Full Enighet (2)', 'Delvis Enighet (1)', 'Ingen Støtte (0)'],
-            type: 'pie',
-            hole: .4, // Gjør det til et doughnut chart
-            marker: {
-                // Definer farger for hver del (bør matche resten av UI)
-                colors: ['#28a745', '#ffc107', '#dc3545'],
-                line: { // Linje mellom segmenter
-                  color: '#ffffff',
-                  width: 1
-                }
-            },
-            hoverinfo: 'label+percent', // Vis etikett og prosent ved hover
-            textinfo: 'value',          // Vis antall (verdi) inne i segmentet
-            textfont_size: 14,
-            insidetextorientation: 'radial' // Orienter teksten inne i segmentene
-        }];
+        showLoader(candidateGrid);
 
-        const layout = {
-            // title: { text: `Standpunktfordeling for ${partyInfo.name}`, font: { size: 16 } }, // Kan ha tittel her eller i H3 over
-            showlegend: true, // Vis forklaring (legend)
-            legend: { x: 0.5, y: -0.1, xanchor: 'center', orientation: 'h' }, // Plasser legend under
-            height: 350, // Kan justeres
-            margin: { l: 20, r: 20, t: 30, b: 40 }, // Juster marger
-            paper_bgcolor: 'rgba(0,0,0,0)', // Gjør bakgrunnen transparent
-            plot_bgcolor: 'rgba(0,0,0,0)'
-        };
+        const selectedViewMode = candidateViewModeSelect.value;
+        const selectedConstituency = candidateConstituencyFilter.value;
+        const partyInfo = partiesMap[partyShorthand];
+        const allPartyCandidates = candidatesMapByParty[partyShorthand];
 
-        // Forsøk å tegne diagrammet, med feilhåndtering
-        try {
-            const plotDiv = document.getElementById(plotDivId);
-            if (plotDiv) {
-                 Plotly.newPlot(plotDivId, data, layout, {responsive: true}); // responsive: true justerer ved vindusendring
-            } else {
-                console.error(`Element with ID ${plotDivId} not found for Plotly chart.`);
-            }
-        } catch (e) {
-             console.error("Plotly error creating Stance Chart:", e);
-             const plotDiv = document.getElementById(plotDivId);
-             if (plotDiv) plotDiv.innerHTML = '<p class="error">Kunne ikke laste diagram.</p>';
+        let filteredCandidates = allPartyCandidates;
+        if (selectedConstituency !== 'all') { filteredCandidates = filteredCandidates.filter(c => c.constituencyName === selectedConstituency); }
+
+        // === HER ER ENDRINGEN ===
+        if (selectedViewMode === 'featured') {
+            filteredCandidates = filteredCandidates.filter(c => c.isFeatured);
+            // Bruk klassene fra candidates.css:
+            candidateGridArea.classList.remove('candidate-grid'); // Fjern normal grid klasse
+            candidateGridArea.classList.add('featured-candidates-grid'); // Legg til featured grid klasse
+        } else {
+            // Bruk klassene fra candidates.css:
+            candidateGridArea.classList.remove('featured-candidates-grid'); // Fjern featured grid klasse
+            candidateGridArea.classList.add('candidate-grid'); // Legg til normal grid klasse
         }
+        // === SLUTT PÅ ENDRING ===
+
+        filteredCandidates.sort((a, b) => { if (a.constituencyName !== b.constituencyName) { return a.constituencyName.localeCompare(b.constituencyName); } return (a.rank || 999) - (b.rank || 999); });
+        console.log(`Party Profile v2.2: Filtering candidates for ${partyShorthand}. Mode: ${selectedViewMode}, Constituency: ${selectedConstituency}. Found ${filteredCandidates.length}`);
+
+        displayPartyCandidatesList(filteredCandidates, partyInfo, selectedViewMode);
+        candidateCountSpan.textContent = filteredCandidates.length;
     }
 
-    // Lager radardiagram for gjennomsnittlig score per saksområde
-    function createAreaChart(sortedAreasData, partyInfo) {
-        const plotDivId = 'plotly-area-chart';
-        // Hent ut etiketter (områdenavn) og verdier (score) fra den sorterte dataen
-        const labels = sortedAreasData.map(area => area.name);
-        const values = sortedAreasData.map(area => area.score);
+    function displayPartyCandidatesList(candidates, partyInfo, viewMode) {
+         if (!candidateGrid) return;
+         candidateGrid.innerHTML = '';
 
-        const data = [{
-            type: 'scatterpolar', // Typen for radardiagram i Plotly
-            r: values,      // Verdiene (score fra 0 til 2) som bestemmer avstand fra sentrum
-            theta: labels,  // Kategoriene/aksene (saksområder)
-            fill: 'toself', // Fyll området innenfor linjen
-            name: partyInfo.name, // Navn som vises i hover/tooltip
-             marker: {
-                 color: partyInfo.color || '#003087' // Bruk partiets farge, fallback til blå
-             },
-             line: {
-                  color: partyInfo.color || '#003087' // Samme farge for linjen
+         if (candidates.length === 0) { candidateGrid.innerHTML = '<p class="no-results">Ingen kandidater funnet.</p>'; return; }
+
+         let currentConstituency = null;
+         candidates.forEach(candidate => {
+             if (candidate.constituencyName !== currentConstituency) {
+                 const separator = createConstituencySeparator(candidate.constituencyName);
+                 candidateGrid.appendChild(separator);
+                 currentConstituency = candidate.constituencyName;
              }
-        }];
-
-        const layout = {
-            // title: { text: `Områdeprofil for ${partyInfo.name}`, font: { size: 16 } },
-            polar: { // Innstillinger for det polare koordinatsystemet
-                radialaxis: { // Aksene som går fra sentrum og utover (våre verdier 0-2)
-                    visible: true,
-                    range: [0, 2], // Definer at skalaen går fra 0 til 2
-                    tickvals: [0, 1, 2], // Vis tydelige markeringer for 0, 1, og 2
-                     angle: 90, // Start 0-aksen øverst
-                     tickfont: { size: 10 } // Liten font for tallene
-                },
-                 angularaxis: { // Aksene rundt sirkelen (våre saksområder)
-                    tickfont: { size: 10 } // Liten font for områdenavn
-                },
-                bgcolor: 'rgba(255, 255, 255, 0.6)' // Litt dus hvit bakgrunn for selve sirkelen
-            },
-            showlegend: false, // Skjul legend (vi har bare én dataserie)
-            height: 350,
-            margin: { l: 40, r: 40, t: 50, b: 40 }, // Marger for å gi plass til etiketter
-            paper_bgcolor: 'rgba(0,0,0,0)', // Transparent papirbakgrunn
-            plot_bgcolor: 'rgba(0,0,0,0)'   // Transparent plotbakgrunn
-        };
-
-        try {
-            const plotDiv = document.getElementById(plotDivId);
-             if (plotDiv) {
-                Plotly.newPlot(plotDivId, data, layout, {responsive: true});
+             let card;
+             if (viewMode === 'featured') {
+                 card = createProfileFeaturedImageCard(candidate, partyInfo); // Bruker nå styles fra candidates.css
              } else {
-                 console.error(`Element with ID ${plotDivId} not found for Plotly chart.`);
+                 card = createCandidateCard(candidate, partyInfo);
              }
-        } catch (e) {
-             console.error("Plotly error creating Area Chart:", e);
-              const plotDiv = document.getElementById(plotDivId);
-              if (plotDiv) plotDiv.innerHTML = '<p class="error">Kunne ikke laste diagram.</p>';
+             candidateGrid.appendChild(card);
+         });
+     }
+
+     function createConstituencySeparator(constituencyName) {
+         const separator = document.createElement('div');
+         separator.className = 'constituency-separator';
+         const count = constituencyMandates[constituencyName];
+         const text = typeof count === 'number' ? `(${count} mandater)` : '(?)';
+         separator.innerHTML = `<span class="name">${constituencyName || '?'}</span> <span class="count">${text}</span>`;
+         return separator;
+     }
+
+     // Denne funksjonen lager HTML for featured-kortet.
+     // Stylingen (utseendet) kommer nå fra candidates.css via klassen 'featured-candidate-card'
+     function createProfileFeaturedImageCard(candidate, partyInfo) {
+        const card = document.createElement('div');
+        const partyClass = `party-${partyInfo.classPrefix || partyInfo.shorthand.toLowerCase()}`;
+        // VIKTIG: Bruker klassen fra candidates.css
+        card.className = `featured-candidate-card ${partyClass}`;
+        card.dataset.candidateInfo = JSON.stringify(candidate);
+        card.dataset.partyInfo = JSON.stringify(partyInfo);
+        // Setter CSS-variabel som brukes av candidates.css for border-color
+        card.style.setProperty('--card-party-color', partyInfo.color || '#ccc');
+
+        card.innerHTML = `
+            ${candidate.imageUrl
+                ? `<img src="${candidate.imageUrl}" alt="${candidate.name || ''}" loading="lazy">`
+                : '<div class="image-placeholder">Bilde mangler</div>'}
+        `;
+        card.title = `${candidate.name || '?'} (${partyInfo.name || '?'}) - Klikk for detaljer`;
+
+        // Ingen egen listener her, bruker den på parent 'candidateGrid'
+        return card;
+     }
+
+     function createCandidateCard(candidate, partyInfo) {
+         const card = document.createElement('div'); const partyClassPrefix = partyInfo.classPrefix || partyInfo.shorthand.toLowerCase();
+         card.className = `candidate-card party-${partyClassPrefix}`; if (candidate.hasRealisticChance) card.classList.add('realistic-chance'); card.style.setProperty('--party-color', partyInfo.color || '#ccc');
+         card.dataset.candidateInfo = JSON.stringify(candidate); card.dataset.partyInfo = JSON.stringify(partyInfo);
+         card.innerHTML = `
+            <div class="card-header"><span class="candidate-rank">${candidate.rank || '?'}</span><div class="candidate-header-info"><span class="candidate-name">${candidate.name || 'Ukjent navn'}</span><span class="party-name-header">${partyInfo.name || candidate.partyShorthand || 'Ukjent parti'}</span></div><div class="party-icon icon-${partyClassPrefix}" style="background-color: ${partyInfo.color || '#ccc'}" title="${partyInfo.name || '?'}">${candidate.partyShorthand?.charAt(0) || '?'}</div></div>
+            <div class="card-body"><div class="candidate-meta">${candidate.age ? `<span>Alder: ${candidate.age}</span>` : ''}${candidate.location ? `<span class="candidate-location"> | Fra: ${candidate.location}</span>` : ''}</div></div>
+            ${candidate.hasRealisticChance ? `<div class="card-footer"><span class="realistic-badge">Realistisk sjanse</span></div>` : '<div class="card-footer"></div>'} `;
+         card.title = `${candidate.name || '?'} (${partyInfo.name || '?'}) - Klikk for detaljer`; return card;
+     }
+
+    // --- Funksjoner for Kandidat Detalj Overlay ---
+    function handleCandidateCardClick(event) {
+        const card = event.target.closest('.candidate-card[data-candidate-info], .featured-candidate-card[data-candidate-info]');
+        if (card && card.dataset.candidateInfo && card.dataset.partyInfo) {
+             console.log("Party Profile v2.2: Candidate card clicked.");
+             try {
+                 const candidate = JSON.parse(card.dataset.candidateInfo); const partyInfo = JSON.parse(card.dataset.partyInfo); displayCandidateDetailOverlay(candidate, partyInfo);
+             } catch (e) { console.error("Party Profile v2.2: Error parsing candidate data from card:", e); if(candidateOverlayContent) candidateOverlayContent.innerHTML = "<p>Kunne ikke laste kandidatdata.</p>"; if(candidateOverlay) candidateOverlay.classList.add('active'); }
         }
     }
+    function displayCandidateDetailOverlay(candidate, partyInfo) {
+         if (!candidateOverlay || !candidateOverlayContent) return;
+         const partyClassPrefix = partyInfo.classPrefix || partyInfo.shorthand.toLowerCase();
+         const imageHtml = candidate.imageUrl ? `<img src="${candidate.imageUrl}" alt="${candidate.name || 'Kandidatbilde'}" class="detail-image">` : `<img src="images/candidates/placeholder-${partyInfo.shorthand.toLowerCase()}.png" alt="Placeholder for ${partyInfo.name || 'partiet'}" class="detail-image placeholder-image" onerror="this.onerror=null; this.src='images/placeholder-generic.png';">`;
+         candidateOverlayContent.innerHTML = `
+             <div class="detail-image-container">${imageHtml}</div> <div class="detail-header"><div class="party-icon icon-${partyClassPrefix}" style="background-color: ${partyInfo.color || '#ccc'};">${partyInfo.shorthand?.charAt(0) || '?'}</div><h3>${candidate.name || '?'}</h3></div>
+             <div class="detail-info"><p><strong>Rangering:</strong> ${candidate.rank || '?'}. plass</p><p><strong>Parti:</strong> ${partyInfo.name || '?'}</p><p><strong>Valgkrets:</strong> ${candidate.constituencyName || '?'}</p>${candidate.age ? `<p><strong>Alder:</strong> ${candidate.age}</p>` : ''}${candidate.location ? `<p><strong>Fra:</strong> ${candidate.location}</p>` : ''}<p><strong>Realistisk sjanse:</strong> ${typeof candidate.hasRealisticChance !== 'undefined' ? (candidate.hasRealisticChance ? 'Ja' : 'Nei') : '?'}</p>${candidate.email ? `<p><strong>E-post:</strong> <a href="mailto:${candidate.email}">${candidate.email}</a></p>` : ''}${candidate.phone ? `<p><strong>Telefon:</strong> <a href="tel:${candidate.phone}">${candidate.phone}</a></p>` : ''}</div>
+             <p class="privacy-notice-panel">Husk personvern ved bruk av kontaktinformasjon.</p> `;
+         candidateOverlay.classList.add('active'); candidateOverlay.scrollTop = 0;
+    }
+    function closeCandidateDetailOverlay() {
+        if (candidateOverlay) { candidateOverlay.classList.remove('active'); setTimeout(() => { if(candidateOverlayContent) candidateOverlayContent.innerHTML = ''; }, 400); }
+    }
 
-    // --- Hjelpefunksjoner ---
-
-    // Genererer HTML for en liste med saker (likner den i party-overview.js)
+    // --- Funksjoner for Issues og Charts ---
+    function processPartyIssueData(partyShorthand) {
+        const partyProfile = { stanceCounts: { level2: 0, level1: 0, level0: 0, total: 0 }, issuesByLevel: { level2: [], level1: [], level0: [] }, scoresByArea: {} }; const areasTemp = {};
+        issuesData.forEach(issue => { partyProfile.stanceCounts.total++; let level = 0; let quote = null; if (issue.partyStances && issue.partyStances[partyShorthand]) { const stance = issue.partyStances[partyShorthand]; level = stance.level ?? 0; quote = stance.quote; } if (level === 2) partyProfile.stanceCounts.level2++; else if (level === 1) partyProfile.stanceCounts.level1++; else partyProfile.stanceCounts.level0++; const issueDetails = { id: issue.id, name: issue.name, area: issue.area, quote: quote }; if (level === 2) partyProfile.issuesByLevel.level2.push(issueDetails); else if (level === 1) partyProfile.issuesByLevel.level1.push(issueDetails); else partyProfile.issuesByLevel.level0.push(issueDetails); if (issue.area) { if (!areasTemp[issue.area]) areasTemp[issue.area] = { totalPoints: 0, count: 0 }; areasTemp[issue.area].totalPoints += level; areasTemp[issue.area].count++; } });
+        for (const areaName in areasTemp) { const areaData = areasTemp[areaName]; partyProfile.scoresByArea[areaName] = { totalPoints: areaData.totalPoints, count: areaData.count, averageScore: areaData.count > 0 ? (areaData.totalPoints / areaData.count) : 0 }; } const sortedAreaEntries = Object.entries(partyProfile.scoresByArea).sort((a, b) => a[0].localeCompare(b[0])); partyProfile.sortedAreas = sortedAreaEntries.map(([areaName, data]) => ({ name: areaName, score: data.averageScore })); return partyProfile;
+    }
+    function createStanceChart(stanceCounts, partyInfo) {
+         const plotDivId = 'plotly-stance-chart'; const plotDiv = document.getElementById(plotDivId); if (!plotDiv) { console.error(`Element with ID ${plotDivId} not found`); return; } plotDiv.innerHTML = ''; const data = [{ values: [stanceCounts.level2, stanceCounts.level1, stanceCounts.level0], labels: ['Full Enighet (2)', 'Delvis Enighet (1)', 'Ingen Støtte (0)'], type: 'pie', hole: .4, marker: { colors: ['#28a745', '#ffc107', '#dc3545'], line: { color: '#ffffff', width: 1 } }, hoverinfo: 'label+percent', textinfo: 'value', textfont_size: 14, insidetextorientation: 'radial' }]; const layout = { showlegend: true, legend: { x: 0.5, y: -0.1, xanchor: 'center', orientation: 'h' }, height: 300, margin: { l: 20, r: 20, t: 0, b: 40 }, paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)' }; try { Plotly.newPlot(plotDivId, data, layout, {responsive: true}); } catch (e) { console.error("Plotly error Stance Chart:", e); plotDiv.innerHTML = '<p class="error">Feil ved lasting.</p>'; }
+    }
+    function createAreaChart(sortedAreasData, partyInfo) {
+        const plotDivId = 'plotly-area-chart'; const plotDiv = document.getElementById(plotDivId); if (!plotDiv) { console.error(`Element with ID ${plotDivId} not found`); return; } plotDiv.innerHTML = ''; const labels = sortedAreasData.map(area => area.name); const values = sortedAreasData.map(area => area.score); const data = [{ type: 'scatterpolar', r: values, theta: labels, fill: 'toself', name: partyInfo.name, marker: { color: partyInfo.color || '#003087' }, line: { color: partyInfo.color || '#003087' } }]; const layout = { polar: { radialaxis: { visible: true, range: [0, 2], tickvals: [0, 1, 2], angle: 90, tickfont: { size: 10 } }, angularaxis: { tickfont: { size: 10 } }, bgcolor: 'rgba(255, 255, 255, 0.6)' }, showlegend: false, height: 300, margin: { l: 40, r: 40, t: 20, b: 40 }, paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)' }; try { Plotly.newPlot(plotDivId, data, layout, {responsive: true}); } catch (e) { console.error("Plotly error Area Chart:", e); plotDiv.innerHTML = '<p class="error">Feil ved lasting.</p>'; }
+    }
     function generateIssueListHTML(issues, agreementTypeClass) {
-        // Hvis listen er tom, vis en melding
-        if (!issues || issues.length === 0) {
-            return '<p class="no-issues">Ingen saker i denne kategorien.</p>';
-        }
-
-        // Bygg HTML-strengen for listen
-        // Bruker CSS-klasser definert i party-profile.css
-        return `<ul class="issue-list">
-            ${issues.map(issue => `
-                <li class="issue-item ${agreementTypeClass}-item">
-                    <strong>${issue.name}</strong>
-                    <div class="issue-area">${issue.area || 'Ukjent område'}</div>
-                    ${issue.quote ? `<div class="issue-quote">"${issue.quote}"</div>` : ''}
-                </li>
-            `).join('')}
-        </ul>`;
+        if (!issues || issues.length === 0) { return '<p class="no-issues">Ingen saker i denne kategorien.</p>'; } return `<ul class="issue-list"> ${issues.map(issue => ` <li class="issue-item ${agreementTypeClass}-item"> <strong>${issue.name}</strong> <div class="issue-area">${issue.area || 'Ukjent område'}</div> ${issue.quote ? `<div class="issue-quote">"${issue.quote}"</div>` : ''} </li> `).join('')} </ul>`;
     }
 
-    // Setter opp klikk-hendelser for faneknappene (tabs)
     function setupProfileTabs(issuesSectionElement) {
-        const tabButtons = issuesSectionElement.querySelectorAll('.tab-button');
-        const tabContents = issuesSectionElement.querySelectorAll('.tab-content');
-
-        // Gå ut hvis vi ikke finner knapper eller innhold
-        if (!tabButtons.length || !tabContents.length) return;
-
-        tabButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                // Finn ID-en til innholdet som skal vises basert på knappens 'data-tab'-attributt
-                const tabIdToShow = `tab-content-${this.dataset.tab}`;
-
-                // 1. Fjern 'active'-klassen fra alle knapper og alt innhold
-                tabButtons.forEach(btn => btn.classList.remove('active'));
-                tabContents.forEach(content => content.classList.remove('active'));
-
-                // 2. Legg 'active'-klassen til den klikkede knappen
-                this.classList.add('active');
-
-                // 3. Finn og vis det korresponderende innholdspanelet
-                const contentToShow = issuesSectionElement.querySelector(`#${tabIdToShow}`);
-                if (contentToShow) {
-                    contentToShow.classList.add('active');
-                } else {
-                     // Skriv ut advarsel hvis innholdet ikke ble funnet (bør ikke skje)
-                     console.warn(`Could not find tab content with ID: ${tabIdToShow}`);
-                }
-            });
-        });
+         const tabButtons = issuesSectionElement?.querySelectorAll('.tab-button');
+         const tabContents = issuesSectionElement?.querySelectorAll('.tab-content');
+         if (!tabButtons || !tabContents || tabButtons.length === 0 || tabContents.length === 0) {
+             console.warn("Party Profile v2.2: Could not find tab buttons or content to set up listeners.");
+             return;
+         }
+          console.log(`Party Profile v2.2: Setting up ${tabButtons.length} tab buttons.`);
+         tabButtons.forEach(button => {
+             button.replaceWith(button.cloneNode(true));
+         });
+          const newTabButtons = issuesSectionElement.querySelectorAll('.tab-button');
+         newTabButtons.forEach(button => {
+             button.addEventListener('click', function() {
+                 const tabIdToShow = `tab-content-${this.dataset.tab}`;
+                 newTabButtons.forEach(btn => btn.classList.remove('active'));
+                 tabContents.forEach(content => content.classList.remove('active'));
+                 this.classList.add('active');
+                 const contentToShow = issuesSectionElement.querySelector(`#${tabIdToShow}`);
+                 if (contentToShow) {
+                     contentToShow.classList.add('active');
+                 } else { console.warn(`Could not find tab content with ID: ${tabIdToShow}`); }
+             });
+         });
+         console.log("Party Profile v2.2: Tab listeners set up.");
     }
 
-}); // Slutt på DOMContentLoaded-lytteren
+    // Hjelpefunksjoner
+     function showLoader(element) { if (element) { element.innerHTML = '<div class="loader">Laster...</div>'; } }
+     function showError(element, message) { if (element) { element.innerHTML = `<div class="loader error"><p>Feil: ${message}</p></div>`; } }
+     function clearBoxContent(element, keepFilters = false) { if (!element) return; if (keepFilters && element.querySelector('.profile-candidate-filters')) { const grid = element.querySelector('#profile-candidate-grid'); if(grid) grid.innerHTML = ''; const count = element.querySelector('#profile-candidate-count'); if(count) count.textContent = '0'; } else { element.innerHTML = ''; } }
+
+}); // Slutt på DOMContentLoaded
