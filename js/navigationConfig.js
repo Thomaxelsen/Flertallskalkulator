@@ -7,11 +7,13 @@ window.navigationConfig = {
     navLinks: [
         // Viktig: Bytt rekkefølge om ønskelig. Den første brukes ofte som "hjem".
         { href: "index.html", title: "Flertallskalkulator" },
-        { href: "party-overview.html", title: "Partioversikt" }, 
+        { href: "party-overview.html", title: "Partioversikt" },
         { href: "party-profile.html", title: "Partiprofil" },
         { href: "party-similarity.html", title: "Partilikhet" },
         { href: "issue-matrix.html", title: "Saksmatrise" },
-        { href: "sakskompass.html", title: "Sakskompass" }
+        { href: "sakskompass.html", title: "Sakskompass" },
+        { href: "map-explorer.html", title: "Kartutforsker" }, // NY LENKE
+        { href: "candidates.html", title: "Kandidatutforsker" }  // NY LENKE
         // Legg til nye sider her i fremtiden, f.eks.:
         // { href: "om-prosjektet.html", title: "Om Prosjektet" }
     ]
