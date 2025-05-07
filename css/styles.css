@@ -1315,3 +1315,124 @@ body.menu-open .burger-menu {
         overflow: auto; /* Tillat scrolling på desktop selv om menyen (utilsiktet) er åpen */
      }
 }
+/* === styles.css TILLEGG for kategorisert navigasjon === */
+
+/* --- Mobilmeny Kategorier --- */
+.mobile-menu-category-title {
+    padding: 10px 15px 5px 15px; /* Litt padding over og mindre under */
+    margin-top: 15px; /* Mer luft over ny kategori */
+    margin-bottom: 5px;
+    font-size: 0.9rem; /* Litt mindre enn hovedlenker */
+    font-weight: bold;
+    color: var(--kf-purple); /* Bruk en aksentfarge */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #eee; /* En lett skillelinje */
+}
+
+.mobile-menu-category-title:first-of-type {
+    margin-top: 0; /* Ingen ekstra margin for første kategori */
+}
+
+/* --- Desktop Navigasjon Dropdowns --- */
+.nav-links {
+    /* Sikre at .nav-links er flex for å håndtere dropdowns horisontalt */
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Mindre gap mellom kategorititler */
+}
+
+.nav-category-dropdown {
+    position: relative; /* Nødvendig for absolutt posisjonering av dropdown-innhold */
+    display: inline-block; /* Lar dem ligge ved siden av hverandre */
+}
+
+.nav-category-title {
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: transparent;
+    color: var(--kf-blue);
+    text-decoration: none;
+    border-radius: 20px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    cursor: default; /* Eller pointer hvis den skal være klikkbar for touch */
+}
+
+.nav-category-title:hover,
+.nav-category-dropdown:hover .nav-category-title { /* Uthev også tittel ved hover på selve dropdown */
+    background-color: rgba(0, 48, 135, 0.05);
+    color: var(--kf-purple);
+}
+
+.nav-category-title.active-category { /* Egen stil for aktiv kategori om ønskelig */
+    font-weight: bold;
+    /* color: var(--kf-pink); */ /* Valgfri aksentfarge for aktiv kategori */
+}
+
+
+.dropdown-content {
+    display: none; /* Skjult som standard */
+    position: absolute;
+    background-color: white;
+    min-width: 220px; /* Bredde på dropdown, juster etter behov */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+    z-index: 100; /* Sikrer at den ligger over annet innhold */
+    border-radius: 8px;
+    padding: 8px 0; /* Litt padding inne i dropdown-boksen */
+    margin-top: 4px; /* Litt luft mellom tittel og dropdown */
+    border: 1px solid #eee;
+}
+
+.nav-category-dropdown:hover .dropdown-content {
+    display: block; /* Vis dropdown ved hover på kategorien */
+}
+
+.dropdown-content a {
+    color: var(--kf-blue);
+    padding: 10px 18px; /* Mer padding for lenker i dropdown */
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    font-size: 0.9rem; /* Litt mindre tekst i dropdown */
+    font-weight: normal; /* Normal vekt, med mindre den er aktiv */
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.dropdown-content a:hover {
+    background-color: rgba(0, 48, 135, 0.05);
+    color: var(--kf-purple);
+}
+
+/* Aktiv lenke INNI en dropdown */
+.dropdown-content a.active {
+    font-weight: bold;
+    color: var(--kf-pink);
+    background-color: rgba(230, 60, 140, 0.05); /* En veldig lys rosa bakgrunn */
+    pointer-events: none; /* Gjør den ikke-klikkbar */
+    cursor: default;
+}
+
+/* Juster for at hamburgermeny ikke overlapper dropdowns unødvendig */
+@media (min-width: 1025px) {
+    .burger-menu {
+        z-index: 99; /* La dropdowns (z-index: 100) ligge over */
+    }
+}
+
+/* Husk å justere header-padding eller .nav-links margin for å gi plass til logo og tittel */
+header {
+    justify-content: space-between; /* Kan hjelpe med fordeling */
+    /* gap: 1rem; /* Reduser gap hvis nødvendig */
+}
+.header-text {
+    /* padding: 0 0.5rem; /* Juster padding for å gi mer plass til nav-links */
+    flex-shrink: 1; /* Tillat header-tekst å krympe litt hvis nødvendig */
+}
+.nav-links {
+    margin-left: auto; /* Skyv navigasjonen til høyre */
+    flex-shrink: 0; /* Forhindre at nav-links krymper */
+}
