@@ -1,27 +1,37 @@
 // navigationConfig.js - Sentral konfigurasjon for navigasjon
 // Denne filen inneholder alle navigasjonslenker for nettstedet
 
-// Definer alle navigasjonslenker i denne sentrale konfigurasjonsfilen
 window.navigationConfig = {
-    // Array av lenker som skal vises i navigasjonen
-    navLinks: [
-        // Viktig: Bytt rekkefølge om ønskelig. Den første brukes ofte som "hjem".
-        { href: "index.html", title: "Flertallskalkulator" },
-        { href: "party-overview.html", title: "Partioversikt" },
-        { href: "party-profile.html", title: "Partiprofil" },
-        { href: "party-similarity.html", title: "Partilikhet" },
-        { href: "issue-matrix.html", title: "Saksmatrise" },
-        { href: "sakskompass.html", title: "Sakskompass" },
-        { href: "map-explorer.html", title: "Kartutforsker" }, // NY LENKE
-        { href: "candidates.html", title: "Kandidatutforsker" }  // NY LENKE
-        // Legg til nye sider her i fremtiden, f.eks.:
-        // { href: "om-prosjektet.html", title: "Om Prosjektet" }
+    linkCategories: [
+        {
+            categoryTitle: "Politiske Saker",
+            links: [
+                { href: "index.html", title: "Flertallskalkulator" },
+                { href: "issue-matrix.html", title: "Saksmatrise" },
+                { href: "sakskompass.html", title: "Sakskompass" }
+            ]
+        },
+        {
+            categoryTitle: "Partier",
+            links: [
+                { href: "party-overview.html", title: "Partioversikt" },
+                { href: "party-profile.html", title: "Partiprofil" },
+                { href: "party-similarity.html", title: "Partilikhet" }
+            ]
+        },
+        {
+            categoryTitle: "Kandidater",
+            links: [
+                { href: "candidates.html", title: "Kandidatutforsker" },
+                { href: "map-explorer.html", title: "Kartutforsker" }
+            ]
+        }
     ]
 };
 
-// Sjekker om objektet ble opprettet før logging for å unngå følgefeil hvis det fortsatt er feil
-if (window.navigationConfig && window.navigationConfig.navLinks) {
-    console.log("Navigation config loaded:", window.navigationConfig.navLinks.length, "links defined.");
+// Sjekker om objektet ble opprettet før logging
+if (window.navigationConfig && window.navigationConfig.linkCategories) {
+    console.log("Navigation config loaded with categories:", window.navigationConfig.linkCategories.length, "categories defined.");
 } else {
-    console.error("Navigation config failed to load or initialize properly.");
+    console.error("Navigation config failed to load or initialize properly with categories.");
 }
