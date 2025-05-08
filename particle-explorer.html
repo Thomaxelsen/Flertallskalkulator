@@ -4,28 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Partikkelutforsker - Politisk Nettverk</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/particle-explorer.css"> <!-- Ny CSS-fil -->
-    <!-- Three.js, Anime.js, 3d-force-graph (fra CDN eller lokale filer) -->
+    <link rel="stylesheet" href="css/styles.css"> <!-- Felles stiler -->
+    <link rel="stylesheet" href="css/particle-explorer.css"> <!-- Stiler for denne siden -->
+
+    <!-- Biblioteker for 3D-grafen -->
+    <!-- Sørg for at disse stiene er korrekte, eller bruk nedlastede versjoner -->
     <script src="//unpkg.com/three"></script>
-    <script src="//unpkg.com/animejs"></script>
+    <!-- Anime.js er ikke strengt nødvendig for 3d-force-graph, men kan brukes til animasjoner senere -->
+    <!-- <script src="//unpkg.com/animejs"></script> -->
     <script src="//unpkg.com/3d-force-graph"></script>
+
 </head>
 <body>
-    <!-- Standard Hamburgermeny HTML -->
-    <div class="burger-menu" id="burgerMenu">...</div>
-    <div class="mobile-menu" id="mobileMenu">...</div>
+    <!-- START: Standard Hamburgermeny HTML (som på andre sider) -->
+    <div class="burger-menu" id="burgerMenu">
+        <div class="burger-bar"></div> <div class="burger-bar"></div> <div class="burger-bar"></div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="menu-header">
+            <h3>Meny</h3> <button class="close-button" id="closeMenu">×</button>
+        </div>
+        <div class="menu-items" id="mobileMenuItems"></div>
+    </div>
     <div class="menu-overlay" id="menuOverlay"></div>
+    <!-- SLUTT: Standard Hamburgermeny HTML -->
 
-    <div class="container particle-container"> <!-- Egen container-klasse? -->
+    <!-- Bruk en egen container for å unngå konflikt med standard .container padding -->
+    <div class="particle-page-container">
         <header>
             <!-- Standard Header -->
-            <div class="logo-container">...</div>
+            <div class="logo-container">
+                 <a href="index.html">
+                    <img src="images/Logo.png" alt="Kreftforeningens logo" class="logo-image">
+                </a>
+            </div>
             <div class="header-text">
                 <h1>Partikkelutforsker</h1>
                 <div class="header-subtitle">Et 3D Nettverk av Politikk</div>
             </div>
-            <div class="nav-links"></div>
+            <div class="nav-links">
+                <!-- Fylles av navigation.js -->
+            </div>
         </header>
 
         <main class="particle-main-content">
@@ -33,21 +52,28 @@
             <div class="particle-controls">
                 <h3>Utforsk Nettverket</h3>
                 <div class="control-group">
-                    <label for="force-strength">Tilknytningsstyrke:</label>
-                    <input type="range" id="force-strength" min="-100" max="0" value="-30">
+                    <label for="force-strength">Frastøting (-)/Tiltrekning (+):</label>
+                    <!-- Justert range og default for bedre start -->
+                    <input type="range" id="force-strength" min="-100" max="50" value="-40" step="1">
+                    <span class="range-value" id="force-strength-value">-40</span>
                 </div>
                 <div class="control-group">
-                    <label for="link-distance">Koblingslengde:</label>
-                    <input type="range" id="link-distance" min="10" max="200" value="50">
+                    <label for="link-distance">Optimal koblingslengde:</label>
+                    <input type="range" id="link-distance" min="10" max="150" value="60" step="1">
+                     <span class="range-value" id="link-distance-value">60</span>
                 </div>
-                <div class="control-group toggle-group">
-                     <label><input type="checkbox" id="toggle-issues" checked> Vis Saker</label>
-                     <label><input type="checkbox" id="toggle-candidates" checked> Vis Kandidater</label>
-                     <label><input type="checkbox" id="toggle-links-issues" checked> Vis Sakskoblinger</label>
-                     <label><input type="checkbox" id="toggle-links-candidates" checked> Vis Kandidatkoblinger</label>
+                 <div class="control-group toggle-group">
+                    <label title="Vis/skjul saker"><input type="checkbox" id="toggle-issues" checked> Saker</label>
+                    <label title="Vis/skjul kandidater"><input type="checkbox" id="toggle-candidates" checked> Kandidater</label>
                  </div>
-                <button id="reset-view-btn" class="button secondary">Nullstill Visning</button>
-                <button id="freeze-layout-btn" class="button secondary">Frys Layout</button>
+                 <div class="control-group toggle-group">
+                    <label title="Vis/skjul koblinger mellom parti og sak"><input type="checkbox" id="toggle-links-issues" checked> Sakskoblinger</label>
+                    <label title="Vis/skjul koblinger mellom parti og kandidat"><input type="checkbox" id="toggle-links-candidates" checked> Kandidatkoblinger</label>
+                 </div>
+                <div class="control-group button-group">
+                    <button id="reset-view-btn" class="button secondary small-btn">Nullstill Visning</button>
+                    <button id="freeze-layout-btn" class="button secondary small-btn">Frys Layout</button>
+                </div>
             </div>
 
             <!-- 3D Graf Container -->
@@ -56,20 +82,31 @@
             </div>
 
             <!-- Info Panel (skjult som standard) -->
-            <div id="particle-info-panel" style="display: none;">
-                <button id="close-info-panel">×</button>
-                <div id="info-panel-content"></div>
+            <div id="particle-info-panel">
+                <button id="close-info-panel" title="Lukk infopanel">×</button>
+                <div id="info-panel-content">
+                    <!-- Innhold fylles av JS -->
+                    <p>Klikk på en node (parti, sak, kandidat) for å se detaljer.</p>
+                </div>
             </div>
         </main>
 
-        <footer>
-            Visualisering drevet av Three.js og 3d-force-graph. Data fra valget 2021.
+        <!-- Minimal footer for denne siden? -->
+        <footer class="particle-footer">
+            Visualisering drevet av Three.js og 3d-force-graph.
         </footer>
     </div>
 
+    <!-- Felles navigasjon og data-lastere -->
     <script src="js/navigationConfig.js"></script>
     <script src="js/navigation.js"></script>
-    <!-- <script src="js/data-service.js"></script> --> <!-- Hvis du bruker data service -->
-    <script src="js/particle-explorer.js"></script> <!-- Din nye logikk -->
+    <!-- Last inn data FØR particle-explorer.js -->
+    <script src="js/partiesData.js"></script> <!-- Antar denne setter window.partiesData -->
+    <script src="js/issues.js"></script> <!-- Antar denne setter window.issues -->
+    <!-- Kandidatdata trengs også -->
+    <!-- <script src="js/candidatesData.js"></script> --> <!-- Du trenger en måte å laste candidates.json på -->
+
+    <!-- Sidespesifikk logikk -->
+    <script src="js/particle-explorer.js"></script>
 </body>
 </html>
