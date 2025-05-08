@@ -104,7 +104,7 @@ header h1 strong {
 /* Desktop Navigasjonslenker (vises/skjules via media queries) */
 .nav-links {
     /* display: flex; <-- Flyttet til media query for desktop */
-    display: none; /* Skjult som standard (mobil først) */
+    display: none !important; /* Skjult som standard (mobil først) - VIKTIG ENDRING */
     align-items: center;
     gap: 10px;
     flex-shrink: 0;
@@ -1185,7 +1185,7 @@ body.menu-open .burger-menu {
 
     /* --- MOBILNAVIGASJON --- */
     .nav-links {
-        display: none; /* Skjul desktop-linker */
+        display: none !important; /* Skjul desktop-linker - VIKTIG ENDRING */
     }
     .burger-menu {
         display: block; /* Sikrer at den vises */
@@ -1309,7 +1309,7 @@ body.menu-open .burger-menu {
         display: none !important; /* Skjul overlay på desktop */
      }
      .nav-links {
-         display: flex; /* Vis desktop-linker */
+         display: flex !important; /* Vis desktop-linker - VIKTIG ENDRING */
      }
      body.menu-open {
         overflow: auto; /* Tillat scrolling på desktop selv om menyen (utilsiktet) er åpen */
@@ -1337,7 +1337,7 @@ body.menu-open .burger-menu {
 /* --- Desktop Navigasjon Dropdowns --- */
 .nav-links {
     /* Sikre at .nav-links er flex for å håndtere dropdowns horisontalt */
-    display: flex;
+    /* display: flex; <-- Satt i media query over */
     align-items: center;
     gap: 5px; /* Mindre gap mellom kategorititler */
 }
