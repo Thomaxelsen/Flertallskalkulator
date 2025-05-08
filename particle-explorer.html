@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partikkelutforsker - Politisk Nettverk</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/particle-explorer.css"> <!-- Ny CSS-fil -->
+    <!-- Three.js, Anime.js, 3d-force-graph (fra CDN eller lokale filer) -->
+    <script src="//unpkg.com/three"></script>
+    <script src="//unpkg.com/animejs"></script>
+    <script src="//unpkg.com/3d-force-graph"></script>
+</head>
+<body>
+    <!-- Standard Hamburgermeny HTML -->
+    <div class="burger-menu" id="burgerMenu">...</div>
+    <div class="mobile-menu" id="mobileMenu">...</div>
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <div class="container particle-container"> <!-- Egen container-klasse? -->
+        <header>
+            <!-- Standard Header -->
+            <div class="logo-container">...</div>
+            <div class="header-text">
+                <h1>Partikkelutforsker</h1>
+                <div class="header-subtitle">Et 3D Nettverk av Politikk</div>
+            </div>
+            <div class="nav-links"></div>
+        </header>
+
+        <main class="particle-main-content">
+            <!-- Kontrollpanel -->
+            <div class="particle-controls">
+                <h3>Utforsk Nettverket</h3>
+                <div class="control-group">
+                    <label for="force-strength">Tilknytningsstyrke:</label>
+                    <input type="range" id="force-strength" min="-100" max="0" value="-30">
+                </div>
+                <div class="control-group">
+                    <label for="link-distance">Koblingslengde:</label>
+                    <input type="range" id="link-distance" min="10" max="200" value="50">
+                </div>
+                <div class="control-group toggle-group">
+                     <label><input type="checkbox" id="toggle-issues" checked> Vis Saker</label>
+                     <label><input type="checkbox" id="toggle-candidates" checked> Vis Kandidater</label>
+                     <label><input type="checkbox" id="toggle-links-issues" checked> Vis Sakskoblinger</label>
+                     <label><input type="checkbox" id="toggle-links-candidates" checked> Vis Kandidatkoblinger</label>
+                 </div>
+                <button id="reset-view-btn" class="button secondary">Nullstill Visning</button>
+                <button id="freeze-layout-btn" class="button secondary">Frys Layout</button>
+            </div>
+
+            <!-- 3D Graf Container -->
+            <div id="3d-graph-container">
+                <div class="graph-loader">Laster 3D nettverk...</div>
+            </div>
+
+            <!-- Info Panel (skjult som standard) -->
+            <div id="particle-info-panel" style="display: none;">
+                <button id="close-info-panel">×</button>
+                <div id="info-panel-content"></div>
+            </div>
+        </main>
+
+        <footer>
+            Visualisering drevet av Three.js og 3d-force-graph. Data fra valget 2021.
+        </footer>
+    </div>
+
+    <script src="js/navigationConfig.js"></script>
+    <script src="js/navigation.js"></script>
+    <!-- <script src="js/data-service.js"></script> --> <!-- Hvis du bruker data service -->
+    <script src="js/particle-explorer.js"></script> <!-- Din nye logikk -->
+</body>
+</html>
