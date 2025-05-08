@@ -7,12 +7,7 @@
     <link rel="stylesheet" href="css/styles.css"> <!-- Felles stiler -->
     <link rel="stylesheet" href="css/particle-explorer.css"> <!-- Stiler for denne siden -->
 
-    <!-- Biblioteker for 3D-grafen -->
-    <!-- ENDRING HER: Bruker spesifikk UMD build for Three.js -->
-    <script src="//unpkg.com/three@0.128.0/build/three.min.js"></script>
-    <!-- Anime.js er ikke strengt nødvendig for 3d-force-graph, men kan brukes til animasjoner senere -->
-    <!-- <script src="//unpkg.com/animejs"></script> -->
-    <script src="//unpkg.com/3d-force-graph"></script>
+    <!-- Merk: Bibliotek-script er FLYTTET til bunnen av body -->
 
 </head>
 <body>
@@ -53,7 +48,6 @@
                 <h3>Utforsk Nettverket</h3>
                 <div class="control-group">
                     <label for="force-strength">Frastøting (-)/Tiltrekning (+):</label>
-                    <!-- Justert range og default for bedre start -->
                     <input type="range" id="force-strength" min="-100" max="50" value="-40" step="1">
                     <span class="range-value" id="force-strength-value">-40</span>
                 </div>
@@ -85,7 +79,6 @@
             <div id="particle-info-panel">
                 <button id="close-info-panel" title="Lukk infopanel">×</button>
                 <div id="info-panel-content">
-                    <!-- Innhold fylles av JS -->
                     <p>Klikk på en node (parti, sak, kandidat) for å se detaljer.</p>
                 </div>
             </div>
@@ -97,15 +90,20 @@
         </footer>
     </div>
 
+    <!-- === SCRIPTS FLYTTET HIT === -->
+    <!-- Biblioteker FØRST -->
+    <script src="//unpkg.com/three@0.128.0/build/three.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="//unpkg.com/3d-force-graph"></script>
+
     <!-- Felles navigasjon og data-lastere -->
     <script src="js/navigationConfig.js"></script>
     <script src="js/navigation.js"></script>
-    <!-- Last inn data FØR particle-explorer.js -->
-    <script src="js/partiesData.js"></script> <!-- Antar denne setter window.partiesData -->
-    <script src="js/issues.js"></script> <!-- Antar denne setter window.issues -->
-    <script src="js/candidatesData.js"></script> <!-- Laster kandidatdata -->
+    <script src="js/partiesData.js"></script>
+    <script src="js/issues.js"></script>
+    <script src="js/candidatesData.js"></script>
 
-    <!-- Sidespesifikk logikk -->
+    <!-- Sidespesifikk logikk TIL SLUTT -->
     <script src="js/particle-explorer.js"></script>
 </body>
 </html>
