@@ -321,3 +321,22 @@
         to { transform: translateY(0); opacity: 1; }
     }
 }
+/* css/particle-explorer.css - TILLEGG for kandidatbilde i infopanel */
+
+#info-panel-content .info-panel-candidate-image {
+    display: block; /* Gjør at den tar egen linje */
+    max-width: 150px; /* Begrens bredden */
+    height: auto; /* Bevar sideforhold */
+    border-radius: 6px; /* Myke kanter */
+    margin: 10px auto 15px auto; /* Sentrer og gi luft rundt */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    border: 1px solid #eee;
+}
+
+#info-panel-content .no-image-text {
+    font-style: italic;
+    color: #888;
+    text-align: center;
+    margin: 15px 0;
+    font-size: 0.85rem;
+}
