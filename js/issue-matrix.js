@@ -1,4 +1,4 @@
-// issue-matrix.js - Håndterer visualisering av saksmatrisen
+// js/issue-matrix.js - Håndterer visualisering av saksmatrisen
 
 // --- START: Popup-logikk (inspirert av issue-selector.js) ---
 
@@ -217,8 +217,6 @@ const agreementColors = {
     2: { background: "rgba(0, 168, 163, 0.1)", color: "#00a8a3", border: "#00a8a3" }
 };
 
-const headerBackground = "#b3d7f0"; // Dusere lyseblå (brukes kun i generateMatrix nå)
-
 // Global variabel for å holde data og popup-status
 let matrixIssues = [];
 let showQuotesEnabled = true; // Start med popups aktivert
@@ -351,15 +349,17 @@ function setupToggleListener() {
 // Generer matrisen basert på filtrering
 function generateMatrix(areaFilter, viewMode) {
     console.log("Genererer matrise med filter:", areaFilter, "visning:", viewMode);
-    const matrixContainer = document.getElementById('matrix-visualization');
-    if (!matrixContainer) {
+    const matrixVisualizationDiv = document.getElementById('matrix-visualization'); // Dette er den ytre div
+    if (!matrixVisualizationDiv) {
         console.error("Matrix container #matrix-visualization ikke funnet.");
         return;
     }
-    matrixContainer.innerHTML = ''; // Tøm container
-    const matrixWrapper = document.createElement('div');
-    matrixWrapper.className = 'matrix-container'; // Bruk CSS-klassen
-    matrixContainer.appendChild(matrixWrapper);
+    matrixVisualizationDiv.innerHTML = ''; // Tøm ytre container
+
+    // === START ENDRING: Ny div for tabell-scrolling ===
+    const tableScrollWrapper = document.createElement('div');
+    tableScrollWrapper.className = 'matrix-table-scroll-wrapper'; // Ny klasse for styling
+    // === SLUTT ENDRING ===
 
     let filteredIssues = matrixIssues;
     if (areaFilter !== 'all') {
@@ -431,17 +431,14 @@ function generateMatrix(areaFilter, viewMode) {
         // Hopp over hvis området ikke finnes i dataene (kan skje med "Andre saker")
         if (!issuesByArea[area]) return;
 
-        // === KORRIGERING START: Lag Area Header ALLTID ===
         // Area Header Row - lages uavhengig av om det er saker under
         const areaRow = document.createElement('tr');
         areaRow.className = 'area-header';
         const areaCell = document.createElement('td');
         areaCell.colSpan = parties.length + 2; // +2 for Sak og SUM
         areaCell.textContent = area;
-        // Styling settes av CSS-regel: .matrix-table tr.area-header td
         areaRow.appendChild(areaCell);
         tbody.appendChild(areaRow);
-        // === KORRIGERING SLUTT ===
 
         // Sjekk NÅ om det finnes saker FØR vi prøver å liste dem
         if (issuesByArea[area].length > 0) {
@@ -526,12 +523,14 @@ function generateMatrix(areaFilter, viewMode) {
                 tbody.appendChild(row);
             });
         }
-        // Ingen 'else' her - hvis det ikke er saker, vises bare overskriften
     });
     // --- Slutt Table Body ---
 
-    table.appendChild(tbody);
-    matrixWrapper.appendChild(table);
+    // === START ENDRING: Legg tabellen til scroll-wrapper, og wrapper til ytre div ===
+    tableScrollWrapper.appendChild(table);
+    matrixVisualizationDiv.appendChild(tableScrollWrapper);
+    // === SLUTT ENDRING ===
+
     updateLegendStyles(); // Oppdater legend-stiler til å matche celler
 }
 
