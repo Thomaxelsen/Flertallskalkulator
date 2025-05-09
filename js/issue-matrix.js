@@ -346,20 +346,15 @@ function setupToggleListener() {
 }
 
 
-// Generer matrisen basert på filtrering
+// === START: Endret generateMatrix funksjon ===
 function generateMatrix(areaFilter, viewMode) {
     console.log("Genererer matrise med filter:", areaFilter, "visning:", viewMode);
-    const matrixVisualizationDiv = document.getElementById('matrix-visualization'); // Dette er den ytre div
+    const matrixVisualizationDiv = document.getElementById('matrix-visualization');
     if (!matrixVisualizationDiv) {
         console.error("Matrix container #matrix-visualization ikke funnet.");
         return;
     }
-    matrixVisualizationDiv.innerHTML = ''; // Tøm ytre container
-
-    // === START ENDRING: Ny div for tabell-scrolling ===
-    const tableScrollWrapper = document.createElement('div');
-    tableScrollWrapper.className = 'matrix-table-scroll-wrapper'; // Ny klasse for styling
-    // === SLUTT ENDRING ===
+    matrixVisualizationDiv.innerHTML = ''; // Tøm den ytre containeren først
 
     let filteredIssues = matrixIssues;
     if (areaFilter !== 'all') {
@@ -367,46 +362,37 @@ function generateMatrix(areaFilter, viewMode) {
     }
     console.log("Filtrerte saker:", filteredIssues.length);
 
-    // --- Sortering og Gruppering ---
-    const areaOrder = [ // Definer rekkefølge
+    const areaOrder = [
         "Arbeidsliv", "Diagnostikk og tidlig oppdagelse", "Folkehelse og forebygging",
         "Forskning og innovasjon", "Frivillig sektor", "Kreftomsorg", "Rettigheter",
         "Tilgang til behandling", "Økt investeringer i helse"
     ];
     const issuesByArea = {};
-    // Initialiser alle områder i riktig rekkefølge for å sikre at overskrifter vises
     areaOrder.forEach(area => issuesByArea[area] = []);
-    // Fyll inn saker i de riktige områdene
     filteredIssues.forEach(issue => {
-        if (issuesByArea[issue.area]) { // Sjekk om området er definert i areaOrder
+        if (issuesByArea[issue.area]) {
             issuesByArea[issue.area].push(issue);
-        } else { // Håndter eventuelle ukjente områder
+        } else {
             if (!issuesByArea["Andre saker"]) issuesByArea["Andre saker"] = [];
             issuesByArea["Andre saker"].push(issue);
         }
     });
-    // Legg til "Andre saker" i rekkefølgen hvis det finnes
     if (issuesByArea["Andre saker"] && issuesByArea["Andre saker"].length > 0) {
         areaOrder.push("Andre saker");
     }
-    // Sorter saker innenfor hvert område
     for (const area in issuesByArea) {
         issuesByArea[area].sort((a, b) => a.name.localeCompare(b.name));
     }
-    // --- Slutt Sortering og Gruppering ---
 
     const table = document.createElement('table');
     table.className = 'matrix-table';
 
-    // --- Lag Table Header (thead) ---
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
-    // Issue Header Column
     const issueHeader = document.createElement('th');
     issueHeader.className = 'issue-col';
     issueHeader.textContent = 'Sak';
     headerRow.appendChild(issueHeader);
-    // Party Header Columns
     parties.forEach(party => {
         const partyHeader = document.createElement('th');
         partyHeader.className = 'party-col'; partyHeader.textContent = party.shorthand; partyHeader.title = party.name;
@@ -415,83 +401,63 @@ function generateMatrix(areaFilter, viewMode) {
         partyHeader.style.color = '#fff';
         headerRow.appendChild(partyHeader);
     });
-    // SUM Header Column
     const sumHeader = document.createElement('th');
     sumHeader.className = 'party-col'; sumHeader.textContent = 'SUM'; sumHeader.title = 'Sum av poeng';
     sumHeader.style.backgroundColor = "#e9ecef";
     headerRow.appendChild(sumHeader);
     thead.appendChild(headerRow);
     table.appendChild(thead);
-    // --- Slutt Table Header ---
 
-
-    // --- Lag Table Body (tbody) ---
     const tbody = document.createElement('tbody');
     areaOrder.forEach(area => {
-        // Hopp over hvis området ikke finnes i dataene (kan skje med "Andre saker")
         if (!issuesByArea[area]) return;
-
-        // Area Header Row - lages uavhengig av om det er saker under
         const areaRow = document.createElement('tr');
         areaRow.className = 'area-header';
         const areaCell = document.createElement('td');
-        areaCell.colSpan = parties.length + 2; // +2 for Sak og SUM
+        areaCell.colSpan = parties.length + 2;
         areaCell.textContent = area;
         areaRow.appendChild(areaCell);
         tbody.appendChild(areaRow);
 
-        // Sjekk NÅ om det finnes saker FØR vi prøver å liste dem
         if (issuesByArea[area].length > 0) {
-            // Gå gjennom hver sak i dette området
             issuesByArea[area].forEach(issue => {
                 const row = document.createElement('tr');
-
-                // Saknavn-celle
                 const issueCell = document.createElement('td');
                 issueCell.className = 'issue-col';
                 issueCell.textContent = issue.name;
                 issueCell.title = issue.name;
                 row.appendChild(issueCell);
-
                 let totalPoints = 0;
-                // Parti-celler
                 parties.forEach(party => {
-                    const cellContainer = document.createElement('td'); // Ytre TD for layout
-
+                    const cellContainer = document.createElement('td');
                     let agreementLevel = 0;
                     let quote = null;
                     if (issue.partyStances && issue.partyStances[party.shorthand]) {
                         agreementLevel = issue.partyStances[party.shorthand].level ?? 0;
                         quote = issue.partyStances[party.shorthand].quote;
                     }
-
                     const cell = document.createElement('div');
                     cell.className = 'cell';
                     const colors = agreementColors[agreementLevel] || agreementColors[0];
                     cell.style.backgroundColor = colors.background;
                     cell.style.color = colors.color;
                     cell.style.border = `1px solid ${colors.border}`;
-
                     if (viewMode === 'numbers') {
                         cell.textContent = agreementLevel;
                     } else {
                         cell.innerHTML = ' ';
                     }
-
                     cell.dataset.party = party.shorthand;
                     cell.dataset.issueId = issue.id;
                     cell.dataset.level = agreementLevel;
-
                     if (quote) {
                         cell.dataset.quote = quote;
                         cell.classList.add('has-quote');
                         cell.style.cursor = "pointer";
-
                         const infoIndicator = document.createElement('span');
                         infoIndicator.className = 'info-indicator';
                         infoIndicator.innerHTML = 'i';
                         cell.appendChild(infoIndicator);
-
                         if (isTouchDevice()) {
                             cell.addEventListener('click', handleMatrixCellInteraction);
                         } else {
@@ -501,13 +467,10 @@ function generateMatrix(areaFilter, viewMode) {
                     } else {
                         cell.style.cursor = "default";
                     }
-
                     cellContainer.appendChild(cell);
                     row.appendChild(cellContainer);
                     totalPoints += agreementLevel;
                 });
-
-                // SUM-celle
                 const sumCellContainer = document.createElement('td');
                 const sumCell = document.createElement('div');
                 sumCell.className = 'sum-cell-content';
@@ -519,20 +482,22 @@ function generateMatrix(areaFilter, viewMode) {
                 else { sumCell.style.backgroundColor = agreementColors[0].background; sumCell.style.color = agreementColors[0].color; sumCell.style.border = `1px solid ${agreementColors[0].border}`; }
                 sumCellContainer.appendChild(sumCell);
                 row.appendChild(sumCellContainer);
-
                 tbody.appendChild(row);
             });
         }
     });
-    // --- Slutt Table Body ---
+    table.appendChild(tbody);
 
-    // === START ENDRING: Legg tabellen til scroll-wrapper, og wrapper til ytre div ===
-    tableScrollWrapper.appendChild(table);
-    matrixVisualizationDiv.appendChild(tableScrollWrapper);
-    // === SLUTT ENDRING ===
+    // Lag scroll-wrapperen NÅ og legg tabellen inni
+    const tableScrollWrapper = document.createElement('div');
+    tableScrollWrapper.className = 'matrix-table-scroll-wrapper';
+    tableScrollWrapper.appendChild(table); // Legg den ferdigbygde tabellen inn i wrapperen
+    matrixVisualizationDiv.appendChild(tableScrollWrapper); // Legg wrapperen til den ytre div-en
 
-    updateLegendStyles(); // Oppdater legend-stiler til å matche celler
+    updateLegendStyles();
 }
+// === SLUTT: Endret generateMatrix funksjon ===
+
 
 // Funksjon for å håndtere interaksjon med matrisecelle (som før)
 function handleMatrixCellInteraction(event) {
