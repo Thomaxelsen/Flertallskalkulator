@@ -1030,7 +1030,24 @@ body.menu-open .burger-menu {
 .legend-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin: 25px 0; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
 /* Stil for legend er nå satt i JS (updateLegendStyles) for konsistens med celler */
 
-.matrix-container { overflow-x: auto; margin-bottom: 30px; background-color: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); -webkit-overflow-scrolling: touch; }
+/* === START ENDRING for Sticky Header i Saksmatrise === */
+.matrix-container {
+    /* overflow-x: auto;  <-- DENNE ER FJERNET */
+    margin-bottom: 30px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    -webkit-overflow-scrolling: touch; /* Kan beholdes for generell touch-scrolling på siden */
+}
+
+/* Ny regel for den indre tabell-wrapperen som skal scrolle */
+.matrix-table-scroll-wrapper {
+    overflow-x: auto; /* Horisontal scroll kun for tabellen */
+    width: 100%; /* Ta full bredde av sin forelder (.matrix-container) */
+    -webkit-overflow-scrolling: touch; /* For jevn scroll på iOS */
+}
+/* === SLUTT ENDRING for Sticky Header i Saksmatrise === */
+
 .matrix-table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 800px; }
 .matrix-table th, .matrix-table td { padding: 10px 12px; border-bottom: 1px solid #eee; text-align: center; vertical-align: middle; white-space: nowrap; }
 .matrix-table td { border-right: 1px solid #eee; }
