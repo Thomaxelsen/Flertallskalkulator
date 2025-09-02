@@ -1978,5 +1978,49 @@
         "quote": null
       }
     }
+  },
+  {
+    "id": 45,
+   "area": "Folkehelse og forebygging",
+    "name": "Gratis skolemat eller frukt",
+    "description": "Gratis skolemat eller frukt",
+    "partyStances": {
+      "R": {
+        "level": 2,
+        "quote": "Sikre alle barn et sunt måltid på skolen hver dag."
+      },
+      "FrP": {
+        "level": 0,
+        "quote": null
+      },
+      "H": {
+        "level": 0,
+        "quote": null
+      },
+      "V": {
+        "level": 0,
+        "quote": null
+      },
+      "KrF": {
+        "level": 0,
+        "quote": null
+      },
+      "AP": {
+        "level": 2,
+        "quote": "At alle skoler har tilbud om et daglig gratis skolemåltid"
+      },
+      "MDG": {
+        "level": 2,
+        "quote": "Styrke gratisprinsippet i skolen og bevilge midler til trykte bøker, fysisk læremateriell og praktisk undervisning og innfasing av skolemat."
+      },
+      "SP": {
+        "level": 2,
+        "quote": ""Innføre et sunt skolemåltid for elever i grunnskolen. Måltidet skal være statlig finansiert, og uten egenandel"."
+      },
+      "SV": {
+        "level": 2,
+        "quote": "Innføre gratis måltid hver dag i grunnskolen og videregående skole"
+      }
+    }
   }
 ]
