@@ -6,8 +6,8 @@
     "description": "Fleksibel sykepengeordning for kreftpasienter",
     "partyStances": {
       "R": {
-        "level": 0,
-        "quote": null
+        "level": 1,
+        "quote": "Forsvare og forbedre dagens sykelønnsordning"
       },
       "FrP": {
         "level": 2,
@@ -110,8 +110,8 @@
         "quote": "Et langt kapittel om NAV"
       },
       "KrF": {
-        "level": 0,
-        "quote": null
+        "level": 1,
+        "quote": "Sikre økt tilgang på skreddersydde tjenester, slik at systemet tilpasses den enkelte og ikke motsatt. Slå sammen all oppfølging/ytelser for unge under 30 år til en felles ytelse med mål om arbeid, kvalifisering og utdanning som erstatter dagpenger, arbeidsavklaringspenger, uføretrygd, tiltakspenger, sosialhjelp og kvalifiseringsprogram."
       },
       "AP": {
         "level": 1,
@@ -122,12 +122,12 @@
         "quote": "Jobbe mer helhetlig med langsiktig oppfølging av funksjonshindrede og kronikere, bl.a. universell utforming og lønnstilskudd som rettighetsfestes. Ordningen må også kunne samordnes med BPA."
       },
       "SP": {
-        "level": 1,
-        "quote": "Gjere avtala om inkluderande arbeidsliv meir forpliktande for alle partar og sikre at fleire med nedsatt arbeidsevne får arbeid."
+        "level": 2,
+        "quote": "Styrke ordningen med individuell jobbstøtte gjennom NAV (IPS) for personer med psykiske utfordringer eller rusproblemer."
       },
       "SV": {
-        "level": 0,
-        "quote": null
+        "level": 2,
+        "quote": "Styrke individuell jobbstøtte (IPS) og jobbfokusert psykologisk behandling, slik at flere unge med psykiske helseplager får delta i arbeidslivet"
       }
     }
   },
@@ -194,8 +194,8 @@
         "quote": "Satse mer på arbeidsrettet rehabilitering for å sikre at flere kommer raskere tilbake til arbeidslivet."
       },
       "V": {
-        "level": 0,
-        "quote": null
+        "level": 2,
+        "quote": "At rehabiliteringstjenestene styrkes, slik at flere kommer raskt tilbake til livet etter sykdom eller skade."
       },
       "KrF": {
         "level": 1,
@@ -214,8 +214,8 @@
         "quote": "Innføre ein eigen opptrappingsplan for gode kommunalt tilrettelagte rehabiliterings- og habiliteringstilbod for alle pasientgrupper."
       },
       "SV": {
-        "level": 1,
-        "quote": "Lansere en opptrappingsplan for habiliterings- og rehabiliteringstjenestene i kommunene."
+        "level": 2,
+        "quote": "Gi alle som trenger helsehjelp for å mestre arbeidslivet, tilbud om arbeidsrettet rehabilitering, der helse og arbeid sees i sammenheng samtidig."
       }
     }
   },
@@ -254,12 +254,12 @@
         "quote": null
       },
       "SP": {
-        "level": 0,
-        "quote": null
+        "level": 2,
+        "quote": "Arbeid for mammografitilbud, for eksempel gjennom mammografibuss, i alle distriktskommuner med lang reisevei til slike tilbud."
       },
       "SV": {
-        "level": 0,
-        "quote": null
+        "level": 1,
+        "quote": "Sørge for at transmenn inkluderes i mammografiordningen"
       }
     }
   },
@@ -327,7 +327,7 @@
       },
       "V": {
         "level": 2,
-        "quote": "Utrede et nasjonalt screeningprogram for prostatakreft."
+        "quote": "Etablere et nasjonalt screeningprogram for prostatakreft og styrke informasjonen til menn om risikofaktorer og symptomer"
       },
       "KrF": {
         "level": 0,
@@ -422,8 +422,8 @@
         "quote": "Tilby gratis legemidler til røykeslutt på nasjonalt nivå."
       },
       "AP": {
-        "level": 2,
-        "quote": "Følge opp ambisjonene i folkehelsestrategien ved å finansiere et nasjonalt røykesluttprogram."
+        "level": 0,
+        "quote": null
       },
       "MDG": {
         "level": 0,
@@ -474,8 +474,8 @@
         "quote": null
       },
       "SP": {
-        "level": 0,
-        "quote": null
+        "level": 1,
+        "quote": "Jobbe for tiltak som forebygger at ungdom begynner å bruke ulike tobakksprodukt."
       },
       "SV": {
         "level": 0,
@@ -514,16 +514,16 @@
         "quote": "Føre en restriktiv alkoholpolitikk og opprettholde Vinmonopolets samfunnsrolle"
       },
       "MDG": {
-        "level": 0,
-        "quote": null
+        "level": 2,
+        "quote": "Videreføre en restriktiv politikk for omsetning av alkohol gjennom å beholde Vinmonopolet og fjerne innreisekvotene."
       },
       "SP": {
         "level": 2,
         "quote": "Ha restriksjoner på alkoholreklame og begrense tilgjengeligheten."
       },
       "SV": {
-        "level": 0,
-        "quote": null
+        "level": 2,
+        "quote": "Føre en ansvarlig alkoholpolitikk med mål om å redusere alkoholforbruket"
       }
     }
   },
@@ -678,8 +678,8 @@
         "quote": "Opprettholde tax-free-ordningen, og gjeninnføre veksling mellom tobakk og alkohol."
       },
       "V": {
-        "level": 2,
-        "quote": "Avvikle ordningen med tax-free ved ankomst på flyplasser, og kompensere Avinor for den delen av inntektene som går til finansiering av distriktsflyplasser."
+        "level": 0,
+        "quote": null
       },
       "KrF": {
         "level": 2,
@@ -766,8 +766,8 @@
         "quote": null
       },
       "V": {
-        "level": 2,
-        "quote": "Innføre et forbud mot markedsføring av spesielt usunn mat rettet mot barn"
+        "level": 0,
+        "quote": null
       },
       "KrF": {
         "level": 0,
@@ -786,8 +786,8 @@
         "quote": null
       },
       "SV": {
-        "level": 0,
-        "quote": null
+        "level": 1,
+        "quote": "Innføre forbud mot kommersiell overvåkning og atferdsrettet reklame på digitale flater"
       }
     }
   },
@@ -854,8 +854,8 @@
         "quote": "Opprette en egen Katapult for helseteknologi og helseinnovasjon som kobles opp mot ledende forsknings- og innovasjonsmiljøer."
       },
       "V": {
-        "level": 0,
-        "quote": null
+        "level": 2,
+        "quote": "Etablere testfasiliteter innen helse gjennom Norsk katapult, for at ny helseteknologi kommer raskere ut i markedet."
       },
       "KrF": {
         "level": 0,
@@ -898,8 +898,8 @@
         "quote": "Gjøre helsenæring til et satsingsområde, gjennom bedre digitalisering av helsedata og biobanker og legge til rette for gründerskap."
       },
       "V": {
-        "level": 0,
-        "quote": null
+        "level": 1,
+        "quote": "At offentlige data må deles og tilgjengeliggjøres i større grad enn i dag, og på standardiserte formater"
       },
       "KrF": {
         "level": 0,
@@ -910,8 +910,8 @@
         "quote": "Bruke norske helsedata til å utvikle nye tjenester, behandlinger og medisinske produkter"
       },
       "MDG": {
-        "level": 0,
-        "quote": null
+        "level": 1,
+        "quote": "Gjøre alle offentlige data fritt tilgjengelig i strukturert format, så lenge det ikke går utover personvern eller rikets sikkerhet"
       },
       "SP": {
         "level": 2,
@@ -1046,8 +1046,8 @@
         "quote": "Sikre god legemiddelberedskap og øke norsk selvforsyning av viktige legemidler."
       },
       "SP": {
-        "level": 2,
-        "quote": "Ha auka nasjonal legemiddelproduksjon for å sikre beredskap og unngå mangelsituasjonar."
+        "level": 0,
+        "quote": null
       },
       "SV": {
         "level": 2,
@@ -1111,7 +1111,7 @@
       },
       "FrP": {
         "level": 2,
-        "quote": "Øke skattefradraget for gaver til frivillige, samfunnsnyttige og humanitære organisasjoner."
+        "quote": "Øke skattefradraget på gaver fra privatpersoner til frivillige organisasjoner"
       },
       "H": {
         "level": 2,
@@ -1166,8 +1166,8 @@
         "quote": "Utvide rettshjelpsordningen til flere områder, blant annet lønnstyveri og tvangsinngrep under straffegjennomføring"
       },
       "KrF": {
-        "level": 0,
-        "quote": null
+        "level": 1,
+        "quote": "Styrke tilbudet om fri rettshjelp ved å øke inntekts- og formuesgrensene for dette."
       },
       "AP": {
         "level": 2,
@@ -1246,8 +1246,8 @@
         "quote": "Gjeninnføre gaveforsterkningsordningen og øke skattefradraget for private givere for å gjøre det mer attraktivt å tiltrekke seg privat kapital."
       },
       "H": {
-        "level": 2,
-        "quote": "Innføre en gaveforsterkningsordning på forskningsområdet."
+        "level": 0,
+        "quote": null
       },
       "V": {
         "level": 2,
@@ -1386,8 +1386,8 @@
         "quote": "Styrke palliativ behandling"
       },
       "KrF": {
-        "level": 1,
-        "quote": "Bygge ut og styrke tilbudet om palliativ behandling til alle som har behov for det."
+        "level": 2,
+        "quote": "Etablere en egen medisinsk spesialitet for palliativ medisin i Norge."
       },
       "AP": {
         "level": 0,
@@ -1470,8 +1470,8 @@
         "quote": "Gjøre det enklere for pasienter og pårørende å forstå sine rettigheter og utøve medvirkning og innflytelse."
       },
       "V": {
-        "level": 0,
-        "quote": null
+        "level": 1,
+        "quote": "Gjennomgå og samordne offentlige kjøp av transporttjenester, slik som skoleskyss, TT-transport og pasienttransport, sett i lys av kunstig intelligens og ny teknologi, for å sikre gode og effektive tjenester"
       },
       "KrF": {
         "level": 0,
@@ -1574,8 +1574,8 @@
         "quote": "Videreføre støtte til FOT-ruter og sikre pasientreiser i distriktene, men uten at turisme spiser av tilbudet."
       },
       "SP": {
-        "level": 0,
-        "quote": null
+        "level": 2,
+        "quote": " Øke refusjonssatsene på pasientreiser slik at de kommer på et akseptabelt nivå." og "Forbedre og forenkle pasientreiseordningen og sikre forsvarlig drosjetransport for pasienter i regi av helseforetakene"
       },
       "SV": {
         "level": 0,
@@ -1735,7 +1735,7 @@
       },
       "V": {
         "level": 2,
-        "quote": "Kliniske studier er avgjørende for utvikling av nye medisiner, behandlinger og medisinsk teknologi."
+        "quote": "Tilrettelegge for flere kliniske studier og annen helseforskning gjennom forenkling av byråkrati og regelverk, etablering av mer attraktive skatteordninger for legemiddelfirmaer som kjører studier i Norge, økt prioritering av forskning/kliniske studier i helsetjenesten og mer offentlig-privat samarbeid."
       },
       "KrF": {
         "level": 0,
@@ -1754,8 +1754,8 @@
         "quote": null
       },
       "SV": {
-        "level": 0,
-        "quote": null
+        "level": 1,
+        "quote": "Etablere statlig produksjon av legemidler (StatMed) og styrke legemiddelforskningen"
       }
     }
   },
@@ -1838,8 +1838,8 @@
         "quote": null
       },
       "SP": {
-        "level": 2,
-        "quote": "Redusere byråkrati og sikre raskare innføring av nye behandlingsmetodar."
+        "level": 0,
+        "quote": null
       },
       "SV": {
         "level": 0,
@@ -1866,8 +1866,8 @@
         "quote": "Helseberedskapen må forbedres for å verne om befolkningens liv og helse, og sørge for medisinsk behandling og pleie og omsorg til berørte personer i alle situasjoner. Avklarte ansvarsforhold, tydelige varslings- og rapporteringsrutiner og god samhandling mellom aktørene ved kriser er spesielt viktig."
       },
       "V": {
-        "level": 0,
-        "quote": null
+        "level": 2,
+        "quote": "Styrke både pandemiberedskapen og tiltak mot antibiotikaresistens gjennom en kombinasjon av forskning, innovasjon og internasjonal samhandling. Vi må bygge robuste helsesystemer som tåler fremtidige kriser, og samtidig jobbe langsiktig for å beskytte vår evne til å bekjempe infeksjoner"
       },
       "KrF": {
         "level": 0,
