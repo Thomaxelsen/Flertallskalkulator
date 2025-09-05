@@ -262,3 +262,28 @@
     visibility: visible;
     opacity: 1;
 }
+/* --- Styling for kategori-gruppering --- */
+
+.issue-category-group {
+    border: 1px solid #e0e0e0; /* En lys grå kant */
+    border-radius: 8px; /* Runde hjørner */
+    margin-bottom: 15px; /* Mellomrom mellom kategorier */
+    overflow: hidden; /* Sikrer at runde hjørner gjelder også for innhold */
+}
+
+.issue-category-group:last-child {
+    margin-bottom: 0; /* Ingen ekstra mellomrom for siste gruppe */
+}
+
+.issue-category-header {
+    background-color: #f0f0f0; /* En lys grå bakgrunn for kategori-header */
+    padding: 10px 15px;
+    font-weight: bold;
+    color: #333;
+    border-bottom: 1px solid #e0e0e0; /* Linje under header */
+}
+
+/* Fjerner den individuelle issue-area taggen som nå er redundant */
+.issue-list li .issue-area {
+    display: none;
+}
