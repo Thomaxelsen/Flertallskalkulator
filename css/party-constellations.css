@@ -1,86 +1,175 @@
-/* Generelle stiler for kontroller og knapper */
-.controls {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin-bottom: 30px;
+/* Generell styling for innholdet */
+.main-content {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
 }
 
-.button-group {
+.selection-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.selection-container h2 {
+    margin-top: 0;
+    color: #333;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+/* Styling for partivelger-knapper */
+.party-selector {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    margin-bottom: 15px;
 }
 
-.button {
+.party-button {
     padding: 10px 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
+    border: 2px solid #ccc;
+    border-radius: 20px;
     cursor: pointer;
-    transition: background-color 0.3s, border-color 0.3s;
-}
-
-.button:hover:not(:disabled) {
-    background-color: #e0e0e0;
-}
-
-.button.active {
-    background-color: #007bff;
-    color: white;
-    border-color: #007bff;
-}
-
-.button:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-}
-
-/* Stiler for resultatseksjonen */
-.results-section {
-    margin-top: 20px;
-}
-
-.constellation {
-    margin-bottom: 30px;
-    padding: 20px;
+    font-weight: bold;
+    transition: all 0.2s ease-in-out;
     background-color: #fff;
+}
+
+.party-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Egen farge for hver knapp basert på parti */
+.party-button.r { border-color: #da291c; }
+.party-button.sv { border-color: #eb2e2d; }
+.party-button.ap { border-color: #ed1b34; }
+.party-button.mdg { border-color: #439539; }
+.party-button.sp { border-color: #14773c; }
+.party-button.v { border-color: #00807b; }
+.party-button.krf { border-color: #ffbe00; }
+.party-button.h { border-color: #007ac8; }
+.party-button.frp { border-color: #002e5e; }
+.party-button.pf { border-color: #a04d94; }
+
+
+/* Styling for valgt knapp */
+.party-button.selected {
+    color: #fff;
+}
+.party-button.selected.r { background-color: #da291c; }
+.party-button.selected.sv { background-color: #eb2e2d; }
+.party-button.selected.ap { background-color: #ed1b34; }
+.party-button.selected.mdg { background-color: #439539; }
+.party-button.selected.sp { background-color: #14773c; }
+.party-button.selected.v { background-color: #00807b; }
+.party-button.selected.krf { background-color: #ffbe00; }
+.party-button.selected.h { background-color: #007ac8; }
+.party-button.selected.frp { background-color: #002e5e; }
+.party-button.selected.pf { background-color: #a04d94; }
+
+
+/* Styling for valg av enighet */
+.agreement-selector label {
+    font-weight: normal;
+    margin-left: 8px;
+    cursor: pointer;
+}
+.agreement-selector input {
+    cursor: pointer;
+}
+
+/* Styling for resultat-seksjonen */
+.results-container {
+    background-color: #ffffff;
+    padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.constellation h3 {
-    margin-top: 0;
-    font-size: 1.5em;
-    color: #333;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
+.placeholder-text {
+    color: #888;
+    font-style: italic;
+    text-align: center;
+    padding: 40px 0;
+}
+
+.constellation-result {
+    margin-bottom: 25px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.constellation-header {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #0056b3;
+    margin-bottom: 15px;
+}
+
+.constellation-header .party-tag {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 15px;
+    color: white;
+    font-size: 0.8em;
+    margin-right: 5px;
 }
 
 .issue-list {
-    list-style: none;
-    padding: 0;
+    list-style-type: none;
+    padding-left: 0;
 }
 
-.issue-item {
-    padding: 15px;
-    border-bottom: 1px solid #f0f0f0;
+.issue-list li {
+    background-color: #f9f9f9;
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.issue-item:last-child {
+.issue-list li:last-child {
     border-bottom: none;
 }
 
-.issue-title {
+.issue-area {
+    font-size: 0.8em;
     font-weight: bold;
-    font-size: 1.1em;
-    color: #444;
+    color: #fff;
+    background-color: #555;
+    padding: 4px 8px;
+    border-radius: 10px;
+    margin-left: 10px;
+    white-space: nowrap;
 }
 
-.issue-category {
-    display: block;
-    font-size: 0.9em;
-    color: #777;
-    margin-top: 5px;
+/* Handlingsknapper */
+.action-buttons {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.action-buttons button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#selectAllBtn {
+    background-color: #007bff;
+    color: white;
+}
+
+#clearAllBtn {
+    background-color: #6c757d;
+    color: white;
 }
