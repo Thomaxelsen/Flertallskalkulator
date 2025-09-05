@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partikonstellasjoner - Se partiers enighet</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/party-constellations.css">
+</head>
+<body>
+    <div class="burger-menu" id="burgerMenu">
+        <div class="burger-bar"></div>
+        <div class="burger-bar"></div>
+        <div class="burger-bar"></div>
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="menu-header">
+            <h3>Meny</h3>
+            <button class="close-button" id="closeMenu">×</button>
+        </div>
+        <div class="menu-items" id="mobileMenuItems">
+            </div>
+    </div>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <a href="index.html">
+                    <img src="images/Logo.png" alt="Kreftforeningens logo" class="logo-image">
+                </a>
+            </div>
+            <div class="header-text">
+                <h1>Partikonstellasjoner</h1>
+                <div class="header-subtitle">Se hvilke saker ulike partigrupper er enige om</div>
+            </div>
+            <div class="nav-links">
+                </div>
+        </header>
+
+        <div class="main-content">
+            <div class="settings-section">
+                <h2 class="section-title">1. Velg partier du vil sammenligne</h2>
+                <div class="party-selector-grid" id="partySelectorGrid">
+                    </div>
+                <div class="action-buttons">
+                    <button class="btn-secondary" id="clearSelectionBtn">Fjern alle valg</button>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h2 class="section-title">2. Velg enighetsnivå</h2>
+                <div class="agreement-level-selector" id="agreementLevelSelector">
+                    <label>
+                        <input type="radio" name="agreement" value="1" checked>
+                        Nivå 1 + 2 (Helt enig + Ganske enig)
+                    </label>
+                    <label>
+                        <input type="radio" name="agreement" value="2">
+                        Kun Nivå 2 (Helt enig)
+                    </label>
+                </div>
+            </div>
+
+             <div class="section-divider"></div>
+
+            <div class="results-section">
+                <h2 class="section-title">Resultater</h2>
+                <div id="resultsContainer">
+                    <p class="results-placeholder">Velg minst to partier for å se hvilke saker de er enige om.</p>
+                    </div>
+            </div>
+        </div>
+        <footer>
+            Data basert på Kreftforeningens politiske program. Til bruk for informasjonsformål.
+        </footer>
+    </div>
+
+    <script src="js/navigationConfig.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/issues.js"></script> <script src="js/party-constellations.js"></script>
+
+</body>
+</html>
