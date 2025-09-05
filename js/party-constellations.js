@@ -132,6 +132,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Funksjon for å vise resultatet for én partikombinasjon
     function displayCombinationResult(combo, issues) {
+        // *** NY LINJE FOR FORBEDRING ***
+        // Sorterer sakene alfabetisk basert på saksområde ('area')
+        issues.sort((a, b) => a.area.localeCompare(b.area));
+
         const resultDiv = document.createElement('div');
         resultDiv.className = 'constellation-result';
 
