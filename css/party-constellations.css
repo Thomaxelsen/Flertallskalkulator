@@ -173,3 +173,92 @@
     background-color: #6c757d;
     color: white;
 }
+/* --- Tillegg for partiknapper i sakslisten --- */
+
+.issue-list li {
+    /* Oppdaterer eksisterende regel for bedre layout */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px; /* Gir litt luft mellom elementene */
+}
+
+.issue-name {
+    flex-grow: 1; /* Lar saksnavnet ta opp ledig plass */
+    text-align: left;
+    margin-right: 10px;
+}
+
+.issue-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-shrink: 0; /* Forhindrer at denne krymper */
+}
+
+.issue-party-buttons-container {
+    display: flex;
+    gap: 5px;
+}
+
+/* Innpakning for knapp og infoboks (for posisjonering og mobilklikk) */
+.issue-party-button-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+/* Selve partiknappen */
+.issue-party-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none; /* Forhindrer at tekst markeres ved klikk */
+    border: 1px solid rgba(0,0,0,0.2);
+}
+
+/* Infoboksen med sitat */
+.issue-quote-tooltip {
+    visibility: hidden; /* Skjult som standard */
+    opacity: 0;
+    width: 280px;
+    background-color: #2c3e50; /* En litt mykere sortfarge */
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 12px;
+    position: absolute;
+    z-index: 10;
+    bottom: 130%; /* Posisjon over knappen */
+    left: 50%;
+    transform: translateX(-50%); /* Sentrerer boksen perfekt */
+    transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+    font-size: 0.9em;
+    line-height: 1.5;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* Liten pil under infoboksen */
+.issue-quote-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: #2c3e50 transparent transparent transparent;
+}
+
+/* Viser infoboksen ved hover (PC) eller når wrapperen er i fokus (mobil-trykk) */
+.issue-party-button-wrapper:hover .issue-quote-tooltip,
+.issue-party-button-wrapper:focus .issue-quote-tooltip {
+    visibility: visible;
+    opacity: 1;
+}
