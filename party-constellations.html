@@ -3,48 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partikonstellasjoner</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Partikonstellasjoner - Hva er partiene enige om?</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/party-constellations.css">
 </head>
 <body>
+    <div class="burger-menu" id="burgerMenu">
+        <div class="burger-bar"></div>
+        <div class="burger-bar"></div>
+        <div class="burger-bar"></div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="menu-header">
+            <h3>Meny</h3>
+            <button class="close-button" id="closeMenu">×</button>
+        </div>
+        <div class="menu-items" id="mobileMenuItems"></div>
+    </div>
+    <div class="menu-overlay" id="menuOverlay"></div>
     <div class="container">
-        <aside class="sidebar">
-            <div class="logo">
-                <img src="images/Logo.png" alt="Logo">
+        <header>
+            <div class="logo-container">
+                <a href="index.html">
+                    <img src="images/Logo.png" alt="Kreftforeningens logo" class="logo-image">
+                </a>
             </div>
-            <nav class="navigation"></nav>
-        </aside>
-        <main class="main-content">
-            <header>
+            <div class="header-text">
                 <h1>Partikonstellasjoner</h1>
-                <p>Velg partier for å se hvilke saker de er enige om. Du kan velge to eller flere partier for å se ulike konstellasjoner av enighet.</p>
-            </header>
-            
-            <section class="controls">
-                <div class="party-selector">
-                    <h2>Velg partier</h2>
-                    <div id="party-buttons" class="button-group">
-                        </div>
+                <div class="header-subtitle">Se hvilke saker partiene er enige om</div>
+            </div>
+            <div class="nav-links">
                 </div>
+        </header>
 
-                <div class="agreement-level-selector">
-                    <h2>Velg enighetsnivå</h2>
-                    <div id="agreement-buttons" class="button-group">
-                        <button class="button" data-level="1_2" disabled>Enighet på nivå 1+2</button>
-                        <button class="button" data-level="2" disabled>Kun enighet på nivå 2</button>
+        <div class="main-content">
+            <div class="selection-container">
+                <h2>1. Velg partier</h2>
+                <div class="party-selector" id="partySelector">
                     </div>
+                 <div class="action-buttons">
+                    <button id="selectAllBtn">Velg alle</button>
+                    <button id="clearAllBtn">Fjern alle</button>
                 </div>
-            </section>
+            </div>
 
-            <section id="constellations-result" class="results-section">
-                </section>
-        </main>
+            <div class="selection-container">
+                <h2>2. Velg enighetsnivå</h2>
+                <p>Skal vi kun inkludere saker der partiene er helt enige, eller også saker der de er delvis enige?</p>
+                <div class="agreement-selector">
+                    <input type="radio" id="level2" name="agreement" value="2" checked>
+                    <label for="level2">Kun helt enige (nivå 2)</label>
+                    <br>
+                    <input type="radio" id="level1" name="agreement" value="1">
+                    <label for="level1">Både helt og delvis enige (nivå 1 & 2)</label>
+                </div>
+            </div>
+
+            <div class="results-container" id="resultsContainer">
+                <h2>Resultater</h2>
+                <div id="resultsOutput">
+                    <p class="placeholder-text">Velg to eller flere partier for å se hva de er enige om.</p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            Data basert på partiprogrammer og Kreftforeningens analyse.
+        </footer>
     </div>
 
-    <script src="js/partiesData.js"></script>
-    <script src="js/issues.js"></script>
     <script src="js/navigationConfig.js"></script>
     <script src="js/navigation.js"></script>
     <script src="js/party-constellations.js"></script>
