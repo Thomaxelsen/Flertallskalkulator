@@ -1,6 +1,5 @@
-// venter på at alt innholdet på siden er lastet inn før vi kjører koden.
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     // --- Globale variabler og DOM-elementer ---
     const partySelectorGrid = document.getElementById('partySelectorGrid');
     const resultsContainer = document.getElementById('resultsContainer');
@@ -18,12 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
             resultsContainer.innerHTML = '<p class="error-message">Kunne ikke laste saksdata. Siden kan ikke vises.</p>';
             return;
         }
-        
+
         // Henter partidata fra en JSON-fil.
         fetch('data/parties.json')
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Nettverksfeil ved lasting av partidata.');
+                    throw new Error(`Nettverksfeil: ${response.statusText}`);
                 }
                 return response.json();
             })
@@ -32,9 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!data || !Array.isArray(data) || data.length === 0) {
                     throw new Error('Partidata er tomt eller i feil format.');
                 }
-                
                 parties = data;
-                
                 // Når data er hentet, bygger vi opp siden.
                 createPartySelectorButtons();
                 setupEventListeners();
@@ -55,40 +52,32 @@ document.addEventListener('DOMContentLoaded', () => {
             button.className = `party-selector-btn party-tag-${party.classPrefix}`;
             button.textContent = party.shorthand;
             button.dataset.shorthand = party.shorthand;
-            
             button.addEventListener('click', () => togglePartySelection(button));
-            
             partySelectorGrid.appendChild(button);
         });
     }
 
     function displayResults(combinations) {
         resultsContainer.innerHTML = '';
-
         if (selectedPartyShorthands.length < 2) {
-             resultsContainer.innerHTML = '<p class="results-placeholder">Velg minst to partier for å se hvilke saker de er enige om.</p>';
-             return;
+            resultsContainer.innerHTML = '<p class="results-placeholder">Velg minst to partier for å se hvilke saker de er enige om.</p>';
+            return;
         }
 
         let foundResults = false;
-        
         combinations.forEach(({ combination, agreedIssues }) => {
             if (agreedIssues.length > 0) {
                 foundResults = true;
                 const resultCard = document.createElement('div');
                 resultCard.className = 'result-card';
-
                 const title = document.createElement('h3');
                 const partyTags = combination.map(shorthand => {
                     const partyInfo = parties.find(p => p.shorthand === shorthand);
-                    // Sjekker om partyInfo finnes for å unngå feil
-                    if (!partyInfo) return ''; 
+                    if (!partyInfo) return '';
                     return `<span class="party-tag-small party-tag-${partyInfo.classPrefix}">${shorthand}</span>`;
                 }).join(' + ');
-                
                 title.innerHTML = `Saker ${partyTags} er enige om (${agreedIssues.length}):`;
                 resultCard.appendChild(title);
-
                 const list = document.createElement('ul');
                 agreedIssues.forEach(issue => {
                     const listItem = document.createElement('li');
@@ -99,9 +88,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 resultsContainer.appendChild(resultCard);
             }
         });
-        
+
         if (!foundResults) {
-             resultsContainer.innerHTML = '<p class="results-placeholder">De valgte partiene har ingen felles standpunkter på det valgte enighetsnivået.</p>';
+            resultsContainer.innerHTML = '<p class="results-placeholder">De valgte partiene har ingen felles standpunkter på det valgte enighetsnivået.</p>';
         }
     }
 
@@ -111,39 +100,31 @@ document.addEventListener('DOMContentLoaded', () => {
             displayResults([]);
             return;
         }
-
         const agreementLevel = parseInt(document.querySelector('input[name="agreement"]:checked').value);
         const partyCombinations = getCombinations(selectedPartyShorthands);
-
         const results = [];
         partyCombinations.forEach(combination => {
             const agreedIssues = findAgreedIssues(combination, agreementLevel);
             results.push({ combination, agreedIssues });
         });
-        
         displayResults(results);
     }
-    
+
     function findAgreedIssues(partyCombination, level) {
         const agreedIssues = [];
-        
         issues.forEach(issue => {
             let allAgree = true;
-            
             for (const partyShorthand of partyCombination) {
                 const standpoint = issue.standpoints[partyShorthand];
-                
                 if (standpoint === undefined || standpoint < level) {
                     allAgree = false;
                     break;
                 }
             }
-            
             if (allAgree) {
                 agreedIssues.push(issue);
             }
         });
-        
         return agreedIssues;
     }
 
@@ -167,13 +148,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function togglePartySelection(button) {
         const shorthand = button.dataset.shorthand;
         button.classList.toggle('selected');
-
         if (selectedPartyShorthands.includes(shorthand)) {
             selectedPartyShorthands = selectedPartyShorthands.filter(p => p !== shorthand);
         } else {
             selectedPartyShorthands.push(shorthand);
         }
-        
         handleUpdate();
     }
 
@@ -185,10 +164,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             handleUpdate();
         });
-
         agreementLevelSelector.addEventListener('change', handleUpdate);
     }
-    
+
     // --- Kjør applikasjonen ---
     initializeApp();
 });
