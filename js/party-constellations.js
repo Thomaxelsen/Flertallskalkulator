@@ -1,172 +1,181 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Henter inn data fra de globale variablene (definert i .js-filene lastet i HTML)
+    const parties = window.partiesData;
+    const issues = window.issuesData;
 
-    // --- Globale variabler og DOM-elementer ---
-    const partySelectorGrid = document.getElementById('partySelectorGrid');
-    const resultsContainer = document.getElementById('resultsContainer');
-    const clearSelectionBtn = document.getElementById('clearSelectionBtn');
-    const agreementLevelSelector = document.getElementById('agreementLevelSelector');
+    // Finner HTML-elementene vi trenger å jobbe med
+    const partyButtonsContainer = document.getElementById('party-buttons');
+    const agreementButtons = document.querySelectorAll('#agreement-buttons .button');
+    const resultContainer = document.getElementById('constellations-result');
 
-    let parties = [];
-    let issues = window.issues || [];
-    let selectedPartyShorthands = [];
+    // Holder styr på hvilke partier og hvilket enighetsnivå som er valgt
+    let selectedParties = [];
+    let selectedAgreementLevel = '1_2'; // Standard nivå
 
-    // --- Initialisering ---
-    function initializeApp() {
-        if (issues.length === 0) {
-            console.error("Saksdata (issues) er ikke lastet. Sjekk at 'js/issues.js' er inkludert og fungerer.");
-            resultsContainer.innerHTML = '<p class="error-message">Kunne ikke laste saksdata. Siden kan ikke vises.</p>';
-            return;
-        }
-
-        // Henter partidata fra en JSON-fil.
-        fetch('data/parties.json')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Nettverksfeil: ${response.statusText}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                // SJEKK: Sørger for at vi faktisk fikk data og at det er en liste (array).
-                if (!data || !Array.isArray(data) || data.length === 0) {
-                    throw new Error('Partidata er tomt eller i feil format.');
-                }
-                parties = data;
-                // Når data er hentet, bygger vi opp siden.
-                createPartySelectorButtons();
-                setupEventListeners();
-            })
-            .catch(error => {
-                // BEDRE FEILHÅNDTERING: Viser feilmeldingen direkte på siden.
-                console.error('Feil under lasting av partidata:', error);
-                partySelectorGrid.innerHTML = `<p class="error-message"><strong>En feil oppstod:</strong> Kunne ikke laste partiene. (${error.message})</p>`;
-            });
-    }
-
-    // --- UI (Brukergrensesnitt) ---
-    function createPartySelectorButtons() {
-        // Tømmer gridden først for sikkerhets skyld.
-        partySelectorGrid.innerHTML = '';
+    // Funksjon for å lage knappene for hvert parti
+    function createPartyButtons() {
         parties.forEach(party => {
             const button = document.createElement('button');
-            button.className = `party-selector-btn party-tag-${party.classPrefix}`;
-            button.textContent = party.shorthand;
-            button.dataset.shorthand = party.shorthand;
-            button.addEventListener('click', () => togglePartySelection(button));
-            partySelectorGrid.appendChild(button);
+            button.className = 'button';
+            button.dataset.partyId = party.id;
+            button.textContent = party.name;
+            button.addEventListener('click', () => togglePartySelection(party.id, button));
+            partyButtonsContainer.appendChild(button);
         });
     }
 
-    function displayResults(combinations) {
-        resultsContainer.innerHTML = '';
-        if (selectedPartyShorthands.length < 2) {
-            resultsContainer.innerHTML = '<p class="results-placeholder">Velg minst to partier for å se hvilke saker de er enige om.</p>';
+    // Funksjon for å håndtere valg/fjerning av partier
+    function togglePartySelection(partyId, button) {
+        button.classList.toggle('active'); // Viser visuelt at knappen er aktiv
+
+        if (selectedParties.includes(partyId)) {
+            // Hvis partiet allerede er valgt, fjern det
+            selectedParties = selectedParties.filter(id => id !== partyId);
+        } else {
+            // Hvis ikke, legg det til
+            selectedParties.push(partyId);
+        }
+
+        // Sjekk om nok partier er valgt for å aktivere enighetsnivå-knappene
+        updateAgreementButtonsState();
+        // Oppdater resultatvisningen
+        renderConstellations();
+    }
+
+    // Funksjon for å aktivere/deaktivere enighetsnivå-knappene
+    function updateAgreementButtonsState() {
+        if (selectedParties.length >= 2) {
+            agreementButtons.forEach(button => button.disabled = false);
+        } else {
+            agreementButtons.forEach(button => button.disabled = true);
+        }
+    }
+
+    // Legger til lyttere på enighetsnivå-knappene
+    agreementButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Fjerner 'active' klassen fra alle knapper
+            agreementButtons.forEach(btn => btn.classList.remove('active'));
+            // Legger til 'active' på den klikkede knappen
+            button.classList.add('active');
+            selectedAgreementLevel = button.dataset.level;
+            renderConstellations();
+        });
+    });
+
+    // Hovedfunksjon for å finne og vise konstellasjonene
+    function renderConstellations() {
+        resultContainer.innerHTML = ''; // Tømmer resultatfeltet
+
+        if (selectedParties.length < 2) {
+            resultContainer.innerHTML = '<p>Velg minst to partier for å se enigheter.</p>';
             return;
         }
 
-        let foundResults = false;
-        combinations.forEach(({ combination, agreedIssues }) => {
-            if (agreedIssues.length > 0) {
-                foundResults = true;
-                const resultCard = document.createElement('div');
-                resultCard.className = 'result-card';
-                const title = document.createElement('h3');
-                const partyTags = combination.map(shorthand => {
-                    const partyInfo = parties.find(p => p.shorthand === shorthand);
-                    if (!partyInfo) return '';
-                    return `<span class="party-tag-small party-tag-${partyInfo.classPrefix}">${shorthand}</span>`;
-                }).join(' + ');
-                title.innerHTML = `Saker ${partyTags} er enige om (${agreedIssues.length}):`;
-                resultCard.appendChild(title);
-                const list = document.createElement('ul');
-                agreedIssues.forEach(issue => {
-                    const listItem = document.createElement('li');
-                    listItem.textContent = issue.title;
-                    list.appendChild(listItem);
-                });
-                resultCard.appendChild(list);
-                resultsContainer.appendChild(resultCard);
-            }
-        });
+        // Finner alle mulige kombinasjoner (konstellasjoner) av de valgte partiene
+        const combinations = getCombinations(selectedParties, 2);
 
-        if (!foundResults) {
-            resultsContainer.innerHTML = '<p class="results-placeholder">De valgte partiene har ingen felles standpunkter på det valgte enighetsnivået.</p>';
-        }
+        // Går gjennom hver kombinasjon og viser enige saker
+        combinations.forEach(combo => {
+            const agreedIssues = findAgreedIssues(combo);
+            displayConstellation(combo, agreedIssues);
+        });
     }
 
-    // --- Logikk ---
-    function handleUpdate() {
-        if (selectedPartyShorthands.length < 2) {
-            displayResults([]);
-            return;
-        }
-        const agreementLevel = parseInt(document.querySelector('input[name="agreement"]:checked').value);
-        const partyCombinations = getCombinations(selectedPartyShorthands);
-        const results = [];
-        partyCombinations.forEach(combination => {
-            const agreedIssues = findAgreedIssues(combination, agreementLevel);
-            results.push({ combination, agreedIssues });
-        });
-        displayResults(results);
-    }
-
-    function findAgreedIssues(partyCombination, level) {
+    // Funksjon for å finne enige saker for en gitt partikombinasjon
+    function findAgreedIssues(partyIds) {
         const agreedIssues = [];
+
         issues.forEach(issue => {
-            let allAgree = true;
-            for (const partyShorthand of partyCombination) {
-                const standpoint = issue.standpoints[partyShorthand];
-                if (standpoint === undefined || standpoint < level) {
-                    allAgree = false;
-                    break;
+            const firstPartyStance = issue.stances[partyIds[0]];
+            if (!firstPartyStance) return; // Hopper over hvis partiet ikke har en mening
+
+            const isAgreed = partyIds.every(partyId => {
+                const stance = issue.stances[partyId];
+                if (!stance) return false;
+
+                // Sjekker enighetsnivået
+                if (selectedAgreementLevel === '2') {
+                    // Streng enighet: Kun nivå 2 teller
+                    return stance.level === 2 && firstPartyStance.level === 2 && stance.agreement === firstPartyStance.agreement;
+                } else {
+                    // Myk enighet: Nivå 1 og 2 teller
+                    return stance.agreement === firstPartyStance.agreement;
                 }
-            }
-            if (allAgree) {
+            });
+
+            if (isAgreed) {
                 agreedIssues.push(issue);
             }
         });
+
         return agreedIssues;
     }
 
-    function getCombinations(parties) {
-        const result = [];
-        for (let i = 0; i < (1 << parties.length); i++) {
-            const subset = [];
-            for (let j = 0; j < parties.length; j++) {
-                if ((i & (1 << j)) > 0) {
-                    subset.push(parties[j]);
-                }
-            }
-            if (subset.length >= 2) {
-                result.push(subset);
-            }
-        }
-        return result.sort((a, b) => b.length - a.length);
-    }
+    // Funksjon for å vise resultatet for en konstellasjon på siden
+    function displayConstellation(partyIds, issues) {
+        const partyNames = partyIds.map(id => parties.find(p => p.id === id).name).join(' og ');
+        
+        const constellationDiv = document.createElement('div');
+        constellationDiv.className = 'constellation';
 
-    // --- Event Handlers ---
-    function togglePartySelection(button) {
-        const shorthand = button.dataset.shorthand;
-        button.classList.toggle('selected');
-        if (selectedPartyShorthands.includes(shorthand)) {
-            selectedPartyShorthands = selectedPartyShorthands.filter(p => p !== shorthand);
-        } else {
-            selectedPartyShorthands.push(shorthand);
-        }
-        handleUpdate();
-    }
+        let content = `<h3>Enighet mellom ${partyNames}</h3>`;
 
-    function setupEventListeners() {
-        clearSelectionBtn.addEventListener('click', () => {
-            selectedPartyShorthands = [];
-            document.querySelectorAll('.party-selector-btn.selected').forEach(btn => {
-                btn.classList.remove('selected');
+        if (issues.length > 0) {
+            content += '<ul class="issue-list">';
+            issues.forEach(issue => {
+                content += `
+                    <li class="issue-item">
+                        <span class="issue-title">${issue.title}</span>
+                        <span class="issue-category">${issue.category}</span>
+                    </li>
+                `;
             });
-            handleUpdate();
-        });
-        agreementLevelSelector.addEventListener('change', handleUpdate);
+            content += '</ul>';
+        } else {
+            content += `<p>Ingen felles enighet funnet for disse partiene på det valgte nivået.</p>`;
+        }
+
+        constellationDiv.innerHTML = content;
+        resultContainer.appendChild(constellationDiv);
     }
 
-    // --- Kjør applikasjonen ---
-    initializeApp();
+    // Hjelpefunksjon for å generere alle mulige kombinasjoner av partier
+    function getCombinations(array, minSize) {
+        const result = [];
+        for (let i = minSize; i <= array.length; i++) {
+            const combinations = k_combinations(array, i);
+            result.push(...combinations);
+        }
+        return result.sort((a, b) => b.length - a.length); // Sorterer slik at de største gruppene vises først
+    }
+
+    // Rekursiv hjelpefunksjon for å finne k-kombinasjoner
+    function k_combinations(set, k) {
+        if (k > set.length || k <= 0) {
+            return [];
+        }
+        if (k === set.length) {
+            return [set];
+        }
+        if (k === 1) {
+            return set.map(item => [item]);
+        }
+        const combs = [];
+        for (let i = 0; i < set.length - k + 1; i++) {
+            const head = set.slice(i, i + 1);
+            const tailcombs = k_combinations(set.slice(i + 1), k - 1);
+            for (let j = 0; j < tailcombs.length; j++) {
+                combs.push(head.concat(tailcombs[j]));
+            }
+        }
+        return combs;
+    }
+
+
+    // Initialiserer siden
+    createPartyButtons();
+    // Setter en standard aktiv knapp for enighetsnivå
+    document.querySelector('#agreement-buttons .button[data-level="1_2"]').classList.add('active');
+
 });
