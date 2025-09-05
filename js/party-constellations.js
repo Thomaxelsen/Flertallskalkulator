@@ -14,10 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Funksjon for å hente data fra JSON-filer
     async function fetchData() {
         try {
-            const partiesResponse = await fetch('data/parties.json');
+            // RETTET: La til ../ foran stien for å gå ett nivå opp fra js-mappen
+            const partiesResponse = await fetch('../data/parties.json');
             parties = await partiesResponse.json();
 
-            const issuesResponse = await fetch('data/issues.json');
+            // RETTET: La til ../ foran stien for å gå ett nivå opp fra js-mappen
+            const issuesResponse = await fetch('../data/issues.json');
             issues = await issuesResponse.json();
 
             // Sorterer partiene etter 'position' for konsistent rekkefølge
