@@ -107,7 +107,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Funksjon for å vise resultatet for én partikombinasjon
     function displayCombinationResult(combo, issues) {
-        issues.sort((a, b) => a.area.localeCompare(b.area));
+        // Group issues by area
+        const issuesByArea = issues.reduce((acc, issue) => {
+            if (!acc[issue.area]) {
+                acc[issue.area] = [];
+            }
+            acc[issue.area].push(issue);
+            return acc;
+        }, {});
+
+        const sortedAreas = Object.keys(issuesByArea).sort();
 
         const resultDiv = document.createElement('div');
         resultDiv.className = 'constellation-result';
@@ -126,61 +135,72 @@ document.addEventListener('DOMContentLoaded', () => {
         const agreementText = document.createElement('span');
         agreementText.textContent = ` er enige om ${issues.length} sak${issues.length > 1 ? 'er' : ''}:`;
         header.appendChild(agreementText);
-
-        const issueList = document.createElement('ul');
-        issueList.className = 'issue-list';
-
-        issues.forEach(issue => {
-            const listItem = document.createElement('li');
-
-            const issueNameSpan = document.createElement('span');
-            issueNameSpan.className = 'issue-name';
-            issueNameSpan.textContent = issue.name;
-
-            const controlsDiv = document.createElement('div');
-            controlsDiv.className = 'issue-controls';
-
-            const buttonsContainer = document.createElement('div');
-            buttonsContainer.className = 'issue-party-buttons-container';
-
-            combo.forEach(shorthand => {
-                const partyInfo = parties.find(p => p.shorthand === shorthand);
-                const quote = issue.partyStances[shorthand]?.quote || 'Sitat ikke tilgjengelig.';
-                if (!partyInfo) return;
-
-                const wrapper = document.createElement('div');
-                wrapper.className = 'issue-party-button-wrapper';
-                wrapper.tabIndex = 0; // Gjør den "fokus-bar" for mobil-klikk
-
-                const button = document.createElement('span');
-                button.className = 'issue-party-button';
-                button.style.backgroundColor = partyInfo.color;
-                button.textContent = shorthand;
-
-                const tooltip = document.createElement('div');
-                tooltip.className = 'issue-quote-tooltip';
-                tooltip.textContent = quote;
-
-                wrapper.appendChild(button);
-                wrapper.appendChild(tooltip);
-                buttonsContainer.appendChild(wrapper);
-            });
-
-            const issueAreaSpan = document.createElement('span');
-            issueAreaSpan.className = 'issue-area';
-            issueAreaSpan.textContent = issue.area;
-
-            controlsDiv.appendChild(buttonsContainer);
-            controlsDiv.appendChild(issueAreaSpan);
-
-            listItem.appendChild(issueNameSpan);
-            listItem.appendChild(controlsDiv);
-
-            issueList.appendChild(listItem);
-        });
-
         resultDiv.appendChild(header);
-        resultDiv.appendChild(issueList);
+
+        // Iterate over sorted areas and create groups
+        sortedAreas.forEach(area => {
+            const categoryGroup = document.createElement('div');
+            categoryGroup.className = 'issue-category-group';
+
+            const categoryHeader = document.createElement('div');
+            categoryHeader.className = 'issue-category-header';
+            categoryHeader.textContent = area;
+            categoryGroup.appendChild(categoryHeader);
+
+            const issueList = document.createElement('ul');
+            issueList.className = 'issue-list';
+
+            // Sort issues within each area by name
+            issuesByArea[area].sort((a, b) => a.name.localeCompare(b.name));
+
+            issuesByArea[area].forEach(issue => {
+                const listItem = document.createElement('li');
+
+                const issueNameSpan = document.createElement('span');
+                issueNameSpan.className = 'issue-name';
+                issueNameSpan.textContent = issue.name;
+
+                const controlsDiv = document.createElement('div');
+                controlsDiv.className = 'issue-controls';
+
+                const buttonsContainer = document.createElement('div');
+                buttonsContainer.className = 'issue-party-buttons-container';
+
+                combo.forEach(shorthand => {
+                    const partyInfo = parties.find(p => p.shorthand === shorthand);
+                    const quote = issue.partyStances[shorthand]?.quote || 'Sitat ikke tilgjengelig.';
+                    if (!partyInfo) return;
+
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'issue-party-button-wrapper';
+                    wrapper.tabIndex = 0; // Gjør den "fokus-bar" for mobil-klikk
+
+                    const button = document.createElement('span');
+                    button.className = 'issue-party-button';
+                    button.style.backgroundColor = partyInfo.color;
+                    button.textContent = shorthand;
+
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'issue-quote-tooltip';
+                    tooltip.textContent = quote;
+
+                    wrapper.appendChild(button);
+                    wrapper.appendChild(tooltip);
+                    buttonsContainer.appendChild(wrapper);
+                });
+                
+                controlsDiv.appendChild(buttonsContainer);
+                // issue-area-span er fjernet herfra da den nå er i categoryHeader
+
+                listItem.appendChild(issueNameSpan);
+                listItem.appendChild(controlsDiv);
+
+                issueList.appendChild(listItem);
+            });
+            categoryGroup.appendChild(issueList);
+            resultDiv.appendChild(categoryGroup);
+        });
+        
         resultsOutput.appendChild(resultDiv);
     }
 
