@@ -16,7 +16,9 @@ window.navigationConfig = {
             links: [
                 { href: "party-overview.html", title: "Partioversikt" },
                 { href: "party-profile.html", title: "Partiprofil" },
-                { href: "party-similarity.html", title: "Partilikhet" }
+                { href: "party-similarity.html", title: "Partilikhet" },
+                // DENNE LINJEN ER LAGT TIL
+                { href: "party-constellations.html", title: "Partikonstellasjoner" }
             ]
         },
         {
