@@ -31,35 +31,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Funksjon for å lage partikortene (erstatter createPartyButtons)
+    // Funksjon for å lage partikortene
     function createPartyCards() {
         parties.forEach(party => {
-            // Vi lager en div i stedet for en knapp for mer styling-fleksibilitet
             const card = document.createElement('div');
-            card.className = 'party-card'; // Nytt klassenavn
-            card.dataset.partyShorthand = party.shorthand; // Viktig for logikken
-            card.title = party.name; // Tooltip med fullt navn
+            card.className = 'party-card';
+            card.dataset.partyShorthand = party.shorthand;
+            card.title = party.name;
 
-            // Partilogo
             const img = document.createElement('img');
-            // Stien til logoen settes basert på konvensjonen vi ble enige om
             img.src = `images/parties/${party.shorthand.toLowerCase()}.png`;
             img.alt = party.name;
             img.className = 'party-logo';
 
-            // Partiets kortnavn
             const name = document.createElement('span');
             name.className = 'party-name';
             name.textContent = party.shorthand;
 
-            // Legg til logo og navn i kortet
             card.appendChild(img);
             card.appendChild(name);
-
-            // Legg til hele kortet i velgeren
             partySelector.appendChild(card);
 
-            // Legg til klikk-funksjonalitet
             card.addEventListener('click', () => {
                 togglePartySelection(party.shorthand);
                 card.classList.toggle('selected');
@@ -67,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Funksjon for å håndtere valg/fjerning av et parti (uendret)
+    // Funksjon for å håndtere valg/fjerning av et parti
     function togglePartySelection(partyShorthand) {
         if (selectedParties.has(partyShorthand)) {
             selectedParties.delete(partyShorthand);
@@ -77,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateResults();
     }
 
-    // Lytter til endringer - oppdatert til å bruke .party-card
+    // Lytter til endringer
     agreementRadios.forEach(radio => radio.addEventListener('change', updateResults));
     
     selectAllBtn.addEventListener('click', () => {
@@ -96,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateResults();
     });
 
-    // Hovedfunksjonen som oppdaterer resultatvisningen (uendret)
+    // Hovedfunksjonen som oppdaterer resultatvisningen
     function updateResults() {
         const minAgreementLevel = parseInt(document.querySelector('input[name="agreement"]:checked').value);
         if (selectedParties.size < 2) {
@@ -119,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Funksjon for å finne saker en gruppe partier er enige om (uendret)
+    // Funksjon for å finne saker en gruppe partier er enige om
     function findAgreedIssues(partyCombo, minLevel) {
         return issues.filter(issue => {
             return partyCombo.every(partyShorthand => {
@@ -129,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Funksjon for å vise resultatet for én partikombinasjon (uendret)
+    // Funksjon for å vise resultatet for én partikombinasjon (MODIFISERT)
     function displayCombinationResult(combo, issues) {
         const issuesByArea = issues.reduce((acc, issue) => {
             if (!acc[issue.area]) {
@@ -140,21 +132,38 @@ document.addEventListener('DOMContentLoaded', () => {
         }, {});
 
         const sortedAreas = Object.keys(issuesByArea).sort();
-
         const resultDiv = document.createElement('div');
         resultDiv.className = 'constellation-result';
-
         const header = document.createElement('div');
         header.className = 'constellation-header';
+
+        // *** START PÅ ENDRING ***
         combo.forEach(shorthand => {
             const partyInfo = parties.find(p => p.shorthand === shorthand);
             if (!partyInfo) return;
-            const tag = document.createElement('span');
+
+            const tag = document.createElement('div');
             tag.className = 'party-tag';
-            tag.textContent = partyInfo.name;
-            tag.style.backgroundColor = partyInfo.color;
+
+            const logo = document.createElement('img');
+            logo.src = `images/parties/${partyInfo.shorthand.toLowerCase()}.png`;
+            logo.className = 'party-tag-logo';
+            logo.alt = partyInfo.name;
+
+            const name = document.createElement('span');
+            name.textContent = partyInfo.name;
+
+            tag.appendChild(logo);
+            tag.appendChild(name);
+
+            const color = partyInfo.color.startsWith('#') ? hexToRgba(partyInfo.color, 0.15) : 'rgba(200, 200, 200, 0.15)';
+            tag.style.backgroundColor = color;
+            tag.style.borderColor = partyInfo.color;
+
             header.appendChild(tag);
         });
+        // *** SLUTT PÅ ENDRING ***
+
         const agreementText = document.createElement('span');
         agreementText.textContent = ` er enige om ${issues.length} sak${issues.length > 1 ? 'er' : ''}:`;
         header.appendChild(agreementText);
@@ -163,53 +172,40 @@ document.addEventListener('DOMContentLoaded', () => {
         sortedAreas.forEach(area => {
             const categoryGroup = document.createElement('div');
             categoryGroup.className = 'issue-category-group';
-
             const categoryHeader = document.createElement('div');
             categoryHeader.className = 'issue-category-header';
             categoryHeader.textContent = area;
             categoryGroup.appendChild(categoryHeader);
-
             const issueList = document.createElement('ul');
             issueList.className = 'issue-list';
-
             issuesByArea[area].sort((a, b) => a.name.localeCompare(b.name));
-
             issuesByArea[area].forEach(issue => {
                 const listItem = document.createElement('li');
-
                 const issueNameSpan = document.createElement('span');
                 issueNameSpan.className = 'issue-name';
                 issueNameSpan.textContent = issue.name;
-
                 const controlsDiv = document.createElement('div');
                 controlsDiv.className = 'issue-controls';
-
                 const buttonsContainer = document.createElement('div');
                 buttonsContainer.className = 'issue-party-buttons-container';
-
                 combo.forEach(shorthand => {
                     const partyInfo = parties.find(p => p.shorthand === shorthand);
                     const quote = issue.partyStances[shorthand]?.quote || 'Sitat ikke tilgjengelig.';
                     if (!partyInfo) return;
-
                     const wrapper = document.createElement('div');
                     wrapper.className = 'issue-party-button-wrapper';
                     wrapper.tabIndex = 0;
-
                     const button = document.createElement('span');
                     button.className = 'issue-party-button';
                     button.style.backgroundColor = partyInfo.color;
                     button.textContent = shorthand;
-
                     const tooltip = document.createElement('div');
                     tooltip.className = 'issue-quote-tooltip';
                     tooltip.textContent = quote;
-
                     wrapper.appendChild(button);
                     wrapper.appendChild(tooltip);
                     buttonsContainer.appendChild(wrapper);
                 });
-                
                 controlsDiv.appendChild(buttonsContainer);
                 listItem.appendChild(issueNameSpan);
                 listItem.appendChild(controlsDiv);
@@ -222,7 +218,15 @@ document.addEventListener('DOMContentLoaded', () => {
         resultsOutput.appendChild(resultDiv);
     }
 
-    // Funksjon for å generere alle mulige kombinasjoner (uendret)
+    // Hjelpefunksjon for å konvertere HEX til RGBA
+    function hexToRgba(hex, alpha) {
+        const r = parseInt(hex.slice(1, 3), 16);
+        const g = parseInt(hex.slice(3, 5), 16);
+        const b = parseInt(hex.slice(5, 7), 16);
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
+
+    // Funksjon for å generere alle mulige kombinasjoner
     function getCombinations(arr) {
         const result = [];
         const n = arr.length;
