@@ -57,7 +57,7 @@
 
 .party-logo {
     height: 50px;
-    width: 100%;
+    max-width: 100%; /* Bruker max-width i stedet for width */
     object-fit: contain;
     margin-bottom: 0.75rem;
 }
