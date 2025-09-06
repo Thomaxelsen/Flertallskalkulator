@@ -53,6 +53,9 @@ fetch('data/parties.json')
 
 // Initialize the app after loading data
 function initializeApp() {
+  // Sorter partiene før de brukes
+  parties.sort((a, b) => a.position - b.position);
+
   // Create party cards
   createPartyCards();
   
@@ -69,41 +72,42 @@ function initializeApp() {
   setupInfoPopup();
 }
 
+// *** MODIFISERT FUNKSJON ***
 // Create party cards function
 function createPartyCards() {
   parties.forEach(party => {
     const partyCard = document.createElement('div');
-    partyCard.className = 'party-card';
+    partyCard.className = 'party-card'; // Bruker samme klasse som på de andre sidene
     partyCard.dataset.seats = party.seats;
     partyCard.dataset.name = party.name;
     partyCard.dataset.shorthand = party.shorthand;
     partyCard.dataset.classPrefix = party.classPrefix;
+    partyCard.title = `${party.name} (${party.seats} mandater)`;
     
-    const partyIcon = document.createElement('span');
-    partyIcon.className = `party-icon icon-${party.classPrefix}`;
-    partyIcon.textContent = party.shorthand.charAt(0);
+    // Lager logo-bildet
+    const img = document.createElement('img');
+    img.src = `images/parties/${party.shorthand.toLowerCase()}.png`;
+    img.alt = party.name;
+    img.className = 'party-logo';
+
+    // Lager partiets kortnavn
+    const name = document.createElement('span');
+    name.className = 'party-name';
+    name.textContent = party.shorthand;
+
+    // Legger til elementene i kortet
+    partyCard.appendChild(img);
+    partyCard.appendChild(name);
     
-    const partyName = document.createElement('span');
-    partyName.className = 'party-name';
-    partyName.textContent = party.name;
-    
-    const partySeats = document.createElement('span');
-    partySeats.className = 'party-seats';
-    partySeats.textContent = party.seats;
-    
-    partyCard.appendChild(partyIcon);
-    partyCard.appendChild(partyName);
-    partyCard.appendChild(partySeats);
-    
+    // Legger til klikk-hendelse
     partyCard.addEventListener('click', () => toggleParty(partyCard));
     
     partyGrid.appendChild(partyCard);
   });
 }
 
-// Konfetti-funksjon for å lage en spektakulær feiring
+// Konfetti-funksjon for å lage en spektakulær feiring (UENDRET)
 function celebrateWithConfetti() {
-  // Partifargene som brukes i konfettien
   const colors = [
     '#ed1b34', // AP
     '#007ac8', // H
@@ -116,16 +120,12 @@ function celebrateWithConfetti() {
     '#439539', // MDG
     '#a04d94'  // PF
   ];
-
-  // Første eksplosjon - fra bunnen og oppover
   confetti({
     particleCount: 150,
     spread: 100,
     origin: { y: 0.9 },
     colors: colors
   });
-
-  // Andre eksplosjon - fra venstre side
   setTimeout(() => {
     confetti({
       particleCount: 80,
@@ -135,8 +135,6 @@ function celebrateWithConfetti() {
       colors: colors
     });
   }, 250);
-
-  // Tredje eksplosjon - fra høyre side
   setTimeout(() => {
     confetti({
       particleCount: 80,
@@ -146,8 +144,6 @@ function celebrateWithConfetti() {
       colors: colors
     });
   }, 400);
-
-  // Fjerde eksplosjon - regn av konfetti
   setTimeout(() => {
     confetti({
       particleCount: 100,
@@ -160,7 +156,7 @@ function celebrateWithConfetti() {
   }, 650);
 }
 
-// Toggle party selection
+// Toggle party selection (UENDRET)
 function toggleParty(partyCard) {
   partyCard.classList.toggle('selected');
   updateResults();
@@ -179,42 +175,34 @@ function toggleParty(partyCard) {
   }
 }
 
-// Setup info popup functionality
+// Setup info popup functionality (UENDRET)
 function setupInfoPopup() {
   const infoButton = document.getElementById('infoButton');
   const infoPopup = document.getElementById('infoPopup');
   const infoTooltip = document.getElementById('infoTooltip');
   const closePopup = document.querySelector('.close-popup');
   
-  if (!infoButton) return; // Avbryt hvis elementene ikke finnes
+  if (!infoButton) return;
   
-  // For touch-enheter (mobil/nettbrett)
   if (isTouchDevice()) {
-    // Vis popup når knappen klikkes
     infoButton.addEventListener('click', function() {
       if (infoPopup) infoPopup.style.display = 'block';
     });
     
-    // Lukk popup når man klikker på X
     if (closePopup) {
       closePopup.addEventListener('click', function() {
         infoPopup.style.display = 'none';
       });
     }
     
-    // Lukk popup når man klikker utenfor innholdet
     window.addEventListener('click', function(event) {
       if (event.target === infoPopup) {
         infoPopup.style.display = 'none';
       }
     });
-  } 
-  // For desktop (ikke touch)
-  else {
-    // For hover på desktop - vis tooltip
+  } else {
     infoButton.addEventListener('mouseenter', function(e) {
       if (infoTooltip) {
-        // Posisjoner tooltip til høyre for knappen
         const buttonRect = infoButton.getBoundingClientRect();
         infoTooltip.style.top = '0';
         infoTooltip.style.left = '30px';
@@ -222,7 +210,6 @@ function setupInfoPopup() {
       }
     });
     
-    // Skjul tooltip når vi tar bort musen
     infoButton.addEventListener('mouseleave', function() {
       if (infoTooltip) {
         infoTooltip.style.display = 'none';
@@ -231,9 +218,8 @@ function setupInfoPopup() {
   }
 }
 
-// Setup event listeners function
+// Setup event listeners function (UENDRET)
 function setupEventListeners() {
-  // Select all parties
   selectAllBtn.addEventListener('click', () => {
     document.querySelectorAll('.party-card').forEach(card => {
       card.classList.add('selected');
@@ -241,7 +227,6 @@ function setupEventListeners() {
     updateResults();
     updateVisualization();
     
-    // Clear any selected issue when selecting all parties
     const issueSelect = document.getElementById('issueSelect');
     if (issueSelect) {
       issueSelect.value = '';
@@ -254,7 +239,6 @@ function setupEventListeners() {
     }
   });
 
-  // Clear all selections
   clearAllBtn.addEventListener('click', () => {
     document.querySelectorAll('.party-card').forEach(card => {
       card.classList.remove('selected');
@@ -262,7 +246,6 @@ function setupEventListeners() {
     updateResults();
     updateVisualization();
     
-    // Clear any selected issue when clearing parties
     const issueSelect = document.getElementById('issueSelect');
     if (issueSelect) {
       issueSelect.value = '';
@@ -276,6 +259,7 @@ function setupEventListeners() {
   });
 }
 
+// *** MODIFISERT FUNKSJON ***
 // Update results based on selections
 function updateResults() {
   const selectedParties = Array.from(document.querySelectorAll('.party-card.selected'));
@@ -283,7 +267,6 @@ function updateResults() {
   const votesAgainst = TOTAL_SEATS - votesFor;
   const hasMajority = votesFor >= MAJORITY_THRESHOLD;
   
-  // Update progress bar
   const percentage = (votesFor / TOTAL_SEATS) * 100;
   progressBar.style.width = `${percentage}%`;
   
@@ -293,59 +276,78 @@ function updateResults() {
     progressBar.classList.remove('majority');
   }
   
-  // Update vote counters
   votesForLabel.textContent = votesFor;
   votesAgainstLabel.textContent = votesAgainst;
   totalVotesFor.textContent = votesFor;
   totalVotesAgainst.textContent = votesAgainst;
   
-  // Update majority status
   if (hasMajority) {
     majorityStatus.className = 'result-status has-majority';
     majorityStatus.textContent = `Flertall oppnådd med ${votesFor} stemmer`;
     
-    // Sjekk om vi gikk fra ikke-flertall til flertall
     if (!majorityStatus.hasAttribute('data-had-majority')) {
-      // Kjør spektakulær konfetti-effekt
       celebrateWithConfetti();
-      
-      // Marker at vi har vist konfetti
       majorityStatus.setAttribute('data-had-majority', 'true');
     }
   } else {
     majorityStatus.className = 'result-status no-majority';
     const votesNeeded = MAJORITY_THRESHOLD - votesFor;
     majorityStatus.textContent = `Ingen flertall (trenger ${votesNeeded} flere stemmer)`;
-    // Fjern markøren når vi ikke lenger har flertall
     majorityStatus.removeAttribute('data-had-majority');
   }
   
-  // Update selected party tags
+  // *** MODIFISERT DEL ***
+  // Update selected party tags with new visual style
   selectedPartyTags.innerHTML = '';
   if (selectedParties.length === 0) {
     const noPartyTag = document.createElement('span');
-    noPartyTag.className = 'party-tag';
+    noPartyTag.className = 'party-tag-placeholder'; // Bruker en egen klasse for placeholder
     noPartyTag.textContent = 'Ingen partier valgt';
     selectedPartyTags.appendChild(noPartyTag);
   } else {
     selectedParties.forEach(party => {
-      const tag = document.createElement('span');
-      tag.className = `party-tag party-tag-${party.dataset.classPrefix}`;
-      tag.textContent = `${party.dataset.shorthand} (${party.dataset.seats})`;
+      const partyInfo = parties.find(p => p.shorthand === party.dataset.shorthand);
+      if (!partyInfo) return;
+
+      const tag = document.createElement('div');
+      tag.className = 'party-tag-small'; // Ny klasse for de små taggene
+
+      const logo = document.createElement('img');
+      logo.src = `images/parties/${partyInfo.shorthand.toLowerCase()}.png`;
+      logo.className = 'party-tag-logo';
+      logo.alt = partyInfo.name;
+
+      const name = document.createElement('span');
+      name.textContent = `${partyInfo.shorthand} (${partyInfo.seats})`;
+
+      tag.appendChild(logo);
+      tag.appendChild(name);
+      tag.style.backgroundColor = hexToRgba(partyInfo.color, 0.15);
+      tag.style.borderColor = partyInfo.color;
+
       selectedPartyTags.appendChild(tag);
     });
   }
 }
 
-// Update visualization based on party selection
+// Update visualization based on party selection (UENDRET)
 function updateVisualization() {
   const selectedParties = Array.from(document.querySelectorAll('.party-card.selected'));
   const selectedPartyShorthands = selectedParties.map(party => party.dataset.shorthand);
   
-  // Update D3 visualization
   updateD3Visualization(selectedPartyShorthands);
 }
 
-// Eksporter funksjoner som trenger å være tilgjengelige for andre script-filer
+// *** NY HJELPEFUNKSJON ***
+// Helper function to convert hex to rgba
+function hexToRgba(hex, alpha) {
+    if (!hex || !hex.startsWith('#')) return 'rgba(200, 200, 200, 0.15)'; // Fallback for safety
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+// Eksporter funksjoner som trenger å være tilgjengelige for andre script-filer (UENDRET)
 window.updateResults = updateResults;
 window.updateVisualization = updateVisualization;

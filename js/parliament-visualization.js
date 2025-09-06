@@ -47,14 +47,10 @@ function createD3ParliamentVisualization(parties, selectedParties) {
     visualizationData.seatPositions = [];
     
     for (let row = 0; row < rows; row++) {
-        // Calculate radius for this row (outer rows have larger radius)
         const rowRadius = radius * 0.3 + (radius * 0.6 * (row / rows));
-        
-        // Calculate how many seats can fit in this row
         const circumference = Math.PI * rowRadius;
         const maxSeatInRow = Math.floor(circumference / (seatRadius * 2.2));
         
-        // Distribute seats more evenly among rows
         let seatsInRow;
         if (row < 3) {
             seatsInRow = Math.min(maxSeatInRow, Math.ceil(169 / (rows * 1.5)));
@@ -64,10 +60,8 @@ function createD3ParliamentVisualization(parties, selectedParties) {
             seatsInRow = Math.min(maxSeatInRow, Math.ceil(169 / (rows * 0.7)));
         }
         
-        // Calculate angle between seats
         const angleStep = Math.PI / (seatsInRow - 1 || 1);
         
-        // Create positions for this row - from left to right
         for (let i = 0; i < seatsInRow; i++) {
             const angle = Math.PI - (angleStep * i);
             const x = rowRadius * Math.cos(angle);
@@ -77,28 +71,24 @@ function createD3ParliamentVisualization(parties, selectedParties) {
                 x: x,
                 y: y,
                 row: row,
-                angle: angle, // Store angle for ordering
-                position: i   // Store position in row for ordering
+                angle: angle,
+                position: i
             });
         }
     }
     
-    // Sort positions from left to right based on angle
     visualizationData.seatPositions.sort((a, b) => {
-        if (a.angle !== b.angle) return b.angle - a.angle; // Higher angle = more to the left
-        return a.row - b.row; // Inner rows first
+        if (a.angle !== b.angle) return b.angle - a.angle;
+        return a.row - b.row;
     });
     
-    // Ensure we don't have more positions than seats
     if (visualizationData.seatPositions.length > 169) {
         visualizationData.seatPositions = visualizationData.seatPositions.slice(0, 169);
     }
     
-    // Now assign parties to positions in left-to-right order based on political position
     visualizationData.allSeats = [];
     let positionIndex = 0;
     
-    // Add seats for each party from left to right
     sortedParties.forEach(party => {
         for (let i = 0; i < party.seats; i++) {
             if (positionIndex < visualizationData.seatPositions.length) {
@@ -125,16 +115,14 @@ function createD3ParliamentVisualization(parties, selectedParties) {
     renderSeats(selectedParties);
 }
 
-// Render all seats based on current selection
+// Render all seats based on current selection (UENDRET)
 function renderSeats(selectedParties) {
     if (!visualizationData.svg) return;
     
-    // Remove all existing elements, not just seats
     visualizationData.svg.selectAll("*").remove();
     
     const seatRadius = 6;
     
-    // Create seats
     visualizationData.allSeats.forEach(seat => {
         const isSelected = selectedParties.includes(seat.party);
         
@@ -169,60 +157,45 @@ function renderSeats(selectedParties) {
                 d3.select("#tooltip").remove();
             })
             .on("click", function() {
-                // Når en sete klikkes, finn tilsvarende partikort og toggle det
                 const partyShorthand = seat.party;
                 togglePartyFromVisualization(partyShorthand);
             });
     });
 }
 
-// Hjelpefunksjon for å toggle et parti når visualisering klikkes
+// Hjelpefunksjon for å toggle et parti (UENDRET)
 function togglePartyFromVisualization(partyShorthand) {
-    // Finn tilsvarende partikort
     const partyCard = document.querySelector(`.party-card[data-shorthand="${partyShorthand}"]`);
     
     if (partyCard && typeof toggleParty === 'function') {
-        // Bruk den eksisterende toggleParty-funksjonen fra script.js
         toggleParty(partyCard);
     }
 }
 
-// Update the legend with current party data and make items clickable
+// *** MODIFISERT FUNKSJON ***
+// Update the legend to use new visual style
 function updateLegend(parties, selectedParties = []) {
-    // Clear existing legend
     document.getElementById('parliamentLegend').innerHTML = '';
     
-    // Sort parties by position
     const sortedParties = [...parties].sort((a, b) => a.position - b.position);
     
-    // Create new legend items
     sortedParties.forEach(party => {
         const legendItem = document.createElement('div');
-        legendItem.className = 'legend-item';
-        
-        // Legg til data-attributter for å koble til partikortet
+        // Gjenbruker '.party-tag-small' for konsistens, og legger til '.legend-item' for spesifisitet
+        legendItem.className = 'party-tag-small legend-item'; 
         legendItem.dataset.shorthand = party.shorthand;
-        legendItem.dataset.seats = party.seats;
         
-        // Legg til CSS-klasse for valgt tilstand
-        if (selectedParties.includes(party.shorthand)) {
-            legendItem.classList.add('selected');
-        }
-        
-        // Gjør elementet klikkbart
-        legendItem.style.cursor = 'pointer';
-        
-        const legendColor = document.createElement('div');
-        legendColor.className = 'legend-color';
-        legendColor.style.backgroundColor = party.color;
-        
+        const logo = document.createElement('img');
+        logo.src = `images/parties/${party.shorthand.toLowerCase()}.png`;
+        logo.className = 'party-tag-logo'; // Gjenbruker denne klassen
+        logo.alt = party.name;
+
         const legendText = document.createElement('span');
-        legendText.textContent = `${party.name} (${party.seats})`;
+        legendText.textContent = `${party.shorthand} (${party.seats})`;
         
-        legendItem.appendChild(legendColor);
+        legendItem.appendChild(logo);
         legendItem.appendChild(legendText);
         
-        // Legg til event listener for klikk
         legendItem.addEventListener('click', function() {
             togglePartyFromVisualization(party.shorthand);
         });
@@ -230,33 +203,46 @@ function updateLegend(parties, selectedParties = []) {
         document.getElementById('parliamentLegend').appendChild(legendItem);
     });
     
-    // Oppdater utseendet på legend-elementer basert på valg
     updateLegendAppearance(selectedParties);
 }
 
-// Hjelpefunksjon for å oppdatere utseende på legend
+// Hjelpefunksjon for å oppdatere utseende på legend (UENDRET)
 function updateLegendAppearance(selectedParties) {
-    // Finn alle legend-elementer
     const legendItems = document.querySelectorAll('.legend-item');
     
-    // Oppdater hver legend-item basert på om partiet er valgt
     legendItems.forEach(item => {
         const partyShorthand = item.dataset.shorthand;
+        const partyInfo = visualizationData.partyData[partyShorthand];
+        
         if (selectedParties.includes(partyShorthand)) {
             item.classList.add('selected');
             item.style.opacity = '1';
+            // Sett farger for valgt tilstand
+            if(partyInfo) {
+                item.style.backgroundColor = hexToRgba(partyInfo.color, 0.15);
+                item.style.borderColor = partyInfo.color;
+            }
         } else {
             item.classList.remove('selected');
-            item.style.opacity = '0.7';
+            item.style.opacity = '0.7'; // Standard "dimmet"
+            // Sett nøytrale farger
+            item.style.backgroundColor = '#f8f9fa';
+            item.style.borderColor = '#eee';
         }
     });
 }
 
-// This will be called to update the visualization when selection changes
+// This will be called to update the visualization when selection changes (UENDRET)
 function updateD3Visualization(selectedParties) {
-    // Re-render all seats with new selection
     renderSeats(selectedParties);
-    
-    // Oppdater også utseendet på legend-elementene
     updateLegendAppearance(selectedParties);
+}
+
+// *** NY HJELPEFUNKSJON *** (Kan være duplikat av den i script.js, men trygt å ha den her også)
+function hexToRgba(hex, alpha) {
+    if (!hex || !hex.startsWith('#')) return 'rgba(200, 200, 200, 0.15)';
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
