@@ -1,321 +1,5 @@
-/* Party Overview CSS */
+/* Party Overview CSS - Renset og korrekt versjon */
 
-.party-overview-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin: 30px 0;
-}
-
-.party-box {
-    background-color: white;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-    transition: transform 0.2s, box-shadow 0.2s;
-    height: auto; /* Endret fra fast høyde til auto */
-    min-height: 500px; /* Satt en minimumshøyde i stedet */
-    display: flex;
-    flex-direction: column;
-}
-
-.party-box:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-}
-
-.party-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #eee;
-    flex: 0 0 auto; /* Ikke la headeren krympe */
-}
-
-.party-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-weight: bold;
-    font-size: 18px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-.party-name {
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: #333;
-}
-
-.party-seat-count {
-    margin-left: auto;
-    background-color: rgba(0, 48, 135, 0.1);
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: bold;
-    color: var(--kf-blue);
-}
-
-.party-stats {
-    background-color: #f8f9fa;
-    padding: 10px 15px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    text-align: center;
-    flex: 0 0 auto; /* Ikke la statistikken krympe */
-}
-
-.agreement-percentage {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: var(--kf-purple);
-}
-
-.agreement-text {
-    font-size: 0.9rem;
-    color: #666;
-}
-
-/* Saker-seksjonen med scrollbar ved behov */
-.issues-section {
-    flex: 1 1 auto; /* La denne delen vokse og krympe */
-    display: flex;
-    flex-direction: column;
-    overflow: hidden; /* Skjul overflyt */
-}
-
-.issues-section h3 {
-    margin-bottom: 15px;
-    flex: 0 0 auto; /* Ikke la overskriften krympe */
-    color: var(--kf-blue);
-    font-size: 1.1rem;
-}
-
-.issue-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    overflow-y: auto; /* Legg til scrollbar ved behov */
-    flex: 1; /* La listen ta resten av plassen */
-}
-
-.issue-item {
-    padding: 10px;
-    margin-bottom: 8px;
-    background-color: rgba(0, 168, 163, 0.1);
-    border-left: 3px solid var(--kf-green);
-    border-radius: 4px;
-    font-size: 0.95rem;
-}
-
-.issue-item:hover {
-    background-color: rgba(0, 168, 163, 0.15);
-}
-
-/* Stilisert scrollbar for bedre utseende */
-.issue-list::-webkit-scrollbar {
-    width: 8px;
-}
-
-.issue-list::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 4px;
-}
-
-.issue-list::-webkit-scrollbar-thumb {
-    background: #ccc;
-    border-radius: 4px;
-}
-
-.issue-list::-webkit-scrollbar-thumb:hover {
-    background: #aaa;
-}
-
-.issue-area {
-    font-size: 0.85rem;
-    color: #666;
-    font-style: italic;
-    margin-top: 3px;
-}
-
-/* Tilpass "ingen saker" meldingen */
-.no-issues {
-    text-align: center;
-    padding: 20px;
-    color: #777;
-    font-style: italic;
-    background-color: #f9f9f9;
-    border-radius: 6px;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Mobile view - rullemeny */
-.mobile-party-selector {
-    display: none;
-    margin: 20px 0;
-    padding: 15px;
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-}
-
-.party-dropdown {
-    width: 100%;
-    padding: 12px 15px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    font-size: 1rem;
-    margin-top: 10px;
-    background-color: white;
-    cursor: pointer;
-}
-
-/* Responsive design */
-@media (max-width: 1024px) {
-    .party-overview-container {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
-    .party-overview-container {
-        grid-template-columns: 1fr;
-    }
-    
-    .mobile-party-selector {
-        display: block;
-    }
-    
-    /* Skjul alle partibokser unntatt den valgte på mobil */
-    .party-box {
-        display: none;
-    }
-    
-    .party-box.active {
-        display: block;
-    }
-}
-/* Stilsett for enighetsvisning */
-.agreement-bars {
-    margin-top: 15px;
-}
-
-.bar-container {
-    margin-bottom: 8px;
-}
-
-.bar-container .label {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.85rem;
-    margin-bottom: 3px;
-}
-
-.bar {
-    height: 8px;
-    background-color: #f0f0f0;
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-.bar-fill {
-    height: 100%;
-    border-radius: 4px;
-}
-
-.bar-fill.agree {
-    background-color: #28a745; /* Grønn for full enighet */
-}
-
-.bar-fill.partial {
-    background-color: #ffc107; /* Gul for delvis enighet */
-}
-
-.bar-fill.disagree {
-    background-color: #dc3545; /* Rød for uenighet */
-}
-
-/* Fanevisning for sakslister */
-.issues-tabs {
-    display: flex;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #eee;
-}
-
-.tab-button {
-    flex: 1;
-    padding: 8px 5px;
-    background: none;
-    border: none;
-    border-bottom: 2px solid transparent;
-    cursor: pointer;
-    font-size: 0.85rem;
-    color: #555;
-    text-align: center;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.tab-button:hover {
-    background-color: #f9f9f9;
-    color: #333;
-}
-
-.tab-button.active {
-    border-bottom-color: var(--kf-blue);
-    color: var(--kf-blue);
-    font-weight: 600;
-}
-
-.tab-content {
-    display: none;
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-.tab-content.active {
-    display: block;
-}
-
-/* Stilsett for sakslistene basert på enighet */
-.agree-list .issue-item {
-    background-color: rgba(40, 167, 69, 0.1);
-    border-left: 3px solid #28a745;
-}
-
-.partial-list .issue-item {
-    background-color: rgba(255, 193, 7, 0.1);
-    border-left: 3px solid #ffc107;
-}
-
-.disagree-list .issue-item {
-    background-color: rgba(220, 53, 69, 0.1);
-    border-left: 3px solid #dc3545;
-}
-
-/* Sitater */
-.issue-quote {
-    font-style: italic;
-    margin-top: 5px;
-    font-size: 0.9rem;
-    color: #555;
-    padding: 5px 10px;
-    background-color: rgba(255, 255, 255, 0.7);
-    border-radius: 4px;
-}
-/* Party Overview CSS */
 .party-overview-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -330,7 +14,7 @@
     box-shadow: 0 4px 15px rgba(0,0,0,0.06);
     transition: transform 0.2s, box-shadow 0.2s;
     height: auto;
-    min-height: 500px;
+    min-height: 500px; /* Sørger for at boksene har en minimumshøyde */
     display: flex;
     flex-direction: column;
 }
@@ -340,7 +24,7 @@
     box-shadow: 0 8px 20px rgba(0,0,0,0.1);
 }
 
-/* NYTT: Styling for logo-header */
+/* Header med logo */
 .party-header {
     display: flex;
     align-items: center;
@@ -374,7 +58,7 @@
     color: #666;
 }
 
-/* Gammel styling for statistikk og faner (beholdt fra din originale fil) */
+/* Statistikk-seksjon */
 .party-stats {
     text-align: center;
     margin-bottom: 20px;
@@ -393,6 +77,7 @@
     margin-bottom: 15px;
 }
 
+/* Grafer / Søyler (agreement bars) */
 .agreement-bars .bar-container {
     margin-bottom: 8px;
 }
@@ -421,6 +106,14 @@
 .bar-fill.partial { background-color: #ffc107; }
 .bar-fill.disagree { background-color: #dc3545; }
 
+/* Saks-seksjon med faner */
+.issues-section {
+    flex: 1; /* Sørger for at denne seksjonen fyller resten av boksen */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Forhindrer innhold i å "lekke" ut */
+}
+
 .issues-tabs {
     display: flex;
     margin-bottom: 15px;
@@ -447,12 +140,17 @@
 .tab-button:hover { background-color: #f9f9f9; color: #333; }
 .tab-button.active { border-bottom-color: var(--kf-blue); color: var(--kf-blue); }
 
-.tab-content { display: none; max-height: 250px; overflow-y: auto; font-size: 0.9rem; }
+.tab-content {
+    display: none;
+    overflow-y: auto; /* Scrollbar ved behov */
+    flex-grow: 1; /* Lar innholdet ta opp tilgjengelig plass */
+}
+
 .tab-content.active { display: block; }
 .tab-content ul { list-style-type: none; padding: 0; margin: 0; }
 .tab-content li { padding: 10px 5px; border-bottom: 1px solid #f0f0f0; }
 .tab-content li:last-child { border-bottom: none; }
-.no-issues { color: #888; padding: 10px; }
+.no-issues { color: #888; padding: 10px; font-style: italic; text-align: center; }
 .issue-area { font-size: 0.8rem; color: #777; margin-top: 4px; }
 .issue-quote { font-style: italic; color: #555; margin-top: 6px; padding-left: 10px; border-left: 2px solid #ddd; }
 
@@ -471,6 +169,7 @@
     border: 1px solid #ccc;
 }
 
+/* Media Queries for responsivt design */
 @media (max-width: 992px) {
     .party-overview-container {
         grid-template-columns: repeat(2, 1fr);
@@ -480,7 +179,7 @@
 @media (max-width: 768px) {
     .party-overview-container {
         grid-template-columns: 1fr;
-        display: block;
+        display: block; /* Endre fra grid til block for mobil-dropdown-logikk */
     }
     .party-dropdown-container {
         display: block;
@@ -490,6 +189,6 @@
         margin-bottom: 20px;
     }
     .party-box.active {
-        display: flex;
+        display: flex; /* Sørger for at den valgte boksen vises korrekt */
     }
 }
