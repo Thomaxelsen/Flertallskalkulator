@@ -20,32 +20,54 @@ document.addEventListener('DOMContentLoaded', () => {
             const issuesResponse = await fetch('data/issues.json');
             issues = await issuesResponse.json();
 
+            // Sorterer partiene basert på rekkefølgen definert i JSON
             parties.sort((a, b) => a.position - b.position);
-            createPartyButtons();
+            
+            // Kaller den oppdaterte funksjonen for å lage partikort
+            createPartyCards();
         } catch (error) {
             console.error('Klarte ikke å laste inn data:', error);
             resultsOutput.innerHTML = '<p>En feil oppstod under lasting av data.</p>';
         }
     }
 
-    // Funksjon for å lage partiknappene
-    function createPartyButtons() {
+    // Funksjon for å lage partikortene (erstatter createPartyButtons)
+    function createPartyCards() {
         parties.forEach(party => {
-            const button = document.createElement('button');
-            button.className = `party-button ${party.classPrefix}`;
-            button.textContent = party.shorthand;
-            button.dataset.partyShorthand = party.shorthand;
-            button.title = party.name;
+            // Vi lager en div i stedet for en knapp for mer styling-fleksibilitet
+            const card = document.createElement('div');
+            card.className = 'party-card'; // Nytt klassenavn
+            card.dataset.partyShorthand = party.shorthand; // Viktig for logikken
+            card.title = party.name; // Tooltip med fullt navn
 
-            button.addEventListener('click', () => {
+            // Partilogo
+            const img = document.createElement('img');
+            // Stien til logoen settes basert på konvensjonen vi ble enige om
+            img.src = `images/parties/${party.shorthand.toLowerCase()}.png`;
+            img.alt = party.name;
+            img.className = 'party-logo';
+
+            // Partiets kortnavn
+            const name = document.createElement('span');
+            name.className = 'party-name';
+            name.textContent = party.shorthand;
+
+            // Legg til logo og navn i kortet
+            card.appendChild(img);
+            card.appendChild(name);
+
+            // Legg til hele kortet i velgeren
+            partySelector.appendChild(card);
+
+            // Legg til klikk-funksjonalitet
+            card.addEventListener('click', () => {
                 togglePartySelection(party.shorthand);
-                button.classList.toggle('selected');
+                card.classList.toggle('selected');
             });
-            partySelector.appendChild(button);
         });
     }
 
-    // Funksjon for å håndtere valg/fjerning av et parti
+    // Funksjon for å håndtere valg/fjerning av et parti (uendret)
     function togglePartySelection(partyShorthand) {
         if (selectedParties.has(partyShorthand)) {
             selectedParties.delete(partyShorthand);
@@ -55,24 +77,26 @@ document.addEventListener('DOMContentLoaded', () => {
         updateResults();
     }
 
-    // Lytter til endringer
+    // Lytter til endringer - oppdatert til å bruke .party-card
     agreementRadios.forEach(radio => radio.addEventListener('change', updateResults));
+    
     selectAllBtn.addEventListener('click', () => {
-        document.querySelectorAll('.party-button').forEach(btn => {
-            selectedParties.add(btn.dataset.partyShorthand);
-            btn.classList.add('selected');
+        document.querySelectorAll('.party-card').forEach(card => {
+            selectedParties.add(card.dataset.partyShorthand);
+            card.classList.add('selected');
         });
         updateResults();
     });
+
     clearAllBtn.addEventListener('click', () => {
-        document.querySelectorAll('.party-button').forEach(btn => {
-            btn.classList.remove('selected');
+        document.querySelectorAll('.party-card').forEach(card => {
+            card.classList.remove('selected');
         });
         selectedParties.clear();
         updateResults();
     });
 
-    // Hovedfunksjonen som oppdaterer resultatvisningen
+    // Hovedfunksjonen som oppdaterer resultatvisningen (uendret)
     function updateResults() {
         const minAgreementLevel = parseInt(document.querySelector('input[name="agreement"]:checked').value);
         if (selectedParties.size < 2) {
@@ -95,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Funksjon for å finne saker en gruppe partier er enige om
+    // Funksjon for å finne saker en gruppe partier er enige om (uendret)
     function findAgreedIssues(partyCombo, minLevel) {
         return issues.filter(issue => {
             return partyCombo.every(partyShorthand => {
@@ -105,9 +129,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Funksjon for å vise resultatet for én partikombinasjon
+    // Funksjon for å vise resultatet for én partikombinasjon (uendret)
     function displayCombinationResult(combo, issues) {
-        // Group issues by area
         const issuesByArea = issues.reduce((acc, issue) => {
             if (!acc[issue.area]) {
                 acc[issue.area] = [];
@@ -137,7 +160,6 @@ document.addEventListener('DOMContentLoaded', () => {
         header.appendChild(agreementText);
         resultDiv.appendChild(header);
 
-        // Iterate over sorted areas and create groups
         sortedAreas.forEach(area => {
             const categoryGroup = document.createElement('div');
             categoryGroup.className = 'issue-category-group';
@@ -150,7 +172,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const issueList = document.createElement('ul');
             issueList.className = 'issue-list';
 
-            // Sort issues within each area by name
             issuesByArea[area].sort((a, b) => a.name.localeCompare(b.name));
 
             issuesByArea[area].forEach(issue => {
@@ -173,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     const wrapper = document.createElement('div');
                     wrapper.className = 'issue-party-button-wrapper';
-                    wrapper.tabIndex = 0; // Gjør den "fokus-bar" for mobil-klikk
+                    wrapper.tabIndex = 0;
 
                     const button = document.createElement('span');
                     button.className = 'issue-party-button';
@@ -190,11 +211,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 
                 controlsDiv.appendChild(buttonsContainer);
-                // issue-area-span er fjernet herfra da den nå er i categoryHeader
-
                 listItem.appendChild(issueNameSpan);
                 listItem.appendChild(controlsDiv);
-
                 issueList.appendChild(listItem);
             });
             categoryGroup.appendChild(issueList);
@@ -204,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
         resultsOutput.appendChild(resultDiv);
     }
 
-    // Funksjon for å generere alle mulige kombinasjoner
+    // Funksjon for å generere alle mulige kombinasjoner (uendret)
     function getCombinations(arr) {
         const result = [];
         const n = arr.length;
@@ -227,5 +245,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return result;
     }
 
+    // Starter datainnhentingen
     fetchData();
 });
