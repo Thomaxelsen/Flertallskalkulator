@@ -1294,3 +1294,48 @@ header {
     margin-left: auto;
     flex-shrink: 0;
 }
+/* === Oppdaterte stiler for Blokkvisualisering Legend === */
+
+/* 1. Gjemmer den gamle fargeprikken (for sikkerhets skyld) */
+.parliament-legend .legend-color {
+    display: none;
+}
+
+/* 2. Overstyrer den gamle legend-stilen med den nye "tag"-stilen */
+.parliament-legend .legend-item {
+    /* Gjenbruker mye fra .party-tag-small for konsistens */
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px 4px 6px;
+    border-radius: 16px;
+    font-weight: 500;
+    font-size: 0.85em;
+    border: 1.5px solid #eee; /* Nøytral border som standard */
+    background-color: #f8f9fa; /* Nøytral bakgrunn som standard */
+    color: #333;
+    margin: 3px;
+    opacity: 0.7; /* Standard "dimmet" tilstand */
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+/* 3. Stil for logoen inni legend-knappen */
+.legend-item-logo {
+    height: 20px;
+    width: 20px;
+}
+
+/* 4. Stil for hover-effekt */
+.parliament-legend .legend-item:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* 5. Stil for valgte knapper (JS setter fargene direkte) */
+.parliament-legend .legend-item.selected {
+    opacity: 1;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
