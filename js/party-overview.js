@@ -1,35 +1,31 @@
 function initializePartyOverview() {
-    // Definer partiinformasjon
+    // Definer partiinformasjon med logoer
     const parties = [
-        { name: "Rødt", shorthand: "R", seats: 8, position: 1, color: "#da291c", classPrefix: "r" },
-        { name: "Sosialistisk Venstreparti", shorthand: "SV", seats: 13, position: 2, color: "#eb2e2d", classPrefix: "sv" },
-        { name: "Arbeiderpartiet", shorthand: "AP", seats: 48, position: 3, color: "#ed1b34", classPrefix: "ap" },
-        { name: "Senterpartiet", shorthand: "SP", seats: 28, position: 4, color: "#14773c", classPrefix: "sp" },
-        { name: "Miljøpartiet De Grønne", shorthand: "MDG", seats: 3, position: 5, color: "#439539", classPrefix: "mdg" },
-        { name: "Kristelig Folkeparti", shorthand: "KrF", seats: 3, position: 6, color: "#ffbe00", classPrefix: "krf" },
-        { name: "Venstre", shorthand: "V", seats: 8, position: 7, color: "#00807b", classPrefix: "v" },
-        { name: "Høyre", shorthand: "H", seats: 36, position: 8, color: "#007ac8", classPrefix: "h" },
-        { name: "Fremskrittspartiet", shorthand: "FrP", seats: 21, position: 9, color: "#002e5e", classPrefix: "frp" },
-     
+        { name: "Rødt", shorthand: "R", seats: 8, position: 1, color: "#da291c", classPrefix: "r", logo: "images/parties/r.png" },
+        { name: "Sosialistisk Venstreparti", shorthand: "SV", seats: 13, position: 2, color: "#eb2e2d", classPrefix: "sv", logo: "images/parties/sv.png" },
+        { name: "Arbeiderpartiet", shorthand: "AP", seats: 48, position: 3, color: "#ed1b34", classPrefix: "ap", logo: "images/parties/ap.png" },
+        { name: "Senterpartiet", shorthand: "SP", seats: 28, position: 4, color: "#14773c", classPrefix: "sp", logo: "images/parties/sp.png" },
+        { name: "Miljøpartiet De Grønne", shorthand: "MDG", seats: 3, position: 5, color: "#439539", classPrefix: "mdg", logo: "images/parties/mdg.png" },
+        { name: "Kristelig Folkeparti", shorthand: "KrF", seats: 3, position: 6, color: "#ffbe00", classPrefix: "krf", logo: "images/parties/krf.png" },
+        { name: "Venstre", shorthand: "V", seats: 8, position: 7, color: "#00807b", classPrefix: "v", logo: "images/parties/v.png" },
+        { name: "Høyre", shorthand: "H", seats: 36, position: 8, color: "#007ac8", classPrefix: "h", logo: "images/parties/h.png" },
+        { name: "Fremskrittspartiet", shorthand: "FrP", seats: 21, position: 9, color: "#002e5e", classPrefix: "frp", logo: "images/parties/frp.png" },
     ];
     
     // Hent detaljerte data fra issues.json
     fetch('data/issues.json')
         .then(response => response.json())
         .then(detailedIssues => {
-            // Analyser issues-data for å kategorisere partienes standpunkter
             const partyIssuesMap = {};
             
-            // Initialiser tomt array for hvert parti
             parties.forEach(party => {
                 partyIssuesMap[party.shorthand] = {
-                    fullyAgree: [], // nivå 2
-                    partiallyAgree: [], // nivå 1
-                    disagree: [] // nivå 0
+                    fullyAgree: [],
+                    partiallyAgree: [],
+                    disagree: []
                 };
             });
             
-            // Gå gjennom alle saker og kategoriser hvert partis standpunkt
             detailedIssues.forEach(issue => {
                 for (const partyCode in issue.partyStances) {
                     const level = issue.partyStances[partyCode].level;
@@ -50,37 +46,32 @@ function initializePartyOverview() {
                 }
             });
             
-            // Nå har vi en komplett oversikt over hvert partis standpunkter
             generatePartyBoxes(parties, partyIssuesMap);
             initializeMobileView(parties, partyIssuesMap);
         })
         .catch(error => {
             console.error('Error loading detailed issues data:', error);
-            // Fallback til eksisterende data
-            fallbackPartyOverview();
+            fallbackPartyOverview(); // Fallback til eksisterende data
         });
 }
 
-// Fallback-funksjon som bruker eksisterende (konverterte) data
+// Fallback-funksjon
 function fallbackPartyOverview() {
-    // Bruk den eksisterende logikken for å vise bare full enighet
+    // Denne funksjonaliteten kan beholdes eller tilpasses etter behov
     const parties = [
-        { name: "Rødt", shorthand: "R", seats: 8, position: 1, color: "#da291c", classPrefix: "r" },
-        { name: "Sosialistisk Venstreparti", shorthand: "SV", seats: 13, position: 2, color: "#eb2e2d", classPrefix: "sv" },
-        { name: "Arbeiderpartiet", shorthand: "AP", seats: 48, position: 3, color: "#ed1b34", classPrefix: "ap" },
-        { name: "Senterpartiet", shorthand: "SP", seats: 28, position: 4, color: "#14773c", classPrefix: "sp" },
-        { name: "Miljøpartiet De Grønne", shorthand: "MDG", seats: 3, position: 5, color: "#439539", classPrefix: "mdg" },
-        { name: "Kristelig Folkeparti", shorthand: "KrF", seats: 3, position: 6, color: "#ffbe00", classPrefix: "krf" },
-        { name: "Venstre", shorthand: "V", seats: 8, position: 7, color: "#00807b", classPrefix: "v" },
-        { name: "Høyre", shorthand: "H", seats: 36, position: 8, color: "#007ac8", classPrefix: "h" },
-        { name: "Fremskrittspartiet", shorthand: "FrP", seats: 21, position: 9, color: "#002e5e", classPrefix: "frp" },
-
+        { name: "Rødt", shorthand: "R", seats: 8, position: 1, color: "#da291c", classPrefix: "r", logo: "images/parties/r.png" },
+        { name: "Sosialistisk Venstreparti", shorthand: "SV", seats: 13, position: 2, color: "#eb2e2d", classPrefix: "sv", logo: "images/parties/sv.png" },
+        { name: "Arbeiderpartiet", shorthand: "AP", seats: 48, position: 3, color: "#ed1b34", classPrefix: "ap", logo: "images/parties/ap.png" },
+        { name: "Senterpartiet", shorthand: "SP", seats: 28, position: 4, color: "#14773c", classPrefix: "sp", logo: "images/parties/sp.png" },
+        { name: "Miljøpartiet De Grønne", shorthand: "MDG", seats: 3, position: 5, color: "#439539", classPrefix: "mdg", logo: "images/parties/mdg.png" },
+        { name: "Kristelig Folkeparti", shorthand: "KrF", seats: 3, position: 6, color: "#ffbe00", classPrefix: "krf", logo: "images/parties/krf.png" },
+        { name: "Venstre", shorthand: "V", seats: 8, position: 7, color: "#00807b", classPrefix: "v", logo: "images/parties/v.png" },
+        { name: "Høyre", shorthand: "H", seats: 36, position: 8, color: "#007ac8", classPrefix: "h", logo: "images/parties/h.png" },
+        { name: "Fremskrittspartiet", shorthand: "FrP", seats: 21, position: 9, color: "#002e5e", classPrefix: "frp", logo: "images/parties/frp.png" },
     ];
     
-    // Analyser issues-data for å finne ut hvilke partier som støtter hvilke saker
     const partyIssuesMap = {};
     
-    // Initialiser tomt array for hvert parti
     parties.forEach(party => {
         partyIssuesMap[party.shorthand] = {
             fullyAgree: [],
@@ -89,7 +80,6 @@ function fallbackPartyOverview() {
         };
     });
     
-    // Gå gjennom alle saker og legg til i riktig parti
     window.issues.forEach(issue => {
         if (issue.partiesInAgreement) {
             issue.partiesInAgreement.forEach(partyCode => {
@@ -111,31 +101,27 @@ function fallbackPartyOverview() {
 // Generer HTML for partiboksene
 function generatePartyBoxes(parties, partyIssuesMap) {
     const partyOverviewContainer = document.querySelector('.party-overview-container');
-    partyOverviewContainer.innerHTML = ''; // Tøm eksisterende innhold
+    partyOverviewContainer.innerHTML = '';
     
     parties.forEach(party => {
-        // Beregn prosentandel av saker partiet støtter fullt ut
         const supportedIssues = partyIssuesMap[party.shorthand].fullyAgree;
         const partialIssues = partyIssuesMap[party.shorthand].partiallyAgree;
         const disagreedIssues = partyIssuesMap[party.shorthand].disagree;
         
-        // Beregn total antall saker
         const totalIssues = supportedIssues.length + partialIssues.length + disagreedIssues.length;
-        const supportPercentage = Math.round((supportedIssues.length / totalIssues) * 100);
+        const supportPercentage = totalIssues > 0 ? Math.round((supportedIssues.length / totalIssues) * 100) : 0;
         
-        // Opprett partiboks
         const partyBox = document.createElement('div');
         partyBox.className = 'party-box';
         partyBox.dataset.party = party.shorthand;
         
-        // HTML for partiboksen
         partyBox.innerHTML = `
             <div class="party-header">
-                <div class="party-icon icon-${party.classPrefix}" style="background-color: ${party.color}">
-                    ${party.shorthand.charAt(0)}
+                <img src="${party.logo}" alt="${party.name} logo" class="party-logo">
+                <div class="party-info">
+                    <h2 class="party-name">${party.name}</h2>
+                    <div class="party-seat-count">${party.seats} mandater</div>
                 </div>
-                <h2 class="party-name">${party.name}</h2>
-                <div class="party-seat-count">${party.seats}</div>
             </div>
             
             <div class="party-stats">
@@ -145,19 +131,19 @@ function generatePartyBoxes(parties, partyIssuesMap) {
                     <div class="bar-container">
                         <div class="label">Full enighet (${supportedIssues.length})</div>
                         <div class="bar">
-                            <div class="bar-fill agree" style="width: ${(supportedIssues.length / totalIssues) * 100}%"></div>
+                            <div class="bar-fill agree" style="width: ${totalIssues > 0 ? (supportedIssues.length / totalIssues) * 100 : 0}%"></div>
                         </div>
                     </div>
                     <div class="bar-container">
                         <div class="label">Delvis enighet (${partialIssues.length})</div>
                         <div class="bar">
-                            <div class="bar-fill partial" style="width: ${(partialIssues.length / totalIssues) * 100}%"></div>
+                            <div class="bar-fill partial" style="width: ${totalIssues > 0 ? (partialIssues.length / totalIssues) * 100 : 0}%"></div>
                         </div>
                     </div>
                     <div class="bar-container">
                         <div class="label">Ingen støtte (${disagreedIssues.length})</div>
                         <div class="bar">
-                            <div class="bar-fill disagree" style="width: ${(disagreedIssues.length / totalIssues) * 100}%"></div>
+                            <div class="bar-fill disagree" style="width: ${totalIssues > 0 ? (disagreedIssues.length / totalIssues) * 100 : 0}%"></div>
                         </div>
                     </div>
                 </div>
@@ -184,10 +170,7 @@ function generatePartyBoxes(parties, partyIssuesMap) {
             </div>
         `;
         
-        // Legg til partiboks i container
         partyOverviewContainer.appendChild(partyBox);
-        
-        // Legg til event listeners for faner
         setupTabButtons(partyBox);
     });
 }
@@ -217,14 +200,11 @@ function setupTabButtons(partyBox) {
     
     tabButtons.forEach(button => {
         button.addEventListener('click', function() {
-            // Fjern aktiv klasse fra alle knapper og innhold
             tabButtons.forEach(btn => btn.classList.remove('active'));
             tabContents.forEach(content => content.classList.remove('active'));
             
-            // Legg til aktiv klasse på valgt knapp
             button.classList.add('active');
             
-            // Vis tilhørende innhold
             const tabId = button.dataset.tab;
             document.getElementById(`${tabId}-${partyShorthand}`).classList.add('active');
         });
@@ -243,16 +223,13 @@ function initializeMobileView(parties, partyIssuesMap) {
         partyDropdown.appendChild(option);
     });
     
-    // Event listener for dropdown på mobil
     partyDropdown.addEventListener('change', function() {
         const selectedParty = this.value;
         
-        // Skjul alle partibokser
         document.querySelectorAll('.party-box').forEach(box => {
             box.classList.remove('active');
         });
         
-        // Vis valgt partiboks
         if (selectedParty) {
             const selectedBox = document.querySelector(`.party-box[data-party="${selectedParty}"]`);
             if (selectedBox) {
@@ -264,9 +241,8 @@ function initializeMobileView(parties, partyIssuesMap) {
 
 // Lytt etter at dokumentet er ferdig lastet
 document.addEventListener('DOMContentLoaded', function() {
-    // Lytt etter issues-data
     if (window.issues && window.issues.length > 0) {
-        initializePartyOverview(); // Issues allerede lastet
+        initializePartyOverview();
     } else {
         document.addEventListener('issuesDataLoaded', initializePartyOverview);
     }
