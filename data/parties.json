@@ -7,6 +7,5 @@
   { "name": "Venstre", "seats": 8, "shorthand": "V", "color": "#00807b", "classPrefix": "v", "position": 6 },
   { "name": "Kristelig Folkeparti", "seats": 3, "shorthand": "KrF", "color": "#ffbe00", "classPrefix": "krf", "position": 7 },
   { "name": "Høyre", "seats": 36, "shorthand": "H", "color": "#007ac8", "classPrefix": "h", "position": 8 },
-  { "name": "Fremskrittspartiet", "seats": 21, "shorthand": "FrP", "color": "#002e5e", "classPrefix": "frp", "position": 9 },
-  { "name": "Pasientfokus", "seats": 1, "shorthand": "PF", "color": "#a04d94", "classPrefix": "pf", "position": 10 }
+  { "name": "Fremskrittspartiet", "seats": 22, "shorthand": "FrP", "color": "#002e5e", "classPrefix": "frp", "position": 9 }
 ]
