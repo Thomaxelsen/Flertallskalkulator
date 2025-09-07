@@ -263,3 +263,176 @@
     font-size: 0.9rem;
     line-height: 1.4;
 }
+/* Generell layout for siden */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Partivelger-seksjonen */
+#partySelector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 20px;
+}
+
+.party-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ccc;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 80px; /* Fast bredde for konsistens */
+}
+
+.party-button:hover {
+    border-color: #7d5ba6;
+    background-color: #f0ebf5;
+}
+
+.party-button.selected {
+    border-color: #7d5ba6;
+    background-color: #e5d9f2;
+    box-shadow: 0 0 5px rgba(125, 91, 166, 0.5);
+}
+
+/* FIKS FOR PROBLEM 1: Styling av logo i partivelger-knappene */
+.party-logo-btn {
+    max-height: 40px; /* Begrenser høyden */
+    width: auto;
+    max-width: 100%;
+    margin-bottom: 5px;
+}
+
+.party-name {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Kontroll-knapper */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Resultat-seksjonen */
+.party-unique-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.party-unique-card h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 0;
+}
+
+/* FIKS FOR PROBLEM 2: Styling av den store logoen i kort-overskriften */
+.party-logo-header {
+    height: 32px; /* Setter en fast, passende høyde */
+    width: auto;
+}
+
+.area-section {
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.area-section h4 {
+    margin-top: 0;
+}
+
+.issue-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    list-style-type: none;
+}
+
+.issue-item:not(:last-child) {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.party-icon-small {
+    height: 24px; /* Liten logo ved siden av saken */
+    width: auto;
+    margin-left: 10px;
+}
+
+.quote-btn {
+    background: #eee;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    font-weight: bold;
+    color: #555;
+    margin-left: 15px;
+}
+
+/* FIKS FOR PROBLEM 3: Endret styling for modal til å bli en "popup" */
+.quote-modal {
+    display: none; /* Skjult som standard */
+    position: fixed; /* Posisjonert i forhold til nettleservinduet */
+    bottom: 20px; /* Posisjon nede i høyre hjørne */
+    right: 20px;
+    width: auto; /* Bredde basert på innhold */
+    max-width: 400px; /* Maksimal bredde */
+    height: auto;
+    background-color: transparent; /* Ingen mørk bakgrunn */
+    z-index: 1001; /* Sikrer at den ligger over alt annet */
+    pointer-events: all; /* Sørger for at man kan interagere med den */
+}
+
+.quote-modal-content {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border: 1px solid #ccc;
+    position: relative;
+    padding: 0;
+    font-size: 14px;
+}
+
+.quote-modal-content .quote-title {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.quote-modal-content .quote-text {
+    padding: 1rem;
+    margin: 0;
+    max-height: 200px; /* Maks høyde med scroll */
+    overflow-y: auto;
+}
+
+.quote-modal-content .close-modal {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+}
