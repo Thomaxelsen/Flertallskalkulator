@@ -1,14 +1,7 @@
-
-/* 
+/*
  * party-unique.js
  * Denne filen implementerer logikken for siden som viser saker hvor bare ett parti
- * (innenfor en valgt gruppe) støtter forslaget. Brukeren kan velge minimum tre partier
- * og velge om bare nivå 2 (full enighet) eller både nivå 1 og 2 skal regnes med.
- *
- * Skriptet baserer seg på at issues.js og partiesData.js har lastet sine data
- * og satt globale variabler window.issues og window.partiesData. Dersom disse
- * ikke er tilgjengelige umiddelbart, lytter skriptet på events for å starte
- * initialisering når dataene er klare.
+ * (innenfor en valgt gruppe) støtter forslaget.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -36,99 +29,47 @@ function initPartyUniquePage() {
     const agreementRadios = document.querySelectorAll('input[name="agreement"]');
     const resultsContainer = document.getElementById('resultsContainer');
 
-    // Map fra shorthand til partiobjekt for rask lookup
     const partiesMap = {};
     window.partiesData.forEach(p => {
         partiesMap[p.shorthand] = p;
     });
 
-    // Holder styr på hvilke partier som er valgt
     const selectedParties = new Set();
+    let agreementThreshold = 2; // Startverdi: "Kun helt enig"
 
-    // Nåværende minstekrav til enighetsnivå. 2 betyr kun nivå 2,
-    // 1 betyr nivå 1 eller 2.
-    let agreementThreshold = 2;
-
-    // Opprett modal for sitatvisning
-    setupQuoteModal();
+    // Hjelpefunksjon for å konvertere HEX til RGBA for bakgrunnsfarger
+    function hexToRgba(hex, alpha) {
+        if (!hex) return 'rgba(200, 200, 200, 0.1)';
+        const r = parseInt(hex.slice(1, 3), 16);
+        const g = parseInt(hex.slice(3, 5), 16);
+        const b = parseInt(hex.slice(5, 7), 16);
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
 
     renderPartyButtons();
     attachAgreementListeners();
     attachActionButtons();
+    updateResults(); // Kjør en gang ved start for å vise meldingen
 
     /**
-     * Oppretter sitatmodalelementet om det ikke finnes fra før.
-     */
-    function setupQuoteModal() {
-        if (document.getElementById('quoteModal')) return;
-        const modal = document.createElement('div');
-        modal.id = 'quoteModal';
-        modal.className = 'quote-modal';
-        modal.innerHTML = `
-            <div class="quote-modal-content">
-                <span class="close-modal">×</span>
-                <h3 class="quote-title"></h3>
-                <p class="quote-text"></p>
-            </div>
-        `;
-        document.body.appendChild(modal);
-        modal.addEventListener('click', (e) => {
-            // Lukk hvis du klikker på overlay eller kryss
-            if (e.target === modal || e.target.classList.contains('close-modal')) {
-                modal.style.display = 'none';
-            }
-        });
-    }
-
-    /**
-     * Viser modal med sitat for gitt sak og parti.
-     */
-    function showQuoteModal(issue, partyCode) {
-        const modal = document.getElementById('quoteModal');
-        if (!modal) return;
-        const party = partiesMap[partyCode];
-        if (!party) return;
-        const stance = issue.partyStances && issue.partyStances[partyCode];
-        const quote = stance && stance.quote ? stance.quote : null;
-        const titleEl = modal.querySelector('.quote-title');
-        const textEl = modal.querySelector('.quote-text');
-        titleEl.textContent = `${party.name} – ${issue.name}`;
-        // Farget kant på toppen for å identifisere parti
-        titleEl.style.backgroundColor = party.color || '#7d5ba6';
-        titleEl.style.color = '#fff';
-        titleEl.style.padding = '0.5rem';
-        titleEl.style.borderRadius = '6px 6px 0 0';
-        textEl.textContent = quote ? quote : 'Ingen sitat tilgjengelig.';
-        modal.style.display = 'block';
-    }
-
-    /**
-     * Rendrer knappene for hvert parti med logo og navn.
+     * Rendrer knappene for hvert parti.
      */
     function renderPartyButtons() {
         if (!partySelectorDiv) return;
         partySelectorDiv.innerHTML = '';
-        // Sorter partiene etter politisk posisjon (om tilgjengelig) for konsist ordning
         const sortedParties = [...window.partiesData].sort((a, b) => (a.position || 99) - (b.position || 99));
+
         sortedParties.forEach(party => {
             const btn = document.createElement('button');
             btn.classList.add('party-button');
             btn.dataset.shorthand = party.shorthand;
-            // Legg til valgt-klasse hvis allerede valgt
             if (selectedParties.has(party.shorthand)) {
                 btn.classList.add('selected');
             }
-            // Innhold: logo og tekst
-            const img = document.createElement('img');
-            img.src = `images/parties/${party.shorthand.toLowerCase()}.png`;
-            img.alt = `${party.name} logo`;
-            img.className = 'party-logo';
-            const nameDiv = document.createElement('div');
-            nameDiv.className = 'party-name';
-            nameDiv.textContent = party.shorthand;
-            btn.appendChild(img);
-            btn.appendChild(nameDiv);
-            // Klikk: toggle valgt status
+            btn.innerHTML = `
+                <img src="images/parties/${party.shorthand.toLowerCase()}.png" alt="${party.name} logo" class="party-logo">
+                <div class="party-name">${party.shorthand}</div>
+            `;
             btn.addEventListener('click', () => {
                 const code = party.shorthand;
                 if (selectedParties.has(code)) {
@@ -143,24 +84,15 @@ function initPartyUniquePage() {
         });
     }
 
-    /**
-     * Lyttere på radio-knappene som styrer enighetsnivå.
-     */
     function attachAgreementListeners() {
         agreementRadios.forEach(radio => {
             radio.addEventListener('change', () => {
-                const val = parseInt(radio.value, 10);
-                if (!isNaN(val)) {
-                    agreementThreshold = val;
-                    updateResults();
-                }
+                agreementThreshold = parseInt(radio.value, 10);
+                updateResults();
             });
         });
     }
 
-    /**
-     * Velg alle / fjern alle-knapper.
-     */
     function attachActionButtons() {
         selectAllBtn.addEventListener('click', () => {
             window.partiesData.forEach(p => selectedParties.add(p.shorthand));
@@ -175,14 +107,13 @@ function initPartyUniquePage() {
     }
 
     /**
-     * Beregner og oppdaterer resultatseksjonen basert på valgte partier og threshold.
+     * Beregner og oppdaterer resultatseksjonen.
      */
     function updateResults() {
         if (!resultsContainer) return;
         resultsContainer.innerHTML = '';
 
-        const partyCount = selectedParties.size;
-        if (partyCount < 3) {
+        if (selectedParties.size < 3) {
             const info = document.createElement('p');
             info.className = 'info-message';
             info.textContent = 'Velg minst tre partier for å se unike saker.';
@@ -190,141 +121,150 @@ function initPartyUniquePage() {
             return;
         }
 
-        // Vis hvilke partier som er valgt (badges)
+        const heading = document.createElement('h2');
+        heading.textContent = 'Resultater for valgte partier:';
+        resultsContainer.appendChild(heading);
+
+        // FIX PROBLEM 1: Lager brikker med logo og tekst for valgte partier.
         const badgesContainer = document.createElement('div');
         badgesContainer.className = 'selected-parties-badges';
         selectedParties.forEach(code => {
             const party = partiesMap[code];
             if (!party) return;
-            const span = document.createElement('span');
-            span.className = `party-tag party-tag-${party.classPrefix}`;
-            span.textContent = party.shorthand;
-            badgesContainer.appendChild(span);
+            const tag = document.createElement('div');
+            tag.className = 'party-tag-small';
+            tag.innerHTML = `
+                <img src="images/parties/${party.shorthand.toLowerCase()}.png" class="party-tag-logo" alt="${party.name}">
+                <span>${party.shorthand}</span>
+            `;
+            tag.style.backgroundColor = hexToRgba(party.color, 0.15);
+            tag.style.borderColor = party.color;
+            badgesContainer.appendChild(tag);
         });
-        const heading = document.createElement('h2');
-        heading.textContent = 'Resultater';
-        resultsContainer.appendChild(heading);
         resultsContainer.appendChild(badgesContainer);
+        // SLUTT FIX 1
 
-        // For hver valgt parti: finn unike saker
+        let anyResultsFound = false;
+
         selectedParties.forEach(code => {
             const party = partiesMap[code];
             if (!party) return;
 
-            // Finn alle saker der dette partiet har nivå >= threshold og alle andre valgte partier har nivå < threshold
             const uniqueIssuesByArea = {};
             window.issues.forEach(issue => {
-                const partyStances = issue.partyStances || {};
-                const thisStance = partyStances[code];
-                const thisLevel = thisStance && typeof thisStance.level === 'number' ? thisStance.level : 0;
-                // Må ha støtte (>= threshold)
-                if (thisLevel < agreementThreshold) return;
-                // Sjekk at ingen andre utvalgte partier har nivå >= threshold
-                let isUnique = true;
-                selectedParties.forEach(otherCode => {
-                    if (otherCode === code) return;
-                    const otherStance = partyStances[otherCode];
-                    const otherLevel = otherStance && typeof otherStance.level === 'number' ? otherStance.level : 0;
-                    if (otherLevel >= agreementThreshold) {
-                        isUnique = false;
+                const stances = issue.partyStances || {};
+                const thisLevel = stances[code]?.level ?? -1;
+
+                if (thisLevel >= agreementThreshold) {
+                    let isUnique = true;
+                    for (const otherCode of selectedParties) {
+                        if (otherCode === code) continue;
+                        const otherLevel = stances[otherCode]?.level ?? -1;
+                        if (otherLevel >= agreementThreshold) {
+                            isUnique = false;
+                            break;
+                        }
                     }
-                });
-                if (!isUnique) return;
-                // Kategoriser etter område
-                const area = issue.area || 'Ukjent område';
-                if (!uniqueIssuesByArea[area]) {
-                    uniqueIssuesByArea[area] = [];
+                    if (isUnique) {
+                        const area = issue.area || 'Ukjent område';
+                        if (!uniqueIssuesByArea[area]) {
+                            uniqueIssuesByArea[area] = [];
+                        }
+                        uniqueIssuesByArea[area].push(issue);
+                    }
                 }
-                uniqueIssuesByArea[area].push(issue);
             });
 
-            // Lag et kort hvis partiet har noen unike saker
-            const uniqueCount = Object.values(uniqueIssuesByArea).reduce((acc, arr) => acc + arr.length, 0);
-            
-            // **FIX FOR PROBLEM 3: Ikke vis kort hvis det ikke er unike saker**
-            if (uniqueCount === 0) return;
-
-            const card = document.createElement('div');
-            card.className = 'party-unique-card';
-            
-            // **FIX FOR PROBLEM 1: Vis logo i kortoverskriften**
-            const cardHeader = document.createElement('h3');
-            cardHeader.innerHTML = `
-                <img src="images/parties/${party.shorthand.toLowerCase()}.png" class="party-logo-header" alt="${party.name}"> 
-                har ${uniqueCount} unike sak${uniqueCount === 1 ? '' : 'er'}
-            `;
-            card.appendChild(cardHeader);
-
-            // Legg til områdeseksjoner
-            Object.keys(uniqueIssuesByArea).sort().forEach(areaName => {
-                const section = document.createElement('div');
-                section.className = 'area-section';
-                const areaHeader = document.createElement('h4');
-                areaHeader.textContent = areaName;
-                section.appendChild(areaHeader);
-                const list = document.createElement('ul');
-                uniqueIssuesByArea[areaName].forEach(issue => {
-                    const li = document.createElement('li');
-                    li.className = 'issue-item';
-                    const issueNameSpan = document.createElement('span');
-                    issueNameSpan.className = 'issue-name';
-                    issueNameSpan.textContent = issue.name;
-                    li.appendChild(issueNameSpan);
-                    
-                    // **FIX FOR PROBLEM 2: Vis logo ved siden av saken**
-                    const logoImg = document.createElement('img');
-                    logoImg.src = `images/parties/${party.shorthand.toLowerCase()}.png`;
-                    logoImg.alt = party.shorthand;
-                    logoImg.className = 'party-icon-small';
-                    li.appendChild(logoImg);
-                    
-                    // Knapp for å vise sitat
-                    const quoteBtn = document.createElement('button');
-                    quoteBtn.className = 'quote-btn';
-                    const stance = issue.partyStances && issue.partyStances[party.shorthand];
-                    const quoteText = stance && stance.quote ? stance.quote : '';
-                    if (quoteText) {
-                        quoteBtn.title = quoteText;
-                    } else {
-                        quoteBtn.title = 'Ingen sitat tilgjengelig';
-                    }
-                    quoteBtn.innerHTML = '“';
-                    
-                    // **FIX FOR PROBLEM 3: Fikset hover-logikk for å unngå flimring**
-                    // Hindrer at modalen lukkes umiddelbart på mouseleave
-                    let modalTimer; 
-                    const showFn = (e) => {
-                        e.stopPropagation();
-                        clearTimeout(modalTimer); // Avbryt eventuell planlagt lukking
-                        showQuoteModal(issue, party.shorthand);
-                    };
-                    
-                    const hideFn = () => {
-                        // Planlegg lukking av modalen med en liten forsinkelse
-                        modalTimer = setTimeout(() => {
-                           const modal = document.getElementById('quoteModal');
-                           if (modal) modal.style.display = 'none';
-                        }, 300); // 300ms forsinkelse
-                    };
-
-                    quoteBtn.addEventListener('click', showFn);
-                    quoteBtn.addEventListener('mouseenter', showFn);
-                    quoteBtn.addEventListener('mouseleave', hideFn);
-
-                    // Sørg for at modalen holder seg åpen hvis musen er over den
-                    const modal = document.getElementById('quoteModal');
-                    if(modal) {
-                        modal.addEventListener('mouseenter', () => clearTimeout(modalTimer));
-                        modal.addEventListener('mouseleave', () => hideFn());
-                    }
-
-                    li.appendChild(quoteBtn);
-                    list.appendChild(li);
-                });
-                section.appendChild(list);
-                card.appendChild(section);
-            });
-            resultsContainer.appendChild(card);
+            const uniqueCount = Object.values(uniqueIssuesByArea).flat().length;
+            if (uniqueCount > 0) {
+                anyResultsFound = true;
+                const card = createResultCard(party, uniqueIssuesByArea, uniqueCount);
+                resultsContainer.appendChild(card);
+            }
         });
+
+        if (!anyResultsFound) {
+            const noResults = document.createElement('p');
+            noResults.className = 'info-message';
+            noResults.textContent = 'Fant ingen unike saker for de valgte partiene med gjeldende filter.';
+            resultsContainer.appendChild(noResults);
+        }
     }
+
+    /**
+     * Lager et resultat-kort for et gitt parti og dets unike saker.
+     */
+    function createResultCard(party, issuesByArea, count) {
+        const card = document.createElement('div');
+        card.className = 'party-unique-card';
+
+        // FIX PROBLEM 2: Sørger for at logoen er en del av overskriften.
+        const cardHeader = document.createElement('h3');
+        cardHeader.innerHTML = `
+            <img src="images/parties/${party.shorthand.toLowerCase()}.png" class="party-logo-header" alt="${party.name}">
+            <span>${party.name} har ${count} unike sak${count === 1 ? '' : 'er'}</span>
+        `;
+        card.appendChild(cardHeader);
+        // SLUTT FIX 2
+
+        Object.keys(issuesByArea).sort().forEach(areaName => {
+            const section = document.createElement('div');
+            section.className = 'area-section';
+            section.innerHTML = `<h4>${areaName}</h4>`;
+            const list = document.createElement('ul');
+
+            issuesByArea[areaName].forEach(issue => {
+                const li = document.createElement('li');
+                li.className = 'issue-item';
+                li.innerHTML = `<span class="issue-name">${issue.name}</span>`;
+
+                const controls = document.createElement('div');
+                controls.style.display = 'flex';
+                controls.style.alignItems = 'center';
+
+                const logoImg = document.createElement('img');
+                logoImg.src = `images/parties/${party.shorthand.toLowerCase()}.png`;
+                logoImg.alt = party.shorthand;
+                logoImg.className = 'party-icon-small';
+                controls.appendChild(logoImg);
+
+                const quote = issue.partyStances[party.shorthand]?.quote;
+                if (quote) {
+                    const quoteBtn = createQuoteButton(issue, party, quote);
+                    controls.appendChild(quoteBtn);
+                }
+
+                li.appendChild(controls);
+                list.appendChild(li);
+            });
+            section.appendChild(list);
+            card.appendChild(section);
+        });
+        return card;
+    }
+
+    /**
+     * FIX PROBLEM 3: Lager en "sitat-knapp" med en innebygd tooltip
+     * i stedet for en modal.
+     */
+    function createQuoteButton(issue, party, quote) {
+        const quoteBtn = document.createElement('div');
+        quoteBtn.className = 'quote-btn';
+        quoteBtn.textContent = 'i';
+        quoteBtn.title = 'Vis sitat';
+
+        const tooltip = document.createElement('div');
+        tooltip.className = 'quote-tooltip';
+        tooltip.innerHTML = `
+            <h5 class="quote-tooltip-title">
+                <img src="images/parties/${party.shorthand.toLowerCase()}.png" class="quote-tooltip-logo" alt="${party.name}">
+                ${party.name}
+            </h5>
+            <p class="quote-tooltip-text">"${quote}"</p>
+        `;
+        
+        quoteBtn.appendChild(tooltip);
+        return quoteBtn;
+    }
+    // SLUTT FIX 3
 }
