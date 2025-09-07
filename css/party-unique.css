@@ -1,8 +1,6 @@
-
-/* 
+/*
  * party-unique.css
  * Stiler for siden som viser unike partisaker.
- * Basert på prosjektets eksisterende estetikk med lyse bakgrunner, runde hjørner og parti‑fargede etiketter.
  */
 
 /* Beholder samme generelle layout som andre sider */
@@ -107,12 +105,32 @@
     margin-bottom: 0.5rem;
 }
 
+/* FIX PROBLEM 1: Stiler for de små logo-brikkene for valgte partier. */
 .selected-parties-badges {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
     margin-bottom: 1rem;
+    align-items: center;
 }
+/* Bruker samme stil som på forsiden for konsistens */
+.party-tag-small {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px 3px 6px;
+    border-radius: 16px;
+    font-weight: 500;
+    font-size: 0.85em;
+    border: 1.5px solid;
+    color: #333;
+}
+.party-tag-logo {
+    height: 18px;
+    width: 18px;
+}
+/* SLUTT FIX 1 */
+
 
 .party-unique-card {
     background-color: #ffffff;
@@ -127,7 +145,19 @@
     margin-top: 0;
     margin-bottom: 0.75rem;
     font-size: 1.1rem;
+    display: flex; /* Sørger for at logo og tekst er på linje */
+    align-items: center;
 }
+
+/* FIX PROBLEM 2: Setter en fast størrelse på logoen i overskriften. */
+.party-logo-header {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    margin-right: 0.75rem; /* Gir litt luft mellom logo og tekst */
+}
+/* SLUTT FIX 2 */
+
 
 .area-section {
     margin-bottom: 1rem;
@@ -164,20 +194,14 @@
     margin-right: 0.5rem;
 }
 
-.party-tag {
-    display: inline-block;
-    padding: 0.15rem 0.45rem;
-    border-radius: 12px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: #fff;
+.party-icon-small {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: contain;
     margin-left: 0.25rem;
 }
 
-.party-tag.small-tag {
-    font-size: 0.7rem;
-    padding: 0.1rem 0.35rem;
-}
 
 /* Info-melding når for få partier er valgt */
 .info-message {
@@ -186,16 +210,6 @@
     border: 1px dashed var(--kf-purple, #7d5ba6);
     border-radius: 8px;
     color: var(--kf-dark-gray, #333);
-}
-
-/* Små partisymboler i resultatlisten */
-/* Små partisymboler i resultatlisten. Økt størrelse for bedre synlighet */
-.party-icon-small {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    object-fit: contain;
-    margin-left: 0.25rem;
 }
 
 /* Knapp for å vise sitat */
@@ -215,52 +229,72 @@
     align-items: center;
     justify-content: center;
     padding: 0;
+    position: relative; /* Nødvendig for at tooltip skal posisjonere seg riktig */
 }
 
 .quote-btn:hover {
     background-color: #e5e7eb;
 }
 
-/* Modal for sitat */
-.quote-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    z-index: 2000;
-    overflow: auto;
-}
-
-.quote-modal-content {
-    background-color: #ffffff;
-    margin: 10% auto;
-    padding: 1rem;
+/* FIX PROBLEM 3: Erstatter modal-stilen med en tooltip-stil. */
+.quote-tooltip {
+    visibility: hidden; /* Skjult som standard */
+    opacity: 0;
+    position: absolute; /* Posisjoneres ift. nærmeste relative forelder (quote-btn) */
+    z-index: 100;
+    bottom: 135%; /* Plasseres over knappen */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 280px;
+    max-width: 80vw;
+    background-color: #fff;
+    color: #333;
     border-radius: 8px;
-    max-width: 500px;
-    position: relative;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    border: 1px solid #ddd;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    pointer-events: none; /* Kan ikke interagere med den som standard */
 }
 
-.close-modal {
+/* Pil under tooltipen */
+.quote-tooltip::after {
+    content: "";
     position: absolute;
-    right: 0.5rem;
-    top: 0.5rem;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: #666;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: #fff transparent transparent transparent;
 }
 
-.quote-title {
+/* Vises når man svever over knappen */
+.quote-btn:hover .quote-tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.quote-tooltip-title {
     margin-top: 0;
     margin-bottom: 0.5rem;
     font-size: 1rem;
     font-weight: 600;
+    display: flex;
+    align-items: center;
 }
 
-.quote-text {
+.quote-tooltip-logo {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+}
+
+.quote-tooltip-text {
     font-size: 0.9rem;
     line-height: 1.4;
+    font-style: italic;
+    color: #555;
+    margin: 0;
 }
+/* SLUTT FIX 3 */
