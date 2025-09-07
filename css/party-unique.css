@@ -1,94 +1,121 @@
 /*
  * party-unique.css
  * Stiler for siden som viser unike partisaker.
+ * --- OPPGRADERT DESIGN FOR KONSISTENS MED party-constellations ---
  */
 
-/* Beholder samme generelle layout som andre sider */
 .main-content {
     max-width: 1100px;
     margin: 0 auto;
     padding: 1rem;
 }
 
-/* Seksjonstitteler */
+.selection-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
 .selection-container h2 {
-    margin-bottom: 0.25rem;
-}
-
-.selection-container p {
     margin-top: 0;
-    margin-bottom: 0.75rem;
-    color: var(--kf-dark-gray, #333);
+    color: #333;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
 }
 
-/* Partiutvelger */
+/* === FIX 1: Nytt kort-design for partivelger (hentet fra party-constellations) === */
 .party-selector {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 0.75rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 1rem;
+    margin-bottom: 15px;
 }
 
-.party-button {
+.party-card {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 60px;
-    height: 60px;
-    padding: 0.25rem;
-    border: 2px solid transparent;
+    padding: 1rem 0.5rem;
+    border: 2px solid #e0e0e0;
     border-radius: 8px;
-    background-color: #f4f7fb;
+    background-color: #ffffff;
     cursor: pointer;
-    transition: border-color 0.2s, background-color 0.2s;
+    transition: all 0.2s ease-in-out;
+    text-align: center;
+    user-select: none;
 }
 
-.party-button.selected {
-    border-color: var(--kf-purple, #7d5ba6);
-    background-color: #eef0f8;
+.party-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    border-color: #c0c0c0;
 }
 
-.party-button:hover {
-    background-color: #e9eef7;
+.party-card.selected {
+    border-color: var(--kf-purple, #7d5ba6); /* Bruker lilla for denne siden */
+    box-shadow: 0 4px 15px rgba(125, 91, 166, 0.25);
+    background-color: #f6f4f9;
 }
 
 .party-logo {
-    width: 32px;
-    height: 32px;
+    height: 50px;
+    max-width: 100%;
     object-fit: contain;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.75rem;
 }
 
 .party-name {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--kf-dark-gray, #333);
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
 }
+/* === SLUTT FIX 1 === */
 
-/* Velg alle / Fjern alle */
+
+/* === FIX 2: Oppdaterte handlingsknapper === */
 .action-buttons {
-    margin-bottom: 1rem;
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
 }
 
 .action-buttons button {
-    margin-right: 0.5rem;
-    padding: 0.4rem 0.8rem;
+    padding: 10px 20px;
     border: none;
-    border-radius: 6px;
-    background-color: var(--kf-purple, #7d5ba6);
-    color: #fff;
-    font-size: 0.85rem;
+    border-radius: 25px;
     cursor: pointer;
-    transition: background-color 0.2s;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
 }
 
-.action-buttons button:hover {
-    background-color: #6d4c9f;
+#selectAllBtn {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: white;
 }
+#selectAllBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+}
+
+#clearAllBtn {
+    background-color: #6c757d;
+    color: white;
+}
+#clearAllBtn:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
+/* === SLUTT FIX 2 === */
+
 
 .agreement-selector {
-    margin-bottom: 1rem;
+    margin-top: 1rem;
 }
 
 .agreement-selector label {
@@ -96,24 +123,29 @@
     font-size: 0.9rem;
 }
 
-/* Resultatseksjon */
+/* === FIX 3: Resultatseksjon med nytt design === */
 .results-container {
     margin-top: 1.5rem;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .results-container h2 {
     margin-bottom: 0.5rem;
 }
 
-/* FIX PROBLEM 1: Stiler for de små logo-brikkene for valgte partier. */
 .selected-parties-badges {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     align-items: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
 }
-/* Bruker samme stil som på forsiden for konsistens */
+
 .party-tag-small {
     display: inline-flex;
     align-items: center;
@@ -129,50 +161,51 @@
     height: 18px;
     width: 18px;
 }
-/* SLUTT FIX 1 */
-
 
 .party-unique-card {
-    background-color: #ffffff;
+    background-color: #fcfcfc;
     border: 1px solid #e5e7eb;
     border-radius: 10px;
     padding: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .party-unique-card h3 {
     margin-top: 0;
-    margin-bottom: 0.75rem;
-    font-size: 1.1rem;
-    display: flex; /* Sørger for at logo og tekst er på linje */
-    align-items: center;
-}
-
-/* FIX PROBLEM 2: Setter en fast størrelse på logoen i overskriften. */
-.party-logo-header {
-    width: 32px;
-    height: 32px;
-    object-fit: contain;
-    margin-right: 0.75rem; /* Gir litt luft mellom logo og tekst */
-}
-/* SLUTT FIX 2 */
-
-
-.area-section {
     margin-bottom: 1rem;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    color: #333;
 }
 
-.area-section h4 {
-    margin: 0 0 0.5rem 0;
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--kf-purple, #7d5ba6);
+.party-logo-header {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    margin-right: 0.75rem;
 }
 
-.area-section ul {
-    list-style: none;
-    padding-left: 0;
+/* Nye stiler for sakskategori-bokser */
+.issue-category-group {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    overflow: hidden; /* For å holde border-radius pent */
+}
+
+.issue-category-header {
+    background-color: #f0f0f0;
+    padding: 10px 15px;
+    font-weight: bold;
+    color: #333;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.issue-list {
+    list-style-type: none;
+    padding: 0;
     margin: 0;
 }
 
@@ -180,9 +213,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.35rem 0;
+    padding: 12px 15px;
+    background-color: #fff;
     border-bottom: 1px solid #f1f3f7;
     font-size: 0.9rem;
+    gap: 15px;
 }
 
 .issue-item:last-child {
@@ -190,111 +225,65 @@
 }
 
 .issue-name {
-    flex: 1;
-    margin-right: 0.5rem;
+    flex-grow: 1;
+}
+
+.issue-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
 }
 
 .party-icon-small {
     width: 24px;
     height: 24px;
-    border-radius: 50%;
-    object-fit: contain;
-    margin-left: 0.25rem;
 }
 
-
-/* Info-melding når for få partier er valgt */
 .info-message {
-    padding: 1rem;
+    padding: 1.5rem;
     background-color: #f4f7fb;
-    border: 1px dashed var(--kf-purple, #7d5ba6);
     border-radius: 8px;
-    color: var(--kf-dark-gray, #333);
+    text-align: center;
+    color: #555;
+    font-style: italic;
 }
 
-/* Knapp for å vise sitat */
+/* Tooltip for sitat (uendret fra forrige fiks) */
 .quote-btn {
-    margin-left: 0.25rem;
-    width: 22px;
-    height: 22px;
-    line-height: 22px;
+    width: 24px;
+    height: 24px;
     border: none;
     border-radius: 50%;
-    background-color: #f1f3f7;
-    color: var(--kf-purple, #7d5ba6);
-    font-size: 0.8rem;
+    background-color: #e9ecef;
+    color: #555;
+    font-size: 0.9rem;
     font-weight: bold;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0;
-    position: relative; /* Nødvendig for at tooltip skal posisjonere seg riktig */
+    position: relative;
+    transition: background-color 0.2s;
 }
-
 .quote-btn:hover {
-    background-color: #e5e7eb;
+    background-color: #dee2e6;
 }
-
-/* FIX PROBLEM 3: Erstatter modal-stilen med en tooltip-stil. */
 .quote-tooltip {
-    visibility: hidden; /* Skjult som standard */
-    opacity: 0;
-    position: absolute; /* Posisjoneres ift. nærmeste relative forelder (quote-btn) */
-    z-index: 100;
-    bottom: 135%; /* Plasseres over knappen */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 280px;
-    max-width: 80vw;
-    background-color: #fff;
-    color: #333;
-    border-radius: 8px;
-    padding: 1rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-    border: 1px solid #ddd;
-    transition: opacity 0.2s ease, visibility 0.2s ease;
-    pointer-events: none; /* Kan ikke interagere med den som standard */
+    visibility: hidden; opacity: 0; position: absolute; z-index: 100;
+    bottom: 135%; left: 50%; transform: translateX(-50%);
+    width: 280px; max-width: 80vw; background-color: #fff; color: #333;
+    border-radius: 8px; padding: 1rem; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    border: 1px solid #ddd; transition: opacity 0.2s ease, visibility 0.2s ease;
+    pointer-events: none;
 }
-
-/* Pil under tooltipen */
 .quote-tooltip::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border-width: 6px;
-    border-style: solid;
+    content: ""; position: absolute; top: 100%; left: 50%;
+    transform: translateX(-50%); border-width: 6px; border-style: solid;
     border-color: #fff transparent transparent transparent;
 }
-
-/* Vises når man svever over knappen */
-.quote-btn:hover .quote-tooltip {
-    visibility: visible;
-    opacity: 1;
-}
-
-.quote-tooltip-title {
-    margin-top: 0;
-    margin-bottom: 0.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-}
-
-.quote-tooltip-logo {
-    width: 20px;
-    height: 20px;
-    margin-right: 8px;
-}
-
-.quote-tooltip-text {
-    font-size: 0.9rem;
-    line-height: 1.4;
-    font-style: italic;
-    color: #555;
-    margin: 0;
-}
-/* SLUTT FIX 3 */
+.quote-btn:hover .quote-tooltip { visibility: visible; opacity: 1; }
+.quote-tooltip-title { margin: 0 0 0.5rem 0; font-size: 1rem; font-weight: 600; display: flex; align-items: center;}
+.quote-tooltip-logo { width: 20px; height: 20px; margin-right: 8px;}
+.quote-tooltip-text { font-size: 0.9rem; line-height: 1.4; font-style: italic; color: #555; margin: 0;}
+/* === SLUTT FIX 3 === */
