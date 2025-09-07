@@ -72,7 +72,6 @@ function initPartyUniquePage() {
         `;
         document.body.appendChild(modal);
         modal.addEventListener('click', (e) => {
-            // Lukk hvis du klikker på overlay eller kryss
             if (e.target === modal || e.target.classList.contains('close-modal')) {
                 modal.style.display = 'none';
             }
@@ -92,7 +91,6 @@ function initPartyUniquePage() {
         const titleEl = modal.querySelector('.quote-title');
         const textEl = modal.querySelector('.quote-text');
         titleEl.textContent = `${party.name} – ${issue.name}`;
-        // Farget kant på toppen for å identifisere parti
         titleEl.style.backgroundColor = party.color || '#7d5ba6';
         titleEl.style.color = '#fff';
         titleEl.style.padding = '0.5rem';
@@ -107,27 +105,24 @@ function initPartyUniquePage() {
     function renderPartyButtons() {
         if (!partySelectorDiv) return;
         partySelectorDiv.innerHTML = '';
-        // Sorter partiene etter politisk posisjon (om tilgjengelig) for konsist ordning
         const sortedParties = [...window.partiesData].sort((a, b) => (a.position || 99) - (b.position || 99));
         sortedParties.forEach(party => {
             const btn = document.createElement('button');
             btn.classList.add('party-button');
             btn.dataset.shorthand = party.shorthand;
-            // Legg til valgt-klasse hvis allerede valgt
             if (selectedParties.has(party.shorthand)) {
                 btn.classList.add('selected');
             }
-            // Innhold: logo og tekst
             const img = document.createElement('img');
             img.src = `images/parties/${party.shorthand.toLowerCase()}.png`;
             img.alt = `${party.name} logo`;
-            img.className = 'party-logo';
+            // FIKS: Endret klassenavn for mer presis styling
+            img.className = 'party-logo-btn';
             const nameDiv = document.createElement('div');
             nameDiv.className = 'party-name';
             nameDiv.textContent = party.shorthand;
             btn.appendChild(img);
             btn.appendChild(nameDiv);
-            // Klikk: toggle valgt status
             btn.addEventListener('click', () => {
                 const code = party.shorthand;
                 if (selectedParties.has(code)) {
@@ -189,7 +184,6 @@ function initPartyUniquePage() {
             return;
         }
 
-        // Vis hvilke partier som er valgt (badges)
         const badgesContainer = document.createElement('div');
         badgesContainer.className = 'selected-parties-badges';
         selectedParties.forEach(code => {
@@ -205,20 +199,16 @@ function initPartyUniquePage() {
         resultsContainer.appendChild(heading);
         resultsContainer.appendChild(badgesContainer);
 
-        // For hver valgt parti: finn unike saker
         selectedParties.forEach(code => {
             const party = partiesMap[code];
             if (!party) return;
 
-            // Finn alle saker der dette partiet har nivå >= threshold og alle andre valgte partier har nivå < threshold
             const uniqueIssuesByArea = {};
             window.issues.forEach(issue => {
                 const partyStances = issue.partyStances || {};
                 const thisStance = partyStances[code];
                 const thisLevel = thisStance && typeof thisStance.level === 'number' ? thisStance.level : 0;
-                // Må ha støtte (>= threshold)
                 if (thisLevel < agreementThreshold) return;
-                // Sjekk at ingen andre utvalgte partier har nivå >= threshold
                 let isUnique = true;
                 selectedParties.forEach(otherCode => {
                     if (otherCode === code) return;
@@ -229,7 +219,6 @@ function initPartyUniquePage() {
                     }
                 });
                 if (!isUnique) return;
-                // Kategoriser etter område
                 const area = issue.area || 'Ukjent område';
                 if (!uniqueIssuesByArea[area]) {
                     uniqueIssuesByArea[area] = [];
@@ -237,93 +226,13 @@ function initPartyUniquePage() {
                 uniqueIssuesByArea[area].push(issue);
             });
 
-            // Lag et kort hvis partiet har noen unike saker
             const uniqueCount = Object.values(uniqueIssuesByArea).reduce((acc, arr) => acc + arr.length, 0);
-            
-            // **FIX FOR PROBLEM 3: Ikke vis kort hvis det ikke er unike saker**
             if (uniqueCount === 0) return;
 
             const card = document.createElement('div');
             card.className = 'party-unique-card';
             
-            // **FIX FOR PROBLEM 1: Vis logo i kortoverskriften**
             const cardHeader = document.createElement('h3');
             cardHeader.innerHTML = `
                 <img src="images/parties/${party.shorthand.toLowerCase()}.png" class="party-logo-header" alt="${party.name}"> 
-                har ${uniqueCount} unike sak${uniqueCount === 1 ? '' : 'er'}
-            `;
-            card.appendChild(cardHeader);
-
-            // Legg til områdeseksjoner
-            Object.keys(uniqueIssuesByArea).sort().forEach(areaName => {
-                const section = document.createElement('div');
-                section.className = 'area-section';
-                const areaHeader = document.createElement('h4');
-                areaHeader.textContent = areaName;
-                section.appendChild(areaHeader);
-                const list = document.createElement('ul');
-                uniqueIssuesByArea[areaName].forEach(issue => {
-                    const li = document.createElement('li');
-                    li.className = 'issue-item';
-                    const issueNameSpan = document.createElement('span');
-                    issueNameSpan.className = 'issue-name';
-                    issueNameSpan.textContent = issue.name;
-                    li.appendChild(issueNameSpan);
-                    
-                    // **FIX FOR PROBLEM 2: Vis logo ved siden av saken**
-                    const logoImg = document.createElement('img');
-                    logoImg.src = `images/parties/${party.shorthand.toLowerCase()}.png`;
-                    logoImg.alt = party.shorthand;
-                    logoImg.className = 'party-icon-small';
-                    li.appendChild(logoImg);
-                    
-                    // Knapp for å vise sitat
-                    const quoteBtn = document.createElement('button');
-                    quoteBtn.className = 'quote-btn';
-                    const stance = issue.partyStances && issue.partyStances[party.shorthand];
-                    const quoteText = stance && stance.quote ? stance.quote : '';
-                    if (quoteText) {
-                        quoteBtn.title = quoteText;
-                    } else {
-                        quoteBtn.title = 'Ingen sitat tilgjengelig';
-                    }
-                    quoteBtn.innerHTML = '“';
-                    
-                    // **FIX FOR PROBLEM 3: Fikset hover-logikk for å unngå flimring**
-                    // Hindrer at modalen lukkes umiddelbart på mouseleave
-                    let modalTimer; 
-                    const showFn = (e) => {
-                        e.stopPropagation();
-                        clearTimeout(modalTimer); // Avbryt eventuell planlagt lukking
-                        showQuoteModal(issue, party.shorthand);
-                    };
-                    
-                    const hideFn = () => {
-                        // Planlegg lukking av modalen med en liten forsinkelse
-                        modalTimer = setTimeout(() => {
-                           const modal = document.getElementById('quoteModal');
-                           if (modal) modal.style.display = 'none';
-                        }, 300); // 300ms forsinkelse
-                    };
-
-                    quoteBtn.addEventListener('click', showFn);
-                    quoteBtn.addEventListener('mouseenter', showFn);
-                    quoteBtn.addEventListener('mouseleave', hideFn);
-
-                    // Sørg for at modalen holder seg åpen hvis musen er over den
-                    const modal = document.getElementById('quoteModal');
-                    if(modal) {
-                        modal.addEventListener('mouseenter', () => clearTimeout(modalTimer));
-                        modal.addEventListener('mouseleave', () => hideFn());
-                    }
-
-                    li.appendChild(quoteBtn);
-                    list.appendChild(li);
-                });
-                section.appendChild(list);
-                card.appendChild(section);
-            });
-            resultsContainer.appendChild(card);
-        });
-    }
-}
+                har ${uniqueCount} unike sak${unique
