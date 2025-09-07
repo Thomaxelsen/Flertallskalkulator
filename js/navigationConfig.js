@@ -17,7 +17,8 @@ window.navigationConfig = {
                 { href: "party-overview.html", title: "Partioversikt" },
                 { href: "party-profile.html", title: "Partiprofil" },
                 { href: "party-similarity.html", title: "Partilikhet" },
-                { href: "party-constellations.html", title: "Partikonstellasjoner" }
+                { href: "party-constellations.html", title: "Partikonstellasjoner" },
+                // NY LINJE: Her legger vi til den nye siden
                 { href: "party-unique.html", title: "Parti-unike saker" }
             ]
         },
