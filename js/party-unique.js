@@ -1,14 +1,14 @@
-/* 
- * party-unique.js
- * Denne filen implementerer logikken for siden som viser saker hvor bare ett parti
- * (innenfor en valgt gruppe) støtter forslaget. Brukeren kan velge minimum tre partier
- * og velge om bare nivå 2 (full enighet) eller både nivå 1 og 2 skal regnes med.
- *
- * Skriptet baserer seg på at issues.js og partiesData.js har lastet sine data
- * og satt globale variabler window.issues og window.partiesData. Dersom disse
- * ikke er tilgjengelige umiddelbart, lytter skriptet på events for å starte
- * initialisering når dataene er klare.
- */
+/* 
+ * party-unique.js
+ * Denne filen implementerer logikken for siden som viser saker hvor bare ett parti
+ * (innenfor en valgt gruppe) støtter forslaget. Brukeren kan velge minimum tre partier
+ * og velge om bare nivå 2 (full enighet) eller både nivå 1 og 2 skal regnes med.
+ *
+ * Skriptet baserer seg på at issues.js og partiesData.js har lastet sine data
+ * og satt globale variabler window.issues og window.partiesData. Dersom disse
+ * ikke er tilgjengelige umiddelbart, lytter skriptet på events for å starte
+ * initialisering når dataene er klare.
+ */
 
 document.addEventListener('DOMContentLoaded', () => {
     // Vent på at både issues og partier skal være lastet inn
@@ -239,11 +239,19 @@ function initPartyUniquePage() {
 
             // Lag et kort hvis partiet har noen unike saker
             const uniqueCount = Object.values(uniqueIssuesByArea).reduce((acc, arr) => acc + arr.length, 0);
+            
+            // **FIX FOR PROBLEM 3: Ikke vis kort hvis det ikke er unike saker**
+            if (uniqueCount === 0) return;
+
             const card = document.createElement('div');
             card.className = 'party-unique-card';
-            // Kortoverskrift
+            
+            // **FIX FOR PROBLEM 1: Vis logo i kortoverskriften**
             const cardHeader = document.createElement('h3');
-            cardHeader.innerHTML = `<span class="party-tag party-tag-${party.classPrefix}">${party.shorthand}</span> har ${uniqueCount} unike sak${uniqueCount === 1 ? '' : 'er'}`;
+            cardHeader.innerHTML = `
+                <img src="images/parties/${party.shorthand.toLowerCase()}.png" class="party-logo-header" alt="${party.name}"> 
+                har ${uniqueCount} unike sak${uniqueCount === 1 ? '' : 'er'}
+            `;
             card.appendChild(cardHeader);
 
             // Legg til områdeseksjoner
@@ -261,40 +269,54 @@ function initPartyUniquePage() {
                     issueNameSpan.className = 'issue-name';
                     issueNameSpan.textContent = issue.name;
                     li.appendChild(issueNameSpan);
-                    // Logo for partiet
+                    
+                    // **FIX FOR PROBLEM 2: Vis logo ved siden av saken**
                     const logoImg = document.createElement('img');
                     logoImg.src = `images/parties/${party.shorthand.toLowerCase()}.png`;
                     logoImg.alt = party.shorthand;
                     logoImg.className = 'party-icon-small';
                     li.appendChild(logoImg);
+                    
                     // Knapp for å vise sitat
                     const quoteBtn = document.createElement('button');
                     quoteBtn.className = 'quote-btn';
-                    // Tooltip som fallback dersom modalen ikke er åpen
                     const stance = issue.partyStances && issue.partyStances[party.shorthand];
                     const quoteText = stance && stance.quote ? stance.quote : '';
                     if (quoteText) {
-                        // Sett HTML "title" for nettleserens innebygde verktøytips
                         quoteBtn.title = quoteText;
                     } else {
                         quoteBtn.title = 'Ingen sitat tilgjengelig';
                     }
-                    // Vis anførselstegn som ikon
                     quoteBtn.innerHTML = '“';
-                    // På klikk eller hover: åpne modal
+                    
+                    // **FIX FOR PROBLEM 3: Fikset hover-logikk for å unngå flimring**
+                    // Hindrer at modalen lukkes umiddelbart på mouseleave
+                    let modalTimer; 
                     const showFn = (e) => {
-                        // Hindre at eventen bobler til listen
                         e.stopPropagation();
+                        clearTimeout(modalTimer); // Avbryt eventuell planlagt lukking
                         showQuoteModal(issue, party.shorthand);
                     };
-                    // Ved klikk
+                    
+                    const hideFn = () => {
+                        // Planlegg lukking av modalen med en liten forsinkelse
+                        modalTimer = setTimeout(() => {
+                           const modal = document.getElementById('quoteModal');
+                           if (modal) modal.style.display = 'none';
+                        }, 300); // 300ms forsinkelse
+                    };
+
                     quoteBtn.addEventListener('click', showFn);
-                    // Ved hover: åpne modal, og lukk når musen forlater knappen
                     quoteBtn.addEventListener('mouseenter', showFn);
-                    quoteBtn.addEventListener('mouseleave', () => {
-                        const modal = document.getElementById('quoteModal');
-                        if (modal) modal.style.display = 'none';
-                    });
+                    quoteBtn.addEventListener('mouseleave', hideFn);
+
+                    // Sørg for at modalen holder seg åpen hvis musen er over den
+                    const modal = document.getElementById('quoteModal');
+                    if(modal) {
+                        modal.addEventListener('mouseenter', () => clearTimeout(modalTimer));
+                        modal.addEventListener('mouseleave', () => hideFn());
+                    }
+
                     li.appendChild(quoteBtn);
                     list.appendChild(li);
                 });
