@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parti‑unike saker</title>
+    <!-- Hovedstiler for hele nettstedet -->
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Spesifikk stil for denne siden -->
+    <link rel="stylesheet" href="css/party-unique.css">
+</head>
+<body>
+    <!-- Mobilmeny / hamburger. Denne fylles av navigation.js -->
+    <div class="burger-menu" id="burgerMenu">
+        <div class="burger-bar"></div>
+        <div class="burger-bar"></div>
+        <div class="burger-bar"></div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="menu-header">
+            <h3>Meny</h3>
+            <button class="close-button" id="closeMenu">×</button>
+        </div>
+        <div class="menu-items" id="mobileMenuItems"></div>
+    </div>
+    <!-- Desktop navigasjon og logo. navigation.js fyller inn lenkene -->
+    <header>
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="images/Logo.png" alt="Kreftforeningens logo" class="logo-image">
+            </a>
+        </div>
+        <div class="header-text">
+            <h1>Parti‑unike saker</h1>
+            <div class="header-subtitle">Finn de sakene bare ett parti støtter</div>
+        </div>
+        <div class="nav-links" id="navLinks"></div>
+    </header>
+    <div class="main-content">
+        <!-- Seksjon 1: Velg partier -->
+        <div class="selection-container">
+            <h2>1. Velg partier</h2>
+            <div class="party-selector" id="partySelector">
+                <!-- Partiknapper legges til her av JS -->
+            </div>
+            <div class="action-buttons">
+                <button id="selectAllBtn">Velg alle</button>
+                <button id="clearAllBtn">Fjern alle</button>
+            </div>
+        </div>
+        <!-- Seksjon 2: Velg enighetsnivå -->
+        <div class="selection-container">
+            <h2>2. Velg enighetsnivå</h2>
+            <p>Skal vi kun inkludere saker der partiet er helt enige, eller også saker der de er delvis enige?</p>
+            <div class="agreement-selector">
+                <input type="radio" id="level2" name="agreement" value="2" checked>
+                <label for="level2">Kun helt enig (nivå 2)</label>
+                <br>
+                <input type="radio" id="level12" name="agreement" value="1">
+                <label for="level12">Både helt og delvis enig (nivå 1 &amp; 2)</label>
+            </div>
+        </div>
+        <!-- Seksjon 3: Resultater -->
+        <div class="results-container" id="resultsContainer">
+            <!-- Resultater rendres her av JS -->
+        </div>
+    </div>
+    <!-- Standard scripts som håndterer navigasjon og lasting av data -->
+    <script src="js/navigationConfig.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/issues.js"></script>
+    <script src="js/partiesData.js"></script>
+    <!-- Vår spesifikke logikk -->
+    <script src="js/party-unique.js"></script>
+</body>
+</html>
