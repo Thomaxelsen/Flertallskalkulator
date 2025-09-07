@@ -1,0 +1,188 @@
+/* 
+ * party-unique.css
+ * Stiler for siden som viser unike partisaker.
+ * Basert på prosjektets eksisterende estetikk med lyse bakgrunner, runde hjørner og parti‑fargede etiketter.
+ */
+
+/* Beholder samme generelle layout som andre sider */
+.main-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+/* Seksjonstitteler */
+.selection-container h2 {
+    margin-bottom: 0.25rem;
+}
+
+.selection-container p {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    color: var(--kf-dark-gray, #333);
+}
+
+/* Partiutvelger */
+.party-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.party-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    padding: 0.25rem;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    background-color: #f4f7fb;
+    cursor: pointer;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.party-button.selected {
+    border-color: var(--kf-purple, #7d5ba6);
+    background-color: #eef0f8;
+}
+
+.party-button:hover {
+    background-color: #e9eef7;
+}
+
+.party-logo {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    margin-bottom: 0.25rem;
+}
+
+.party-name {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--kf-dark-gray, #333);
+}
+
+/* Velg alle / Fjern alle */
+.action-buttons {
+    margin-bottom: 1rem;
+}
+
+.action-buttons button {
+    margin-right: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--kf-purple, #7d5ba6);
+    color: #fff;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.action-buttons button:hover {
+    background-color: #6d4c9f;
+}
+
+.agreement-selector {
+    margin-bottom: 1rem;
+}
+
+.agreement-selector label {
+    margin-left: 0.25rem;
+    font-size: 0.9rem;
+}
+
+/* Resultatseksjon */
+.results-container {
+    margin-top: 1.5rem;
+}
+
+.results-container h2 {
+    margin-bottom: 0.5rem;
+}
+
+.selected-parties-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.party-unique-card {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.party-unique-card h3 {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+}
+
+.area-section {
+    margin-bottom: 1rem;
+}
+
+.area-section h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--kf-purple, #7d5ba6);
+}
+
+.area-section ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.issue-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid #f1f3f7;
+    font-size: 0.9rem;
+}
+
+.issue-item:last-child {
+    border-bottom: none;
+}
+
+.issue-name {
+    flex: 1;
+    margin-right: 0.5rem;
+}
+
+.party-tag {
+    display: inline-block;
+    padding: 0.15rem 0.45rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #fff;
+    margin-left: 0.25rem;
+}
+
+.party-tag.small-tag {
+    font-size: 0.7rem;
+    padding: 0.1rem 0.35rem;
+}
+
+/* Info-melding når for få partier er valgt */
+.info-message {
+    padding: 1rem;
+    background-color: #f4f7fb;
+    border: 1px dashed var(--kf-purple, #7d5ba6);
+    border-radius: 8px;
+    color: var(--kf-dark-gray, #333);
+}
