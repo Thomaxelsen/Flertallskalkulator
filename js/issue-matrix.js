@@ -398,17 +398,12 @@ function generateMatrix(areaFilter, viewMode) {
         partyHeader.className = 'party-col';
         partyHeader.title = party.name;
         
-        // === ENDRING START: Bytt ut textContent med innerHTML for å inkludere logo ===
+        // === ENDRING: Byttet ut header-innhold med kun logoen ===
         partyHeader.innerHTML = `
             <img src="images/parties/${party.shorthand.toLowerCase()}.png" alt="${party.name}" class="matrix-header-logo">
-            <span class="matrix-header-shorthand">${party.shorthand}</span>
         `;
-        // === ENDRING SLUTT ===
+        // === SLUTT ENDRING ===
 
-        const rgbColor = hexToRgb(party.color);
-        partyHeader.style.backgroundColor = `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, 0.8)`;
-        // Vi fjerner fargen på teksten her, da den nå settes i CSS for bedre lesbarhet
-        // partyHeader.style.color = '#fff'; 
         headerRow.appendChild(partyHeader);
     });
 
@@ -423,7 +418,6 @@ function generateMatrix(areaFilter, viewMode) {
 
     const tbody = document.createElement('tbody');
     areaOrder.forEach(area => {
-        // Returner tidlig hvis det ikke finnes saker for dette området i det filtrerte utvalget
         if (!issuesByArea[area] || issuesByArea[area].length === 0) return;
 
         const areaRow = document.createElement('tr');
