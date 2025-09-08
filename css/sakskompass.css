@@ -97,9 +97,9 @@
     stroke: black;
 }
 
-/* Demping av andre elementer ved hover */
-.sk-visualization-area:hover .bar-group:not(.highlighted),
-.sk-visualization-area:hover .y-axis .tick:not(.highlighted) {
+/* Demping av andre elementer KUN NÅR man interagerer */
+.sk-visualization-area.is-interacting .bar-group:not(.highlighted),
+.sk-visualization-area.is-interacting .y-axis .tick:not(.highlighted) {
     opacity: 0.3;
 }
 
