@@ -1,7 +1,7 @@
-// js/sakskompass.js - OPPGRADERT OG KOMPLETT VERSJON
+// js/sakskompass.js - OPPGRADERT OG KORRIGERT FOR HOVER-INTERAKSJON
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("Sakskompass (Upgraded): DOM Loaded. Waiting for data...");
+    console.log("Sakskompass (Upgraded v2): DOM Loaded. Waiting for data...");
     
     // Konstanter for Stortinget
     const TOTAL_SEATS = 169;
@@ -35,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function() {
             initializeSakskompass();
         });
     }
-    // Kjører sjekk med en gang i tilfelle data allerede var lastet
     initializeSakskompass();
 
 
@@ -100,18 +99,20 @@ document.addEventListener('DOMContentLoaded', function() {
     function processAndVisualizeData() {
         const supportLevelType = document.getElementById('sk-support-level-filter').value;
         const viewType = document.getElementById('sk-view-type-filter').value;
-        const container = d3.select("#sk-visualization-container");
+        const container = d3.select("#sk-visualization-area"); // Endret til å velge den ytre containeren for klassen
+        const visContainer = d3.select("#sk-visualization-container");
+        
         if (!issuesLoaded || !partiesLoaded) {
-            container.html('<div class="loader">Laster data...</div>');
+            visContainer.html('<div class="loader">Laster data...</div>');
             return;
         }
-        container.html('<div class="loader">Behandler data...</div>');
+        visContainer.html('<div class="loader">Behandler data...</div>');
         setTimeout(() => {
             const processedIssues = processIssueData(supportLevelType);
             const finalData = applyFiltersAndSort(processedIssues);
-            container.html('');
+            visContainer.html('');
             if (!finalData || finalData.length === 0) {
-                container.html('<p class="no-data">Ingen saker funnet for gjeldende filtre.</p>');
+                visContainer.html('<p class="no-data">Ingen saker funnet for gjeldende filtre.</p>');
                 updateLegend([]);
                 return;
             }
@@ -125,15 +126,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Visualiseringsfunksjoner ---
 
     function createHorizontalBarChart(data) {
-        const container = d3.select("#sk-visualization-container");
-        container.html('');
-        const containerWidth = container.node().getBoundingClientRect().width;
+        const container = d3.select("#sk-visualization-area"); // Ytre container
+        const visContainer = d3.select("#sk-visualization-container"); // Indre container for SVG
+        visContainer.html('');
+        
+        const containerWidth = visContainer.node().getBoundingClientRect().width;
         
         let dynamicMarginLeft = (containerWidth < 500) ? 150 : (containerWidth < 768) ? 200 : 300;
         const margin = { top: 20, right: 40, bottom: 40, left: dynamicMarginLeft };
         const width = containerWidth - margin.left - margin.right;
         
-        const svg = container.append("svg").attr("width", containerWidth);
+        const svg = visContainer.append("svg").attr("width", containerWidth);
         
         const defs = svg.append("defs");
         const dropShadow = defs.append("filter").attr("id", "drop-shadow").attr("height", "130%");
@@ -163,9 +166,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const yScale = d3.scaleBand().domain(data.map(d => d.name)).range([0, height]).paddingOuter(0.1);
         const xScale = d3.scaleLinear().domain([0, TOTAL_SEATS]).range([0, width]);
         
-        g.append("g")
-            .attr("class", "x-axis axis")
-            .attr("transform", `translate(0, ${height})`)
+        g.append("g").attr("class", "x-axis axis").attr("transform", `translate(0, ${height})`)
             .call(d3.axisBottom(xScale).tickSize(-height).ticks(Math.max(5, Math.floor(width / 80))));
 
         const yAxis = g.append("g").attr("class", "y-axis axis")
@@ -184,28 +185,26 @@ document.addEventListener('DOMContentLoaded', function() {
             .attr("transform", d => `translate(0, ${calculatedPositions.find(p => p.name === d.name).y})`)
             .style("filter", "url(#drop-shadow)")
             .on("mouseover", (event, d) => {
+                container.classed("is-interacting", true); // <-- NY LINJE
                 barGroups.classed("highlighted", other_d => d === other_d);
                 yAxis.selectAll(".tick").classed("highlighted", tick_d => d.name === tick_d);
             })
             .on("mouseout", () => {
+                container.classed("is-interacting", false); // <-- NY LINJE
                 barGroups.classed("highlighted", false);
                 yAxis.selectAll(".tick").classed("highlighted", false);
             });
             
         barGroups.selectAll(".bar-segment").data(d => {
             let currentX = 0;
-            return d.supportingPartiesData.map(p => {
-                const startX = currentX;
-                currentX += p.seats;
-                return { ...p, startX: startX, issueName: d.name };
-            });
+            return d.supportingPartiesData.map(p => ({ ...p, startX: currentX, issueName: d.name, seats: (currentX += p.seats) - p.seats }));
         }).join("rect")
             .attr("class", "bar-segment")
             .attr("y", 0)
             .attr("height", d => calculatedPositions.find(p => p.name === d.issueName).height)
             .attr("x", d => xScale(d.startX))
             .attr("rx", 3)
-            .attr("width", 0) // Start with width 0 for animation
+            .attr("width", 0)
             .attr("fill", d => d.color || "#cccccc")
             .attr("fill-opacity", d => d.level === 1 ? 0.7 : 1.0)
             .on("mouseover", (event, d) => {
@@ -228,8 +227,22 @@ document.addEventListener('DOMContentLoaded', function() {
             .style("opacity", 0)
             .text(d => d.totalMandates)
             .transition().duration(800).delay(500).style("opacity", 1);
+            
+        // Legg til hover på Y-aksen også
+        yAxis.selectAll(".tick")
+             .on("mouseover", (event, d) => {
+                container.classed("is-interacting", true); // <-- NY LINJE
+                barGroups.classed("highlighted", bar_d => d === bar_d.name);
+                yAxis.selectAll(".tick").classed("highlighted", tick_d => d === tick_d);
+            })
+            .on("mouseout", () => {
+                container.classed("is-interacting", false); // <-- NY LINJE
+                barGroups.classed("highlighted", false);
+                yAxis.selectAll(".tick").classed("highlighted", false);
+            });
     }
     
+    // De andre visualiseringsfunksjonene er uendret.
     function createDotPlot(data) { /* ... Den originale, komplette koden for dot plot ... */ }
     function createTable(data) { /* ... Den originale, komplette koden for tabell ... */ }
     
