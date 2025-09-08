@@ -1,12 +1,13 @@
-// js/sakskompass.js - v4 MED DETALJPANEL
+// js/sakskompass.js - v5, ENDELIG KORRIGERT FOR TEGNEFEIL
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("Sakskompass (v4 with Panel): DOM Loaded. Waiting for data...");
-
+    console.log("Sakskompass (v5 Corrected): DOM Loaded. Waiting for data...");
+    
+    // Konstanter for Stortinget
     const TOTAL_SEATS = 169;
     const MAJORITY_THRESHOLD = 85;
 
-    // NYE DOM-elementer for panelet
+    // DOM-elementer for panelet
     const detailPanel = document.getElementById('sk-detail-panel');
     const panelContent = document.getElementById('panel-content');
     const panelIssueName = document.getElementById('panel-issue-name');
@@ -22,10 +23,11 @@ document.addEventListener('DOMContentLoaded', function() {
         partiesData.forEach(p => partiesMap[p.shorthand] = p);
         populateAreaFilter();
         setupEventListeners();
-        setupPanelEventListeners(); // NYTT KALL
+        setupPanelEventListeners(); 
         processAndVisualizeData();
     }
 
+    // Lytter etter at data er lastet
     document.addEventListener('issuesDataLoaded', () => {
         issuesData = window.issues || [];
         issuesLoaded = true;
@@ -43,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     initializeSakskompass();
 
-    // --- Panel-funksjoner (NY SEKSJON) ---
+    // --- Panel-funksjoner ---
     function setupPanelEventListeners() {
         if (closePanelBtn) closePanelBtn.addEventListener('click', hideIssueDetails);
         if (panelOverlay) panelOverlay.addEventListener('click', hideIssueDetails);
@@ -51,19 +53,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function showIssueDetails(issueDataFromChart) {
         if (!detailPanel || !panelContent || !panelIssueName) return;
-
-        // Finn den komplette saken fra den globale datalisten
         const fullIssue = issuesData.find(i => i.id === issueDataFromChart.id);
         if (!fullIssue) {
-            console.error("Fant ikke saksdetaljer for ID:", issueDataFromChart.id);
             panelContent.innerHTML = "<p>Kunne ikke laste saksdetaljer.</p>";
             return;
         }
 
         panelIssueName.textContent = fullIssue.name;
-
-        // Grupper partiene etter standpunkt
         const stances = { level2: [], level1: [], level0: [] };
+        
+        // Gå gjennom partilisten for å sikre korrekt rekkefølge
         partiesData.forEach(party => {
             const stance = fullIssue.partyStances ? (fullIssue.partyStances[party.shorthand] || { level: 0 }) : { level: 0 };
             const partyDataWithStance = { ...party, quote: stance.quote };
@@ -73,26 +72,20 @@ document.addEventListener('DOMContentLoaded', function() {
             else stances.level0.push(partyDataWithStance);
         });
 
-        // Bygg HTML for panelet
         let html = `<p class="issue-area">${fullIssue.area || 'Ukjent saksområde'}</p>`;
         html += createPartyListHTML(stances.level2, 'Full enighet', 'level-2');
         html += createPartyListHTML(stances.level1, 'Delvis enighet', 'level-1');
         html += createPartyListHTML(stances.level0, 'Ingen støtte / Uenig', 'level-0');
-        
         panelContent.innerHTML = html;
         
-        // Vis panelet
         detailPanel.classList.add('active');
         panelOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Forhindre scrolling av bakgrunnen
+        document.body.style.overflow = 'hidden';
     }
 
     function createPartyListHTML(partiesArray, title, className) {
         if (partiesArray.length === 0) return '';
-        
-        // Sorter partier etter posisjon
         partiesArray.sort((a, b) => (a.position || 99) - (b.position || 99));
-
         let listItems = partiesArray.map(party => `
             <div class="stance-party-item">
                 <img src="images/parties/${party.shorthand.toLowerCase()}.png" alt="${party.name}" class="party-logo">
@@ -105,24 +98,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </div>
         `).join('');
-
-        return `
-            <div class="stance-group ${className}">
-                <h4>${title} (${partiesArray.length})</h4>
-                ${listItems}
-            </div>
-        `;
+        return `<div class="stance-group ${className}"><h4>${title} (${partiesArray.length})</h4>${listItems}</div>`;
     }
 
     function hideIssueDetails() {
         if (detailPanel && panelOverlay) {
             detailPanel.classList.remove('active');
             panelOverlay.classList.remove('active');
-            document.body.style.overflow = ''; // Tillat scrolling igjen
+            document.body.style.overflow = '';
         }
     }
 
-    // --- Hjelpefunksjoner (uendret) ---
+    // --- Hjelpefunksjoner ---
     function getUniqueAreas() {
         const areas = (issuesData || []).map(issue => issue.area).filter(Boolean);
         return [...new Set(areas)].sort();
@@ -208,7 +195,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const container = d3.select("#sk-visualization-area");
         const visContainer = d3.select("#sk-visualization-container");
         visContainer.html('');
-        
         const containerWidth = visContainer.node().getBoundingClientRect().width;
         
         let dynamicMarginLeft = (containerWidth < 500) ? 150 : (containerWidth < 768) ? 200 : 300;
@@ -243,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const height = currentY > 0 ? currentY - itemPadding : 0;
         svg.attr("height", height + margin.top + margin.bottom);
         
-        const yScale = d3.scaleBand().domain(data.map(d => d.name)).range([0, height]).paddingOuter(0.1);
+        const yScale = d3.scaleBand().domain(data.map(d => d.name)).range([0, height]); // Fjerner padding for nøyaktig posisjonering
         const xScale = d3.scaleLinear().domain([0, TOTAL_SEATS]).range([0, width]);
         
         g.append("g").attr("class", "x-axis axis").attr("transform", `translate(0, ${height})`)
@@ -264,7 +250,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .attr("class", "bar-group")
             .attr("transform", (d, i) => `translate(0, ${calculatedPositions[i].y})`)
             .style("filter", "url(#drop-shadow)")
-            .style("cursor", "pointer") // NYTT: Viser at raden er klikkbar
+            .style("cursor", "pointer")
             .on("mouseover", (event, d) => {
                 container.classed("is-interacting", true);
                 barGroups.classed("highlighted", other_d => d === other_d);
@@ -275,13 +261,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 barGroups.classed("highlighted", false);
                 yAxis.selectAll(".tick").classed("highlighted", false);
             })
-            .on("click", (event, d) => { // NYTT: Klikk-hendelse
+            .on("click", (event, d) => {
                 showIssueDetails(d);
             });
             
         barGroups.selectAll(".bar-segment").data(d => {
             let currentX = 0;
-            return d.supportingPartiesData.map(p => ({ ...p, startX: currentX, issueName: d.name, seats: (currentX += p.seats) - p.seats }));
+            return d.supportingPartiesData.map(p => {
+                const segmentData = { ...p, startX: currentX, issueName: d.name };
+                currentX += p.seats;
+                return segmentData;
+            });
         }).join("rect")
             .attr("class", "bar-segment")
             .attr("y", 0)
@@ -293,7 +283,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .attr("fill-opacity", d => d.level === 1 ? 0.7 : 1.0)
             .on("mouseover", (event, d) => {
                 tooltip.classed("visible", true).html(`<b>${d.name}</b>Mandater: ${d.seats}<br>Støtte: Nivå ${d.level}`);
-                event.stopPropagation(); // Hindrer at barGroup sin mouseover trigges
+                event.stopPropagation();
             })
             .on("mousemove", event => tooltip.style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 10) + "px"))
             .on("mouseout", () => tooltip.classed("visible", false));
@@ -314,23 +304,25 @@ document.addEventListener('DOMContentLoaded', function() {
             .transition().duration(800).delay(500).style("opacity", 1);
             
         yAxis.selectAll(".tick")
-             .style("cursor", "pointer") // NYTT: Viser at teksten er klikkbar
-             .on("mouseover", (event, d) => {
+             .style("cursor", "pointer")
+             .on("mouseover", (event, d_name) => {
                 container.classed("is-interacting", true);
-                barGroups.classed("highlighted", bar_d => d === bar_d.name);
-                yAxis.selectAll(".tick").classed("highlighted", tick_d => d === tick_d);
+                const correspondingData = data.find(issue => issue.name === d_name);
+                barGroups.classed("highlighted", bar_d => correspondingData && bar_d.id === correspondingData.id);
+                yAxis.selectAll(".tick").classed("highlighted", tick_d => d_name === tick_d);
             })
             .on("mouseout", () => {
                 container.classed("is-interacting", false);
                 barGroups.classed("highlighted", false);
                 yAxis.selectAll(".tick").classed("highlighted", false);
             })
-            .on("click", (event, d_name) => { // NYTT: Klikk-hendelse for tekst
+            .on("click", (event, d_name) => {
                 const correspondingData = data.find(issue => issue.name === d_name);
                 if (correspondingData) showIssueDetails(correspondingData);
             });
     }
     
+    // De andre visualiseringsfunksjonene er uendret
     function createDotPlot(data) { /* ... Den originale, komplette koden for dot plot ... */ }
     function createTable(data) { /* ... Den originale, komplette koden for tabell ... */ }
     
