@@ -1,7 +1,7 @@
-// js/candidates.js (Version 11.2 - Viser placeholder-bilder i panelet)
+// js/candidates.js (Version 11.3 - Erstatter parti-ikoner med logoer)
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("Candidates JS v11.2: DOM loaded. Implementing placeholder images in panel.");
+    console.log("Candidates JS v11.3: DOM loaded. Replacing party icons with logos.");
 
     // --- Hjelpefunksjon for å sjekke touch-enhet ---
     function isTouchDevice() {
@@ -59,27 +59,18 @@ document.addEventListener('DOMContentLoaded', () => {
      // --- Funksjon for å vise i Sidepanel ---
      function displayCandidateInPanel(candidate, partyInfo) {
          if (!detailPanelContent || !candidate || !partyInfo) return;
-         const partyClassPrefix = partyInfo.classPrefix || partyInfo.shorthand.toLowerCase();
 
-         // ---------- START ENDRING HER ----------
          const imageHtml = candidate.imageUrl
             ? `<img src="${candidate.imageUrl}" alt="${candidate.name || 'Kandidatbilde'}" class="detail-image">`
-            : `<img
-                 src="images/candidates/placeholder-${partyInfo.shorthand.toLowerCase()}.png"
-                 alt="Placeholder-bilde for ${partyInfo.name || 'partiet'}"
-                 class="detail-image placeholder-image"
-                 onerror="this.onerror=null; this.src='images/placeholder-generic.png'; console.warn('Placeholder missing for ${partyInfo.shorthand}, using generic.');"
-               >`;
-         // Antar en generisk fallback 'placeholder-generic.png' hvis partispesifikk mangler.
-         // Du kan endre onerror til f.eks. å vise tekst: onerror="this.outerHTML='<div class=\\'image-placeholder-panel\\'>Bilde mangler</div>';"
-
-         // Oppdatert HTML-struktur med den nye imageHtml-variabelen:
+            : `<img src="images/candidates/placeholder-${partyInfo.shorthand.toLowerCase()}.png" alt="Placeholder-bilde for ${partyInfo.name || 'partiet'}" class="detail-image placeholder-image" onerror="this.onerror=null; this.src='images/placeholder-generic.png';">`;
+        
+         // === ENDRING 1: Bytter ut .party-icon div med en img-tag ===
          detailPanelContent.innerHTML = `
              <div class="detail-image-container">
                  ${imageHtml}
              </div>
              <div class="detail-header">
-                 <div class="party-icon icon-${partyClassPrefix}" style="background-color: ${partyInfo.color || '#ccc'};">${partyInfo.shorthand?.charAt(0) || '?'}</div>
+                 <img src="images/parties/${partyInfo.shorthand.toLowerCase()}.png" class="party-icon" alt="${partyInfo.name}">
                  <h3>${candidate.name || '?'}</h3>
              </div>
              <div class="detail-info">
@@ -94,31 +85,26 @@ document.addEventListener('DOMContentLoaded', () => {
              </div>
              <p class="privacy-notice-panel">Husk personvern ved bruk av kontaktinformasjon.</p>
          `;
-         // ---------- SLUTT ENDRING HER ----------
+         // === SLUTT ENDRING 1 ===
 
         if (detailPanel) detailPanel.scrollTop = 0;
      }
 
-     // --- Funksjon for å vise i Modal (Mobil) ---
-     // Ingen endringer her, da modalen ikke ser ut til å vise hovedbilde
      function displayCandidateInModal(candidate, partyInfo) {
          if (!modal || !modalContentContainer || !candidate || !partyInfo) return;
-         const partyClassPrefix = partyInfo.classPrefix || partyInfo.shorthand.toLowerCase();
          modalContentContainer.innerHTML = `
-             <h3> <div class="party-icon icon-${partyClassPrefix}" style="background-color: ${partyInfo.color || '#ccc'}; width: 28px; height: 28px; font-size: 14px;">${partyInfo.shorthand?.charAt(0) || '?'}</div> ${candidate.name || '?'} </h3>
+             <h3> <img src="images/parties/${partyInfo.shorthand.toLowerCase()}.png" class="party-icon" alt="${partyInfo.name}" style="width: 28px; height: 28px; margin-right: 8px; vertical-align: middle;"> ${candidate.name || '?'} </h3>
              <p><strong>Rangering:</strong> ${candidate.rank || '?'}. plass</p> <p><strong>Parti:</strong> ${partyInfo.name || '?'}</p> <p><strong>Valgkrets:</strong> ${candidate.constituencyName || '?'}</p> ${candidate.age ? `<p><strong>Alder:</strong> ${candidate.age}</p>` : ''} ${candidate.location ? `<p><strong>Fra:</strong> ${candidate.location}</p>` : ''} <p><strong>Realistisk sjanse:</strong> ${typeof candidate.hasRealisticChance !== 'undefined' ? (candidate.hasRealisticChance ? 'Ja' : 'Nei') : '?'}</p> ${candidate.email ? `<p><strong>E-post:</strong> <a href="mailto:${candidate.email}">${candidate.email}</a></p>` : ''} ${candidate.phone ? `<p><strong>Telefon:</strong> <a href="tel:${candidate.phone}">${candidate.phone}</a></p>` : ''}
              <p class="privacy-notice">Husk personvern ved bruk av kontaktinformasjon.</p>
          `;
           modal.classList.remove('hover-mode'); modal.style.display = 'block';
      }
 
-    // --- Funksjon for å resette panelet ---
     function resetDetailPanel() { if (detailPanelContent) { detailPanelContent.innerHTML = `<div class="placeholder-text"><h3>Kandidatinformasjon</h3><p>Velg en kandidat...</p></div>`; } if (currentlySelectedCard) { currentlySelectedCard.classList.remove('selected-detail'); currentlySelectedCard = null; } }
 
-    // --- Hovedfunksjon for filtrering og visning ---
     function handleFilteringAndDisplay() {
         if (!regularViewContainer || !featuredViewContainer || !candidateGrid || !featuredGrid) return; console.log("Handling filtering...");
-        resetDetailPanel(); // Reset panel når filtre endres
+        resetDetailPanel();
         const selectedConstituency = constituencyFilter?.value || 'all'; const selectedParty = partyFilter?.value || 'all'; const showOnlyRealistic = realisticChanceFilter?.checked || false; const searchTerm = nameSearch?.value.toLowerCase().trim() || ''; const selectedViewMode = viewModeSelect?.value || 'normal';
         let allMatchingCandidates = []; if (!Array.isArray(allConstituencyData)) { console.error("Data error!"); if (candidateCount) candidateCount.textContent = 'Feil'; return; }
         allConstituencyData.forEach(c => { if (!c || !Array.isArray(c.parties)) return; if (selectedConstituency === 'all' || c.constituencyName === selectedConstituency) { c.parties.forEach(p => { if (!p || !Array.isArray(p.candidates)) return; if (selectedParty === 'all' || p.partyShorthand === selectedParty) { p.candidates.forEach(cand => { if (!cand || !cand.name) return; let include = true; if (showOnlyRealistic && !cand.hasRealisticChance) include = false; if (searchTerm && !cand.name.toLowerCase().includes(searchTerm)) include = false; if (include) { allMatchingCandidates.push({ ...cand, constituencyName: c.constituencyName, partyShorthand: p.partyShorthand, partyName: p.partyName }); } }); } }); } });
@@ -127,13 +113,11 @@ document.addEventListener('DOMContentLoaded', () => {
         else { displayRegularCandidates(allMatchingCandidates); featuredViewContainer.style.display = 'none'; regularViewContainer.style.display = 'block'; if (candidateCount) candidateCount.textContent = allMatchingCandidates.length; }
     }
 
-    // --- Visningslogikk ---
     function displayFeaturedCandidates(featuredCandidates) {
         if (!featuredGrid) return; featuredGrid.innerHTML = ''; if (featuredCandidates.length === 0) { featuredGrid.innerHTML = '<p>Ingen funnet.</p>'; return; } let currentConstituency = null;
         featuredCandidates.forEach(candidate => { const partyInfo = partiesMap[candidate.partyShorthand]; if (!partyInfo) return; if (candidate.constituencyName !== currentConstituency) { const sep = createConstituencySeparator(candidate.constituencyName); featuredGrid.appendChild(sep); currentConstituency = candidate.constituencyName; } const card = createFeaturedImageCard(candidate, partyInfo); featuredGrid.appendChild(card); });
      }
 
-    // GJENOPPRETTET full innerHTML
     function createFeaturedImageCard(candidate, partyInfo) {
         const card = document.createElement('div'); const partyClass = `party-${partyInfo.classPrefix || partyInfo.shorthand.toLowerCase()}`; card.className = `featured-candidate-card ${partyClass}`; card.dataset.candidateInfo = JSON.stringify(candidate); card.dataset.partyInfo = JSON.stringify(partyInfo); card.style.setProperty('--card-party-color', partyInfo.color || '#ccc');
         card.innerHTML = `
@@ -147,11 +131,12 @@ document.addEventListener('DOMContentLoaded', () => {
         candidates.forEach(candidate => { const partyInfo = partiesMap[candidate.partyShorthand]; if (!partyInfo) return; if (candidate.constituencyName !== currentConstituency) { const sep = createConstituencySeparator(candidate.constituencyName); candidateGrid.appendChild(sep); currentConstituency = candidate.constituencyName; } const card = createCandidateCard(candidate, partyInfo); candidateGrid.appendChild(card); });
      }
 
-    function createConstituencySeparator(constituencyName) { const separator = document.createElement('div'); separator.className = 'constituency-separator'; const count = constituencyMandates[constituencyName]; const text = typeof count === 'number' ? `(${count} mandater)` : '(?)'; separator.innerHTML = `<span class="name">${constituencyName || '?'}</span> <span class="count">${text}</span>`; return separator; } // Forenklet innhold
+    function createConstituencySeparator(constituencyName) { const separator = document.createElement('div'); separator.className = 'constituency-separator'; const count = constituencyMandates[constituencyName]; const text = typeof count === 'number' ? `(${count} mandater)` : '(?)'; separator.innerHTML = `<span class="name">${constituencyName || '?'}</span> <span class="count">${text}</span>`; return separator; }
 
-    // GJENOPPRETTET full innerHTML
     function createCandidateCard(candidate, partyInfo) {
-        const card = document.createElement('div'); const partyClassPrefix = partyInfo.classPrefix || partyInfo.shorthand.toLowerCase(); card.className = `candidate-card party-${partyClassPrefix}`; if (candidate.hasRealisticChance) card.classList.add('realistic-chance'); card.style.setProperty('--party-color', partyInfo.color || '#ccc'); card.dataset.candidateInfo = JSON.stringify(candidate); card.dataset.partyInfo = JSON.stringify(partyInfo);
+        const card = document.createElement('div'); card.className = `candidate-card party-${partyInfo.classPrefix || partyInfo.shorthand.toLowerCase()}`; if (candidate.hasRealisticChance) card.classList.add('realistic-chance'); card.style.setProperty('--party-color', partyInfo.color || '#ccc'); card.dataset.candidateInfo = JSON.stringify(candidate); card.dataset.partyInfo = JSON.stringify(partyInfo);
+        
+        // === ENDRING 2: Bytter ut .party-icon div med en img-tag ===
         card.innerHTML = `
             <div class="card-header">
                 <span class="candidate-rank">${candidate.rank || '?'}</span>
@@ -159,9 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
                      <span class="candidate-name">${candidate.name || 'Ukjent navn'}</span>
                      <span class="party-name-header">${partyInfo.name || candidate.partyShorthand || 'Ukjent parti'}</span>
                  </div>
-                <div class="party-icon icon-${partyClassPrefix}" style="background-color: ${partyInfo.color || '#ccc'}" title="${partyInfo.name || '?'}">
-                     ${candidate.partyShorthand?.charAt(0) || '?'}
-                 </div>
+                 <img src="images/parties/${partyInfo.shorthand.toLowerCase()}.png" class="party-icon" alt="${partyInfo.name}" title="${partyInfo.name}">
             </div>
             <div class="card-body">
                 <div class="candidate-meta">
@@ -171,10 +154,11 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             ${candidate.hasRealisticChance ? `<div class="card-footer"><span class="realistic-badge">Realistisk sjanse</span></div>` : '<div class="card-footer"></div>'}
         `;
+        // === SLUTT ENDRING 2 ===
+
         card.title = `${candidate.name || '?'} (${partyInfo.name || '?'}) - Klikk for detaljer`; return card;
     }
 
-    // --- Debounce Hjelpefunksjon ---
     function debounce(func, wait) { let timeout; return function executedFunction(...args) { const later = () => { clearTimeout(timeout); func(...args); }; clearTimeout(timeout); timeout = setTimeout(later, wait); }; }
 
 }); // End DOMContentLoaded
