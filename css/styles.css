@@ -1339,3 +1339,40 @@ header {
     font-weight: bold;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
+/* === NYE STILER FOR PARTILOGOER I SAKSMATRISE-HEADER === */
+
+/* 1. Justerer selve header-cellen for å passe til nytt innhold */
+.matrix-table thead th.party-col {
+    display: flex;
+    flex-direction: column; /* Stabler logo over tekst */
+    align-items: center;
+    justify-content: center;
+    gap: 4px; /* Litt luft mellom logo og tekst */
+    padding-top: 8px;
+    padding-bottom: 8px;
+    min-width: 80px; /* Øker bredden litt for å få plass */
+    max-width: 80px;
+}
+
+/* 2. Styler selve logoen */
+.matrix-header-logo {
+    height: 30px;
+    width: auto;
+    max-width: 50px;
+    object-fit: contain;
+    display: block; /* Fjerner eventuell ekstra plass under bildet */
+}
+
+/* 3. Styler partiforkortelsen */
+.matrix-header-shorthand {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: white; /* Sørger for at teksten er hvit */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.4); /* Legger til skygge for lesbarhet */
+}
+
+/* Unntak for KrF som har gul bakgrunn, der mørk tekst er bedre */
+.matrix-table thead th.party-col[title="Kristelig Folkeparti"] .matrix-header-shorthand {
+    color: #333;
+    text-shadow: none; /* Fjerner skyggen som ikke trengs på lys bakgrunn */
+}
