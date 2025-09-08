@@ -1,6 +1,6 @@
-/* sakskompass.css - OPPGRADERT VERSJON */
+/* sakskompass.css - OPPGRADERT OG KOMPLETT VERSJON */
 
-/* Kontrollpanel (uendret) */
+/* Kontrollpanel */
 .sk-controls {
     display: flex;
     flex-wrap: wrap;
@@ -16,7 +16,7 @@
     min-width: 200px;
 }
 
-/* Visualiseringsområde (uendret) */
+/* Visualiseringsområde */
 .sk-visualization-area {
     background-color: white;
     border-radius: 12px;
@@ -33,10 +33,10 @@
 .visualization-container .loader,
 .visualization-container .no-data,
 .visualization-container .error {
-    text-align: center;
-    padding: 40px 20px;
-    font-size: 1.1rem;
-    color: #777;
+     text-align: center;
+     padding: 40px 20px;
+     font-size: 1.1rem;
+     color: #777;
 }
 
 /* --- D3 Chart Styles (OPPDATERT) --- */
@@ -48,23 +48,23 @@
 }
 
 /* Akser */
-.sk-visualization-area .axis path,
-.sk-visualization-area .axis line {
+.sk-visualization-area .axis path {
     stroke: #ccc;
 }
 .sk-visualization-area .axis .domain {
     stroke: none; /* Skjul hovedaksen for et renere utseende */
 }
-.sk-visualization-area .axis text {
-    font-size: 0.85rem; /* Litt større tekst */
-    fill: #555;
-    cursor: default;
-}
-
-/* Rutenettlinjer for X-aksen */
-.sk-visualization-area .x-axis .tick line {
+.sk-visualization-area .axis line {
     stroke: #e9ecef; /* Svak farge for rutenett */
     stroke-dasharray: 2, 2; /* Stiplede linjer */
+}
+.sk-visualization-area .y-axis .tick line {
+    stroke: none; /* Fjerner tick-streker på y-aksen */
+}
+.sk-visualization-area .axis text {
+    font-size: 0.85rem;
+    fill: #555;
+    cursor: default;
 }
 
 /* Flertallslinje */
@@ -82,19 +82,19 @@
 
 /* --- Søyler (NYTT DESIGN) --- */
 .bar-group {
-    transition: opacity 0.3s ease; /* For demping ved hover på andre */
+    transition: opacity 0.3s ease;
 }
 .bar-segment {
     transition: filter 0.2s ease, stroke-width 0.2s ease;
-    stroke: rgba(255, 255, 255, 0.5); /* Lysere skille */
+    stroke: rgba(255, 255, 255, 0.5);
     stroke-width: 1px;
 }
 .bar-group:hover .bar-segment {
-    filter: brightness(1.1); /* Lysner segmentene litt ved hover */
+    filter: brightness(1.1);
 }
 .bar-segment:hover {
     stroke-width: 1.5px;
-    stroke: black; /* Tydelig ramme på segmentet du peker på */
+    stroke: black;
 }
 
 /* Demping av andre elementer ved hover */
@@ -122,11 +122,10 @@
     font-weight: 500;
 }
 
-
 /* --- Tooltip (OPPDATERT) --- */
 .d3-tooltip {
     position: absolute;
-    background-color: #343a40; /* Mørkere bakgrunn */
+    background-color: #343a40;
     color: white;
     padding: 10px 15px;
     border-radius: 6px;
@@ -142,7 +141,7 @@
     opacity: 1;
 }
 .d3-tooltip b {
-    color: #ffbe2c; /* Gult for utheving */
+    color: #ffbe2c;
     display: block;
     margin-bottom: 5px;
     font-size: 1rem;
@@ -155,12 +154,12 @@
 .d3-tooltip small {
     display: block;
     margin-top: 8px;
-    color: #ced4da; /* Lysere grå for detaljer */
+    color: #ced4da;
     font-size: 0.8em;
     line-height: 1.4;
 }
 
-/* Tabellvisning og Legende (uendret) */
+/* Tabellvisning og Legende (uendret fra din original) */
 .sk-table-container { overflow-x: auto; max-height: 80vh; }
 .sk-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.9rem; }
 .sk-table th, .sk-table td { padding: 10px 12px; border: 1px solid #eee; text-align: left; vertical-align: top; }
@@ -173,7 +172,7 @@
 .legend-container-sk .legend-item { opacity: 1; cursor: default; }
 .legend-container-sk .legend-item:hover { transform: none; }
 
-/* Responsivitet (uendret) */
+/* Responsivitet (uendret fra din original) */
 @media (max-width: 768px) {
     .sk-controls { flex-direction: column; }
     .sk-visualization-area .axis text { font-size: 0.7rem; }
