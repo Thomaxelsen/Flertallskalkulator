@@ -1,11 +1,18 @@
-// js/sakskompass.js - OPPGRADERT v3, KORRIGERT FOR TEGNEFEIL
+// js/sakskompass.js - v5, ENDELIG KORRIGERT FOR TEGNEFEIL
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("Sakskompass (Upgraded v3): DOM Loaded. Waiting for data...");
+    console.log("Sakskompass (v5 Corrected): DOM Loaded. Waiting for data...");
     
     // Konstanter for Stortinget
     const TOTAL_SEATS = 169;
     const MAJORITY_THRESHOLD = 85;
+
+    // DOM-elementer for panelet
+    const detailPanel = document.getElementById('sk-detail-panel');
+    const panelContent = document.getElementById('panel-content');
+    const panelIssueName = document.getElementById('panel-issue-name');
+    const closePanelBtn = document.getElementById('close-panel-btn');
+    const panelOverlay = document.getElementById('sk-panel-overlay');
 
     let issuesData = [], partiesData = [], partiesMap = {};
     let issuesLoaded = false, partiesLoaded = false;
@@ -16,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
         partiesData.forEach(p => partiesMap[p.shorthand] = p);
         populateAreaFilter();
         setupEventListeners();
+        setupPanelEventListeners(); 
         processAndVisualizeData();
     }
 
@@ -37,8 +45,71 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     initializeSakskompass();
 
+    // --- Panel-funksjoner ---
+    function setupPanelEventListeners() {
+        if (closePanelBtn) closePanelBtn.addEventListener('click', hideIssueDetails);
+        if (panelOverlay) panelOverlay.addEventListener('click', hideIssueDetails);
+    }
 
-    // --- Hjelpefunksjoner (uendret fra din original) ---
+    function showIssueDetails(issueDataFromChart) {
+        if (!detailPanel || !panelContent || !panelIssueName) return;
+        const fullIssue = issuesData.find(i => i.id === issueDataFromChart.id);
+        if (!fullIssue) {
+            panelContent.innerHTML = "<p>Kunne ikke laste saksdetaljer.</p>";
+            return;
+        }
+
+        panelIssueName.textContent = fullIssue.name;
+        const stances = { level2: [], level1: [], level0: [] };
+        
+        // Gå gjennom partilisten for å sikre korrekt rekkefølge
+        partiesData.forEach(party => {
+            const stance = fullIssue.partyStances ? (fullIssue.partyStances[party.shorthand] || { level: 0 }) : { level: 0 };
+            const partyDataWithStance = { ...party, quote: stance.quote };
+
+            if (stance.level === 2) stances.level2.push(partyDataWithStance);
+            else if (stance.level === 1) stances.level1.push(partyDataWithStance);
+            else stances.level0.push(partyDataWithStance);
+        });
+
+        let html = `<p class="issue-area">${fullIssue.area || 'Ukjent saksområde'}</p>`;
+        html += createPartyListHTML(stances.level2, 'Full enighet', 'level-2');
+        html += createPartyListHTML(stances.level1, 'Delvis enighet', 'level-1');
+        html += createPartyListHTML(stances.level0, 'Ingen støtte / Uenig', 'level-0');
+        panelContent.innerHTML = html;
+        
+        detailPanel.classList.add('active');
+        panelOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function createPartyListHTML(partiesArray, title, className) {
+        if (partiesArray.length === 0) return '';
+        partiesArray.sort((a, b) => (a.position || 99) - (b.position || 99));
+        let listItems = partiesArray.map(party => `
+            <div class="stance-party-item">
+                <img src="images/parties/${party.shorthand.toLowerCase()}.png" alt="${party.name}" class="party-logo">
+                <div class="party-details">
+                    <div class="party-name">${party.name}</div>
+                    ${party.quote 
+                        ? `<div class="party-quote">«${party.quote}»</div>` 
+                        : `<div class="party-quote no-quote">(Ingen utdypende begrunnelse)</div>`
+                    }
+                </div>
+            </div>
+        `).join('');
+        return `<div class="stance-group ${className}"><h4>${title} (${partiesArray.length})</h4>${listItems}</div>`;
+    }
+
+    function hideIssueDetails() {
+        if (detailPanel && panelOverlay) {
+            detailPanel.classList.remove('active');
+            panelOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+
+    // --- Hjelpefunksjoner ---
     function getUniqueAreas() {
         const areas = (issuesData || []).map(issue => issue.area).filter(Boolean);
         return [...new Set(areas)].sort();
@@ -60,10 +131,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     function processIssueData(supportLevelType) {
-        if (!Array.isArray(issuesData) || issuesData.length === 0 || Object.keys(partiesMap).length === 0) {
-            return [];
-        }
-        return (issuesData || []).map(issue => {
+        if (!Array.isArray(issuesData) || issuesData.length === 0 || Object.keys(partiesMap).length === 0) return [];
+        return issuesData.map(issue => {
             let totalMandates = 0;
             const supportingPartiesData = [];
             if (issue.partyStances) {
@@ -72,8 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const partyInfo = partiesMap[partyCode];
                     if (partyInfo && stance && typeof stance.level !== 'undefined') {
                         const level = stance.level;
-                        let includeParty = (supportLevelType === 'level-2' && level === 2) ||
-                                           (supportLevelType === 'level-1-2' && (level === 1 || level === 2));
+                        let includeParty = (supportLevelType === 'level-2' && level === 2) || (supportLevelType === 'level-1-2' && (level === 1 || level === 2));
                         if (includeParty && typeof partyInfo.seats === 'number') {
                             totalMandates += partyInfo.seats;
                             supportingPartiesData.push({ ...partyInfo, level: level });
@@ -99,9 +167,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function processAndVisualizeData() {
         const supportLevelType = document.getElementById('sk-support-level-filter').value;
         const viewType = document.getElementById('sk-view-type-filter').value;
-        const container = d3.select("#sk-visualization-area"); 
         const visContainer = d3.select("#sk-visualization-container");
-        
         if (!issuesLoaded || !partiesLoaded) {
             visContainer.html('<div class="loader">Laster data...</div>');
             return;
@@ -129,7 +195,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const container = d3.select("#sk-visualization-area");
         const visContainer = d3.select("#sk-visualization-container");
         visContainer.html('');
-        
         const containerWidth = visContainer.node().getBoundingClientRect().width;
         
         let dynamicMarginLeft = (containerWidth < 500) ? 150 : (containerWidth < 768) ? 200 : 300;
@@ -142,8 +207,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const dropShadow = defs.append("filter").attr("id", "drop-shadow").attr("height", "130%");
         dropShadow.append("feGaussianBlur").attr("in", "SourceAlpha").attr("stdDeviation", 2);
         dropShadow.append("feOffset").attr("dx", 1).attr("dy", 1).attr("result", "offsetblur");
-        dropShadow.append("feComponentTransfer")
-            .append("feFuncA").attr("type", "linear").attr("slope", 0.3); // Gjør skyggen svakere
+        dropShadow.append("feComponentTransfer").append("feFuncA").attr("type", "linear").attr("slope", 0.3);
         const feMerge = dropShadow.append("feMerge");
         feMerge.append("feMergeNode");
         feMerge.append("feMergeNode").attr("in", "SourceGraphic");
@@ -151,13 +215,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
         
         let calculatedPositions = [], currentY = 0, itemPadding = 15, minItemHeight = 28;
-        const tempG = g.append("g").style("opacity", 0); // Gjemmer midlertidig akse
+        const tempG = g.append("g").style("opacity", 0);
         const tempYScale = d3.scaleBand().domain(data.map(d => d.name)).range([0, data.length * 40]);
         const tempYAxis = tempG.call(d3.axisLeft(tempYScale)).call(g => g.selectAll(".tick text").call(wrapAxisText, margin.left - 15));
         
-        tempYAxis.selectAll(".tick").each(function() {
+        tempYAxis.selectAll(".tick").each(function(d, i) {
             const textHeight = Math.max(minItemHeight, this.getBBox().height);
-            calculatedPositions.push({ y: currentY, height: textHeight });
+            calculatedPositions[i] = { y: currentY, height: textHeight };
             currentY += textHeight + itemPadding;
         });
         tempG.remove();
@@ -165,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const height = currentY > 0 ? currentY - itemPadding : 0;
         svg.attr("height", height + margin.top + margin.bottom);
         
-        const yScale = d3.scaleBand().domain(data.map(d => d.name)).range([0, height]).paddingOuter(0.1);
+        const yScale = d3.scaleBand().domain(data.map(d => d.name)).range([0, height]); // Fjerner padding for nøyaktig posisjonering
         const xScale = d3.scaleLinear().domain([0, TOTAL_SEATS]).range([0, width]);
         
         g.append("g").attr("class", "x-axis axis").attr("transform", `translate(0, ${height})`)
@@ -186,6 +250,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .attr("class", "bar-group")
             .attr("transform", (d, i) => `translate(0, ${calculatedPositions[i].y})`)
             .style("filter", "url(#drop-shadow)")
+            .style("cursor", "pointer")
             .on("mouseover", (event, d) => {
                 container.classed("is-interacting", true);
                 barGroups.classed("highlighted", other_d => d === other_d);
@@ -195,14 +260,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 container.classed("is-interacting", false);
                 barGroups.classed("highlighted", false);
                 yAxis.selectAll(".tick").classed("highlighted", false);
+            })
+            .on("click", (event, d) => {
+                showIssueDetails(d);
             });
             
         barGroups.selectAll(".bar-segment").data(d => {
             let currentX = 0;
             return d.supportingPartiesData.map(p => {
-                const startX = currentX;
+                const segmentData = { ...p, startX: currentX, issueName: d.name };
                 currentX += p.seats;
-                return { ...p, startX: startX, issueName: d.name };
+                return segmentData;
             });
         }).join("rect")
             .attr("class", "bar-segment")
@@ -215,6 +283,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .attr("fill-opacity", d => d.level === 1 ? 0.7 : 1.0)
             .on("mouseover", (event, d) => {
                 tooltip.classed("visible", true).html(`<b>${d.name}</b>Mandater: ${d.seats}<br>Støtte: Nivå ${d.level}`);
+                event.stopPropagation();
             })
             .on("mousemove", event => tooltip.style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 10) + "px"))
             .on("mouseout", () => tooltip.classed("visible", false));
@@ -235,18 +304,25 @@ document.addEventListener('DOMContentLoaded', function() {
             .transition().duration(800).delay(500).style("opacity", 1);
             
         yAxis.selectAll(".tick")
-             .on("mouseover", (event, d) => {
+             .style("cursor", "pointer")
+             .on("mouseover", (event, d_name) => {
                 container.classed("is-interacting", true);
-                barGroups.classed("highlighted", bar_d => d === bar_d.name);
-                yAxis.selectAll(".tick").classed("highlighted", tick_d => d === tick_d);
+                const correspondingData = data.find(issue => issue.name === d_name);
+                barGroups.classed("highlighted", bar_d => correspondingData && bar_d.id === correspondingData.id);
+                yAxis.selectAll(".tick").classed("highlighted", tick_d => d_name === tick_d);
             })
             .on("mouseout", () => {
                 container.classed("is-interacting", false);
                 barGroups.classed("highlighted", false);
                 yAxis.selectAll(".tick").classed("highlighted", false);
+            })
+            .on("click", (event, d_name) => {
+                const correspondingData = data.find(issue => issue.name === d_name);
+                if (correspondingData) showIssueDetails(correspondingData);
             });
     }
     
+    // De andre visualiseringsfunksjonene er uendret
     function createDotPlot(data) { /* ... Den originale, komplette koden for dot plot ... */ }
     function createTable(data) { /* ... Den originale, komplette koden for tabell ... */ }
     

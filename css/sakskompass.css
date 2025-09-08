@@ -183,3 +183,138 @@
     .sk-table th, .sk-table td { padding: 6px 8px; }
     .sk-table td.parties-col { min-width: 150px; }
 }
+/* ------ START: NYE REGLER FOR DETALJPANEL ------ */
+
+/* Overlay/Bakdrop */
+.panel-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1090; /* Høyt, men under panelet */
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none; /* Kan ikke klikkes når skjult */
+}
+.panel-overlay.active {
+    opacity: 1;
+    pointer-events: auto; /* Kan klikkes når synlig */
+}
+
+/* Selve sidepanelet */
+.detail-panel {
+    position: fixed;
+    top: 0;
+    right: -450px; /* Start utenfor skjermen */
+    width: 450px;
+    max-width: 90vw; /* Maks 90% av skjermbredden */
+    height: 100%;
+    background-color: white;
+    box-shadow: -5px 0 20px rgba(0,0,0,0.15);
+    z-index: 1100; /* Ligger over alt annet */
+    transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: flex;
+    flex-direction: column;
+}
+.detail-panel.active {
+    right: 0; /* Gli inn i synet */
+}
+
+/* Panel Header */
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 25px;
+    border-bottom: 1px solid #eee;
+    flex-shrink: 0; /* Header skal ikke krympe */
+}
+.panel-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    color: var(--kf-blue);
+}
+.close-panel-btn {
+    background: none;
+    border: none;
+    font-size: 2.5rem;
+    line-height: 1;
+    color: #aaa;
+    cursor: pointer;
+    padding: 0 5px;
+    transition: color 0.2s;
+}
+.close-panel-btn:hover {
+    color: #333;
+}
+
+/* Panel Content */
+.panel-content {
+    padding: 25px;
+    overflow-y: auto; /* Scroll for langt innhold */
+    flex-grow: 1;
+}
+.panel-content .issue-area {
+    font-style: italic;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Gruppering av standpunkt */
+.stance-group {
+    margin-bottom: 25px;
+}
+.stance-group h4 {
+    margin: 0 0 10px 0;
+    padding-bottom: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-bottom: 2px solid;
+}
+.stance-group.level-2 h4 { color: #28a745; border-color: #28a745; }
+.stance-group.level-1 h4 { color: #ffc107; border-color: #ffc107; }
+.stance-group.level-0 h4 { color: #dc3545; border-color: #dc3545; }
+
+/* Parti-element i listen */
+.stance-party-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+.stance-party-item:last-child {
+    border-bottom: none;
+}
+
+.stance-party-item .party-logo {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+}
+
+.stance-party-item .party-details {
+    flex-grow: 1;
+}
+.stance-party-item .party-name {
+    font-weight: bold;
+    font-size: 1rem;
+}
+.stance-party-item .party-quote {
+    margin-top: 5px;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: #555;
+    line-height: 1.5;
+    background-color: #f8f9fa;
+    padding: 8px 12px;
+    border-left: 3px solid #ddd;
+    border-radius: 4px;
+}
+.stance-party-item .party-quote.no-quote {
+    color: #999;
+}
+
+/* ------ SLUTT: NYE REGLER FOR DETALJPANEL ------ */
+```4.  Lagre filen `sakskompass.css`.
