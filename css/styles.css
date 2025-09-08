@@ -1339,40 +1339,31 @@ header {
     font-weight: bold;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
-/* === NYE STILER FOR PARTILOGOER I SAKSMATRISE-HEADER === */
+/* === FIKS OG NYE STILER FOR PARTILOGOER I SAKSMATRISE-HEADER === */
 
-/* 1. Justerer selve header-cellen for å passe til nytt innhold */
+/* 1. Styler header-cellen for å passe til en logo */
 .matrix-table thead th.party-col {
-    display: flex;
-    flex-direction: column; /* Stabler logo over tekst */
-    align-items: center;
-    justify-content: center;
-    gap: 4px; /* Litt luft mellom logo og tekst */
-    padding-top: 8px;
-    padding-bottom: 8px;
-    min-width: 80px; /* Øker bredden litt for å få plass */
-    max-width: 80px;
+    padding: 8px 5px;
+    min-width: 70px; /* Juster etter behov */
+    max-width: 70px;
+    background-color: #f8f9fa !important; /* Bruker standard header-farge */
+    vertical-align: middle; /* Sikrer at logoen er midtstilt vertikalt */
 }
 
-/* 2. Styler selve logoen */
+/* 2. Styler selve logoen i headeren */
 .matrix-header-logo {
-    height: 30px;
+    height: 45px; /* Gjør logoen til hovedelementet */
     width: auto;
-    max-width: 50px;
+    max-width: 100%;
     object-fit: contain;
-    display: block; /* Fjerner eventuell ekstra plass under bildet */
+    display: block; /* Fjerner unødvendig luft under bildet */
+    margin: 0 auto; /* Sentrerer logoen horisontalt i cellen */
+    padding: 2px 0; /* Litt vertikal luft */
 }
 
-/* 3. Styler partiforkortelsen */
-.matrix-header-shorthand {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: white; /* Sørger for at teksten er hvit */
-    text-shadow: 0 1px 2px rgba(0,0,0,0.4); /* Legger til skygge for lesbarhet */
-}
-
-/* Unntak for KrF som har gul bakgrunn, der mørk tekst er bedre */
-.matrix-table thead th.party-col[title="Kristelig Folkeparti"] .matrix-header-shorthand {
-    color: #333;
-    text-shadow: none; /* Fjerner skyggen som ikke trengs på lys bakgrunn */
+/* 3. Justerer SUM-headeren for konsistens */
+.matrix-table thead th.party-col[title="Sum av poeng"] {
+    color: #555 !important;
+    font-weight: bold;
+    font-size: 0.9rem;
 }
