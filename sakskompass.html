@@ -91,7 +91,20 @@
                  <!-- Legende legges til her (f.eks. for partifarger) -->
              </div>
         </div>
-
+    
+        <!-- ===== START: Nytt Detaljpanel for Saker ===== -->
+    <div id="sk-panel-overlay" class="panel-overlay"></div>
+    <aside id="sk-detail-panel" class="detail-panel">
+        <div class="panel-header">
+            <h3 id="panel-issue-name">Saksdetaljer</h3>
+            <button id="close-panel-btn" class="close-panel-btn" title="Lukk">&times;</button>
+        </div>
+        <div id="panel-content" class="panel-content">
+            <!-- Innhold fylles av JavaScript -->
+            <div class="loader">Laster detaljer...</div>
+        </div>
+    </aside>
+    <!-- ===== SLUTT: Nytt Detaljpanel for Saker ===== -->
 
         <!-- Standard Footer -->
         <footer>
