@@ -346,7 +346,6 @@ function setupToggleListener() {
 }
 
 
-// === START: Endret generateMatrix funksjon ===
 function generateMatrix(areaFilter, viewMode) {
     console.log("Genererer matrise med filter:", areaFilter, "visning:", viewMode);
     const matrixVisualizationDiv = document.getElementById('matrix-visualization');
@@ -393,16 +392,30 @@ function generateMatrix(areaFilter, viewMode) {
     issueHeader.className = 'issue-col';
     issueHeader.textContent = 'Sak';
     headerRow.appendChild(issueHeader);
+
     parties.forEach(party => {
         const partyHeader = document.createElement('th');
-        partyHeader.className = 'party-col'; partyHeader.textContent = party.shorthand; partyHeader.title = party.name;
+        partyHeader.className = 'party-col';
+        partyHeader.title = party.name;
+        
+        // === ENDRING START: Bytt ut textContent med innerHTML for å inkludere logo ===
+        partyHeader.innerHTML = `
+            <img src="images/parties/${party.shorthand.toLowerCase()}.png" alt="${party.name}" class="matrix-header-logo">
+            <span class="matrix-header-shorthand">${party.shorthand}</span>
+        `;
+        // === ENDRING SLUTT ===
+
         const rgbColor = hexToRgb(party.color);
         partyHeader.style.backgroundColor = `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, 0.8)`;
-        partyHeader.style.color = '#fff';
+        // Vi fjerner fargen på teksten her, da den nå settes i CSS for bedre lesbarhet
+        // partyHeader.style.color = '#fff'; 
         headerRow.appendChild(partyHeader);
     });
+
     const sumHeader = document.createElement('th');
-    sumHeader.className = 'party-col'; sumHeader.textContent = 'SUM'; sumHeader.title = 'Sum av poeng';
+    sumHeader.className = 'party-col';
+    sumHeader.textContent = 'SUM';
+    sumHeader.title = 'Sum av poeng';
     sumHeader.style.backgroundColor = "#e9ecef";
     headerRow.appendChild(sumHeader);
     thead.appendChild(headerRow);
@@ -410,7 +423,9 @@ function generateMatrix(areaFilter, viewMode) {
 
     const tbody = document.createElement('tbody');
     areaOrder.forEach(area => {
-        if (!issuesByArea[area]) return;
+        // Returner tidlig hvis det ikke finnes saker for dette området i det filtrerte utvalget
+        if (!issuesByArea[area] || issuesByArea[area].length === 0) return;
+
         const areaRow = document.createElement('tr');
         areaRow.className = 'area-header';
         const areaCell = document.createElement('td');
@@ -419,87 +434,81 @@ function generateMatrix(areaFilter, viewMode) {
         areaRow.appendChild(areaCell);
         tbody.appendChild(areaRow);
 
-        if (issuesByArea[area].length > 0) {
-            issuesByArea[area].forEach(issue => {
-                const row = document.createElement('tr');
-                const issueCell = document.createElement('td');
-                issueCell.className = 'issue-col';
-                issueCell.textContent = issue.name;
-                issueCell.title = issue.name;
-                row.appendChild(issueCell);
-                let totalPoints = 0;
-                parties.forEach(party => {
-                    const cellContainer = document.createElement('td');
-                    let agreementLevel = 0;
-                    let quote = null;
-                    if (issue.partyStances && issue.partyStances[party.shorthand]) {
-                        agreementLevel = issue.partyStances[party.shorthand].level ?? 0;
-                        quote = issue.partyStances[party.shorthand].quote;
-                    }
-                    const cell = document.createElement('div');
-                    cell.className = 'cell';
-                    const colors = agreementColors[agreementLevel] || agreementColors[0];
-                    cell.style.backgroundColor = colors.background;
-                    cell.style.color = colors.color;
-                    cell.style.border = `1px solid ${colors.border}`;
-                    if (viewMode === 'numbers') {
-                        cell.textContent = agreementLevel;
+        issuesByArea[area].forEach(issue => {
+            const row = document.createElement('tr');
+            const issueCell = document.createElement('td');
+            issueCell.className = 'issue-col';
+            issueCell.textContent = issue.name;
+            issueCell.title = issue.name;
+            row.appendChild(issueCell);
+            let totalPoints = 0;
+            parties.forEach(party => {
+                const cellContainer = document.createElement('td');
+                let agreementLevel = 0;
+                let quote = null;
+                if (issue.partyStances && issue.partyStances[party.shorthand]) {
+                    agreementLevel = issue.partyStances[party.shorthand].level ?? 0;
+                    quote = issue.partyStances[party.shorthand].quote;
+                }
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                const colors = agreementColors[agreementLevel] || agreementColors[0];
+                cell.style.backgroundColor = colors.background;
+                cell.style.color = colors.color;
+                cell.style.border = `1px solid ${colors.border}`;
+                if (viewMode === 'numbers') {
+                    cell.textContent = agreementLevel;
+                } else {
+                    cell.innerHTML = ' ';
+                }
+                cell.dataset.party = party.shorthand;
+                cell.dataset.issueId = issue.id;
+                cell.dataset.level = agreementLevel;
+                if (quote) {
+                    cell.dataset.quote = quote;
+                    cell.classList.add('has-quote');
+                    cell.style.cursor = "pointer";
+                    const infoIndicator = document.createElement('span');
+                    infoIndicator.className = 'info-indicator';
+                    infoIndicator.innerHTML = 'i';
+                    cell.appendChild(infoIndicator);
+                    if (isTouchDevice()) {
+                        cell.addEventListener('click', handleMatrixCellInteraction);
                     } else {
-                        cell.innerHTML = ' ';
+                        cell.addEventListener('mouseenter', handleMatrixCellInteraction);
+                        cell.addEventListener('mouseleave', handleMatrixCellLeave);
                     }
-                    cell.dataset.party = party.shorthand;
-                    cell.dataset.issueId = issue.id;
-                    cell.dataset.level = agreementLevel;
-                    if (quote) {
-                        cell.dataset.quote = quote;
-                        cell.classList.add('has-quote');
-                        cell.style.cursor = "pointer";
-                        const infoIndicator = document.createElement('span');
-                        infoIndicator.className = 'info-indicator';
-                        infoIndicator.innerHTML = 'i';
-                        cell.appendChild(infoIndicator);
-                        if (isTouchDevice()) {
-                            cell.addEventListener('click', handleMatrixCellInteraction);
-                        } else {
-                            cell.addEventListener('mouseenter', handleMatrixCellInteraction);
-                            cell.addEventListener('mouseleave', handleMatrixCellLeave);
-                        }
-                    } else {
-                        cell.style.cursor = "default";
-                    }
-                    cellContainer.appendChild(cell);
-                    row.appendChild(cellContainer);
-                    totalPoints += agreementLevel;
-                });
-                const sumCellContainer = document.createElement('td');
-                const sumCell = document.createElement('div');
-                sumCell.className = 'sum-cell-content';
-                sumCell.textContent = totalPoints;
-                const maxPossiblePoints = parties.length * 2;
-                const scoreRatio = maxPossiblePoints > 0 ? totalPoints / maxPossiblePoints : 0;
-                if (scoreRatio >= 0.6) { sumCell.style.backgroundColor = agreementColors[2].background; sumCell.style.color = agreementColors[2].color; sumCell.style.border = `1px solid ${agreementColors[2].border}`; }
-                else if (scoreRatio >= 0.3) { sumCell.style.backgroundColor = agreementColors[1].background; sumCell.style.color = agreementColors[1].color; sumCell.style.border = `1px solid ${agreementColors[1].border}`; }
-                else { sumCell.style.backgroundColor = agreementColors[0].background; sumCell.style.color = agreementColors[0].color; sumCell.style.border = `1px solid ${agreementColors[0].border}`; }
-                sumCellContainer.appendChild(sumCell);
-                row.appendChild(sumCellContainer);
-                tbody.appendChild(row);
+                } else {
+                    cell.style.cursor = "default";
+                }
+                cellContainer.appendChild(cell);
+                row.appendChild(cellContainer);
+                totalPoints += agreementLevel;
             });
-        }
+            const sumCellContainer = document.createElement('td');
+            const sumCell = document.createElement('div');
+            sumCell.className = 'sum-cell-content';
+            sumCell.textContent = totalPoints;
+            const maxPossiblePoints = parties.length * 2;
+            const scoreRatio = maxPossiblePoints > 0 ? totalPoints / maxPossiblePoints : 0;
+            if (scoreRatio >= 0.6) { sumCell.style.backgroundColor = agreementColors[2].background; sumCell.style.color = agreementColors[2].color; sumCell.style.border = `1px solid ${agreementColors[2].border}`; }
+            else if (scoreRatio >= 0.3) { sumCell.style.backgroundColor = agreementColors[1].background; sumCell.style.color = agreementColors[1].color; sumCell.style.border = `1px solid ${agreementColors[1].border}`; }
+            else { sumCell.style.backgroundColor = agreementColors[0].background; sumCell.style.color = agreementColors[0].color; sumCell.style.border = `1px solid ${agreementColors[0].border}`; }
+            sumCellContainer.appendChild(sumCell);
+            row.appendChild(sumCellContainer);
+            tbody.appendChild(row);
+        });
     });
     table.appendChild(tbody);
 
-    // Lag scroll-wrapperen NÅ og legg tabellen inni
     const tableScrollWrapper = document.createElement('div');
     tableScrollWrapper.className = 'matrix-table-scroll-wrapper';
-    tableScrollWrapper.appendChild(table); // Legg den ferdigbygde tabellen inn i wrapperen
-    matrixVisualizationDiv.appendChild(tableScrollWrapper); // Legg wrapperen til den ytre div-en
+    tableScrollWrapper.appendChild(table);
+    matrixVisualizationDiv.appendChild(tableScrollWrapper);
 
     updateLegendStyles();
 }
-// === SLUTT: Endret generateMatrix funksjon ===
 
-
-// Funksjon for å håndtere interaksjon med matrisecelle (som før)
 function handleMatrixCellInteraction(event) {
     if (!showQuotesEnabled) return;
 
@@ -533,7 +542,6 @@ function handleMatrixCellInteraction(event) {
     }
 }
 
-// Funksjon for å håndtere mouseleave (kun desktop) (som før)
 function handleMatrixCellLeave(event) {
      if (hoverTimerMatrix) {
         clearTimeout(hoverTimerMatrix);
@@ -549,7 +557,6 @@ function handleMatrixCellLeave(event) {
 }
 
 
-// Konverter hex til RGB (som før)
 function hexToRgb(hex) {
     if (!hex) return { r: 200, g: 200, b: 200 }; // Fallback grå
     hex = hex.replace('#', '');
@@ -559,7 +566,6 @@ function hexToRgb(hex) {
     return { r, g, b };
 }
 
-// Oppdater legend-stil (som før)
 function updateLegendStyles() {
     const legendItems = document.querySelectorAll('.legend-container .legend-item');
     legendItems.forEach(item => {
