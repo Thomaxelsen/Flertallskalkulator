@@ -1,7 +1,7 @@
-// js/sakskompass.js - OPPGRADERT OG KORRIGERT FOR HOVER-INTERAKSJON
+// js/sakskompass.js - OPPGRADERT v3, KORRIGERT FOR TEGNEFEIL
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("Sakskompass (Upgraded v2): DOM Loaded. Waiting for data...");
+    console.log("Sakskompass (Upgraded v3): DOM Loaded. Waiting for data...");
     
     // Konstanter for Stortinget
     const TOTAL_SEATS = 169;
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeSakskompass();
 
 
-    // --- Hjelpefunksjoner (uendret) ---
+    // --- Hjelpefunksjoner (uendret fra din original) ---
     function getUniqueAreas() {
         const areas = (issuesData || []).map(issue => issue.area).filter(Boolean);
         return [...new Set(areas)].sort();
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function processAndVisualizeData() {
         const supportLevelType = document.getElementById('sk-support-level-filter').value;
         const viewType = document.getElementById('sk-view-type-filter').value;
-        const container = d3.select("#sk-visualization-area"); // Endret til å velge den ytre containeren for klassen
+        const container = d3.select("#sk-visualization-area"); 
         const visContainer = d3.select("#sk-visualization-container");
         
         if (!issuesLoaded || !partiesLoaded) {
@@ -126,8 +126,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Visualiseringsfunksjoner ---
 
     function createHorizontalBarChart(data) {
-        const container = d3.select("#sk-visualization-area"); // Ytre container
-        const visContainer = d3.select("#sk-visualization-container"); // Indre container for SVG
+        const container = d3.select("#sk-visualization-area");
+        const visContainer = d3.select("#sk-visualization-container");
         visContainer.html('');
         
         const containerWidth = visContainer.node().getBoundingClientRect().width;
@@ -141,7 +141,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const defs = svg.append("defs");
         const dropShadow = defs.append("filter").attr("id", "drop-shadow").attr("height", "130%");
         dropShadow.append("feGaussianBlur").attr("in", "SourceAlpha").attr("stdDeviation", 2);
-        dropShadow.append("feOffset").attr("dx", 1).attr("dy", 1);
+        dropShadow.append("feOffset").attr("dx", 1).attr("dy", 1).attr("result", "offsetblur");
+        dropShadow.append("feComponentTransfer")
+            .append("feFuncA").attr("type", "linear").attr("slope", 0.3); // Gjør skyggen svakere
         const feMerge = dropShadow.append("feMerge");
         feMerge.append("feMergeNode");
         feMerge.append("feMergeNode").attr("in", "SourceGraphic");
@@ -149,13 +151,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
         
         let calculatedPositions = [], currentY = 0, itemPadding = 15, minItemHeight = 28;
-        const tempG = g.append("g");
+        const tempG = g.append("g").style("opacity", 0); // Gjemmer midlertidig akse
         const tempYScale = d3.scaleBand().domain(data.map(d => d.name)).range([0, data.length * 40]);
         const tempYAxis = tempG.call(d3.axisLeft(tempYScale)).call(g => g.selectAll(".tick text").call(wrapAxisText, margin.left - 15));
         
-        tempYAxis.selectAll(".tick").each(function(d) {
+        tempYAxis.selectAll(".tick").each(function() {
             const textHeight = Math.max(minItemHeight, this.getBBox().height);
-            calculatedPositions.push({ name: d, y: currentY, height: textHeight });
+            calculatedPositions.push({ y: currentY, height: textHeight });
             currentY += textHeight + itemPadding;
         });
         tempG.remove();
@@ -173,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .call(d3.axisLeft(yScale).tickSize(0).tickPadding(10))
             .call(g => g.select(".domain").remove());
         yAxis.selectAll(".tick text").call(wrapAxisText, margin.left - 15);
-        yAxis.selectAll(".tick").attr("transform", d => `translate(0, ${calculatedPositions.find(p => p.name === d).y + calculatedPositions.find(p => p.name === d).height / 2})`);
+        yAxis.selectAll(".tick").attr("transform", (d, i) => `translate(0, ${calculatedPositions[i].y + calculatedPositions[i].height / 2})`);
         
         g.append("line").attr("class", "majority-line").attr("x1", xScale(MAJORITY_THRESHOLD)).attr("x2", xScale(MAJORITY_THRESHOLD)).attr("y1", -5).attr("y2", height);
         g.append("text").attr("class", "majority-label").attr("x", xScale(MAJORITY_THRESHOLD)).attr("y", -8).text(`Flertall`);
@@ -182,26 +184,30 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const barGroups = g.selectAll(".bar-group").data(data, d => d.id).join("g")
             .attr("class", "bar-group")
-            .attr("transform", d => `translate(0, ${calculatedPositions.find(p => p.name === d.name).y})`)
+            .attr("transform", (d, i) => `translate(0, ${calculatedPositions[i].y})`)
             .style("filter", "url(#drop-shadow)")
             .on("mouseover", (event, d) => {
-                container.classed("is-interacting", true); // <-- NY LINJE
+                container.classed("is-interacting", true);
                 barGroups.classed("highlighted", other_d => d === other_d);
                 yAxis.selectAll(".tick").classed("highlighted", tick_d => d.name === tick_d);
             })
             .on("mouseout", () => {
-                container.classed("is-interacting", false); // <-- NY LINJE
+                container.classed("is-interacting", false);
                 barGroups.classed("highlighted", false);
                 yAxis.selectAll(".tick").classed("highlighted", false);
             });
             
         barGroups.selectAll(".bar-segment").data(d => {
             let currentX = 0;
-            return d.supportingPartiesData.map(p => ({ ...p, startX: currentX, issueName: d.name, seats: (currentX += p.seats) - p.seats }));
+            return d.supportingPartiesData.map(p => {
+                const startX = currentX;
+                currentX += p.seats;
+                return { ...p, startX: startX, issueName: d.name };
+            });
         }).join("rect")
             .attr("class", "bar-segment")
             .attr("y", 0)
-            .attr("height", d => calculatedPositions.find(p => p.name === d.issueName).height)
+            .attr("height", (d, i, nodes) => calculatedPositions[data.findIndex(issue => issue.name === d.issueName)].height)
             .attr("x", d => xScale(d.startX))
             .attr("rx", 3)
             .attr("width", 0)
@@ -220,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function() {
         barGroups.append("text")
             .attr("class", "total-mandate-label")
             .attr("x", d => xScale(d.totalMandates) + 5)
-            .attr("y", d => calculatedPositions.find(p => p.name === d.name).height / 2)
+            .attr("y", (d, i) => calculatedPositions[i].height / 2)
             .attr("dy", "0.35em")
             .attr("fill", "#333")
             .attr("font-size", "0.8rem")
@@ -228,21 +234,19 @@ document.addEventListener('DOMContentLoaded', function() {
             .text(d => d.totalMandates)
             .transition().duration(800).delay(500).style("opacity", 1);
             
-        // Legg til hover på Y-aksen også
         yAxis.selectAll(".tick")
              .on("mouseover", (event, d) => {
-                container.classed("is-interacting", true); // <-- NY LINJE
+                container.classed("is-interacting", true);
                 barGroups.classed("highlighted", bar_d => d === bar_d.name);
                 yAxis.selectAll(".tick").classed("highlighted", tick_d => d === tick_d);
             })
             .on("mouseout", () => {
-                container.classed("is-interacting", false); // <-- NY LINJE
+                container.classed("is-interacting", false);
                 barGroups.classed("highlighted", false);
                 yAxis.selectAll(".tick").classed("highlighted", false);
             });
     }
     
-    // De andre visualiseringsfunksjonene er uendret.
     function createDotPlot(data) { /* ... Den originale, komplette koden for dot plot ... */ }
     function createTable(data) { /* ... Den originale, komplette koden for tabell ... */ }
     
