@@ -1,11 +1,11 @@
 [
   { "name": "Rødt", "seats": 9, "shorthand": "R", "color": "#da291c", "classPrefix": "r", "position": 1 },
   { "name": "Sosialistisk Venstreparti", "seats": 9, "shorthand": "SV", "color": "#eb2e2d", "classPrefix": "sv", "position": 2 },
-  { "name": "Arbeiderpartiet", "seats": 53, "shorthand": "AP", "color": "#ed1b34", "classPrefix": "ap", "position": 3 },
+  { "name": "Arbeiderpartiet", "seats": 54, "shorthand": "AP", "color": "#ed1b34", "classPrefix": "ap", "position": 3 },
   { "name": "Miljøpartiet De Grønne", "seats": 8, "shorthand": "MDG", "color": "#439539", "classPrefix": "mdg", "position": 4 },
-  { "name": "Senterpartiet", "seats": 10, "shorthand": "SP", "color": "#14773c", "classPrefix": "sp", "position": 5 },
-  { "name": "Venstre", "seats": 2, "shorthand": "V", "color": "#00807b", "classPrefix": "v", "position": 6 },
+  { "name": "Senterpartiet", "seats": 9, "shorthand": "SP", "color": "#14773c", "classPrefix": "sp", "position": 5 },
+  { "name": "Venstre", "seats": 3, "shorthand": "V", "color": "#00807b", "classPrefix": "v", "position": 6 },
   { "name": "Kristelig Folkeparti", "seats": 7, "shorthand": "KrF", "color": "#ffbe00", "classPrefix": "krf", "position": 7 },
-  { "name": "Høyre", "seats": 24, "shorthand": "H", "color": "#007ac8", "classPrefix": "h", "position": 8 },
+  { "name": "Høyre", "seats": 23, "shorthand": "H", "color": "#007ac8", "classPrefix": "h", "position": 8 },
   { "name": "Fremskrittspartiet", "seats": 47, "shorthand": "FrP", "color": "#002e5e", "classPrefix": "frp", "position": 9 }
 ]
