@@ -60,14 +60,17 @@
                 </select>
             </div>
 
-            <div class="filter-group">
-                <label for="sk-view-type-filter">Visningstype:</label>
-                <select id="sk-view-type-filter" class="filter-dropdown">
-                    <option value="bar-chart" selected>Horisontalt søylediagram</option>
-                    <option value="dot-plot">Prikkdiagram (enkel)</option>
-                    <option value="table">Tabellvisning</option> <!-- Ekstra alternativ: ren tabell -->
-                </select>
-            </div>
+            <div class="filter-group sk-party-filter">
+    <label>Filtrer etter parti:</label>
+    <div id="sk-party-checkboxes" class="sk-party-checkbox-list">
+        <!-- Partiknapper legges til her av JS -->
+        <div class="loader">Laster partier...</div>
+    </div>
+    <div class="party-filter-actions">
+        <button id="sk-select-all-parties" class="party-filter-btn">Velg alle</button>
+        <button id="sk-clear-all-parties" class="party-filter-btn">Fjern alle</button>
+    </div>
+</div>
 
              <div class="filter-group">
                 <label for="sk-sort-filter">Sorter etter:</label>
