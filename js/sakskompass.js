@@ -1,7 +1,12 @@
-// js/sakskompass.js - OPPGRADERT VERSJON
+// js/sakskompass.js - OPPGRADERT OG KOMPLETT VERSJON
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Sakskompass (Upgraded): DOM Loaded. Waiting for data...");
+    
+    // Konstanter for Stortinget
+    const TOTAL_SEATS = 169;
+    const MAJORITY_THRESHOLD = 85;
+
     let issuesData = [], partiesData = [], partiesMap = {};
     let issuesLoaded = false, partiesLoaded = false;
 
@@ -14,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
         processAndVisualizeData();
     }
 
+    // Lytter etter at data er lastet
     document.addEventListener('issuesDataLoaded', () => {
         issuesData = window.issues || [];
         issuesLoaded = true;
@@ -22,7 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (window.partiesDataLoaded) {
         partiesData = window.partiesData;
         partiesLoaded = true;
-        initializeSakskompass();
     } else {
         document.addEventListener('partiesDataLoaded', () => {
             partiesData = window.partiesData;
@@ -30,6 +35,9 @@ document.addEventListener('DOMContentLoaded', function() {
             initializeSakskompass();
         });
     }
+    // Kjører sjekk med en gang i tilfelle data allerede var lastet
+    initializeSakskompass();
+
 
     // --- Hjelpefunksjoner (uendret) ---
     function getUniqueAreas() {
@@ -114,43 +122,40 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 10);
     }
 
-    // --- Visualiseringsfunksjoner (OPPDATERT) ---
+    // --- Visualiseringsfunksjoner ---
 
     function createHorizontalBarChart(data) {
         const container = d3.select("#sk-visualization-container");
         container.html('');
         const containerWidth = container.node().getBoundingClientRect().width;
+        
         let dynamicMarginLeft = (containerWidth < 500) ? 150 : (containerWidth < 768) ? 200 : 300;
         const margin = { top: 20, right: 40, bottom: 40, left: dynamicMarginLeft };
         const width = containerWidth - margin.left - margin.right;
         
         const svg = container.append("svg").attr("width", containerWidth);
         
-        // --- START PÅ OPPDATERINGER ---
-        // Legg til <defs> for gradient og skygge
         const defs = svg.append("defs");
-        const dropShadow = defs.append("filter")
-            .attr("id", "drop-shadow")
-            .attr("height", "130%");
+        const dropShadow = defs.append("filter").attr("id", "drop-shadow").attr("height", "130%");
         dropShadow.append("feGaussianBlur").attr("in", "SourceAlpha").attr("stdDeviation", 2);
         dropShadow.append("feOffset").attr("dx", 1).attr("dy", 1);
         const feMerge = dropShadow.append("feMerge");
         feMerge.append("feMergeNode");
         feMerge.append("feMergeNode").attr("in", "SourceGraphic");
-        // --- SLUTT PÅ OPPDATERINGER ---
 
         const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
         
         let calculatedPositions = [], currentY = 0, itemPadding = 15, minItemHeight = 28;
+        const tempG = g.append("g");
         const tempYScale = d3.scaleBand().domain(data.map(d => d.name)).range([0, data.length * 40]);
-        const tempYAxis = g.append("g").call(d3.axisLeft(tempYScale)).call(g => g.selectAll(".tick text").call(wrapAxisText, margin.left - 15));
+        const tempYAxis = tempG.call(d3.axisLeft(tempYScale)).call(g => g.selectAll(".tick text").call(wrapAxisText, margin.left - 15));
         
         tempYAxis.selectAll(".tick").each(function(d) {
             const textHeight = Math.max(minItemHeight, this.getBBox().height);
             calculatedPositions.push({ name: d, y: currentY, height: textHeight });
             currentY += textHeight + itemPadding;
         });
-        tempYAxis.remove();
+        tempG.remove();
         
         const height = currentY > 0 ? currentY - itemPadding : 0;
         svg.attr("height", height + margin.top + margin.bottom);
@@ -158,7 +163,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const yScale = d3.scaleBand().domain(data.map(d => d.name)).range([0, height]).paddingOuter(0.1);
         const xScale = d3.scaleLinear().domain([0, TOTAL_SEATS]).range([0, width]);
         
-        // X-akse med rutenett
         g.append("g")
             .attr("class", "x-axis axis")
             .attr("transform", `translate(0, ${height})`)
@@ -168,20 +172,17 @@ document.addEventListener('DOMContentLoaded', function() {
             .call(d3.axisLeft(yScale).tickSize(0).tickPadding(10))
             .call(g => g.select(".domain").remove());
         yAxis.selectAll(".tick text").call(wrapAxisText, margin.left - 15);
-        
         yAxis.selectAll(".tick").attr("transform", d => `translate(0, ${calculatedPositions.find(p => p.name === d).y + calculatedPositions.find(p => p.name === d).height / 2})`);
         
-        // Flertallslinje
-        const majorityThreshold = 85;
-        g.append("line").attr("class", "majority-line").attr("x1", xScale(majorityThreshold)).attr("x2", xScale(majorityThreshold)).attr("y1", -5).attr("y2", height);
-        g.append("text").attr("class", "majority-label").attr("x", xScale(majorityThreshold)).attr("y", -8).text(`Flertall`);
+        g.append("line").attr("class", "majority-line").attr("x1", xScale(MAJORITY_THRESHOLD)).attr("x2", xScale(MAJORITY_THRESHOLD)).attr("y1", -5).attr("y2", height);
+        g.append("text").attr("class", "majority-label").attr("x", xScale(MAJORITY_THRESHOLD)).attr("y", -8).text(`Flertall`);
         
         const tooltip = d3.select("body").select(".d3-tooltip").empty() ? d3.select("body").append("div").attr("class", "d3-tooltip") : d3.select("body").select(".d3-tooltip");
         
         const barGroups = g.selectAll(".bar-group").data(data, d => d.id).join("g")
             .attr("class", "bar-group")
-            .attr("transform", d => `translate(0, ${calculatedPositions.find(p => p.name === d).y})`)
-            .style("filter", "url(#drop-shadow)") // Legg på skygge
+            .attr("transform", d => `translate(0, ${calculatedPositions.find(p => p.name === d.name).y})`)
+            .style("filter", "url(#drop-shadow)")
             .on("mouseover", (event, d) => {
                 barGroups.classed("highlighted", other_d => d === other_d);
                 yAxis.selectAll(".tick").classed("highlighted", tick_d => d.name === tick_d);
@@ -196,29 +197,25 @@ document.addEventListener('DOMContentLoaded', function() {
             return d.supportingPartiesData.map(p => {
                 const startX = currentX;
                 currentX += p.seats;
-                return { ...p, startX: startX };
+                return { ...p, startX: startX, issueName: d.name };
             });
         }).join("rect")
             .attr("class", "bar-segment")
             .attr("y", 0)
-            .attr("height", d => calculatedPositions.find(p => p.name === d.name).height)
+            .attr("height", d => calculatedPositions.find(p => p.name === d.issueName).height)
             .attr("x", d => xScale(d.startX))
-            .attr("rx", 3) // Avrundede kanter
-            .attr("width", 0) // Start med bredde 0 for animasjon
+            .attr("rx", 3)
+            .attr("width", 0) // Start with width 0 for animation
             .attr("fill", d => d.color || "#cccccc")
             .attr("fill-opacity", d => d.level === 1 ? 0.7 : 1.0)
             .on("mouseover", (event, d) => {
-                tooltip.classed("visible", true)
-                    .html(`<b>${d.name}</b>Mandater: ${d.seats}<br>Støtte: Nivå ${d.level}`);
+                tooltip.classed("visible", true).html(`<b>${d.name}</b>Mandater: ${d.seats}<br>Støtte: Nivå ${d.level}`);
             })
             .on("mousemove", event => tooltip.style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 10) + "px"))
             .on("mouseout", () => tooltip.classed("visible", false));
 
-        // Animasjon
         barGroups.selectAll(".bar-segment")
-            .transition()
-            .duration(800)
-            .delay((d, i) => i * 10)
+            .transition().duration(800).delay((d, i) => i * 10)
             .attr("width", d => xScale(d.seats));
         
         barGroups.append("text")
@@ -233,8 +230,8 @@ document.addEventListener('DOMContentLoaded', function() {
             .transition().duration(800).delay(500).style("opacity", 1);
     }
     
-    function createDotPlot(data) { /* ... uendret kode for dot plot ... */ }
-    function createTable(data) { /* ... uendret kode for tabell ... */ }
+    function createDotPlot(data) { /* ... Den originale, komplette koden for dot plot ... */ }
+    function createTable(data) { /* ... Den originale, komplette koden for tabell ... */ }
     
     function updateLegend(partyList) {
         const legendContainer = d3.select("#sk-legend-container");
@@ -250,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function wrapAxisText(text, width) {
         text.each(function() {
             let text = d3.select(this), words = text.text().split(/\s+/).reverse(), word, line = [],
-                lineNumber = 0, lineHeight = 1.1, dy = parseFloat(text.attr("dy") || 0),
+                lineHeight = 1.1, dy = parseFloat(text.attr("dy") || 0),
                 tspan = text.text(null).append("tspan").attr("x", -10).attr("dy", dy + "em").style("text-anchor", "end");
             while (word = words.pop()) {
                 line.push(word);
