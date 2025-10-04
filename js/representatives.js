@@ -1,7 +1,7 @@
-// js/representatives.js
+// js/representatives.js (v2 - med sortering og bugfiks)
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("Representatives JS: DOM loaded.");
+    console.log("Representatives JS (v2): DOM loaded.");
 
     // Globale variabler
     let allRepresentativesData = [];
@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentlySelectedCard = null;
 
     // DOM-element referanser
+    const groupingSelect = document.getElementById('grouping-select');
     const constituencyFilter = document.getElementById('constituency-filter');
     const partyFilter = document.getElementById('party-filter');
     const committeeFilter = document.getElementById('committee-filter');
@@ -25,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Datainnlasting ---
     function loadData() {
         if (loader) loader.style.display = 'block';
-
         const partiesPromise = window.partiesDataLoaded ? Promise.resolve(window.partiesData) : fetch('data/parties.json').then(r => r.json());
         const representativesPromise = fetch('data/representatives.json').then(r => r.json());
 
@@ -35,10 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     window.partiesData = parties;
                     window.partiesDataLoaded = true;
                 }
-                allRepresentativesData = representatives.filter(rep => rep.isActive === true); // Vis kun aktive representanter
-
+                allRepresentativesData = representatives.filter(rep => rep.isActive === true);
                 parties.forEach(p => { partiesMap[p.shorthand] = p; });
-
                 const activeParties = parties.filter(p => allRepresentativesData.some(r => r.partyShorthand === p.shorthand));
                 
                 populateFilters(activeParties);
@@ -57,7 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Fylle ut filter-menyer ---
     function populateFilters(activeParties) {
-        // Valgkretser
         const constituencies = [...new Set(allRepresentativesData.map(r => r.constituencyName))].sort();
         constituencies.forEach(name => {
             const option = document.createElement('option');
@@ -66,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
             constituencyFilter.appendChild(option);
         });
 
-        // Partier
         activeParties.sort((a, b) => (a.position || 99) - (b.position || 99));
         activeParties.forEach(party => {
             const option = document.createElement('option');
@@ -75,7 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
             partyFilter.appendChild(option);
         });
 
-        // Komiteer
         const committees = [...new Set(allRepresentativesData.map(r => r.committee).filter(Boolean))].sort();
         committees.forEach(name => {
             const option = document.createElement('option');
@@ -87,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Event Listeners ---
     function setupEventListeners() {
+        groupingSelect?.addEventListener('change', handleFilteringAndDisplay);
         constituencyFilter?.addEventListener('change', handleFilteringAndDisplay);
         partyFilter?.addEventListener('change', handleFilteringAndDisplay);
         committeeFilter?.addEventListener('change', handleFilteringAndDisplay);
@@ -134,6 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.style.display = 'block';
     }
 
+    // *** FIKS FOR PLACEHOLDER-BILDE ***
     function generateDetailHTML(rep, party, isModal = false) {
         const imageHtml = rep.imageUrl
             ? `<img src="${rep.imageUrl}" alt="${rep.name}" class="detail-image">`
@@ -167,10 +164,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // --- Filtrering og Visning ---
+    // --- Filtrering og Visning (Hovedendring her) ---
     function handleFilteringAndDisplay() {
         resetDetailPanel();
         
+        const grouping = groupingSelect.value;
         const selectedConstituency = constituencyFilter.value;
         const selectedParty = partyFilter.value;
         const selectedCommittee = committeeFilter.value;
@@ -184,18 +182,11 @@ document.addEventListener('DOMContentLoaded', () => {
             return inConstituency && inParty && inCommittee && matchesSearch;
         });
 
-        filteredReps.sort((a, b) => {
-            if (a.constituencyName !== b.constituencyName) return a.constituencyName.localeCompare(b.constituencyName);
-            const pA = partiesMap[a.partyShorthand]?.position || 99;
-            const pB = partiesMap[b.partyShorthand]?.position || 99;
-            return pA - pB;
-        });
-        
-        displayRepresentatives(filteredReps);
+        displayGroupedRepresentatives(filteredReps, grouping);
         representativeCount.textContent = filteredReps.length;
     }
     
-    function displayRepresentatives(reps) {
+    function displayGroupedRepresentatives(reps, groupBy) {
         if (!representativeGrid) return;
         representativeGrid.innerHTML = '';
         if (reps.length === 0) {
@@ -203,21 +194,65 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        let currentConstituency = null;
-        reps.forEach(rep => {
-            const partyInfo = partiesMap[rep.partyShorthand];
-            if (!partyInfo) return;
+        let grouped = {};
+        if (groupBy === 'party') {
+            reps.sort((a,b) => (partiesMap[a.partyShorthand]?.position || 99) - (partiesMap[b.partyShorthand]?.position || 99) || a.name.localeCompare(b.name));
+            grouped = reps.reduce((acc, rep) => {
+                const key = rep.partyShorthand;
+                if (!acc[key]) acc[key] = [];
+                acc[key].push(rep);
+                return acc;
+            }, {});
+        } else if (groupBy === 'committee') {
+            reps.sort((a,b) => (a.committee || 'zzz').localeCompare(b.committee || 'zzz') || a.name.localeCompare(b.name));
+            grouped = reps.reduce((acc, rep) => {
+                const key = rep.committee || 'Ikke tildelt komité';
+                if (!acc[key]) acc[key] = [];
+                acc[key].push(rep);
+                return acc;
+            }, {});
+        } else { // Default to constituency
+            reps.sort((a,b) => a.constituencyName.localeCompare(b.constituencyName) || (partiesMap[a.partyShorthand]?.position || 99) - (partiesMap[b.partyShorthand]?.position || 99));
+            grouped = reps.reduce((acc, rep) => {
+                const key = rep.constituencyName;
+                if (!acc[key]) acc[key] = [];
+                acc[key].push(rep);
+                return acc;
+            }, {});
+        }
 
-            if (rep.constituencyName !== currentConstituency) {
-                const separator = document.createElement('div');
-                separator.className = 'constituency-separator';
-                separator.textContent = rep.constituencyName;
-                representativeGrid.appendChild(separator);
-                currentConstituency = rep.constituencyName;
+        const sortedGroupKeys = Object.keys(grouped).sort((a, b) => {
+            if (groupBy === 'party') {
+                return (partiesMap[a]?.position || 99) - (partiesMap[b]?.position || 99);
             }
+            if (a === 'Ikke tildelt komité') return 1; // Plasser denne sist
+            if (b === 'Ikke tildelt komité') return -1;
+            return a.localeCompare(b);
+        });
 
-            const card = createRepresentativeCard(rep, partyInfo);
-            representativeGrid.appendChild(card);
+        sortedGroupKeys.forEach(groupKey => {
+            let separator;
+            if (groupBy === 'party') {
+                const partyInfo = partiesMap[groupKey];
+                separator = document.createElement('div');
+                separator.className = 'party-separator-card';
+                separator.style.setProperty('--party-color', partyInfo.color);
+                separator.innerHTML = `
+                    <img src="images/parties/${partyInfo.shorthand.toLowerCase()}.png" alt="${partyInfo.name}">
+                    <h2>${partyInfo.name}</h2>
+                `;
+            } else {
+                separator = document.createElement('div');
+                separator.className = 'group-separator';
+                separator.textContent = groupKey;
+            }
+            representativeGrid.appendChild(separator);
+
+            grouped[groupKey].forEach(rep => {
+                const partyInfo = partiesMap[rep.partyShorthand];
+                const card = createRepresentativeCard(rep, partyInfo);
+                representativeGrid.appendChild(card);
+            });
         });
     }
 
