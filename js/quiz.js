@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Globale variabler
     let allRepresentatives = [];
+    let partiesMap = {};
     let repsWithImagesAndGender = [];
     let menWithImages = [];
     let womenWithImages = [];
@@ -16,23 +17,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const backToSelectionBtn = document.getElementById('back-to-selection-btn');
 
     // Hent data og initialiser
-    fetch('data/representatives.json')
-        .then(response => response.json())
-        .then(data => {
-            allRepresentatives = data.filter(rep => rep.isActive && rep.gender); // Inkluderer kun de med kjønn
-            repsWithImagesAndGender = allRepresentatives.filter(rep => rep.imageUrl);
-            menWithImages = repsWithImagesAndGender.filter(rep => rep.gender === 'M');
-            womenWithImages = repsWithImagesAndGender.filter(rep => rep.gender === 'K');
-            
-            console.log(`Quiz: Loaded ${allRepresentatives.length} active reps with gender info.`);
-            console.log(`Found ${menWithImages.length} men and ${womenWithImages.length} women with images.`);
-            
-            setupSelectionListeners();
-        })
-        .catch(error => {
-            console.error("Error loading representatives data:", error);
-            selectionArea.innerHTML = "<h2>Kunne ikke laste quiz-data.</h2><p>Vennligst prøv å laste siden på nytt.</p>";
-        });
+    Promise.all([
+        fetch('data/representatives.json').then(res => res.json()),
+        fetch('data/parties.json').then(res => res.json())
+    ]).then(([repsData, partiesData]) => {
+        allRepresentatives = repsData.filter(rep => rep.isActive && rep.gender);
+        partiesData.forEach(p => partiesMap[p.shorthand] = p);
+        
+        repsWithImagesAndGender = allRepresentatives.filter(rep => rep.imageUrl);
+        menWithImages = repsWithImagesAndGender.filter(rep => rep.gender === 'M');
+        womenWithImages = repsWithImagesAndGender.filter(rep => rep.gender === 'K');
+        
+        console.log(`Quiz: Loaded ${allRepresentatives.length} active reps and ${Object.keys(partiesMap).length} parties.`);
+        setupSelectionListeners();
+    }).catch(error => {
+        console.error("Error loading data:", error);
+        selectionArea.innerHTML = "<h2>Kunne ikke laste quiz-data.</h2><p>Vennligst prøv å laste siden på nytt.</p>";
+    });
     
     function setupSelectionListeners() {
         selectionArea.addEventListener('click', (e) => {
@@ -55,11 +56,11 @@ document.addEventListener('DOMContentLoaded', () => {
         updateScore();
 
         if (quizType === 'guess-name') {
-            quizTitle.textContent = "Gjett navnet";
+            quizTitle.textContent = "Gjett navnet (1/2)";
             scoreDisplay.style.display = 'block';
             startGuessNameQuiz();
         } else if (quizType === 'guess-face') {
-            quizTitle.textContent = "Gjett ansiktet";
+            quizTitle.textContent = "Gjett ansiktet (1/2)";
             scoreDisplay.style.display = 'block';
             startGuessFaceQuiz();
         } else if (quizType === 'match-committee') {
@@ -81,10 +82,79 @@ document.addEventListener('DOMContentLoaded', () => {
         scoreDisplay.textContent = `Poeng: ${score}`;
     }
 
-    // --- NY OG FORBEDRET FEEDBACK-FUNKSJON ---
-    function showFeedbackAndNextButton(isCorrect, correctName, clickedElement, nextQuestionFunction, optionsSelector) {
+    // --- STEG 1 FEEDBACK: Håndterer svar på navn/bilde ---
+    function handleIdentityAnswer(isCorrect, correctRep, clickedElement, optionsSelector) {
+        if (isCorrect) {
+            score++;
+            updateScore();
+        }
+
+        // Visuell feedback på svaralternativene
+        const allOptions = quizContent.querySelectorAll(optionsSelector);
+        allOptions.forEach(opt => {
+            opt.classList.add('answered');
+            if (opt.dataset.name === correctRep.name) {
+                opt.classList.add('correct');
+            } else if (opt === clickedElement) {
+                opt.classList.add('incorrect');
+            } else {
+                opt.classList.add('faded');
+            }
+            if (opt.tagName === 'BUTTON') opt.disabled = true;
+        });
+
+        // Gå videre til å gjette parti etter en pause
+        setTimeout(() => {
+            buildPartyQuestion(correctRep);
+        }, 1500);
+    }
+
+    // --- STEG 2: Bygger spørsmålet om parti ---
+    function buildPartyQuestion(correctRep) {
+        if (currentQuizType === 'guess-name') quizTitle.textContent = "Gjett partiet (2/2)";
+        if (currentQuizType === 'guess-face') quizTitle.textContent = "Gjett partiet (2/2)";
+
+        const correctPartyShorthand = correctRep.partyShorthand;
+        const allPartyShorthands = Object.keys(partiesMap);
+        const incorrectPartyOptions = shuffleArray(allPartyShorthands.filter(p => p !== correctPartyShorthand)).slice(0, 3);
+        
+        let partyOptions = [correctPartyShorthand, ...incorrectPartyOptions];
+        partyOptions = shuffleArray(partyOptions);
+
+        const partyQuestionHTML = `
+            <h4 class="party-selection-prompt">Hvilket parti tilhører ${correctRep.name}?</h4>
+            <div class="party-options-container">
+                ${partyOptions.map(shorthand => {
+                    const party = partiesMap[shorthand];
+                    return `
+                        <div class="party-option-btn" data-shorthand="${shorthand}">
+                            <img src="images/parties/${shorthand.toLowerCase()}.png" alt="${party.name}">
+                            <span>${party.name}</span>
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+        `;
+        quizContent.innerHTML += partyQuestionHTML;
+
+        // Legg til lyttere på de nye partiknappene
+        quizContent.querySelectorAll('.party-option-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const clickedBtn = e.currentTarget;
+                const selectedShorthand = clickedBtn.dataset.shorthand;
+                const isCorrect = selectedShorthand === correctPartyShorthand;
+                
+                // Gi endelig feedback og vis "Neste"-knapp
+                handlePartyAnswer(isCorrect, correctRep, clickedBtn);
+            });
+        });
+    }
+
+    // --- STEG 2 FEEDBACK: Håndterer svar på parti og viser "Neste"-knapp ---
+    function handlePartyAnswer(isCorrect, correctRep, clickedElement) {
         const feedbackDiv = document.createElement('div');
         feedbackDiv.className = 'feedback-message';
+        const correctPartyName = partiesMap[correctRep.partyShorthand].name;
 
         if (isCorrect) {
             feedbackDiv.classList.add('correct');
@@ -93,48 +163,39 @@ document.addEventListener('DOMContentLoaded', () => {
             updateScore();
         } else {
             feedbackDiv.classList.add('incorrect');
-            feedbackDiv.textContent = `Feil. Riktig svar var ${correctName}.`;
+            feedbackDiv.textContent = `Feil. ${correctRep.name} tilhører ${correctPartyName}.`;
         }
-        
-        // Deaktiver og stilsett alle alternativer
-        const allOptions = quizContent.querySelectorAll(optionsSelector);
-        allOptions.forEach(opt => {
-            opt.classList.add('answered'); // For CSS
-            
-            const optionName = opt.dataset.name;
-            if (optionName === correctName) {
+
+        const allPartyOptions = quizContent.querySelectorAll('.party-option-btn');
+        allPartyOptions.forEach(opt => {
+            opt.classList.add('answered');
+            if (opt.dataset.shorthand === correctRep.partyShorthand) {
                 opt.classList.add('correct');
             } else if (opt === clickedElement) {
                 opt.classList.add('incorrect');
             } else {
                 opt.classList.add('faded');
             }
-
-            // Forhindre flere klikk
-            if (opt.tagName === 'BUTTON') {
-                opt.disabled = true;
-            } else {
-                opt.style.pointerEvents = 'none';
-            }
         });
 
-        // Legg til "Neste spørsmål"-knapp
         const nextButton = document.createElement('button');
         nextButton.id = 'next-question-btn';
         nextButton.className = 'button primary';
         nextButton.textContent = 'Neste spørsmål';
-        nextButton.addEventListener('click', nextQuestionFunction, { once: true }); // Kjøres kun én gang
+        const nextFunction = currentQuizType === 'guess-name' ? startGuessNameQuiz : startGuessFaceQuiz;
+        nextButton.addEventListener('click', nextFunction, { once: true });
 
-        // Vis tilbakemelding og knappen
         quizContent.appendChild(feedbackDiv);
         quizContent.appendChild(nextButton);
     }
-
+    
+    // --- Quiz 1: Gjett Navnet ---
     function startGuessNameQuiz() {
         if (menWithImages.length < 8 && womenWithImages.length < 8) {
-            quizContent.innerHTML = "<p>For få representanter (minst 8 av ett kjønn) med bilder til å starte quizen.</p>";
+            quizContent.innerHTML = "<p>For få representanter med bilder til å starte quizen.</p>";
             return;
         }
+        quizTitle.textContent = "Gjett navnet (1/2)"; // Reset tittel
 
         let potentialCorrectReps = [];
         if (menWithImages.length >= 8) potentialCorrectReps.push(...menWithImages);
@@ -144,7 +205,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const correctGender = correctRep.gender;
 
         let options = [correctRep];
-        
         let sourceForOptions = (correctGender === 'M') ? menWithImages : womenWithImages;
         const otherReps = shuffleArray([...sourceForOptions].filter(rep => rep.name !== correctRep.name));
         options.push(...otherReps.slice(0, 7));
@@ -163,17 +223,18 @@ document.addEventListener('DOMContentLoaded', () => {
             button.addEventListener('click', (e) => {
                 const selectedName = e.target.dataset.name;
                 const isCorrect = selectedName === correctRep.name;
-                // Kall den nye feedback-funksjonen
-                showFeedbackAndNextButton(isCorrect, correctRep.name, e.target, startGuessNameQuiz, '.answer-options-names button');
+                handleIdentityAnswer(isCorrect, correctRep, e.target, '.answer-options-names button');
             });
         });
     }
 
+    // --- Quiz 2: Gjett Ansiktet ---
     function startGuessFaceQuiz() {
         if (menWithImages.length < 8 && womenWithImages.length < 8) {
-            quizContent.innerHTML = "<p>For få representanter (minst 8 av ett kjønn) med bilder til å starte quizen.</p>";
+            quizContent.innerHTML = "<p>For få representanter med bilder til å starte quizen.</p>";
             return;
         }
+        quizTitle.textContent = "Gjett ansiktet (1/2)"; // Reset tittel
 
         let sourceForOptions;
         const canUseMen = menWithImages.length >= 8;
@@ -204,8 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const clickedCard = e.currentTarget;
                 const selectedName = clickedCard.dataset.name;
                 const isCorrect = selectedName === correctRep.name;
-                // Kall den nye feedback-funksjonen
-                showFeedbackAndNextButton(isCorrect, correctRep.name, clickedCard, startGuessFaceQuiz, '.image-option-card');
+                handleIdentityAnswer(isCorrect, correctRep, clickedCard, '.image-option-card');
             });
         });
     }
