@@ -26,7 +26,7 @@ window.navigationConfig = {
             categoryTitle: "Politikere",
             links: [
                 { href: "representatives.html", title: "Stortingsrepresentanter" },
-                { href: "map-explorer.html", title: "Kartutforsker" }
+                { href: "quiz.html", title: "Politiker-quiz" }
             ]
         }
     ]
