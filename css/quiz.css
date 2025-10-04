@@ -85,6 +85,51 @@
     to { transform: scale(1); opacity: 1; }
 }
 
+/* --- NYE STILER STARTER HER --- */
+/* Quiz 1: Gjett navnet - Stiler for svaralternativer */
+.answer-options-names button.correct {
+    background: var(--success-color);
+    color: white;
+    border-color: var(--success-color);
+    transform: scale(1.05);
+}
+.answer-options-names button.incorrect {
+    background: var(--fail-color);
+    color: white;
+    border-color: var(--fail-color);
+}
+.answer-options-names button.faded {
+    opacity: 0.5;
+    pointer-events: none;
+}
+.answer-options-names button:disabled {
+    cursor: not-allowed;
+}
+
+/* Quiz 2: Gjett ansiktet - Stiler for svaralternativer */
+.image-option-card.correct {
+    border-color: var(--success-color);
+    border-width: 4px;
+    transform: scale(1.05);
+}
+.image-option-card.incorrect {
+    border-color: var(--fail-color);
+    border-width: 4px;
+}
+.image-option-card.faded {
+    opacity: 0.4;
+    pointer-events: none;
+    transform: scale(0.95);
+}
+
+/* Knappen for "Neste spørsmål" */
+#next-question-btn {
+    margin-top: 1.5rem;
+    animation: popIn 0.3s ease;
+}
+/* --- NYE STILER SLUTTER HER --- */
+
+
 /* Quiz 1: Gjett navnet */
 .question-image-container {
     max-width: 250px;
@@ -129,7 +174,7 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     aspect-ratio: 1 / 1;
 }
-.image-option-card:hover {
+.image-option-card:hover:not(.answered) { /* Hindre hover-effekt etter svar er gitt */
     transform: scale(1.05);
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     border-color: var(--kf-blue);
@@ -227,4 +272,3 @@
     border-top: 1px solid #eee;
     text-align: center;
 }
---- END OF FILE css/quiz.css ---
