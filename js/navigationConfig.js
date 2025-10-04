@@ -23,9 +23,9 @@ window.navigationConfig = {
             ]
         },
         {
-            categoryTitle: "Kandidater",
+            categoryTitle: "Politikere",
             links: [
-                { href: "candidates.html", title: "Kandidatutforsker" },
+                { href: "representatives.html", title: "Stortingsrepresentanter" },
                 { href: "map-explorer.html", title: "Kartutforsker" }
             ]
         }
