@@ -284,4 +284,3 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.parentElement.prepend(feedback);
     }
 });
---- END OF FILE js/quiz.js ---
