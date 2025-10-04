@@ -255,4 +255,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Start Lasting ---
     loadData();
-});```
+});
