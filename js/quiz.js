@@ -1,4 +1,3 @@
---- START OF FILE js/quiz.js ---
 document.addEventListener('DOMContentLoaded', () => {
     // Globale variabler
     let allRepresentatives = [];
