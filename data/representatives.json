@@ -10,7 +10,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/abid-raja.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=150&e=yVITf1"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=150&e=yVITf1",
+    "gender": "M"
   },
   {
     "name": "Agnes Nærland Viljugrein",
@@ -23,7 +24,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/agnes-naerland-viljugrein.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=22&e=Sr2OOJ"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=22&e=Sr2OOJ",
+    "gender": "K"
   },
   {
     "name": "Aina Stenersen",
@@ -36,7 +38,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/aina-stenersen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=82&e=UyGaqR"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=82&e=UyGaqR",
+    "gender": "K"
   },
   {
     "name": "Aleksander Stokkebø",
@@ -49,7 +52,8 @@
     "regionOffice": "Rogaland",
     "kfContact": "",
     "imageUrl": "images/representatives/aleksander-stokkebo.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=113&e=FVAFBf"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=113&e=FVAFBf",
+    "gender": "M"
   },
   {
     "name": "Alf Erik Andersen",
@@ -62,7 +66,8 @@
     "regionOffice": "Agder",
     "kfContact": "",
     "imageUrl": "images/representatives/alf-erik-andersen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=57&e=8QyVDi"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=57&e=8QyVDi",
+    "gender": "M"
   },
   {
     "name": "Amalie Gunnufsen",
@@ -75,7 +80,8 @@
     "regionOffice": "Agder",
     "kfContact": "",
     "imageUrl": "images/representatives/amalie-gunnufsen.jpeg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=152&e=mzQvwn"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=152&e=mzQvwn",
+    "gender": "K"
   },
   {
     "name": "Andreas Bjelland Eriksen",
@@ -88,7 +94,8 @@
     "regionOffice": "Rogaland",
     "kfContact": "",
     "imageUrl": "",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=159&e=dgBos4"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=159&e=dgBos4",
+    "gender": "M"
   },
   {
     "name": "Anette Carnarius Elseth",
@@ -101,7 +108,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/annette-carnarius-elseth.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=145&e=xfJIgC"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=145&e=xfJIgC",
+    "gender": "K"
   },
   {
     "name": "Anna Irene Molberg",
@@ -114,7 +122,8 @@
     "regionOffice": "Innlandet",
     "kfContact": "",
     "imageUrl": "images/representatives/anna-molberg.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=34&e=ihiQdC"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=34&e=ihiQdC",
+    "gender": "K"
   },
   {
     "name": "Anne Grethe Hauan",
@@ -127,7 +136,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "",
     "imageUrl": "images/representatives/anne-grethe-hauan.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=7&e=05YH0u"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=7&e=05YH0u",
+    "gender": "K"
   },
   {
     "name": "Anne Hagenborg",
@@ -140,7 +150,8 @@
     "regionOffice": "Innlandet",
     "kfContact": "",
     "imageUrl": "images/representatives/anne-hagenborg.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=142&e=vMtKuf"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=142&e=vMtKuf",
+    "gender": "K"
   },
   {
     "name": "Anne Kristine Linnestad",
@@ -153,7 +164,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/anne-kristine-linnestad.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=12&e=Nkdv2i"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=12&e=Nkdv2i",
+    "gender": "K"
   },
   {
     "name": "Anne Lise Fredlund",
@@ -166,7 +178,8 @@
     "regionOffice": "Innlandet",
     "kfContact": "",
     "imageUrl": "images/representatives/anne-lise-gjerstad-fredlund.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=135&e=iWT314"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=135&e=iWT314",
+    "gender": "K"
   },
   {
     "name": "Anniken Refseth",
@@ -179,7 +192,8 @@
     "regionOffice": "Midt-Norge",
     "kfContact": "",
     "imageUrl": "images/representatives/anniken-refseth.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=77&e=ImO2Ge"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=77&e=ImO2Ge",
+    "gender": "K"
   },
   {
     "name": "Arild Hermstad",
@@ -192,7 +206,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "Thomas Axelsen",
     "imageUrl": "images/representatives/arild-hermstad.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=136&e=rCPc4k"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=136&e=rCPc4k",
+    "gender": "M"
   },
   {
     "name": "Bengt Fasteraune",
@@ -205,7 +220,8 @@
     "regionOffice": "Innlandet",
     "kfContact": "",
     "imageUrl": "images/representatives/bengt-fasteraune.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=39&e=La94kb"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=39&e=La94kb",
+    "gender": "M"
   },
   {
     "name": "Mari Holm Lønseth",
@@ -218,7 +234,8 @@
     "regionOffice": "Midt-Norge",
     "kfContact": "",
     "imageUrl": "images/representatives/mari-holm-lonseth.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=1&e=MmAs87"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=1&e=MmAs87",
+    "gender": "K"
   },
   {
     "name": "Bengt Rune Strifeldt",
@@ -231,7 +248,8 @@
     "regionOffice": "Nord",
     "kfContact": "",
     "imageUrl": "images/representatives/bengt-rune-strifeldt.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=133&e=dMaaE2"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=133&e=dMaaE2",
+    "gender": "M"
   },
   {
     "name": "Benjamin Jakobsen",
@@ -244,7 +262,8 @@
     "regionOffice": "Vestland",
     "kfContact": "",
     "imageUrl": "images/representatives/benjamin-jakobsen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=116&e=gxfHTj"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=116&e=gxfHTj",
+    "gender": "M"
   },
   {
     "name": "Bente Estil",
@@ -257,7 +276,8 @@
     "regionOffice": "Midt-Norge",
     "kfContact": "",
     "imageUrl": "images/representatives/bente-estil.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=48&e=wCDsdj"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=48&e=wCDsdj",
+    "gender": "K"
   },
   {
     "name": "Bent-Joacim Bentzen",
@@ -270,7 +290,8 @@
     "regionOffice": "Nord",
     "kfContact": "",
     "imageUrl": "images/representatives/bent-joacim-bentzen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=23&e=qNWpay"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=23&e=qNWpay",
+    "gender": "M"
   },
   {
     "name": "Bjørn Arild Gram",
@@ -283,7 +304,8 @@
     "regionOffice": "Midt-Norge",
     "kfContact": "",
     "imageUrl": "images/representatives/bjorn-arild-gram.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=70&e=j6LbAe"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=70&e=j6LbAe",
+    "gender": "M"
   },
   {
     "name": "Bjørn Larsen",
@@ -296,7 +318,8 @@
     "regionOffice": "Nord",
     "kfContact": "",
     "imageUrl": "images/representatives/bjorn-larsen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=72&e=Yz7wRd"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=72&e=Yz7wRd",
+    "gender": "M"
   },
   {
     "name": "Bjørnar Laabak",
@@ -309,7 +332,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "",
     "imageUrl": "images/representatives/bjornar-laabak.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=94&e=R7Sqeb"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=94&e=R7Sqeb",
+    "gender": "M"
   },
   {
     "name": "Bjørnar Moxnes",
@@ -322,7 +346,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/bjornar-moxnes.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=4&e=vGgm3e"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=4&e=vGgm3e",
+    "gender": "M"
   },
   {
     "name": "Bjørn-Kristian Svendsrud",
@@ -335,7 +360,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "",
     "imageUrl": "images/representatives/bjorn-kristian-svendsrud.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=131&e=DyrcvR"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=131&e=DyrcvR",
+    "gender": "M"
   },
   {
     "name": "Bård André Hoksrud",
@@ -348,7 +374,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "",
     "imageUrl": "images/representatives/bard-hoksrud.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=64&e=7wTdLb"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=64&e=7wTdLb",
+    "gender": "M"
   },
   {
     "name": "Bård Ludvig Thorheim",
@@ -361,7 +388,8 @@
     "regionOffice": "Nord",
     "kfContact": "",
     "imageUrl": "images/representatives/bard-ludvig-thorheim.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=127&e=QrQXKx"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=127&e=QrQXKx",
+    "gender": "M"
   },
   {
     "name": "Dagfinn Henrik Olsen",
@@ -374,7 +402,8 @@
     "regionOffice": "Nord",
     "kfContact": "",
     "imageUrl": "images/representatives/dagfinn-henrik-olsen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=11&e=jFo9EZ"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=11&e=jFo9EZ",
+    "gender": "M"
   },
   {
     "name": "Elise Waagen",
@@ -387,7 +416,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "Shakeel Rehman",
     "imageUrl": "images/representatives/elise-waagen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=37&e=uSnoo1"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=37&e=uSnoo1",
+    "gender": "K"
   },
   {
     "name": "Erlend Larsen",
@@ -400,7 +430,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "",
     "imageUrl": "images/representatives/erlend-larsen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=92&e=iyoDP0"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=92&e=iyoDP0",
+    "gender": "M"
   },
   {
     "name": "Erlend Svardal Bøe",
@@ -413,7 +444,8 @@
     "regionOffice": "Nord",
     "kfContact": "",
     "imageUrl": "images/representatives/erlend-svardal-boe.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=146&e=GHoOIm"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=146&e=GHoOIm",
+    "gender": "M"
   },
   {
     "name": "Erlend Wiborg",
@@ -426,7 +458,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "",
     "imageUrl": "images/representatives/erlend-wiborg.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=86&e=jpQovY"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=86&e=jpQovY",
+    "gender": "M"
   },
   {
     "name": "Erling Sande",
@@ -439,7 +472,8 @@
     "regionOffice": "Vestland",
     "kfContact": "",
     "imageUrl": "images/representatives/erling-sande.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=66&e=3oCI8e"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=66&e=3oCI8e",
+    "gender": "M"
   },
   {
     "name": "Erna Solberg",
@@ -452,7 +486,8 @@
     "regionOffice": "Vestland",
     "kfContact": "Ida Steinsland Lutro",
     "imageUrl": "images/representatives/erna-solberg.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=162&e=WAuT4V"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=162&e=WAuT4V",
+    "gender": "K"
   },
   {
     "name": "Even Amandus Røed",
@@ -465,7 +500,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "",
     "imageUrl": "images/representatives/even-amandus-roed.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=119&e=uaBBMz"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=119&e=uaBBMz",
+    "gender": "M"
   },
   {
     "name": "Even Hemstad Eriksen",
@@ -478,7 +514,8 @@
     "regionOffice": "Innlandet",
     "kfContact": "",
     "imageUrl": "images/representatives/even-eriksen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=76&e=8OV7Hr"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=76&e=8OV7Hr",
+    "gender": "M"
   },
   {
     "name": "Farahnaz Bahrami",
@@ -491,7 +528,8 @@
     "regionOffice": "Innlandet",
     "kfContact": "",
     "imageUrl": "images/representatives/farahnaz-bahrami.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=171&e=X0mVfz"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=171&e=X0mVfz",
+    "gender": "K"
   },
   {
     "name": "Farukh Qureshi",
@@ -504,7 +542,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/farukh-qureshi.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=180&e=aYB7PF"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=180&e=aYB7PF",
+    "gender": "M"
   },
   {
     "name": "Finn Krokeide",
@@ -517,7 +556,8 @@
     "regionOffice": "Innlandet",
     "kfContact": "",
     "imageUrl": "images/representatives/finn-krokeide.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=129&e=xvQeU9"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=129&e=xvQeU9",
+    "gender": "M"
   },
   {
     "name": "Frank Edvard Sve",
@@ -530,7 +570,8 @@
     "regionOffice": "Midt-Norge",
     "kfContact": "",
     "imageUrl": "images/representatives/frank-edvard-sve.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=78&e=ggvh5R"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=78&e=ggvh5R",
+    "gender": "M"
   },
   {
     "name": "Frode Jacobsen",
@@ -543,7 +584,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/frode-jacobsen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=151&e=VyERiX"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=151&e=VyERiX",
+    "gender": "M"
   },
   {
     "name": "Fröya Skjold Sjursæther",
@@ -556,7 +598,8 @@
     "regionOffice": "Vestland",
     "kfContact": "",
     "imageUrl": "images/representatives/froya-skjold-sjursaether.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=3&e=VXFmkH"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=3&e=VXFmkH",
+    "gender": "K"
   },
   {
     "name": "Geir Inge Lien",
@@ -569,7 +612,8 @@
     "regionOffice": "Midt-Norge",
     "kfContact": "",
     "imageUrl": "images/representatives/geir-inge-lien.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=69&e=fea7Pp"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=69&e=fea7Pp",
+    "gender": "M"
   },
   {
     "name": "Geir Pollestad",
@@ -582,7 +626,8 @@
     "regionOffice": "Rogaland",
     "kfContact": "",
     "imageUrl": "images/representatives/geir-pollestad.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=5&e=Iems2V"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=5&e=Iems2V",
+    "gender": "M"
   },
   {
     "name": "Geir-Asbjørn Jørgensen",
@@ -595,7 +640,8 @@
     "regionOffice": "Nord",
     "kfContact": "",
     "imageUrl": "images/representatives/geir-jorgensen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=107&e=xV63Va"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=107&e=xV63Va",
+    "gender": "M"
   },
   {
     "name": "Grunde Kreken Almeland",
@@ -608,7 +654,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "Lars Dahlgren",
     "imageUrl": "images/representatives/grunde-almeland.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=103&e=EVA8MW"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=103&e=EVA8MW",
+    "gender": "M"
   },
   {
     "name": "Guri Melby",
@@ -621,7 +668,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "Thomas Axelsen",
     "imageUrl": "images/representatives/guri-melby.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=169&e=nT0gmy"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=169&e=nT0gmy",
+    "gender": "K"
   },
   {
     "name": "Hanne Beate Stenvaag",
@@ -634,7 +682,8 @@
     "regionOffice": "Nord",
     "kfContact": "",
     "imageUrl": "images/representatives/hanne-beate-stenvaag.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=148&e=zY6aTy"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=148&e=zY6aTy",
+    "gender": "K"
   },
   {
     "name": "Hans Andreas Limi",
@@ -647,7 +696,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/hans-andreas-limi.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=138&e=OMM849"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=138&e=OMM849",
+    "gender": "M"
   },
   {
     "name": "Hans Edvard Askjer",
@@ -660,7 +710,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "",
     "imageUrl": "images/representatives/hans-edvard-askjer.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=110&e=D9ROmb"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=110&e=D9ROmb",
+    "gender": "M"
   },
   {
     "name": "Harry Valderhaug",
@@ -673,7 +724,8 @@
     "regionOffice": "Midt-Norge",
     "kfContact": "",
     "imageUrl": "images/representatives/harry-valderhaug.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=71&e=3K6GgC"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=71&e=3K6GgC",
+    "gender": "M"
   },
   {
     "name": "Hashim Abdi",
@@ -686,7 +738,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "Shakeel Rehman",
     "imageUrl": "images/representatives/hashim-abdi.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=24&e=g3dy0a"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=24&e=g3dy0a",
+    "gender": "M"
   },
   {
     "name": "Hege Bae Nyholt",
@@ -699,7 +752,8 @@
     "regionOffice": "Midt-Norge",
     "kfContact": "",
     "imageUrl": "images/representatives/hege-bae-nyholt.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=14&e=IFMVJp"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=14&e=IFMVJp",
+    "gender": "K"
   },
   {
     "name": "Helge André Njåstad",
@@ -712,7 +766,8 @@
     "regionOffice": "Vestland",
     "kfContact": "",
     "imageUrl": "images/representatives/helge-andre-njastad.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=114&e=bZFir4"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=114&e=bZFir4",
+    "gender": "M"
   },
   {
     "name": "Henrik Asheim",
@@ -725,7 +780,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/henrik-asheim.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=87&e=A2bOPy"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=87&e=A2bOPy",
+    "gender": "M"
   },
   {
     "name": "Hilde Grande",
@@ -738,7 +794,8 @@
     "regionOffice": "Nord",
     "kfContact": "",
     "imageUrl": "images/representatives/hilde-grande.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=95&e=L6utOh"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=95&e=L6utOh",
+    "gender": "K"
   },
   {
     "name": "Himanshu Gulati",
@@ -751,7 +808,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/himanshu-gulati.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=29&e=RZBlKZ"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=29&e=RZBlKZ",
+    "gender": "M"
   },
   {
     "name": "Haagen Severin Nilson Poppe",
@@ -764,7 +822,8 @@
     "regionOffice": "Agder",
     "kfContact": "",
     "imageUrl": "images/representatives/haagen-severin-nilson-poppe.avif",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=112&e=kdjoe4"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=112&e=kdjoe4",
+    "gender": "M"
   },
   {
     "name": "Ida Lindtveit Røse",
@@ -777,7 +836,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/ida-lindtveit-rose.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=62&e=Y5Anx4"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=62&e=Y5Anx4",
+    "gender": "K"
   },
   {
     "name": "Ine Eriksen Søreide",
@@ -790,7 +850,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/ine-eriksen-soreide.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=55&e=u0FBAh"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=55&e=u0FBAh",
+    "gender": "K"
   },
   {
     "name": "Ingrid Fiskaa",
@@ -803,7 +864,8 @@
     "regionOffice": "Rogaland",
     "kfContact": "Shakeel Rehman",
     "imageUrl": "images/representatives/ingrid-fiskaa.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=124&e=DmvVTt"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=124&e=DmvVTt",
+    "gender": "K"
   },
   {
     "name": "Ingrid Liland",
@@ -816,7 +878,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "Lars Dahlgren",
     "imageUrl": "images/representatives/ingrid-liland.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=167&e=1l4i5B"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=167&e=1l4i5B",
+    "gender": "K"
   },
   {
     "name": "Isak Veierud Busch",
@@ -829,7 +892,8 @@
     "regionOffice": "Midt-Norge",
     "kfContact": "",
     "imageUrl": "images/representatives/isak-verierud-busch.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=25&e=8jlKnu"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=25&e=8jlKnu",
+    "gender": "M"
   },
   {
     "name": "Joakim Myklebost Tangen",
@@ -842,7 +906,8 @@
     "regionOffice": "Midt-Norge",
     "kfContact": "",
     "imageUrl": "images/representatives/joakim-myklebost-tangen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=123&e=wmtjyG"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=123&e=wmtjyG",
+    "gender": "M"
   },
   {
     "name": "Joel Ystebø",
@@ -855,7 +920,8 @@
     "regionOffice": "Vestland",
     "kfContact": "",
     "imageUrl": "images/representatives/joel-ystebo.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=30&e=T8qh10"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=30&e=T8qh10",
+    "gender": "M"
   },
   {
     "name": "Jon Engen-Helgheim",
@@ -868,7 +934,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "",
     "imageUrl": "images/representatives/jon-engen-helgheim.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=106&e=bBdlHJ"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=106&e=bBdlHJ",
+    "gender": "M"
   },
   {
     "name": "Jonas Andersen Sayed",
@@ -881,7 +948,8 @@
     "regionOffice": "Rogaland",
     "kfContact": "",
     "imageUrl": "images/representatives/jonas-andersen-sayed.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=36&e=azKY68"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=36&e=azKY68",
+    "gender": "M"
   },
   {
     "name": "Jone Blikra",
@@ -894,7 +962,8 @@
     "regionOffice": "",
     "kfContact": "",
     "imageUrl": "images/representatives/jone-blikra.jpg",
-    "profileUrl": ""
+    "profileUrl": "",
+    "gender": "M"
   },
   {
     "name": "Jørgen Kristiansen",
@@ -907,7 +976,8 @@
     "regionOffice": "Agder",
     "kfContact": "",
     "imageUrl": "images/representatives/jorgen-kristiansen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=98&e=eX1auz"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=98&e=eX1auz",
+    "gender": "M"
   },
   {
     "name": "Jorunn Gleditsch Lossius",
@@ -920,7 +990,8 @@
     "regionOffice": "Agder",
     "kfContact": "Lars Dahlgren",
     "imageUrl": "images/representatives/jorunn-gleditsch-lossius.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=2&e=XZDcqd"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=2&e=XZDcqd",
+    "gender": "K"
   },
   {
     "name": "Julia Brännström Nordtug",
@@ -933,7 +1004,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "",
     "imageUrl": "images/representatives/julia-brannstrom-nordtug.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=33&e=rJbtN5"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=33&e=rJbtN5",
+    "gender": "K"
   },
   {
     "name": "Julia Eikeland",
@@ -946,7 +1018,8 @@
     "regionOffice": "Rogaland",
     "kfContact": "",
     "imageUrl": "images/representatives/julia-eikeland.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=26&e=yI2i08"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=26&e=yI2i08",
+    "gender": "K"
   },
   {
     "name": "Julie Estdahl Stuestøl",
@@ -959,7 +1032,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "",
     "imageUrl": "images/representatives/julie-estedahl-stuestol.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=102&e=r8uu5C"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=102&e=r8uu5C",
+    "gender": "K"
   },
   {
     "name": "June Trengereid Gruer",
@@ -972,7 +1046,8 @@
     "regionOffice": "Vestland",
     "kfContact": "",
     "imageUrl": "images/representatives/june-trengereid-gruer.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=183&e=NdyRo4"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=183&e=NdyRo4",
+    "gender": "K"
   },
   {
     "name": "Kai Steffen Østensen",
@@ -985,7 +1060,8 @@
     "regionOffice": "Agder",
     "kfContact": "",
     "imageUrl": "images/representatives/kai-steffen-ostensen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=28&e=Rnp0Ko"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=28&e=Rnp0Ko",
+    "gender": "M"
   },
   {
     "name": "Kamzy Gunaratnam",
@@ -998,7 +1074,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/kamzy-gunaratnam.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=147&e=CAJULD"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=147&e=CAJULD",
+    "gender": "K"
   },
   {
     "name": "Kari Baadstrand Sandnes",
@@ -1011,7 +1088,8 @@
     "regionOffice": "Nord",
     "kfContact": "",
     "imageUrl": "images/representatives/kari-baadstrand-sandnes.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=178&e=xz0kfl"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=178&e=xz0kfl",
+    "gender": "K"
   },
   {
     "name": "Kari Sofie Bjørnsen",
@@ -1024,7 +1102,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/kari-sofie-bjornsen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=49&e=YKhjzz"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=49&e=YKhjzz",
+    "gender": "K"
   },
   {
     "name": "Kathy Lie",
@@ -1037,7 +1116,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "Lars Dahlgren",
     "imageUrl": "images/representatives/kathy-lie.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=68&e=dMfIgR"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=68&e=dMfIgR",
+    "gender": "K"
   },
   {
     "name": "Kirsti Bergstø",
@@ -1050,7 +1130,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "Thomas Axelsen",
     "imageUrl": "images/representatives/kirsti-bergsto.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=105&e=zOMnC3"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=105&e=zOMnC3",
+    "gender": "K"
   },
   {
     "name": "Kjersti Toppe",
@@ -1063,7 +1144,8 @@
     "regionOffice": "Vestland",
     "kfContact": "",
     "imageUrl": "images/representatives/kjersti-toppe.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=6&e=TJhPja"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=6&e=TJhPja",
+    "gender": "K"
   },
   {
     "name": "Konstanse Marie Alvær",
@@ -1076,7 +1158,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "",
     "imageUrl": "images/representatives/marie-konstanse-alvaer.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=175&e=hnXKOx"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=175&e=hnXKOx",
+    "gender": "K"
   },
   {
     "name": "Kristian August Eilertsen",
@@ -1089,7 +1172,8 @@
     "regionOffice": "Nord",
     "kfContact": "",
     "imageUrl": "images/representatives/kristian-august-eilertsen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=53&e=FchUu4"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=53&e=FchUu4",
+    "gender": "M"
   },
   {
     "name": "Kristine L. Solli",
@@ -1102,7 +1186,8 @@
     "regionOffice": "Midt-Norge",
     "kfContact": "",
     "imageUrl": "images/representatives/kristine-lofshus-solli.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=16&e=q2vcvw"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=16&e=q2vcvw",
+    "gender": "K"
   },
   {
     "name": "Kristoffer Sivertsen",
@@ -1115,7 +1200,8 @@
     "regionOffice": "Rogaland",
     "kfContact": "",
     "imageUrl": "images/representatives/kristoffer-sivertsen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=40&e=Qi3Oq3"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=40&e=Qi3Oq3",
+    "gender": "M"
   },
   {
     "name": "Lars Haltbrekken",
@@ -1128,7 +1214,8 @@
     "regionOffice": "Midt-Norge",
     "kfContact": "Lars Dahlgren",
     "imageUrl": "images/representatives/lars-haltbrekken.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=74&e=ngQKf6"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=74&e=ngQKf6",
+    "gender": "M"
   },
   {
     "name": "Lars Terje Høiendahl Rem",
@@ -1141,7 +1228,8 @@
     "regionOffice": "Innlandet",
     "kfContact": "",
     "imageUrl": "images/representatives/lars-rem.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=35&e=8PdIV4"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=35&e=8PdIV4",
+    "gender": "M"
   },
   {
     "name": "Lill Harriet Sandaune",
@@ -1154,7 +1242,8 @@
     "regionOffice": "Midt-Norge",
     "kfContact": "",
     "imageUrl": "images/representatives/lill-harriet-sandaune.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=75&e=TmoJ94"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=75&e=TmoJ94",
+    "gender": "K"
   },
   {
     "name": "Linda Merkesdal",
@@ -1167,7 +1256,8 @@
     "regionOffice": "Vestland",
     "kfContact": "",
     "imageUrl": "images/representatives/linda-monsen-merkesdal.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=121&e=ndJQre"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=121&e=ndJQre",
+    "gender": "K"
   },
   {
     "name": "Line Marlene Haugen",
@@ -1180,7 +1270,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "",
     "imageUrl": "images/representatives/line-marlene-haugen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=109&e=AKxs5a"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=109&e=AKxs5a",
+    "gender": "K"
   },
   {
     "name": "Lise Selnes",
@@ -1193,7 +1284,8 @@
     "regionOffice": "Innlandet",
     "kfContact": "",
     "imageUrl": "images/representatives/lise-selnes.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=51&e=7dlFRG"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=51&e=7dlFRG",
+    "gender": "K"
   },
   {
     "name": "Liv Thon Gustavsen",
@@ -1206,7 +1298,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/liv-gustavsen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=97&e=3baqoq"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=97&e=3baqoq",
+    "gender": "K"
   },
   {
     "name": "Mahmoud Farahmand",
@@ -1219,7 +1312,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "",
     "imageUrl": "images/representatives/magmoud-farahmand.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=8&e=RP0iPS"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=8&e=RP0iPS",
+    "gender": "M"
   },
   {
     "name": "Mani Hussaini",
@@ -1232,7 +1326,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/mani-hussaini.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=65&e=o8Is4p"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=65&e=o8Is4p",
+    "gender": "M"
   },
   {
     "name": "Maren Grøthe",
@@ -1245,7 +1340,8 @@
     "regionOffice": "Midt-Norge",
     "kfContact": "",
     "imageUrl": "images/representatives/maren-grothe.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=122&e=ct2cS7"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=122&e=ct2cS7",
+    "gender": "K"
   },
   {
     "name": "Margret Hagerup",
@@ -1258,7 +1354,8 @@
     "regionOffice": "Rogaland",
     "kfContact": "",
     "imageUrl": "images/representatives/margret-hagerup.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=41&e=kcYku9"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=41&e=kcYku9",
+    "gender": "K"
   },
   {
     "name": "Maria-Karine Aasen-Svensrud",
@@ -1271,7 +1368,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "",
     "imageUrl": "images/representatives/maria-aasen-svensrud.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=99&e=Y3jqHa"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=99&e=Y3jqHa",
+    "gender": "K"
   },
   {
     "name": "Marian Hussein",
@@ -1284,7 +1382,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "Shakeel Rehman",
     "imageUrl": "images/representatives/marian-hussein.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=13&e=hAtK9O"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=13&e=hAtK9O",
+    "gender": "K"
   },
   {
     "name": "Marie Sneve Martinussen",
@@ -1297,7 +1396,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "Thomas Axelsen",
     "imageUrl": "images/representatives/marie-sneve-martinussen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=21&e=asGbqS"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=21&e=asGbqS",
+    "gender": "K"
   },
   {
     "name": "Marius Arion Nilsen",
@@ -1310,7 +1410,8 @@
     "regionOffice": "Agder",
     "kfContact": "",
     "imageUrl": "images/representatives/marius-arion-nilsen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=118&e=NPrshk"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=118&e=NPrshk",
+    "gender": "M"
   },
   {
     "name": "Marius Langballe Dalin",
@@ -1323,7 +1424,8 @@
     "regionOffice": "Vestland",
     "kfContact": "",
     "imageUrl": "images/representatives/marius-langballe-dalin.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=47&e=PHpZ6A"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=47&e=PHpZ6A",
+    "gender": "M"
   },
   {
     "name": "Marthe Hammer",
@@ -1336,7 +1438,8 @@
     "regionOffice": "Vestland",
     "kfContact": "Gina Knutson Barstad",
     "imageUrl": "images/representatives/marthe-hammer.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=132&e=GXrn3n"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=132&e=GXrn3n",
+    "gender": "K"
   },
   {
     "name": "Martin Virkesdal Jonsterhaug",
@@ -1349,7 +1452,8 @@
     "regionOffice": "Vestland",
     "kfContact": "",
     "imageUrl": "images/representatives/martin-virkesdal-jonsterhaug.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=73&e=8qzWtL"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=73&e=8qzWtL",
+    "gender": "M"
   },
   {
     "name": "Masud Gharahkhani",
@@ -1362,7 +1466,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "",
     "imageUrl": "images/representatives/masud-gharahkhani.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=157&e=Q9E2gV"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=157&e=Q9E2gV",
+    "gender": "M"
   },
   {
     "name": "Mathilde Tybring-Gjedde",
@@ -1375,7 +1480,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/mathilde-tybring-gjedde.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=111&e=wYekI1"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=111&e=wYekI1",
+    "gender": "K"
   },
   {
     "name": "Mats Henriksen",
@@ -1388,7 +1494,8 @@
     "regionOffice": "Midt-Norge",
     "kfContact": "",
     "imageUrl": "images/representatives/mats-henriksen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=91&e=pdjlu4"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=91&e=pdjlu4",
+    "gender": "M"
   },
   {
     "name": "May Helen Hetland Ervik",
@@ -1401,7 +1508,8 @@
     "regionOffice": "Rogaland",
     "kfContact": "",
     "imageUrl": "images/representatives/may-helen-hetland-ervik.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=149&e=KRRJuk"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=149&e=KRRJuk",
+    "gender": "K"
   },
   {
     "name": "Mímir Kristjánsson",
@@ -1414,7 +1522,8 @@
     "regionOffice": "Rogaland",
     "kfContact": "",
     "imageUrl": "images/representatives/mimir-kristjansson.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=104&e=sVSb6A"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=104&e=sVSb6A",
+    "gender": "M"
   },
   {
     "name": "Mirell Høyer-Berntsen",
@@ -1427,7 +1536,8 @@
     "regionOffice": "Agder",
     "kfContact": "",
     "imageUrl": "images/representatives/mirell-hoyer-berntsen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=15&e=hWq3fm"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=15&e=hWq3fm",
+    "gender": "K"
   },
   {
     "name": "Mona Nilsen",
@@ -1440,7 +1550,8 @@
     "regionOffice": "Nord",
     "kfContact": "",
     "imageUrl": "images/representatives/mona-nilsen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=130&e=H2l6gg"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=130&e=H2l6gg",
+    "gender": "K"
   },
   {
     "name": "Monica Molvær",
@@ -1453,7 +1564,8 @@
     "regionOffice": "Midt-Norge",
     "kfContact": "",
     "imageUrl": "images/representatives/monica-molvaer.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=125&e=upDh7M"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=125&e=upDh7M",
+    "gender": "K"
   },
   {
     "name": "Monica Nielsen",
@@ -1466,7 +1578,8 @@
     "regionOffice": "Nord",
     "kfContact": "",
     "imageUrl": "images/representatives/monica-nielsen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=182&e=5guceH"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=182&e=5guceH",
+    "gender": "K"
   },
   {
     "name": "Morgan Engebretsen Langfeldt",
@@ -1479,7 +1592,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "",
     "imageUrl": "images/representatives/morgan-langfeldt.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=67&e=ESSSTH"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=67&e=ESSSTH",
+    "gender": "M"
   },
   {
     "name": "Morten Kolbjørnsen",
@@ -1492,7 +1606,8 @@
     "regionOffice": "Innlandet",
     "kfContact": "",
     "imageUrl": "images/representatives/morten-kolbjornsen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=143&e=KiGEK2"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=143&e=KiGEK2",
+    "gender": "M"
   },
   {
     "name": "Morten Stordalen",
@@ -1505,7 +1620,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "",
     "imageUrl": "images/representatives/morten-stordalen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=93&e=xdSzjv"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=93&e=xdSzjv",
+    "gender": "M"
   },
   {
     "name": "Mudassar Hussain Kapur",
@@ -1518,7 +1634,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/mudassar-kapur.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=163&e=Tcwg32"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=163&e=Tcwg32",
+    "gender": "M"
   },
   {
     "name": "Nikolai Astrup",
@@ -1531,7 +1648,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/nikolai-astrup.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=164&e=KhzgiF"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=164&e=KhzgiF",
+    "gender": "M"
   },
   {
     "name": "Nils-Ole Foshaug",
@@ -1544,7 +1662,8 @@
     "regionOffice": "Nord",
     "kfContact": "",
     "imageUrl": "images/representatives/nils-ole-foshaug.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=144&e=LQdizR"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=144&e=LQdizR",
+    "gender": "M"
   },
   {
     "name": "Oda Indgaard",
@@ -1557,7 +1676,8 @@
     "regionOffice": "Midt-Norge",
     "kfContact": "",
     "imageUrl": "images/representatives/oda-indgaard.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=42&e=Qcd3zc"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=42&e=Qcd3zc",
+    "gender": "K"
   },
   {
     "name": "Ove Bernt Trellevik",
@@ -1570,7 +1690,8 @@
     "regionOffice": "Vestland",
     "kfContact": "",
     "imageUrl": "images/representatives/ove-trellevik.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=46&e=7Xs0s4"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=46&e=7Xs0s4",
+    "gender": "M"
   },
   {
     "name": "Per Vidar Kjølmoen",
@@ -1583,7 +1704,8 @@
     "regionOffice": "Midt-Norge",
     "kfContact": "",
     "imageUrl": "images/representatives/per-vidar-kjolmoen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=83&e=4UaTKg"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=83&e=4UaTKg",
+    "gender": "M"
   },
   {
     "name": "Per-Willy Amundsen",
@@ -1596,7 +1718,8 @@
     "regionOffice": "Nord",
     "kfContact": "",
     "imageUrl": "images/representatives/pre-willy-amundsen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=161&e=kq7m3M"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=161&e=kq7m3M",
+    "gender": "M"
   },
   {
     "name": "Peter Christian Frølich",
@@ -1609,7 +1732,8 @@
     "regionOffice": "Vestland",
     "kfContact": "",
     "imageUrl": "images/representatives/peter-frolich.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=17&e=Azmic2"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=17&e=Azmic2",
+    "gender": "M"
   },
   {
     "name": "Pål Morten Borgli",
@@ -1622,7 +1746,8 @@
     "regionOffice": "Rogaland",
     "kfContact": "",
     "imageUrl": "images/representatives/pal-morten-borgli.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=84&e=7tnwlC"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=84&e=7tnwlC",
+    "gender": "M"
   },
   {
     "name": "Ragnhild Synnøve Bergheim",
@@ -1635,7 +1760,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/ragnhild-bergheim.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=9&e=uBtgSG"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=9&e=uBtgSG",
+    "gender": "K"
   },
   {
     "name": "Remi Alexander Sølvberg",
@@ -1648,7 +1774,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "",
     "imageUrl": "images/representatives/remi-solvberg.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=50&e=ueH53e"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=50&e=ueH53e",
+    "gender": "M"
   },
   {
     "name": "Rikard Spets",
@@ -1661,7 +1788,8 @@
     "regionOffice": "Midt-Norge",
     "kfContact": "",
     "imageUrl": "images/representatives/rikard-spets.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=63&e=trB8nD"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=63&e=trB8nD",
+    "gender": "M"
   },
   {
     "name": "Ronny Aukrust",
@@ -1674,7 +1802,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "Shakeel Rehman",
     "imageUrl": "images/representatives/ronny-aukrust.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=170&e=8cz6Qa"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=170&e=8cz6Qa",
+    "gender": "M"
   },
   {
     "name": "Rune Bakervik",
@@ -1687,7 +1816,8 @@
     "regionOffice": "Vestland",
     "kfContact": "",
     "imageUrl": "images/representatives/rune-bakervik.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=140&e=Umqh61"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=140&e=Umqh61",
+    "gender": "M"
   },
   {
     "name": "Rune Midtun",
@@ -1700,7 +1830,8 @@
     "regionOffice": "Rogaland",
     "kfContact": "",
     "imageUrl": "images/representatives/rune-midtun.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=153&e=hXje7w"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=153&e=hXje7w",
+    "gender": "M"
   },
   {
     "name": "Rune Støstad",
@@ -1713,7 +1844,8 @@
     "regionOffice": "Innlandet",
     "kfContact": "",
     "imageUrl": "images/representatives/rune-stostad.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=88&e=r5NRbH"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=88&e=r5NRbH",
+    "gender": "M"
   },
   {
     "name": "Ruth Mariann Hop",
@@ -1726,7 +1858,8 @@
     "regionOffice": "Rogaland",
     "kfContact": "",
     "imageUrl": "images/representatives/ruth-mariann-hop.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=120&e=A9I4xu"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=120&e=A9I4xu",
+    "gender": "K"
   },
   {
     "name": "Seher Aydar",
@@ -1739,7 +1872,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/seher-aydar.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=108&e=ZYLRs7"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=108&e=ZYLRs7",
+    "gender": "K"
   },
   {
     "name": "Sigurd Kvammen Rafaelsen",
@@ -1752,7 +1886,8 @@
     "regionOffice": "Nord",
     "kfContact": "",
     "imageUrl": "images/representatives/sigurd-kvammen-rafaelsen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=18&e=nifcAz"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=18&e=nifcAz",
+    "gender": "M"
   },
   {
     "name": "Silje Hjemdal",
@@ -1765,7 +1900,8 @@
     "regionOffice": "Vestland",
     "kfContact": "Lars Dahlgren",
     "imageUrl": "images/representatives/silje-hjemdal.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=89&e=fQAKc6"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=89&e=fQAKc6",
+    "gender": "K"
   },
   {
     "name": "Simen Velle",
@@ -1778,7 +1914,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/simen-velle.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=10&e=pD0hiB"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=10&e=pD0hiB",
+    "gender": "M"
   },
   {
     "name": "Siren Julianne Jensen",
@@ -1791,7 +1928,8 @@
     "regionOffice": "Nord",
     "kfContact": "",
     "imageUrl": "images/representatives/siren-julianne-jensen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=166&e=fYbY30"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=166&e=fYbY30",
+    "gender": "K"
   },
   {
     "name": "Sofie Marhaug",
@@ -1804,7 +1942,8 @@
     "regionOffice": "Vestland",
     "kfContact": "",
     "imageUrl": "images/representatives/sofie-marhaug.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=128&e=5C6Duq"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=128&e=5C6Duq",
+    "gender": "K"
   },
   {
     "name": "Solveig Vestenfor",
@@ -1817,7 +1956,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "",
     "imageUrl": "images/representatives/solveig-vestenfor.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=141&e=3x5vCu"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=141&e=3x5vCu",
+    "gender": "K"
   },
   {
     "name": "Solveig Vitanza",
@@ -1830,7 +1970,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "",
     "imageUrl": "images/representatives/solveig-vitanza.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=137&e=UZ9oLv"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=137&e=UZ9oLv",
+    "gender": "K"
   },
   {
     "name": "Stian Storbukås",
@@ -1843,7 +1984,8 @@
     "regionOffice": "Agder",
     "kfContact": "",
     "imageUrl": "images/representatives/stian-storbukaas.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=96&e=If2nRD"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=96&e=If2nRD",
+    "gender": "M"
   },
   {
     "name": "Stig Atle Abrahamsen",
@@ -1856,7 +1998,8 @@
     "regionOffice": "Vestland",
     "kfContact": "",
     "imageUrl": "images/representatives/stig-atle-abrahamsen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=58&e=Hm9XH7"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=58&e=Hm9XH7",
+    "gender": "M"
   },
   {
     "name": "Stig Even Søvik Lillestøl",
@@ -1869,7 +2012,8 @@
     "regionOffice": "Vestland",
     "kfContact": "",
     "imageUrl": "images/representatives/stig-even-lillestol.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=38&e=5qqah5"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=38&e=5qqah5",
+    "gender": "M"
   },
   {
     "name": "Sunniva Holmås Eidsvoll",
@@ -1882,7 +2026,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "Lars Dahlgren",
     "imageUrl": "images/representatives/sunniva-holmas-eidsvoll.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=154&e=fBW9Tg"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=154&e=fBW9Tg",
+    "gender": "K"
   },
   {
     "name": "Sverre Myrli",
@@ -1895,7 +2040,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/sverre-myrli.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=100&e=rO5XvO"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=100&e=rO5XvO",
+    "gender": "M"
   },
   {
     "name": "Sylvi Listhaug",
@@ -1908,7 +2054,8 @@
     "regionOffice": "Midt-Norge",
     "kfContact": "Thomas Axelsen",
     "imageUrl": "images/representatives/sylvi-listhaug.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=45&e=TpPy8P"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=45&e=TpPy8P",
+    "gender": "K"
   },
   {
     "name": "Tage Pettersen",
@@ -1921,7 +2068,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "",
     "imageUrl": "images/representatives/tage-pettersen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=56&e=wqCQ4q"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=56&e=wqCQ4q",
+    "gender": "M"
   },
   {
     "name": "Tobias Hangaard Linge",
@@ -1934,7 +2082,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/tobias-hangaard-linge.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=172&e=IpvAUi"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=172&e=IpvAUi",
+    "gender": "M"
   },
   {
     "name": "Tom Einar Karlsen",
@@ -1947,7 +2096,8 @@
     "regionOffice": "Nord",
     "kfContact": "",
     "imageUrl": "images/representatives/tom-einar-karlsen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=181&e=eX5cZn"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=181&e=eX5cZn",
+    "gender": "M"
   },
   {
     "name": "Tom Staahle",
@@ -1960,7 +2110,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "Shakeel Rehman",
     "imageUrl": "images/representatives/tom-staahle.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=60&e=yVRuhm"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=60&e=yVRuhm",
+    "gender": "M"
   },
   {
     "name": "Tone Wilhelmsen Trøen",
@@ -1973,7 +2124,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "Thomas Axelsen",
     "imageUrl": "images/representatives/tone-wilhelmsen-troen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=117&e=r4q5aq"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=117&e=r4q5aq",
+    "gender": "K"
   },
   {
     "name": "Tonje Brenna",
@@ -1986,7 +2138,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/tonje-brenna.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=32&e=FhYY3k"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=32&e=FhYY3k",
+    "gender": "K"
   },
   {
     "name": "Tor Andre Johnsen",
@@ -1999,7 +2152,8 @@
     "regionOffice": "Innlandet",
     "kfContact": "",
     "imageUrl": "images/representatives/tor-andre-johnsen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=85&e=wV0lxl"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=85&e=wV0lxl",
+    "gender": "M"
   },
   {
     "name": "Tor Mikkel Wara",
@@ -2012,7 +2166,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/tor-mikkel-wara.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=79&e=rdvBQ4"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=79&e=rdvBQ4",
+    "gender": "M"
   },
   {
     "name": "Torbjørn Vereide",
@@ -2025,7 +2180,8 @@
     "regionOffice": "Vestland",
     "kfContact": "",
     "imageUrl": "images/representatives/torbjorn-vereide.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=160&e=zKYg4s"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=160&e=zKYg4s",
+    "gender": "M"
   },
   {
     "name": "Trine Lise Sundnes",
@@ -2038,7 +2194,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/trine-lise-sundnes.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=179&e=E3Ywxk"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=179&e=E3Ywxk",
+    "gender": "K"
   },
   {
     "name": "Trond Giske",
@@ -2051,7 +2208,8 @@
     "regionOffice": "Midt-Norge",
     "kfContact": "Shakeel Rehman",
     "imageUrl": "images/representatives/trond-giske.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=43&e=K4ZPg7"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=43&e=K4ZPg7",
+    "gender": "M"
   },
   {
     "name": "Trond Helleland",
@@ -2064,7 +2222,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "",
     "imageUrl": "images/representatives/trond-helleland.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=101&e=G14syP"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=101&e=G14syP",
+    "gender": "M"
   },
   {
     "name": "Truls Vasvik",
@@ -2077,7 +2236,8 @@
     "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
     "kfContact": "",
     "imageUrl": "images/representatives/truls-vasvik.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=134&e=lYfjrZ"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=134&e=lYfjrZ",
+    "gender": "M"
   },
   {
     "name": "Trygve Magnus Slagsvold Vedum",
@@ -2090,7 +2250,8 @@
     "regionOffice": "Innlandet",
     "kfContact": "Thomas Axelsen",
     "imageUrl": "images/representatives/trygve-slagsvold-vedum.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=168&e=TO0AGU"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=168&e=TO0AGU",
+    "gender": "M"
   },
   {
     "name": "Tuva Moflag",
@@ -2103,7 +2264,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/tuva-moflag.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=155&e=lyIMiL"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=155&e=lyIMiL",
+    "gender": "K"
   },
   {
     "name": "Une Aina Bastholm",
@@ -2116,7 +2278,8 @@
     "regionOffice": "Oslo og Akershus",
     "kfContact": "",
     "imageUrl": "images/representatives/une-bastholm.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=165&e=uX33iV"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=165&e=uX33iV",
+    "gender": "K"
   },
   {
     "name": "Vebjørn Gorseth",
@@ -2129,7 +2292,8 @@
     "regionOffice": "Midt-Norge",
     "kfContact": "",
     "imageUrl": "images/representatives/vebjorn-gorseth.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=20&e=0sXo6S"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=20&e=0sXo6S",
+    "gender": "M"
   },
   {
     "name": "Øystein Mathisen",
@@ -2142,7 +2306,8 @@
     "regionOffice": "Nord",
     "kfContact": "",
     "imageUrl": "images/representatives/oystein-mathisen.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=90&e=RI57ag"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=90&e=RI57ag",
+    "gender": "M"
   },
   {
     "name": "Morten Sandanger",
@@ -2155,7 +2320,8 @@
     "regionOffice": "Rogaland",
     "kfContact": "",
     "imageUrl": "images/representatives/morten-sandanger.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=27&e=YaHeMF"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=27&e=YaHeMF",
+    "gender": "M"
   },
      {
     "name": "Morten Wold",
@@ -2168,7 +2334,8 @@
     "regionOffice": "Innlandet",
     "kfContact": "",
     "imageUrl": "images/representatives/morten-wold.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=59&e=Px6Qcl"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=59&e=Px6Qcl",
+    "gender": "M"
   },
       {
     "name": "Solveig Vik",
@@ -2181,7 +2348,8 @@
     "regionOffice": "Rogaland",
     "kfContact": "",
     "imageUrl": "images/representatives/solveig-vik.jpg",
-    "profileUrl": ""
+    "profileUrl": "",
+    "gender": "K"
   },
     {
     "name": "Tellef Inge Mørland",
@@ -2194,7 +2362,8 @@
     "regionOffice": "Agder",
     "kfContact": "",
     "imageUrl": "images/representatives/tellef-inge-morland.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=156&e=BCXJdf"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=156&e=BCXJdf",
+    "gender": "M"
   },
   {
     "name": "Åse Kristin Ask Bakke",
@@ -2207,6 +2376,7 @@
     "regionOffice": "Midt-Norge",
     "kfContact": "",
     "imageUrl": "images/representatives/ase-kristin-ask-bakke.jpg",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=31&e=L4J4sd"
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=31&e=L4J4sd",
+    "gender": "K"
   }
 ]
