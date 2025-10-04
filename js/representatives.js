@@ -1,7 +1,7 @@
-// js/representatives.js (v2 - med sortering og bugfiks)
+// js/representatives.js (v2.1 - Fiks for placeholder-bilder)
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("Representatives JS (v2): DOM loaded.");
+    console.log("Representatives JS (v2.1): DOM loaded.");
 
     // Globale variabler
     let allRepresentativesData = [];
@@ -130,11 +130,16 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.style.display = 'block';
     }
 
-    // *** FIKS FOR PLACEHOLDER-BILDE ***
+    // =======================================================
+    // === HER ER FIKSEN for placeholder-bildet ===
+    // =======================================================
     function generateDetailHTML(rep, party, isModal = false) {
+        // Bygg riktig sti til placeholder-bildet basert på parti
+        const placeholderPath = `images/candidates/placeholder-${party.shorthand.toLowerCase()}.png`;
+
         const imageHtml = rep.imageUrl
             ? `<img src="${rep.imageUrl}" alt="${rep.name}" class="detail-image">`
-            : `<img src="images/placeholder-generic.png" alt="Placeholder" class="detail-image">`;
+            : `<img src="${placeholderPath}" alt="Placeholder for ${party.name}" class="detail-image">`;
 
         return `
             <div class="detail-image-container">${imageHtml}</div>
@@ -164,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // --- Filtrering og Visning (Hovedendring her) ---
+    // --- Filtrering og Visning ---
     function handleFilteringAndDisplay() {
         resetDetailPanel();
         
