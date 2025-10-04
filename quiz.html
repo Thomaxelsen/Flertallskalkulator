@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Politiker-Quiz</title>
+    <!-- Felles stiler -->
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Spesifikke stiler for denne siden -->
+    <link rel="stylesheet" href="css/quiz.css">
+</head>
+<body>
+    <!-- Hamburgermeny-struktur (lik som på andre sider) -->
+    <div class="burger-menu" id="burgerMenu">
+        <div class="burger-bar"></div>
+        <div class="burger-bar"></div>
+        <div class="burger-bar"></div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="menu-header">
+            <h3>Meny</h3>
+            <button class="close-button" id="closeMenu">×</button>
+        </div>
+        <div class="menu-items" id="mobileMenuItems"></div>
+    </div>
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <div class="container">
+        <!-- Header (lik som på andre sider) -->
+        <header>
+            <div class="logo-container">
+                <a href="index.html">
+                    <img src="images/Logo.png" alt="Kreftforeningens logo" class="logo-image">
+                </a>
+            </div>
+            <div class="header-text">
+                <h1>Politiker-Quiz</h1>
+                <div class="header-subtitle">Test dine kunnskaper om Stortinget</div>
+            </div>
+            <div class="nav-links">
+                <!-- Fylles dynamisk av navigation.js -->
+            </div>
+        </header>
+
+        <main class="quiz-main-content">
+            <!-- Seksjon for å velge quiz-type -->
+            <div id="quiz-selection-area" class="quiz-selection-container">
+                <h2>Velg en quiz</h2>
+                <div class="quiz-choices">
+                    <button class="button primary" data-quiz-type="guess-name">Gjett navnet</button>
+                    <button class="button primary" data-quiz-type="guess-face">Gjett ansiktet</button>
+                    <button class="button primary" data-quiz-type="match-committee">Koble politiker til komité</button>
+                </div>
+            </div>
+
+            <!-- Hovedcontainer for der quizen vises -->
+            <div id="quiz-container" class="quiz-container-main" style="display: none;">
+                <!-- Innholdet her blir generert av quiz.js -->
+                <div class="quiz-header">
+                    <h3 id="quiz-title">Quiz-tittel</h3>
+                    <div class="quiz-score" id="quiz-score-display" style="display: none;">Poeng: 0</div>
+                </div>
+                <div id="quiz-content" class="quiz-content-area">
+                    <div class="loader">Laster quiz...</div>
+                </div>
+                <div class="quiz-controls">
+                     <button id="back-to-selection-btn" class="button secondary small-btn">Tilbake til valg</button>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            Data basert på representantlisten for Stortingsperioden 2025-2029.
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/navigationConfig.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/quiz.js"></script> <!-- Den nye logikk-filen for quizen -->
+</body>
+</html>
