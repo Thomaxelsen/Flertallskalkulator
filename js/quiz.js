@@ -19,14 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('data/representatives.json')
         .then(response => response.json())
         .then(data => {
-            allRepresentatives = data.filter(rep => rep.isActive);
-            // NYTT: Forbered lister for å enkelt kunne velge basert på kjønn
-            repsWithImagesAndGender = allRepresentatives.filter(rep => rep.imageUrl && rep.gender);
+            allRepresentatives = data.filter(rep => rep.isActive && rep.gender); // Inkluderer kun de med kjønn
+            repsWithImagesAndGender = allRepresentatives.filter(rep => rep.imageUrl);
             menWithImages = repsWithImagesAndGender.filter(rep => rep.gender === 'M');
             womenWithImages = repsWithImagesAndGender.filter(rep => rep.gender === 'K');
             
-            console.log(`Quiz: Loaded ${allRepresentatives.length} active reps.`);
-            console.log(`Found ${menWithImages.length} men and ${womenWithImages.length} women with images and gender info.`);
+            console.log(`Quiz: Loaded ${allRepresentatives.length} active reps with gender info.`);
+            console.log(`Found ${menWithImages.length} men and ${womenWithImages.length} women with images.`);
             
             setupSelectionListeners();
         })
@@ -35,7 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
             selectionArea.innerHTML = "<h2>Kunne ikke laste quiz-data.</h2><p>Vennligst prøv å laste siden på nytt.</p>";
         });
     
-    // Sett opp lyttere for quiz-valg
     function setupSelectionListeners() {
         selectionArea.addEventListener('click', (e) => {
             if (e.target.matches('button[data-quiz-type]')) {
@@ -50,7 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Start en quiz
     function startQuiz(quizType) {
         selectionArea.style.display = 'none';
         quizContainer.style.display = 'block';
@@ -72,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // --- Hjelpefunksjoner ---
     function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -85,9 +81,11 @@ document.addEventListener('DOMContentLoaded', () => {
         scoreDisplay.textContent = `Poeng: ${score}`;
     }
 
-    function showFeedback(isCorrect, nextQuestionFunction) {
+    // --- NY OG FORBEDRET FEEDBACK-FUNKSJON ---
+    function showFeedbackAndNextButton(isCorrect, correctName, clickedElement, nextQuestionFunction, optionsSelector) {
         const feedbackDiv = document.createElement('div');
         feedbackDiv.className = 'feedback-message';
+
         if (isCorrect) {
             feedbackDiv.classList.add('correct');
             feedbackDiv.textContent = 'Riktig!';
@@ -95,41 +93,63 @@ document.addEventListener('DOMContentLoaded', () => {
             updateScore();
         } else {
             feedbackDiv.classList.add('incorrect');
-            feedbackDiv.textContent = 'Feil svar.';
+            feedbackDiv.textContent = `Feil. Riktig svar var ${correctName}.`;
         }
-        quizContent.appendChild(feedbackDiv);
+        
+        // Deaktiver og stilsett alle alternativer
+        const allOptions = quizContent.querySelectorAll(optionsSelector);
+        allOptions.forEach(opt => {
+            opt.classList.add('answered'); // For CSS
+            
+            const optionName = opt.dataset.name;
+            if (optionName === correctName) {
+                opt.classList.add('correct');
+            } else if (opt === clickedElement) {
+                opt.classList.add('incorrect');
+            } else {
+                opt.classList.add('faded');
+            }
 
-        setTimeout(() => {
-            nextQuestionFunction();
-        }, 1500);
+            // Forhindre flere klikk
+            if (opt.tagName === 'BUTTON') {
+                opt.disabled = true;
+            } else {
+                opt.style.pointerEvents = 'none';
+            }
+        });
+
+        // Legg til "Neste spørsmål"-knapp
+        const nextButton = document.createElement('button');
+        nextButton.id = 'next-question-btn';
+        nextButton.className = 'button primary';
+        nextButton.textContent = 'Neste spørsmål';
+        nextButton.addEventListener('click', nextQuestionFunction, { once: true }); // Kjøres kun én gang
+
+        // Vis tilbakemelding og knappen
+        quizContent.appendChild(feedbackDiv);
+        quizContent.appendChild(nextButton);
     }
 
-    // --- Quiz 1: Gjett Navnet (OPPDATERT) ---
     function startGuessNameQuiz() {
-        // Sjekk om vi har nok representanter av minst ett kjønn
         if (menWithImages.length < 8 && womenWithImages.length < 8) {
             quizContent.innerHTML = "<p>For få representanter (minst 8 av ett kjønn) med bilder til å starte quizen.</p>";
             return;
         }
 
-        // Velg en tilfeldig representant fra en gyldig kjønnsgruppe
-        let correctRep;
         let potentialCorrectReps = [];
         if (menWithImages.length >= 8) potentialCorrectReps.push(...menWithImages);
         if (womenWithImages.length >= 8) potentialCorrectReps.push(...womenWithImages);
         
-        correctRep = potentialCorrectReps[Math.floor(Math.random() * potentialCorrectReps.length)];
+        const correctRep = potentialCorrectReps[Math.floor(Math.random() * potentialCorrectReps.length)];
         const correctGender = correctRep.gender;
 
         let options = [correctRep];
         
-        // Velg 7 andre alternativer FRA SAMME KJØNNSGRUPPE
         let sourceForOptions = (correctGender === 'M') ? menWithImages : womenWithImages;
         const otherReps = shuffleArray([...sourceForOptions].filter(rep => rep.name !== correctRep.name));
         options.push(...otherReps.slice(0, 7));
         options = shuffleArray(options);
 
-        // Bygg HTML (som før)
         quizContent.innerHTML = `
             <div class="question-image-container">
                 <img src="${correctRep.imageUrl}" alt="Bilde av en politiker" class="question-image">
@@ -139,25 +159,22 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
 
-        // Legg til lyttere (som før)
         quizContent.querySelectorAll('.answer-options-names button').forEach(button => {
             button.addEventListener('click', (e) => {
                 const selectedName = e.target.dataset.name;
                 const isCorrect = selectedName === correctRep.name;
-                quizContent.querySelectorAll('button').forEach(btn => btn.disabled = true);
-                showFeedback(isCorrect, startGuessNameQuiz);
+                // Kall den nye feedback-funksjonen
+                showFeedbackAndNextButton(isCorrect, correctRep.name, e.target, startGuessNameQuiz, '.answer-options-names button');
             });
         });
     }
 
-    // --- Quiz 2: Gjett Ansiktet (OPPDATERT) ---
     function startGuessFaceQuiz() {
         if (menWithImages.length < 8 && womenWithImages.length < 8) {
             quizContent.innerHTML = "<p>For få representanter (minst 8 av ett kjønn) med bilder til å starte quizen.</p>";
             return;
         }
 
-        // Velg en tilfeldig kjønnsgruppe som har nok representanter
         let sourceForOptions;
         const canUseMen = menWithImages.length >= 8;
         const canUseWomen = womenWithImages.length >= 8;
@@ -168,7 +185,6 @@ document.addEventListener('DOMContentLoaded', () => {
             sourceForOptions = canUseMen ? menWithImages : womenWithImages;
         }
 
-        // Velg 8 tilfeldige alternativer fra den valgte gruppen
         let options = shuffleArray([...sourceForOptions]).slice(0, 8);
         const correctRep = options[Math.floor(Math.random() * options.length)];
         
@@ -185,10 +201,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         quizContent.querySelectorAll('.image-option-card').forEach(card => {
             card.addEventListener('click', (e) => {
-                const selectedName = e.currentTarget.dataset.name;
+                const clickedCard = e.currentTarget;
+                const selectedName = clickedCard.dataset.name;
                 const isCorrect = selectedName === correctRep.name;
-                quizContent.querySelector('.answer-options-images').style.pointerEvents = 'none';
-                showFeedback(isCorrect, startGuessFaceQuiz);
+                // Kall den nye feedback-funksjonen
+                showFeedbackAndNextButton(isCorrect, correctRep.name, clickedCard, startGuessFaceQuiz, '.image-option-card');
             });
         });
     }
@@ -204,7 +221,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedReps = shuffleArray([...repsWithCommittee]).slice(0, 10);
         const names = shuffleArray(selectedReps.map(rep => ({ name: rep.name, committee: rep.committee })));
         
-        // Sikrer 10 unike komiteer for å unngå forvirring
         const uniqueCommittees = [...new Set(selectedReps.map(rep => rep.committee))];
         const committees = shuffleArray(uniqueCommittees);
 
@@ -264,9 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.preventDefault();
                 zone.classList.remove('drag-over');
                 
-                // Tillat kun ett navn per komité-boks
                 if (zone.classList.contains('committee-target') && zone.querySelector('.name-item')) {
-                    // Hvis boksen er opptatt, bytt plass
                     const existingItem = zone.querySelector('.name-item');
                     draggedItem.parentElement.appendChild(existingItem);
                     zone.appendChild(draggedItem);
@@ -303,7 +317,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     allCorrect = false;
                 }
             } else {
-                allCorrect = false; // Hvis en boks er tom er ikke alt riktig
+                allCorrect = false;
             }
         });
 
