@@ -208,17 +208,17 @@
     "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=39&e=La94kb"
   },
   {
-    "name": "Bengt Halvard Odden",
-    "partyShorthand": "AP",
-    "constituencyName": "Telemark",
-    "phone": "",
+    "name": "Mari Holm Lønseth",
+    "partyShorthand": "H",
+    "constituencyName": "Sør-Trøndelag",
+    "phone": "400 00 178",
     "email": "",
     "isActive": true,
     "committee": "",
-    "regionOffice": "Vestfold, Telemark, Buskerud og Østfold",
+    "regionOffice": "Midt-Norge",
     "kfContact": "",
-    "imageUrl": "",
-    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=176&e=2F42bu"
+    "imageUrl": "images/representatives/mari-holm-lonseth.jpg",
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=1&e=MmAs87"
   },
   {
     "name": "Bengt Rune Strifeldt",
@@ -2143,6 +2143,58 @@
     "kfContact": "",
     "imageUrl": "images/representatives/oystein-mathisen.jpg",
     "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=90&e=RI57ag"
+  },
+  {
+    "name": "Morten Sandanger",
+    "partyShorthand": "AP",
+    "constituencyName": "Rogaland",
+    "phone": "454 02 983",
+    "email": "",
+    "isActive": true,
+    "committee": "",
+    "regionOffice": "Rogaland",
+    "kfContact": "",
+    "imageUrl": "images/representatives/morten-sandanger.jpg",
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=27&e=YaHeMF"
+  },
+     {
+    "name": "Morten Wold",
+    "partyShorthand": "FrP",
+    "constituencyName": "Buskerud",
+    "phone": "906 03 320",
+    "email": "",
+    "isActive": true,
+    "committee": "",
+    "regionOffice": "Innlandet",
+    "kfContact": "",
+    "imageUrl": "images/representatives/morten-wold.jpg",
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=59&e=Px6Qcl"
+  },
+      {
+    "name": "Solveig Vik",
+    "partyShorthand": "AP",
+    "constituencyName": "Rogaland",
+    "phone": "",
+    "email": "",
+    "isActive": true,
+    "committee": "",
+    "regionOffice": "Rogaland",
+    "kfContact": "",
+    "imageUrl": "images/representatives/solveig-vik.jpg",
+    "profileUrl": ""
+  },
+    {
+    "name": "Tellef Inge Mørland",
+    "partyShorthand": "AP",
+    "constituencyName": "Aust-Agder",
+    "phone": "",
+    "email": "",
+    "isActive": true,
+    "committee": "",
+    "regionOffice": "Agder",
+    "kfContact": "",
+    "imageUrl": "images/representatives/tellef-inge-morland.jpg",
+    "profileUrl": "https://kreftforening-my.sharepoint.com/personal/lars_dahlgren_kreftforeningen_no/Lists/Stortinget%2020252029/DispForm.aspx?ID=156&e=BCXJdf"
   },
   {
     "name": "Åse Kristin Ask Bakke",
