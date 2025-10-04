@@ -24,9 +24,10 @@
         </header>
 
         <div class="representative-filters">
-            <div class="filter-group"> <label for="constituency-filter">Velg Valgkrets:</label> <select id="constituency-filter" class="filter-dropdown"> <option value="all">Alle Valgkretser</option> </select> </div>
-            <div class="filter-group"> <label for="party-filter">Velg Parti:</label> <select id="party-filter" class="filter-dropdown"> <option value="all">Alle Partier</option> </select> </div>
-            <div class="filter-group"> <label for="committee-filter">Velg Komité:</label> <select id="committee-filter" class="filter-dropdown"> <option value="all">Alle Komiteer</option> </select> </div>
+            <div class="filter-group main-sort-group"> <label for="grouping-select">Grupper etter:</label> <select id="grouping-select" class="filter-dropdown"> <option value="party">Parti</option> <option value="constituency">Valgkrets</option> <option value="committee">Komité</option> </select> </div>
+            <div class="filter-group"> <label for="constituency-filter">Filtrer Valgkrets:</label> <select id="constituency-filter" class="filter-dropdown"> <option value="all">Alle Valgkretser</option> </select> </div>
+            <div class="filter-group"> <label for="party-filter">Filtrer Parti:</label> <select id="party-filter" class="filter-dropdown"> <option value="all">Alle Partier</option> </select> </div>
+            <div class="filter-group"> <label for="committee-filter">Filtrer Komité:</label> <select id="committee-filter" class="filter-dropdown"> <option value="all">Alle Komiteer</option> </select> </div>
             <div class="filter-group search-group"> <label for="name-search">Søk på navn:</label> <input type="text" id="name-search" placeholder="Skriv inn navn..." class="search-input"> </div>
             <div class="filter-group count-group"> <span id="representative-count">Laster...</span> representanter vises. </div>
         </div>
@@ -34,7 +35,6 @@
         <div class="content-layout-wrapper">
             <div class="main-content-area">
                 <div id="representatives-view">
-                    <h3>Alle Representanter</h3>
                     <p class="interaction-hint">Klikk på en representant for mer informasjon.</p>
                     <div id="representative-grid" class="representative-grid">
                         <div class="loader">Laster representanter...</div>
