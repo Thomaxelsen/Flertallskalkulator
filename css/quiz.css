@@ -85,7 +85,6 @@
     to { transform: scale(1); opacity: 1; }
 }
 
-/* --- NYE STILER STARTER HER --- */
 /* Quiz 1: Gjett navnet - Stiler for svaralternativer */
 .answer-options-names button.correct {
     background: var(--success-color);
@@ -121,14 +120,76 @@
     pointer-events: none;
     transform: scale(0.95);
 }
+.image-option-card.answered {
+    cursor: default;
+}
 
 /* Knappen for "Neste spørsmål" */
 #next-question-btn {
     margin-top: 1.5rem;
     animation: popIn 0.3s ease;
 }
-/* --- NYE STILER SLUTTER HER --- */
 
+/* --- NYE STILER STARTER HER --- */
+/* Steg 2: Gjett parti */
+.party-selection-prompt {
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    animation: fadeIn 0.5s ease;
+}
+.party-options-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+    animation: fadeIn 0.5s ease;
+}
+.party-option-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.party-option-btn:hover:not(.answered) {
+    border-color: var(--kf-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.party-option-btn img {
+    height: 40px;
+    width: 40px;
+    object-fit: contain;
+}
+.party-option-btn span {
+    font-weight: 600;
+    color: #333;
+}
+/* Stiler for tilbakemelding på partiknapper */
+.party-option-btn.correct {
+    border-color: var(--success-color);
+    background-color: rgba(40, 167, 69, 0.1);
+    transform: scale(1.05);
+}
+.party-option-btn.incorrect {
+    border-color: var(--fail-color);
+    background-color: rgba(220, 53, 69, 0.1);
+}
+.party-option-btn.faded {
+    opacity: 0.5;
+}
+.party-option-btn.answered {
+    pointer-events: none;
+    cursor: default;
+}
+/* --- NYE STILER SLUTTER HER --- */
 
 /* Quiz 1: Gjett navnet */
 .question-image-container {
@@ -174,7 +235,7 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     aspect-ratio: 1 / 1;
 }
-.image-option-card:hover:not(.answered) { /* Hindre hover-effekt etter svar er gitt */
+.image-option-card:hover:not(.answered) {
     transform: scale(1.05);
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     border-color: var(--kf-blue);
@@ -235,7 +296,7 @@
     border-radius: 4px;
     margin-bottom: 0.5rem;
     padding: 0.75rem;
-    min-height: 50px; /* Høyde for å kunne droppe */
+    min-height: 50px;
     transition: background-color 0.2s, border-color 0.2s;
 }
 .committee-target.drag-over {
@@ -245,12 +306,11 @@
 .committee-target .committee-name {
     font-weight: 500;
     color: #555;
-    pointer-events: none; /* Sørger for at man kan droppe på teksten */
+    pointer-events: none;
 }
 .committee-target .name-item {
     cursor: default;
 }
-/* Stiler for tilbakemelding etter innsending */
 .committee-target.correct {
     border-style: solid;
     border-color: #28a745;
@@ -262,7 +322,7 @@
     background-color: rgba(220, 53, 69, 0.1);
 }
 .committee-target.incorrect .name-item {
-    cursor: grab; /* Gjør feilplasserte elementer flyttbare igjen */
+    cursor: grab;
 }
 
 /* Kontroller nederst */
