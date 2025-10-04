@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Representantutforsker - Stortinget 2025-2029</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/representatives.css">
+</head>
+<body>
+    <div class="burger-menu" id="burgerMenu">
+        <div class="burger-bar"></div> <div class="burger-bar"></div> <div class="burger-bar"></div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="menu-header"> <h3>Meny</h3> <button class="close-button" id="closeMenu">×</button> </div>
+        <div class="menu-items" id="mobileMenuItems"></div>
+    </div>
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="container">
+        <header>
+            <div class="logo-container"> <a href="index.html"> <img src="images/Logo.png" alt="Kreftforeningens logo" class="logo-image"> </a> </div>
+            <div class="header-text"> <h1>Representantutforsker</h1> <div class="header-subtitle">Oversikt over Stortingsrepresentanter 2025-2029</div> </div>
+            <div class="nav-links"></div>
+        </header>
+
+        <div class="representative-filters">
+            <div class="filter-group"> <label for="constituency-filter">Velg Valgkrets:</label> <select id="constituency-filter" class="filter-dropdown"> <option value="all">Alle Valgkretser</option> </select> </div>
+            <div class="filter-group"> <label for="party-filter">Velg Parti:</label> <select id="party-filter" class="filter-dropdown"> <option value="all">Alle Partier</option> </select> </div>
+            <div class="filter-group"> <label for="committee-filter">Velg Komité:</label> <select id="committee-filter" class="filter-dropdown"> <option value="all">Alle Komiteer</option> </select> </div>
+            <div class="filter-group search-group"> <label for="name-search">Søk på navn:</label> <input type="text" id="name-search" placeholder="Skriv inn navn..." class="search-input"> </div>
+            <div class="filter-group count-group"> <span id="representative-count">Laster...</span> representanter vises. </div>
+        </div>
+
+        <div class="content-layout-wrapper">
+            <div class="main-content-area">
+                <div id="representatives-view">
+                    <h3>Alle Representanter</h3>
+                    <p class="interaction-hint">Klikk på en representant for mer informasjon.</p>
+                    <div id="representative-grid" class="representative-grid">
+                        <div class="loader">Laster representanter...</div>
+                    </div>
+                </div>
+            </div>
+
+            <aside id="representative-detail-panel" class="representative-detail-panel">
+                <div class="panel-content">
+                    <div class="placeholder-text">
+                        <h3>Representantinformasjon</h3>
+                        <p>Velg en representant fra listen til venstre for å se detaljer.</p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <div id="representative-detail-modal" class="quote-modal">
+            <div class="quote-modal-content">
+                <span class="close-modal" id="close-representative-modal">×</span>
+                <div id="representative-detail-content"></div>
+            </div>
+        </div>
+
+        <footer> Representantdata for Stortingsperioden 2025-2029. </footer>
+    </div>
+
+    <script src="js/navigationConfig.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/partiesData.js"></script>
+    <script src="js/representatives.js"></script> </body>
+</html>
