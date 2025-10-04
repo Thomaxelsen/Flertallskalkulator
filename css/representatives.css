@@ -128,3 +128,59 @@
 
 .representative-detail-modal { display: none; } /* Modal er skjult som standard */
 .privacy-notice { font-size: 0.8rem; color: #777; margin-top: 15px; text-align: center; border-top: 1px dashed #ddd; padding-top: 10px;}
+
+/* === NY KODE FOR GRUPPERINGSOVERSKRIFTER === */
+
+.main-sort-group {
+    flex-basis: 100%; /* Tar full bredde på liten skjerm */
+}
+@media (min-width: 768px) {
+    .main-sort-group {
+        flex-basis: auto; /* Går tilbake til normal på større skjerm */
+        flex-grow: 0.5;
+    }
+}
+
+/* Stil for enkel tekst-overskrift (for valgkrets og komité) */
+.group-separator {
+    grid-column: 1 / -1;
+    font-size: 1.2rem;
+    padding: 15px 0 10px 0;
+    margin-top: 20px;
+    font-weight: bold;
+    color: var(--kf-blue);
+    border-bottom: 2px solid var(--kf-purple);
+}
+.group-separator:first-of-type {
+    margin-top: 0;
+}
+
+/* Stil for den nye, pene parti-overskriften */
+.party-separator-card {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background-color: #fff;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-top: 25px;
+    border: 1px solid #e0e0e0;
+    border-left: 5px solid var(--party-color, #ccc);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.04);
+}
+.party-separator-card:first-of-type {
+    margin-top: 0;
+}
+
+.party-separator-card img {
+    height: 50px;
+    width: 50px;
+    object-fit: contain;
+}
+
+.party-separator-card h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #333;
+}
