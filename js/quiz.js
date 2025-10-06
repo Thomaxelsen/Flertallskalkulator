@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let womenWithImages = [];
     let score = 0;
     let currentQuizType = null;
+    let allCommittees = [];
 
     // DOM-elementer
     const selectionArea = document.getElementById('quiz-selection-area');
@@ -23,10 +24,15 @@ document.addEventListener('DOMContentLoaded', () => {
     ]).then(([repsData, partiesData]) => {
         allRepresentatives = repsData.filter(rep => rep.isActive && rep.gender);
         partiesData.forEach(p => partiesMap[p.shorthand] = p);
-        
+
         repsWithImagesAndGender = allRepresentatives.filter(rep => rep.imageUrl);
         menWithImages = repsWithImagesAndGender.filter(rep => rep.gender === 'M');
         womenWithImages = repsWithImagesAndGender.filter(rep => rep.gender === 'K');
+
+        allCommittees = [...new Set(allRepresentatives
+            .filter(rep => rep.committee && rep.committee.trim() !== '')
+            .map(rep => rep.committee.trim())
+        )];
         
         console.log(`Quiz: Loaded ${allRepresentatives.length} active reps and ${Object.keys(partiesMap).length} parties.`);
         setupSelectionListeners();
@@ -271,136 +277,176 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Quiz 3: Koble til Komité (UENDRET) ---
+    function escapeHtml(text) {
+        if (typeof text !== 'string') return '';
+        return text
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    function escapeAttribute(text) {
+        return escapeHtml(text);
+    }
+
+    function createRepresentativeImageMarkup(rep) {
+        if (rep.imageUrl) {
+            const safeUrl = escapeAttribute(rep.imageUrl);
+            const safeName = escapeAttribute(rep.name);
+            return `<img src="${safeUrl}" alt="${safeName}" class="committee-rep-image">`;
+        }
+
+        const initials = rep.name
+            .split(' ')
+            .filter(Boolean)
+            .map(part => part[0])
+            .join('')
+            .slice(0, 2)
+            .toUpperCase();
+
+        return `<div class="committee-rep-placeholder">${initials}</div>`;
+    }
+
+    function getCommitteeOptions(correctCommittee, optionPool) {
+        const options = new Set([correctCommittee]);
+        const shuffledPool = shuffleArray([...optionPool]);
+
+        for (const committee of shuffledPool) {
+            if (options.size >= Math.min(4, optionPool.length)) break;
+            options.add(committee);
+        }
+
+        return shuffleArray([...options]);
+    }
+
     function startMatchCommitteeQuiz() {
         const repsWithCommittee = allRepresentatives.filter(rep => rep.committee && rep.committee.trim() !== "");
-        if (repsWithCommittee.length < 10) {
+        if (repsWithCommittee.length < 4 || allCommittees.length < 2) {
             quizContent.innerHTML = "<p>For få representanter med komité-tilhørighet til å starte quizen.</p>";
             return;
         }
 
-        const selectedReps = shuffleArray([...repsWithCommittee]).slice(0, 10);
-        const names = shuffleArray(selectedReps.map(rep => ({ name: rep.name, committee: rep.committee })));
-        
-        const uniqueCommittees = [...new Set(selectedReps.map(rep => rep.committee))];
-        const committees = shuffleArray(uniqueCommittees);
+        const numberOfQuestions = Math.min(8, repsWithCommittee.length);
+        const selectedReps = shuffleArray([...repsWithCommittee]).slice(0, numberOfQuestions);
 
-        quizContent.innerHTML = `
-            <div class="match-committee-container">
-                <p class="match-instructions">Dra navnet på politikeren til riktig komité.</p>
-                <div class="match-lists-wrapper">
-                    <div class="draggable-names-list">
-                        <div class="list-title">Politikere</div>
-                        <div id="names-source">
-                            ${names.map(p => `<div class="name-item" draggable="true" data-name="${p.name}" data-correct-committee="${p.committee}">${p.name}</div>`).join('')}
+        const cardsHTML = selectedReps.map((rep, index) => {
+            const trimmedCommittee = rep.committee.trim();
+            const safeCommitteeAttr = escapeAttribute(trimmedCommittee);
+            const safeName = escapeHtml(rep.name);
+            const safeParty = rep.partyShorthand ? escapeHtml(rep.partyShorthand) : '';
+            const committeeOptions = getCommitteeOptions(trimmedCommittee, allCommittees);
+            const imageMarkup = createRepresentativeImageMarkup(rep);
+
+            return `
+                <div class="committee-card" data-correct-committee="${safeCommitteeAttr}">
+                    <div class="committee-rep-info">
+                        <div class="committee-rep-visual">${imageMarkup}</div>
+                        <div class="committee-rep-meta">
+                            <div class="committee-rep-name">${safeName}</div>
+                            ${safeParty ? `<div class="committee-rep-party">${safeParty}</div>` : ''}
                         </div>
                     </div>
-                    <div class="droppable-committees-list">
-                        <div class="list-title">Komiteer</div>
-                        <div id="committees-target">
-                            ${committees.map(c => `<div class="committee-target" data-committee-name="${c}"><span class="committee-name">${c}</span></div>`).join('')}
-                        </div>
+                    <div class="committee-options" role="radiogroup" aria-label="Komitévalg for ${safeName}">
+                        ${committeeOptions.map((option, optionIndex) => `
+                            <label class="committee-option" data-committee="${escapeAttribute(option)}">
+                                <input type="radio" name="committee-${index}" value="${escapeAttribute(option)}">
+                                <span>${escapeHtml(option)}</span>
+                            </label>
+                        `).join('')}
                     </div>
                 </div>
+            `;
+        }).join('');
+
+        quizContent.innerHTML = `
+            <div class="committee-quiz-container">
+                <p class="match-instructions">Marker hvilken komité du mener hver representant sitter i.</p>
+                <div class="committee-card-grid">
+                    ${cardsHTML}
+                </div>
                 <div class="quiz-controls">
-                    <button id="submit-committee-match" class="button primary">Send inn svar</button>
+                    <button id="submit-committee-answers" class="button primary">Sjekk svar</button>
                 </div>
             </div>
         `;
-        setupDragAndDrop();
+
+        const submitBtn = document.getElementById('submit-committee-answers');
+        submitBtn.addEventListener('click', () => {
+            evaluateCommitteeQuiz();
+        });
     }
 
-    function setupDragAndDrop() {
-        const nameItems = document.querySelectorAll('.name-item');
-        const committeeTargets = document.querySelectorAll('.committee-target');
-        const submitBtn = document.getElementById('submit-committee-match');
-        const namesSource = document.getElementById('names-source');
-        let draggedItem = null;
+    function evaluateCommitteeQuiz() {
+        const submitBtn = document.getElementById('submit-committee-answers');
+        const cards = quizContent.querySelectorAll('.committee-card');
+        const oldFeedback = quizContent.querySelector('.feedback-message');
+        if (oldFeedback) oldFeedback.remove();
 
-        nameItems.forEach(item => {
-            item.addEventListener('dragstart', () => {
-                draggedItem = item;
-                setTimeout(() => item.classList.add('dragging'), 0);
-            });
-            item.addEventListener('dragend', () => {
-                draggedItem.classList.remove('dragging');
-                draggedItem = null;
-            });
-        });
-
-        const allDropZones = [...committeeTargets, namesSource];
-
-        allDropZones.forEach(zone => {
-            zone.addEventListener('dragover', e => {
-                e.preventDefault();
-                zone.classList.add('drag-over');
-            });
-            zone.addEventListener('dragenter', e => e.preventDefault());
-            zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
-            zone.addEventListener('drop', (e) => {
-                e.preventDefault();
-                zone.classList.remove('drag-over');
-                
-                if (zone.classList.contains('committee-target') && zone.querySelector('.name-item')) {
-                    const existingItem = zone.querySelector('.name-item');
-                    draggedItem.parentElement.appendChild(existingItem);
-                    zone.appendChild(draggedItem);
-                } else {
-                    zone.appendChild(draggedItem);
-                }
-            });
-        });
-
-        submitBtn.addEventListener('click', checkCommitteeMatches);
-    }
-    
-    function checkCommitteeMatches() {
-        const submitBtn = document.getElementById('submit-committee-match');
-        const targets = document.querySelectorAll('.committee-target');
         let correctCount = 0;
-        let totalPlaced = 0;
-        let allCorrect = true;
+        let unansweredCount = 0;
 
-        targets.forEach(target => {
-            const placedItem = target.querySelector('.name-item');
-            target.classList.remove('correct', 'incorrect');
-            
-            if (placedItem) {
-                totalPlaced++;
-                const isCorrect = placedItem.dataset.correctCommittee === target.dataset.committeeName;
-                if (isCorrect) {
-                    target.classList.add('correct');
-                    placedItem.draggable = false;
-                    correctCount++;
-                } else {
-                    target.classList.add('incorrect');
-                    placedItem.draggable = true;
-                    allCorrect = false;
+        cards.forEach(card => {
+            const correctCommittee = card.dataset.correctCommittee;
+            const selectedInput = card.querySelector('input[type="radio"]:checked');
+            const optionLabels = card.querySelectorAll('.committee-option');
+
+            card.classList.remove('correct', 'incorrect', 'unanswered');
+            optionLabels.forEach(label => {
+                label.classList.remove('correct', 'incorrect', 'selected');
+            });
+
+            if (!selectedInput) {
+                unansweredCount++;
+                card.classList.add('unanswered');
+                return;
+            }
+
+            const selectedLabel = selectedInput.closest('.committee-option');
+            if (selectedLabel) {
+                selectedLabel.classList.add('selected');
+            }
+
+            if (selectedInput.value === correctCommittee) {
+                card.classList.add('correct');
+                if (selectedLabel) {
+                    selectedLabel.classList.add('correct');
                 }
+                correctCount++;
             } else {
-                allCorrect = false;
+                card.classList.add('incorrect');
+                if (selectedLabel) {
+                    selectedLabel.classList.add('incorrect');
+                }
+                optionLabels.forEach(label => {
+                    if (label.dataset.committee === correctCommittee) {
+                        label.classList.add('correct');
+                    }
+                });
             }
         });
 
-        const unplacedItems = document.querySelectorAll('#names-source .name-item');
-        if (unplacedItems.length > 0) {
-            allCorrect = false;
-        }
-
-        const oldFeedback = document.querySelector('.feedback-message');
-        if(oldFeedback) oldFeedback.remove();
-
         const feedback = document.createElement('div');
         feedback.className = 'feedback-message';
-        
-        if (allCorrect && totalPlaced === 10) {
+
+        if (unansweredCount > 0) {
+            feedback.classList.add('incorrect');
+            feedback.textContent = `Du må svare på alle spørsmålene før du kan sjekke resultatet. (${unansweredCount} uten svar)`;
+        } else if (correctCount === cards.length) {
             feedback.classList.add('correct');
-            feedback.textContent = `Gratulerer, alt er riktig! (${correctCount}/10)`;
-            submitBtn.style.display = 'none';
+            feedback.textContent = `Strålende! Du traff riktig på alle ${correctCount} representantene.`;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Alle svar er riktige';
+            cards.forEach(card => {
+                card.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = true);
+            });
         } else {
             feedback.classList.add('incorrect');
-            feedback.textContent = `Du har ${correctCount} av ${totalPlaced} plasserte riktig. Prøv å rette feilene!`;
-            submitBtn.textContent = "Sjekk på nytt";
+            feedback.textContent = `Du har ${correctCount} av ${cards.length} riktig. Gjør endringer og prøv igjen!`;
+            submitBtn.textContent = 'Sjekk på nytt';
         }
+
         submitBtn.parentElement.prepend(feedback);
     }
 });
