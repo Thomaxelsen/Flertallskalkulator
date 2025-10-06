@@ -137,6 +137,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const header = document.createElement('div');
         header.className = 'constellation-header';
 
+        const seatCount = combo.reduce((total, shorthand) => {
+            const partyInfo = parties.find(p => p.shorthand === shorthand);
+            return partyInfo ? total + (partyInfo.seats || 0) : total;
+        }, 0);
+
         // *** START PÅ ENDRING ***
         combo.forEach(shorthand => {
             const partyInfo = parties.find(p => p.shorthand === shorthand);
@@ -163,6 +168,11 @@ document.addEventListener('DOMContentLoaded', () => {
             header.appendChild(tag);
         });
         // *** SLUTT PÅ ENDRING ***
+
+        const seatBadge = document.createElement('div');
+        seatBadge.className = 'constellation-seat-badge';
+        seatBadge.innerHTML = `<strong>${seatCount}</strong> representanter`;
+        header.appendChild(seatBadge);
 
         const agreementText = document.createElement('span');
         agreementText.textContent = ` er enige om ${issues.length} sak${issues.length > 1 ? 'er' : ''}:`;
