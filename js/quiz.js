@@ -382,7 +382,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const submitBtn = document.getElementById('submit-committee-answers');
         const cards = quizContent.querySelectorAll('.committee-card');
         const oldFeedback = quizContent.querySelector('.feedback-message');
+        const oldRestartBtn = quizContent.querySelector('#restart-committee-quiz');
         if (oldFeedback) oldFeedback.remove();
+        if (oldRestartBtn) oldRestartBtn.remove();
 
         let correctCount = 0;
         let unansweredCount = 0;
@@ -433,20 +435,36 @@ document.addEventListener('DOMContentLoaded', () => {
         if (unansweredCount > 0) {
             feedback.classList.add('incorrect');
             feedback.textContent = `Du må svare på alle spørsmålene før du kan sjekke resultatet. (${unansweredCount} uten svar)`;
-        } else if (correctCount === cards.length) {
-            feedback.classList.add('correct');
-            feedback.textContent = `Strålende! Du traff riktig på alle ${correctCount} representantene.`;
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Alle svar er riktige';
-            cards.forEach(card => {
-                card.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = true);
-            });
-        } else {
-            feedback.classList.add('incorrect');
-            feedback.textContent = `Du har ${correctCount} av ${cards.length} riktig. Gjør endringer og prøv igjen!`;
-            submitBtn.textContent = 'Sjekk på nytt';
+            submitBtn.textContent = 'Sjekk svar';
+            submitBtn.parentElement.prepend(feedback);
+            return;
         }
 
+        if (correctCount === cards.length) {
+            feedback.classList.add('correct');
+            feedback.textContent = `Strålende! Du traff riktig på alle ${correctCount} representantene.`;
+            submitBtn.textContent = 'Alle svar er riktige';
+        } else {
+            feedback.classList.add('incorrect');
+            feedback.textContent = `Du har ${correctCount} av ${cards.length} riktig. Start en ny runde for å prøve igjen.`;
+            submitBtn.textContent = 'Svar sendt';
+        }
+
+        cards.forEach(card => {
+            card.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = true);
+        });
+
+        submitBtn.disabled = true;
         submitBtn.parentElement.prepend(feedback);
+
+        const restartBtn = document.createElement('button');
+        restartBtn.id = 'restart-committee-quiz';
+        restartBtn.className = 'button secondary';
+        restartBtn.textContent = 'Start ny runde';
+        restartBtn.addEventListener('click', () => {
+            startMatchCommitteeQuiz();
+        }, { once: true });
+
+        submitBtn.parentElement.appendChild(restartBtn);
     }
 });
