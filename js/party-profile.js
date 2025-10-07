@@ -160,24 +160,58 @@ document.addEventListener('DOMContentLoaded', function() {
         const issuesDiv = document.createElement('div');
         issuesDiv.className = 'profile-issues-section';
         issuesDiv.innerHTML = `
-            <h3>Detaljert Saksoversikt</h3>
-            <div class="issues-tabs">
-                 <button class="tab-button active" data-tab="level2">Full enighet (${stanceCounts.level2})</button>
-                 <button class="tab-button" data-tab="level1">Delvis enighet (${stanceCounts.level1})</button>
-                 <button class="tab-button" data-tab="level0">Ingen støtte (${stanceCounts.level0})</button>
+            <div class="issues-header">
+                <div class="issues-heading-group">
+                    <h3>Detaljert Saksoversikt</h3>
+                    <p class="issues-subtitle">Utforsk hva partiet mener i hver sak, og åpne et panel for å sammenligne alle partienes standpunkter.</p>
+                </div>
+                <div class="issues-stats">
+                    <div class="issues-stat">
+                        <span class="issues-stat-label">Full enighet</span>
+                        <span class="issues-stat-value">${stanceCounts.level2}</span>
+                    </div>
+                    <div class="issues-stat">
+                        <span class="issues-stat-label">Delvis enighet</span>
+                        <span class="issues-stat-value">${stanceCounts.level1}</span>
+                    </div>
+                    <div class="issues-stat">
+                        <span class="issues-stat-label">Ingen støtte</span>
+                        <span class="issues-stat-value">${stanceCounts.level0}</span>
+                    </div>
+                </div>
             </div>
-             <div class="tab-content active" id="tab-content-level2">
-                ${generateIssueListHTML(issuesByLevel.level2, 'agree')}
+            <div class="issues-main" aria-live="polite">
+                <div class="issues-tabs" role="tablist">
+                    <button class="tab-button active" role="tab" aria-selected="true" aria-controls="tab-content-level2" data-tab="level2">Full enighet (${stanceCounts.level2})</button>
+                    <button class="tab-button" role="tab" aria-selected="false" aria-controls="tab-content-level1" data-tab="level1">Delvis enighet (${stanceCounts.level1})</button>
+                    <button class="tab-button" role="tab" aria-selected="false" aria-controls="tab-content-level0" data-tab="level0">Ingen støtte (${stanceCounts.level0})</button>
+                </div>
+                <div class="tab-content active" id="tab-content-level2" role="tabpanel">
+                    ${generateIssueListHTML(issuesByLevel.level2, 'agree', 'Full enighet')}
+                </div>
+                <div class="tab-content" id="tab-content-level1" role="tabpanel">
+                    ${generateIssueListHTML(issuesByLevel.level1, 'partial', 'Delvis enighet')}
+                </div>
+                <div class="tab-content" id="tab-content-level0" role="tabpanel">
+                    ${generateIssueListHTML(issuesByLevel.level0, 'disagree', 'Ingen støtte')}
+                </div>
             </div>
-            <div class="tab-content" id="tab-content-level1">
-                 ${generateIssueListHTML(issuesByLevel.level1, 'partial')}
-             </div>
-             <div class="tab-content" id="tab-content-level0">
-                 ${generateIssueListHTML(issuesByLevel.level0, 'disagree')}
-            </div>
+            <aside class="issue-detail-overlay" aria-hidden="true">
+                <div class="issue-detail-panel" role="dialog" aria-modal="false" aria-labelledby="issue-detail-title">
+                    <div class="issue-detail-panel-header">
+                        <button type="button" class="issue-detail-close" aria-label="Lukk sakspanel">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="issue-detail-scroll">
+                        <div class="issue-detail-content" id="issue-detail-content"></div>
+                    </div>
+                </div>
+            </aside>
         `;
         issuesBoxContent.appendChild(issuesDiv);
         setupProfileTabs(issuesDiv);
+        setupIssueDetailInteractions(issuesDiv);
     }
     function renderStanceChartBox(stanceCounts) {
          clearBoxContent(stanceChartBoxContent); if (!stanceChartBoxContent) return;
@@ -431,8 +465,150 @@ document.addEventListener('DOMContentLoaded', function() {
     function createAreaChart(sortedAreasData, partyInfo) {
         const plotDivId = 'plotly-area-chart'; const plotDiv = document.getElementById(plotDivId); if (!plotDiv) { console.error(`Element with ID ${plotDivId} not found`); return; } plotDiv.innerHTML = ''; const labels = sortedAreasData.map(area => area.name); const values = sortedAreasData.map(area => area.score); const palette = buildChartPalette(partyInfo.color); const data = [{ type: 'scatterpolar', r: values, theta: labels, fill: 'toself', name: partyInfo.name, marker: { color: palette.primary, size: 8 }, line: { color: palette.primary, width: 3 }, fillcolor: palette.primarySoft, hovertemplate: '<b>%{theta}</b><br>Score: %{r:.2f}<extra></extra>' }]; const layout = { polar: { radialaxis: { visible: true, range: [0, 2], tickvals: [0, 1, 2], ticktext: ['0', '1', '2'], angle: 90, tickfont: { size: 12, color: '#3b4a66' }, gridcolor: 'rgba(35, 70, 120, 0.12)', gridwidth: 1.4 }, angularaxis: { tickfont: { size: 12, color: '#3b4a66' }, gridcolor: 'rgba(35, 70, 120, 0.14)', gridwidth: 1 }, bgcolor: 'rgba(255,255,255,0.55)' }, showlegend: false, height: 320, margin: { l: 40, r: 40, t: 30, b: 40 }, paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)', font: { color: '#23314f' } }; try { Plotly.newPlot(plotDivId, data, layout, {responsive: true, displayModeBar: false}); } catch (e) { console.error("Plotly error Area Chart:", e); plotDiv.innerHTML = '<p class="error">Feil ved lasting.</p>'; }
     }
-    function generateIssueListHTML(issues, agreementTypeClass) {
-        if (!issues || issues.length === 0) { return '<p class="no-issues">Ingen saker i denne kategorien.</p>'; } return `<ul class="issue-list"> ${issues.map(issue => ` <li class="issue-item ${agreementTypeClass}-item"> <strong>${issue.name}</strong> <div class="issue-area">${issue.area || 'Ukjent område'}</div> ${issue.quote ? `<div class="issue-quote">"${issue.quote}"</div>` : ''} </li> `).join('')} </ul>`;
+    function generateIssueListHTML(issues, agreementTypeClass, agreementLabel) {
+        if (!issues || issues.length === 0) {
+            return '<p class="no-issues">Ingen saker i denne kategorien.</p>';
+        }
+
+        return `<ul class="issue-list">
+            ${issues.map(issue => {
+                const quoteMarkup = issue.quote ? `<p class="issue-item-quote">«${issue.quote}»</p>` : '';
+                return `
+                    <li class="issue-item ${agreementTypeClass}-item" data-issue-id="${issue.id}" tabindex="0" role="button" aria-label="Se alle partiers standpunkt i saken ${issue.name}">
+                        <div class="issue-item-sheen"></div>
+                        <div class="issue-item-content">
+                            <div class="issue-item-top">
+                                <span class="issue-item-status">${agreementLabel}</span>
+                                <span class="issue-item-area">${issue.area || 'Ukjent område'}</span>
+                            </div>
+                            <h4 class="issue-item-title">${issue.name}</h4>
+                            ${quoteMarkup}
+                            <div class="issue-item-footer">
+                                <span class="issue-item-action">Se alle partier</span>
+                            </div>
+                        </div>
+                    </li>
+                `;
+            }).join('')}
+        </ul>`;
+    }
+
+    function setupIssueDetailInteractions(issuesSectionElement) {
+        if (!issuesSectionElement) return;
+
+        const overlay = issuesSectionElement.querySelector('.issue-detail-overlay');
+        const overlayContent = overlay?.querySelector('.issue-detail-content');
+        const closeButton = overlay?.querySelector('.issue-detail-close');
+        const issuesMain = issuesSectionElement.querySelector('.issues-main');
+
+        if (!overlay || !overlayContent || !closeButton || !issuesMain) return;
+
+        let lastFocusedIssue = null;
+
+        const issueItems = issuesSectionElement.querySelectorAll('.issue-item[data-issue-id]');
+        issueItems.forEach(item => {
+            item.addEventListener('click', () => openIssueDetail(item.dataset.issueId, item));
+            item.addEventListener('keydown', event => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    openIssueDetail(item.dataset.issueId, item);
+                }
+            });
+        });
+
+        closeButton.addEventListener('click', () => closeIssueDetail());
+        overlay.addEventListener('keydown', event => {
+            if (event.key === 'Escape') {
+                event.preventDefault();
+                closeIssueDetail();
+            }
+        });
+
+        overlay.addEventListener('click', event => {
+            if (event.target === overlay) {
+                closeIssueDetail();
+            }
+        });
+
+        function openIssueDetail(issueId, triggerElement) {
+            if (!issueId || !overlayContent) return;
+            const issue = issuesData.find(item => String(item.id) === String(issueId));
+            if (!issue) {
+                console.warn('Party Profile v2.3: Issue not found for detail panel', issueId);
+                return;
+            }
+
+            overlayContent.innerHTML = buildIssueDetailMarkup(issue);
+            lastFocusedIssue = triggerElement || null;
+
+            issuesSectionElement.classList.add('showing-issue-detail');
+            issuesMain.setAttribute('aria-hidden', 'true');
+            overlay.setAttribute('aria-hidden', 'false');
+            overlay.classList.add('active');
+
+            requestAnimationFrame(() => {
+                closeButton.focus();
+            });
+        }
+
+        function closeIssueDetail() {
+            issuesSectionElement.classList.remove('showing-issue-detail');
+            issuesMain.removeAttribute('aria-hidden');
+            overlay.setAttribute('aria-hidden', 'true');
+            overlay.classList.remove('active');
+            if (lastFocusedIssue) {
+                lastFocusedIssue.focus();
+            }
+        }
+    }
+
+    function buildIssueDetailMarkup(issue) {
+        const descriptionMarkup = issue.description ? `<p class="issue-detail-description">${issue.description}</p>` : '';
+        const parties = [...partiesData];
+        const partyItems = parties.map(party => {
+            const stance = issue.partyStances ? issue.partyStances[party.shorthand] : null;
+            const stanceMeta = getStanceMeta(stance?.level);
+            const quote = stance?.quote ? `<p class="issue-detail-quote">«${stance.quote}»</p>` : '<p class="issue-detail-quote issue-detail-quote--muted">Ingen standpunkt registrert.</p>';
+            return `
+                <li class="issue-detail-item">
+                    <div class="issue-detail-party">
+                        <span class="issue-party-indicator" style="--party-color: ${party.color || '#c4c8d0'}"></span>
+                        <div class="issue-detail-party-text">
+                            <span class="issue-detail-party-name">${party.name}</span>
+                            <span class="issue-detail-badge ${stanceMeta.badgeClass}">${stanceMeta.label}</span>
+                        </div>
+                    </div>
+                    ${quote}
+                </li>
+            `;
+        }).join('');
+
+        return `
+            <header class="issue-detail-header">
+                <div class="issue-detail-meta">
+                    <span class="issue-detail-area">${issue.area || 'Ukjent område'}</span>
+                </div>
+                <h4 id="issue-detail-title">${issue.name}</h4>
+                ${descriptionMarkup}
+            </header>
+            <div class="issue-detail-divider"></div>
+            <ul class="issue-detail-list">
+                ${partyItems}
+            </ul>
+        `;
+    }
+
+    function getStanceMeta(level) {
+        if (level === 2) {
+            return { label: 'Full enighet', badgeClass: 'stance-badge--agree' };
+        }
+        if (level === 1) {
+            return { label: 'Delvis enighet', badgeClass: 'stance-badge--partial' };
+        }
+        if (level === 0) {
+            return { label: 'Ingen støtte', badgeClass: 'stance-badge--disagree' };
+        }
+        return { label: 'Ingen informasjon', badgeClass: 'stance-badge--unknown' };
     }
 
     function setupProfileTabs(issuesSectionElement) {
@@ -443,23 +619,43 @@ document.addEventListener('DOMContentLoaded', function() {
              return;
          }
           console.log(`Party Profile v2.3: Setting up ${tabButtons.length} tab buttons.`);
-         tabButtons.forEach(button => {
-             button.replaceWith(button.cloneNode(true));
-         });
-          const newTabButtons = issuesSectionElement.querySelectorAll('.tab-button');
-         newTabButtons.forEach(button => {
-             button.addEventListener('click', function() {
-                 const tabIdToShow = `tab-content-${this.dataset.tab}`;
-                 newTabButtons.forEach(btn => btn.classList.remove('active'));
-                 tabContents.forEach(content => content.classList.remove('active'));
-                 this.classList.add('active');
-                 const contentToShow = issuesSectionElement.querySelector(`#${tabIdToShow}`);
-                 if (contentToShow) {
-                     contentToShow.classList.add('active');
-                 } else { console.warn(`Could not find tab content with ID: ${tabIdToShow}`); }
-             });
-         });
-         console.log("Party Profile v2.3: Tab listeners set up.");
+        tabButtons.forEach(button => {
+            button.replaceWith(button.cloneNode(true));
+        });
+        const newTabButtons = issuesSectionElement.querySelectorAll('.tab-button');
+        newTabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const tabIdToShow = `tab-content-${this.dataset.tab}`;
+                newTabButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-selected', 'false');
+                });
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    content.setAttribute('hidden', 'true');
+                });
+                this.classList.add('active');
+                this.setAttribute('aria-selected', 'true');
+                const contentToShow = issuesSectionElement.querySelector(`#${tabIdToShow}`);
+                if (contentToShow) {
+                    contentToShow.classList.add('active');
+                    contentToShow.removeAttribute('hidden');
+                } else {
+                    console.warn(`Could not find tab content with ID: ${tabIdToShow}`);
+                }
+            });
+        });
+        tabContents.forEach((content, index) => {
+            if (!content.classList.contains('active')) {
+                content.setAttribute('hidden', 'true');
+            } else {
+                content.removeAttribute('hidden');
+            }
+            if (newTabButtons[index]) {
+                newTabButtons[index].setAttribute('aria-selected', content.classList.contains('active') ? 'true' : 'false');
+            }
+        });
+        console.log("Party Profile v2.3: Tab listeners set up.");
     }
 
     // Hjelpefunksjoner
