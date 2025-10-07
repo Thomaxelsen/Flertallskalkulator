@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Referanser til DOM-elementer
     const profileContentGrid = document.getElementById('profile-content');
     const partySelect = document.getElementById('party-select');
+    const partyLogoBanner = document.getElementById('party-logo-banner');
+    const partyHeroSection = document.getElementById('party-hero');
     const placeholderDiv = document.querySelector('.profile-placeholder');
     const issuesBoxContent = document.getElementById('profile-issues-content');
     const candidatesBox = document.querySelector('.box-candidates');
@@ -73,6 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
          }
         placeholderDiv.style.display = 'flex';
         profileContentGrid.classList.remove('active');
+        resetPartyHero();
 
         partySelect.removeEventListener('change', handlePartySelection);
         partySelect.querySelectorAll('option:not([value=""])').forEach(o => o.remove());
@@ -82,6 +85,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const option = document.createElement('option'); option.value = party.shorthand; option.textContent = party.name; partySelect.appendChild(option);
              } else { console.warn(`Party Profile v2.3: Skipping party ${party.shorthand} in dropdown - no representative data found.`); }
         });
+        buildPartyLogoBanner(sortedParties);
+        setActivePartyLogo(null);
         partySelect.addEventListener('change', handlePartySelection);
 
         if (candidateConstituencyFilter) candidateConstituencyFilter.addEventListener('change', () => handleRepresentativeFiltering(partySelect.value));
@@ -97,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Kjernefunksjoner ---
     function handlePartySelection() {
          const selectedShorthand = this.value;
-         if (!selectedShorthand) { placeholderDiv.style.display = 'flex'; profileContentGrid.classList.remove('active'); clearBoxContent(issuesBoxContent); clearBoxContent(candidatesBoxContent, true); clearBoxContent(stanceChartBoxContent); clearBoxContent(areaChartBoxContent); return; }
+         if (!selectedShorthand) { placeholderDiv.style.display = 'flex'; profileContentGrid.classList.remove('active'); clearBoxContent(issuesBoxContent); clearBoxContent(candidatesBoxContent, true); clearBoxContent(stanceChartBoxContent); clearBoxContent(areaChartBoxContent); resetPartyHero(); setActivePartyLogo(null); return; }
          placeholderDiv.style.display = 'none'; profileContentGrid.classList.add('active');
          showLoader(issuesBoxContent); showLoader(candidateGrid);
          showLoader(stanceChartBoxContent); showLoader(areaChartBoxContent);
@@ -107,6 +112,8 @@ document.addEventListener('DOMContentLoaded', function() {
              try {
                  const partyInfo = partiesMap[selectedShorthand]; if (!partyInfo) throw new Error(`Party info not found for ${selectedShorthand}`);
                  const partyIssueData = processPartyIssueData(selectedShorthand);
+                 setActivePartyLogo(selectedShorthand);
+                 updatePartyHero(partyInfo, partyIssueData);
                  renderIssuesBox(partyIssueData.issuesByLevel, partyIssueData.stanceCounts);
                  renderStanceChartBox(partyIssueData.stanceCounts, partyInfo);
                  renderAreaChartBox(partyIssueData.sortedAreas, partyInfo);
@@ -144,13 +151,13 @@ document.addEventListener('DOMContentLoaded', function() {
     function renderStanceChartBox(stanceCounts, partyInfo) {
          clearBoxContent(stanceChartBoxContent); if (!stanceChartBoxContent) return;
          const chartContainer = document.createElement('div'); chartContainer.className = 'chart-container';
-         chartContainer.innerHTML = `<h3>Fordeling av Standpunkt</h3><div id="plotly-stance-chart"></div>`;
+         chartContainer.innerHTML = `<h3>Fordeling av Standpunkt</h3><div id="plotly-stance-chart" class="chart-surface"></div>`;
          stanceChartBoxContent.appendChild(chartContainer); createStanceChart(stanceCounts, partyInfo);
     }
     function renderAreaChartBox(sortedAreasData, partyInfo) {
          clearBoxContent(areaChartBoxContent); if (!areaChartBoxContent) return;
          const chartContainer = document.createElement('div'); chartContainer.className = 'chart-container';
-         chartContainer.innerHTML = `<h3>Gj.snitt Støtte per Saksområde</h3><div id="plotly-area-chart"></div>`;
+         chartContainer.innerHTML = `<h3>Gj.snitt Støtte per Saksområde</h3><div id="plotly-area-chart" class="chart-surface"></div>`;
          areaChartBoxContent.appendChild(chartContainer); createAreaChart(sortedAreasData, partyInfo);
     }
     function initializeRepresentativesBox(partyShorthand) {
@@ -383,10 +390,10 @@ document.addEventListener('DOMContentLoaded', function() {
         for (const areaName in areasTemp) { const areaData = areasTemp[areaName]; partyProfile.scoresByArea[areaName] = { totalPoints: areaData.totalPoints, count: areaData.count, averageScore: areaData.count > 0 ? (areaData.totalPoints / areaData.count) : 0 }; } const sortedAreaEntries = Object.entries(partyProfile.scoresByArea).sort((a, b) => a[0].localeCompare(b[0])); partyProfile.sortedAreas = sortedAreaEntries.map(([areaName, data]) => ({ name: areaName, score: data.averageScore })); return partyProfile;
     }
     function createStanceChart(stanceCounts, partyInfo) {
-         const plotDivId = 'plotly-stance-chart'; const plotDiv = document.getElementById(plotDivId); if (!plotDiv) { console.error(`Element with ID ${plotDivId} not found`); return; } plotDiv.innerHTML = ''; const data = [{ values: [stanceCounts.level2, stanceCounts.level1, stanceCounts.level0], labels: ['Full Enighet (2)', 'Delvis Enighet (1)', 'Ingen Støtte (0)'], type: 'pie', hole: .4, marker: { colors: ['#28a745', '#ffc107', '#dc3545'], line: { color: '#ffffff', width: 1 } }, hoverinfo: 'label+percent', textinfo: 'value', textfont_size: 14, insidetextorientation: 'radial' }]; const layout = { showlegend: true, legend: { x: 0.5, y: -0.1, xanchor: 'center', orientation: 'h' }, height: 300, margin: { l: 20, r: 20, t: 0, b: 40 }, paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)' }; try { Plotly.newPlot(plotDivId, data, layout, {responsive: true}); } catch (e) { console.error("Plotly error Stance Chart:", e); plotDiv.innerHTML = '<p class="error">Feil ved lasting.</p>'; }
+         const plotDivId = 'plotly-stance-chart'; const plotDiv = document.getElementById(plotDivId); if (!plotDiv) { console.error(`Element with ID ${plotDivId} not found`); return; } plotDiv.innerHTML = ''; const palette = buildChartPalette(partyInfo.color); const data = [{ values: [stanceCounts.level2, stanceCounts.level1, stanceCounts.level0], labels: ['Full Enighet (2)', 'Delvis Enighet (1)', 'Ingen Støtte (0)'], type: 'pie', hole: .56, marker: { colors: [palette.success, palette.warning, palette.danger], line: { color: '#f7fbff', width: 2 } }, hoverinfo: 'label+percent+value', textinfo: 'percent', textfont: { size: 14, color: '#23314f' }, pull: [0.04, 0, 0] }]; const layout = { showlegend: true, legend: { x: 0.5, y: -0.12, xanchor: 'center', orientation: 'h', font: { color: '#35425f', size: 12 } }, height: 320, margin: { l: 14, r: 14, t: 10, b: 60 }, paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)', annotations: [{ text: `Totalt ${stanceCounts.total}`, font: { size: 12, color: '#4a5a78' }, showarrow: false, x: 0.5, y: 0.48 }] }; try { Plotly.newPlot(plotDivId, data, layout, {responsive: true, displayModeBar: false}); } catch (e) { console.error("Plotly error Stance Chart:", e); plotDiv.innerHTML = '<p class="error">Feil ved lasting.</p>'; }
     }
     function createAreaChart(sortedAreasData, partyInfo) {
-        const plotDivId = 'plotly-area-chart'; const plotDiv = document.getElementById(plotDivId); if (!plotDiv) { console.error(`Element with ID ${plotDivId} not found`); return; } plotDiv.innerHTML = ''; const labels = sortedAreasData.map(area => area.name); const values = sortedAreasData.map(area => area.score); const data = [{ type: 'scatterpolar', r: values, theta: labels, fill: 'toself', name: partyInfo.name, marker: { color: partyInfo.color || '#003087' }, line: { color: partyInfo.color || '#003087' } }]; const layout = { polar: { radialaxis: { visible: true, range: [0, 2], tickvals: [0, 1, 2], angle: 90, tickfont: { size: 10 } }, angularaxis: { tickfont: { size: 10 } }, bgcolor: 'rgba(255, 255, 255, 0.6)' }, showlegend: false, height: 300, margin: { l: 40, r: 40, t: 20, b: 40 }, paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)' }; try { Plotly.newPlot(plotDivId, data, layout, {responsive: true}); } catch (e) { console.error("Plotly error Area Chart:", e); plotDiv.innerHTML = '<p class="error">Feil ved lasting.</p>'; }
+        const plotDivId = 'plotly-area-chart'; const plotDiv = document.getElementById(plotDivId); if (!plotDiv) { console.error(`Element with ID ${plotDivId} not found`); return; } plotDiv.innerHTML = ''; const labels = sortedAreasData.map(area => area.name); const values = sortedAreasData.map(area => area.score); const palette = buildChartPalette(partyInfo.color); const data = [{ type: 'scatterpolar', r: values, theta: labels, fill: 'toself', name: partyInfo.name, marker: { color: palette.primary, size: 8 }, line: { color: palette.primary, width: 3 }, fillcolor: palette.primarySoft, hovertemplate: '<b>%{theta}</b><br>Score: %{r:.2f}<extra></extra>' }]; const layout = { polar: { radialaxis: { visible: true, range: [0, 2], tickvals: [0, 1, 2], ticktext: ['0', '1', '2'], angle: 90, tickfont: { size: 12, color: '#3b4a66' }, gridcolor: 'rgba(35, 70, 120, 0.12)', gridwidth: 1.4 }, angularaxis: { tickfont: { size: 12, color: '#3b4a66' }, gridcolor: 'rgba(35, 70, 120, 0.14)', gridwidth: 1 }, bgcolor: 'rgba(255,255,255,0.55)' }, showlegend: false, height: 320, margin: { l: 40, r: 40, t: 30, b: 40 }, paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)', font: { color: '#23314f' } }; try { Plotly.newPlot(plotDivId, data, layout, {responsive: true, displayModeBar: false}); } catch (e) { console.error("Plotly error Area Chart:", e); plotDiv.innerHTML = '<p class="error">Feil ved lasting.</p>'; }
     }
     function generateIssueListHTML(issues, agreementTypeClass) {
         if (!issues || issues.length === 0) { return '<p class="no-issues">Ingen saker i denne kategorien.</p>'; } return `<ul class="issue-list"> ${issues.map(issue => ` <li class="issue-item ${agreementTypeClass}-item"> <strong>${issue.name}</strong> <div class="issue-area">${issue.area || 'Ukjent område'}</div> ${issue.quote ? `<div class="issue-quote">"${issue.quote}"</div>` : ''} </li> `).join('')} </ul>`;
@@ -423,5 +430,120 @@ document.addEventListener('DOMContentLoaded', function() {
      function showLoader(element) { if (element) { element.innerHTML = '<div class="loader">Laster...</div>'; } }
      function showError(element, message) { if (element) { element.innerHTML = `<div class="loader error"><p>Feil: ${message}</p></div>`; } }
      function clearBoxContent(element, keepFilters = false) { if (!element) return; if (keepFilters && element.querySelector('.profile-candidate-filters')) { const grid = element.querySelector('#profile-candidate-grid'); if(grid) grid.innerHTML = ''; const count = element.querySelector('#profile-candidate-count'); if(count) count.textContent = '0'; } else { element.innerHTML = ''; } }
+
+    function buildPartyLogoBanner(sortedParties) {
+        if (!partyLogoBanner) return;
+        partyLogoBanner.innerHTML = '';
+        sortedParties.forEach(party => {
+            if (!representativesMapByParty[party.shorthand] || representativesMapByParty[party.shorthand].length === 0) {
+                return;
+            }
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'party-logo-button';
+            button.dataset.party = party.shorthand;
+            button.setAttribute('aria-label', party.name);
+            button.title = party.name;
+            button.innerHTML = `
+                <img src="${getPartyLogoPath(party.shorthand)}" alt="${party.name} logo">
+                <span>${party.shorthand}</span>
+            `;
+            button.addEventListener('click', () => {
+                if (partySelect) {
+                    partySelect.value = party.shorthand;
+                    partySelect.dispatchEvent(new Event('change'));
+                }
+            });
+            partyLogoBanner.appendChild(button);
+        });
+    }
+
+    function setActivePartyLogo(shorthand) {
+        if (!partyLogoBanner) return;
+        const buttons = partyLogoBanner.querySelectorAll('.party-logo-button');
+        buttons.forEach(button => {
+            const isActive = button.dataset.party === shorthand;
+            button.classList.toggle('selected', isActive);
+            button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+    }
+
+    function updatePartyHero(partyInfo, partyIssueData) {
+        if (!partyHeroSection) return;
+        const cardColor = partyInfo.color || '#0d6efd';
+        const palette = buildChartPalette(cardColor);
+        const reps = representativesMapByParty[partyInfo.shorthand] || [];
+        const representativeCount = reps.length;
+        const stanceCounts = partyIssueData.stanceCounts;
+        const total = stanceCounts.total || 1;
+        const fullAgreementPercent = Math.round((stanceCounts.level2 / total) * 100);
+        const partialPercent = Math.round((stanceCounts.level1 / total) * 100);
+        const weightedScore = ((stanceCounts.level2 * 2) + (stanceCounts.level1 * 1)) / total;
+        const averageScore = Number.isFinite(weightedScore) ? weightedScore.toFixed(2) : '0.00';
+
+        partyHeroSection.innerHTML = `
+            <div class="party-hero-card" style="--party-color:${cardColor}; --party-color-soft:${palette.primarySoft}; --party-color-border:${palette.primarySoftBorder}; --party-color-strong:${palette.primary};">
+                <div class="party-hero-logo">
+                    <img src="${getPartyLogoPath(partyInfo.shorthand)}" alt="${partyInfo.name} logo">
+                </div>
+                <div class="party-hero-details">
+                    <h2 class="party-hero-title">${partyInfo.name}</h2>
+                    <div class="party-hero-meta">
+                        <span class="party-hero-pill accent">Støtteindeks ${averageScore} / 2</span>
+                        <span class="party-hero-pill">${representativeCount} representanter</span>
+                        ${partyInfo.seats ? `<span class="party-hero-pill">${partyInfo.seats} mandater</span>` : ''}
+                    </div>
+                    <p class="party-hero-summary">
+                        Full enighet i ${fullAgreementPercent}% av sakene og delvis enighet i ${partialPercent}%. Utforsk partiets prioriterte saker, representanter og stemmemønster nedenfor.
+                    </p>
+                </div>
+            </div>
+        `;
+    }
+
+    function resetPartyHero() {
+        if (!partyHeroSection) return;
+        partyHeroSection.innerHTML = `
+            <div class="party-hero-placeholder">
+                <p>Velg et parti for å låse opp en skreddersydd profil.</p>
+            </div>
+        `;
+    }
+
+    function getPartyLogoPath(shorthand) {
+        if (!shorthand) return 'images/Logo.png';
+        return `images/parties/${shorthand.toLowerCase()}.png`;
+    }
+
+    function buildChartPalette(baseColor) {
+        const defaultColor = '#0d6efd';
+        const rgb = hexToRgb(baseColor || defaultColor) || hexToRgb(defaultColor);
+        const soft = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.14)`;
+        const softBorder = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.32)`;
+        const warning = 'rgba(255, 184, 34, 0.85)';
+        const success = `rgba(${Math.max(rgb.r - 20, 0)}, ${Math.min(rgb.g + 60, 255)}, ${Math.max(rgb.b - 20, 0)}, 0.95)`;
+        const danger = 'rgba(220, 53, 69, 0.9)';
+        return {
+            primary: `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`,
+            primarySoft: soft,
+            primarySoftBorder: softBorder,
+            warning,
+            success,
+            danger
+        };
+    }
+
+    function hexToRgb(hex) {
+        if (!hex) return null;
+        const normalized = hex.replace('#', '');
+        if (![3, 6].includes(normalized.length)) return null;
+        const padded = normalized.length === 3 ? normalized.split('').map(ch => ch + ch).join('') : normalized;
+        const bigint = parseInt(padded, 16);
+        return {
+            r: (bigint >> 16) & 255,
+            g: (bigint >> 8) & 255,
+            b: bigint & 255
+        };
+    }
 
 }); // Slutt på DOMContentLoaded
