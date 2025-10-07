@@ -33,6 +33,22 @@
     flex: 0 0 auto; /* Ikke la headeren krympe */
 }
 
+.party-logo {
+    width: 54px;
+    height: 54px;
+    margin-right: 16px;
+    object-fit: contain;
+    flex-shrink: 0;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.12));
+}
+
+.party-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start;
+}
+
 .party-icon {
     width: 40px;
     height: 40px;
@@ -92,23 +108,50 @@
 }
 
 .party-stats {
-    background-color: #f8f9fa;
-    padding: 10px 15px;
-    border-radius: 8px;
-    margin-bottom: 15px;
+    position: relative;
+    background: linear-gradient(135deg, rgba(0, 122, 200, 0.12), rgba(136, 84, 208, 0.12));
+    padding: 18px 20px 22px;
+    border-radius: 14px;
+    margin-bottom: 18px;
     text-align: center;
     flex: 0 0 auto; /* Ikke la statistikken krympe */
+    border: 1px solid rgba(0, 122, 200, 0.08);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.party-stats::before {
+    content: "🤝";
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    font-size: 1.9rem;
+    opacity: 0.35;
+    pointer-events: none;
+}
+
+.party-stats::after {
+    content: "";
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 140px;
+    height: 140px;
+    background: radial-gradient(circle, rgba(0, 122, 200, 0.25) 0%, rgba(0, 122, 200, 0) 65%);
+    opacity: 0.7;
 }
 
 .agreement-percentage {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: var(--kf-purple);
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--kf-blue);
+    margin-bottom: 4px;
 }
 
 .agreement-text {
-    font-size: 0.9rem;
-    color: #666;
+    font-size: 0.95rem;
+    color: #4f4f4f;
+    margin-bottom: 12px;
 }
 
 /* Saker-seksjonen med scrollbar ved behov */
@@ -130,21 +173,42 @@
     list-style-type: none;
     padding: 0;
     margin: 0;
-    overflow-y: auto; /* Legg til scrollbar ved behov */
-    flex: 1; /* La listen ta resten av plassen */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
+
 .issue-item {
-    padding: 10px;
-    margin-bottom: 8px;
-    background-color: rgba(0, 168, 163, 0.1);
-    border-left: 3px solid var(--kf-green);
-    border-radius: 4px;
+    position: relative;
+    padding: 12px 16px 12px 42px;
+    border-radius: 12px;
     font-size: 0.95rem;
+    line-height: 1.4;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    color: #1f2937;
+    --issue-accent: var(--kf-blue);
+}
+
+.issue-item::before {
+    content: "";
+    position: absolute;
+    top: 14px;
+    left: 16px;
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    background-color: var(--issue-accent);
+    mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="white" d="M6.173 14.727 0 8.553l2.12-2.12 4.053 4.053L13.879.879l2.121 2.121z"/></svg>') center / 12px 12px no-repeat;
+    -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="white" d="M6.173 14.727 0 8.553l2.12-2.12 4.053 4.053L13.879.879l2.121 2.121z"/></svg>') center / 12px 12px no-repeat;
 }
 
 .issue-item:hover {
-    background-color: rgba(0, 168, 163, 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
 }
 
 /* Stilisert scrollbar for bedre utseende */
@@ -176,15 +240,16 @@
 /* Tilpass "ingen saker" meldingen */
 .no-issues {
     text-align: center;
-    padding: 20px;
-    color: #777;
+    padding: 22px;
+    color: #5f6c7b;
     font-style: italic;
-    background-color: #f9f9f9;
-    border-radius: 6px;
+    background: linear-gradient(135deg, rgba(241, 245, 249, 0.9), rgba(226, 232, 240, 0.8));
+    border-radius: 12px;
     flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 1px dashed rgba(0, 122, 200, 0.25);
 }
 
 /* Mobile view - rullemeny */
@@ -235,82 +300,114 @@
 }
 /* Stilsett for enighetsvisning */
 .agreement-bars {
-    margin-top: 15px;
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .bar-container {
-    margin-bottom: 8px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
 .bar-container .label {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     font-size: 0.85rem;
-    margin-bottom: 3px;
+    margin-bottom: 6px;
+    color: #4a4a4a;
 }
 
 .bar {
-    height: 8px;
-    background-color: #f0f0f0;
-    border-radius: 4px;
+    height: 10px;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.03));
+    border-radius: 999px;
     overflow: hidden;
+    position: relative;
+}
+
+.bar::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0));
+    pointer-events: none;
 }
 
 .bar-fill {
     height: 100%;
-    border-radius: 4px;
+    border-radius: 999px;
+    position: relative;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
 }
 
 .bar-fill.agree {
-    background-color: #28a745; /* Grønn for full enighet */
+    background: linear-gradient(135deg, #25b25c, #68d88c);
 }
 
 .bar-fill.partial {
-    background-color: #ffc107; /* Gul for delvis enighet */
+    background: linear-gradient(135deg, #ffb347, #ffd97a);
 }
 
 .bar-fill.disagree {
-    background-color: #dc3545; /* Rød for uenighet */
+    background: linear-gradient(135deg, #ff5f6d, #ffc371);
 }
 
 /* Fanevisning for sakslister */
 .issues-tabs {
     display: flex;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #eee;
+    align-items: center;
+    padding: 6px;
+    margin-bottom: 16px;
+    border-radius: 999px;
+    background-color: #f1f5f9;
+    border: 1px solid rgba(0, 122, 200, 0.08);
+    gap: 6px;
 }
 
 .tab-button {
     flex: 1;
-    padding: 8px 5px;
-    background: none;
+    padding: 9px 12px;
+    background: transparent;
     border: none;
-    border-bottom: 2px solid transparent;
+    border-radius: 999px;
     cursor: pointer;
     font-size: 0.85rem;
-    color: #555;
+    color: #4d5c6a;
     text-align: center;
     transition: all 0.2s ease;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-weight: 600;
 }
 
 .tab-button:hover {
-    background-color: #f9f9f9;
-    color: #333;
+    background-color: rgba(0, 122, 200, 0.1);
+    color: var(--kf-blue);
 }
 
 .tab-button.active {
-    border-bottom-color: var(--kf-blue);
-    color: var(--kf-blue);
-    font-weight: 600;
+    background: linear-gradient(135deg, rgba(0, 122, 200, 0.9), rgba(136, 84, 208, 0.9));
+    color: white;
+    box-shadow: 0 8px 20px rgba(0, 122, 200, 0.25);
 }
 
 .tab-content {
     display: none;
-    max-height: 300px;
+    max-height: 320px;
     overflow-y: auto;
+    padding: 10px;
+    border-radius: 12px;
+    background-color: #fbfcfe;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
 .tab-content.active {
@@ -319,201 +416,31 @@
 
 /* Stilsett for sakslistene basert på enighet */
 .agree-list .issue-item {
-    background-color: rgba(40, 167, 69, 0.1);
-    border-left: 3px solid #28a745;
+    --issue-accent: #1f9254;
+    border-left: 4px solid #1f9254;
+    background: linear-gradient(135deg, rgba(37, 178, 92, 0.12), rgba(37, 178, 92, 0.05));
 }
 
 .partial-list .issue-item {
-    background-color: rgba(255, 193, 7, 0.1);
-    border-left: 3px solid #ffc107;
+    --issue-accent: #f4b000;
+    border-left: 4px solid #ffc107;
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.16), rgba(255, 193, 7, 0.06));
 }
 
 .disagree-list .issue-item {
-    background-color: rgba(220, 53, 69, 0.1);
-    border-left: 3px solid #dc3545;
+    --issue-accent: #dc3545;
+    border-left: 4px solid #dc3545;
+    background: linear-gradient(135deg, rgba(220, 53, 69, 0.18), rgba(220, 53, 69, 0.07));
 }
 
 /* Sitater */
 .issue-quote {
     font-style: italic;
-    margin-top: 5px;
+    margin-top: 8px;
     font-size: 0.9rem;
-    color: #555;
-    padding: 5px 10px;
-    background-color: rgba(255, 255, 255, 0.7);
-    border-radius: 4px;
-}
-/* Party Overview CSS */
-.party-overview-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin: 30px 0;
-}
-
-.party-box {
-    background-color: white;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-    transition: transform 0.2s, box-shadow 0.2s;
-    height: auto;
-    min-height: 500px;
-    display: flex;
-    flex-direction: column;
-}
-
-.party-box:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-}
-
-/* NYTT: Styling for logo-header */
-.party-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-    padding-bottom: 15px;
-    border-bottom: 2px solid #eee;
-}
-
-.party-logo {
-    width: 50px;
-    height: 50px;
-    margin-right: 15px;
-    object-fit: contain;
-    flex-shrink: 0;
-}
-
-.party-info {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    align-items: flex-start;
-}
-
-.party-name {
-    margin: 0;
-    font-size: 1.25rem;
-    font-weight: 700;
-}
-
-/* Gammel styling for statistikk og faner (beholdt fra din originale fil) */
-.party-stats {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.agreement-percentage {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--kf-blue);
-    margin-bottom: 5px;
-}
-
-.agreement-text {
-    font-size: 0.9rem;
-    color: #555;
-    margin-bottom: 15px;
-}
-
-.agreement-bars .bar-container {
-    margin-bottom: 8px;
-}
-
-.agreement-bars .label {
-    font-size: 0.8rem;
-    color: #666;
-    text-align: left;
-    margin-bottom: 4px;
-}
-
-.agreement-bars .bar {
-    width: 100%;
-    height: 8px;
-    background-color: #f0f0f0;
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-.agreement-bars .bar-fill {
-    height: 100%;
-    border-radius: 4px;
-}
-
-.bar-fill.agree { background-color: #28a745; }
-.bar-fill.partial { background-color: #ffc107; }
-.bar-fill.disagree { background-color: #dc3545; }
-
-.issues-tabs {
-    display: flex;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #eee;
-}
-
-.tab-button {
-    flex: 1;
-    padding: 10px 5px;
-    background: none;
-    border: none;
-    border-bottom: 3px solid transparent;
-    cursor: pointer;
-    font-size: 0.9rem;
-    color: #555;
-    text-align: center;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-weight: 600;
-}
-
-.tab-button:hover { background-color: #f9f9f9; color: #333; }
-.tab-button.active { border-bottom-color: var(--kf-blue); color: var(--kf-blue); }
-
-.tab-content { display: none; max-height: 250px; overflow-y: auto; font-size: 0.9rem; }
-.tab-content.active { display: block; }
-.tab-content ul { list-style-type: none; padding: 0; margin: 0; }
-.tab-content li { padding: 10px 5px; border-bottom: 1px solid #f0f0f0; }
-.tab-content li:last-child { border-bottom: none; }
-.no-issues { color: #888; padding: 10px; }
-.issue-area { font-size: 0.8rem; color: #777; margin-top: 4px; }
-.issue-quote { font-style: italic; color: #555; margin-top: 6px; padding-left: 10px; border-left: 2px solid #ddd; }
-
-
-/* Mobilvisning */
-.party-dropdown-container {
-    display: none;
-    margin-bottom: 20px;
-}
-
-#party-dropdown {
-    width: 100%;
-    padding: 12px;
-    font-size: 1rem;
+    color: #374151;
+    padding: 8px 10px;
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 8px;
-    border: 1px solid #ccc;
-}
-
-@media (max-width: 992px) {
-    .party-overview-container {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
-    .party-overview-container {
-        grid-template-columns: 1fr;
-        display: block;
-    }
-    .party-dropdown-container {
-        display: block;
-    }
-    .party-box {
-        display: none;
-        margin-bottom: 20px;
-    }
-    .party-box.active {
-        display: flex;
-    }
+    border-left: 3px solid currentColor;
 }
