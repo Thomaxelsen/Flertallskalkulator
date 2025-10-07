@@ -1,64 +1,76 @@
-function initializePartyOverview() {
-    // Definer partiinformasjon med logoer
-    const parties = [
-        { name: "Rødt", shorthand: "R", seats: 8, position: 1, color: "#da291c", classPrefix: "r", logo: "images/parties/r.png" },
-        { name: "Sosialistisk Venstreparti", shorthand: "SV", seats: 13, position: 2, color: "#eb2e2d", classPrefix: "sv", logo: "images/parties/sv.png" },
-        { name: "Arbeiderpartiet", shorthand: "AP", seats: 48, position: 3, color: "#ed1b34", classPrefix: "ap", logo: "images/parties/ap.png" },
-        { name: "Senterpartiet", shorthand: "SP", seats: 28, position: 4, color: "#14773c", classPrefix: "sp", logo: "images/parties/sp.png" },
-        { name: "Miljøpartiet De Grønne", shorthand: "MDG", seats: 3, position: 5, color: "#439539", classPrefix: "mdg", logo: "images/parties/mdg.png" },
-        { name: "Kristelig Folkeparti", shorthand: "KrF", seats: 3, position: 6, color: "#ffbe00", classPrefix: "krf", logo: "images/parties/krf.png" },
-        { name: "Venstre", shorthand: "V", seats: 8, position: 7, color: "#00807b", classPrefix: "v", logo: "images/parties/v.png" },
-        { name: "Høyre", shorthand: "H", seats: 36, position: 8, color: "#007ac8", classPrefix: "h", logo: "images/parties/h.png" },
-        { name: "Fremskrittspartiet", shorthand: "FrP", seats: 21, position: 9, color: "#002e5e", classPrefix: "frp", logo: "images/parties/frp.png" },
-    ];
-    
-    // Hent detaljerte data fra issues.json
-    fetch('data/issues.json')
-        .then(response => response.json())
-        .then(detailedIssues => {
-            const partyIssuesMap = {};
-            
-            parties.forEach(party => {
-                partyIssuesMap[party.shorthand] = {
-                    fullyAgree: [],
-                    partiallyAgree: [],
-                    disagree: []
-                };
-            });
-            
-            detailedIssues.forEach(issue => {
-                for (const partyCode in issue.partyStances) {
-                    const level = issue.partyStances[partyCode].level;
-                    const issueInfo = {
-                        id: issue.id,
-                        name: issue.name,
-                        area: issue.area,
-                        quote: issue.partyStances[partyCode].quote
-                    };
-                    
-                    if (level === 2) {
-                        partyIssuesMap[partyCode].fullyAgree.push(issueInfo);
-                    } else if (level === 1) {
-                        partyIssuesMap[partyCode].partiallyAgree.push(issueInfo);
-                    } else {
-                        partyIssuesMap[partyCode].disagree.push(issueInfo);
-                    }
-                }
-            });
-            
-            generatePartyBoxes(parties, partyIssuesMap);
-            initializeMobileView(parties, partyIssuesMap);
-        })
-        .catch(error => {
-            console.error('Error loading detailed issues data:', error);
-            fallbackPartyOverview(); // Fallback til eksisterende data
+const partyLogos = {
+    "R": "images/parties/r.png",
+    "SV": "images/parties/sv.png",
+    "AP": "images/parties/ap.png",
+    "SP": "images/parties/sp.png",
+    "MDG": "images/parties/mdg.png",
+    "KrF": "images/parties/krf.png",
+    "V": "images/parties/v.png",
+    "H": "images/parties/h.png",
+    "FrP": "images/parties/frp.png"
+};
+
+async function initializePartyOverview() {
+    try {
+        const response = await fetch('data/parties.json');
+        if (!response.ok) {
+            throw new Error(`Failed to load parties.json: ${response.status} ${response.statusText}`);
+        }
+
+        const partiesFromJson = await response.json();
+        const parties = partiesFromJson
+            .map(party => ({
+                ...party,
+                logo: partyLogos[party.shorthand] || `images/parties/${party.shorthand.toLowerCase()}.png`
+            }))
+            .sort((a, b) => a.position - b.position);
+
+        const detailedIssues = Array.isArray(window.issues) ? window.issues : [];
+        const partyIssuesMap = {};
+
+        parties.forEach(party => {
+            partyIssuesMap[party.shorthand] = {
+                fullyAgree: [],
+                partiallyAgree: [],
+                disagree: []
+            };
         });
+
+        detailedIssues.forEach(issue => {
+            for (const partyCode in issue.partyStances) {
+                if (!partyIssuesMap[partyCode]) {
+                    continue;
+                }
+
+                const level = issue.partyStances[partyCode].level;
+                const issueInfo = {
+                    id: issue.id,
+                    name: issue.name,
+                    area: issue.area,
+                    quote: issue.partyStances[partyCode].quote
+                };
+
+                if (level === 2) {
+                    partyIssuesMap[partyCode].fullyAgree.push(issueInfo);
+                } else if (level === 1) {
+                    partyIssuesMap[partyCode].partiallyAgree.push(issueInfo);
+                } else {
+                    partyIssuesMap[partyCode].disagree.push(issueInfo);
+                }
+            }
+        });
+
+        generatePartyBoxes(parties, partyIssuesMap);
+        initializeMobileView(parties, partyIssuesMap);
+    } catch (error) {
+        console.error('Error initializing party overview:', error);
+        fallbackPartyOverview();
+    }
 }
 
 // Fallback-funksjon
-function fallbackPartyOverview() {
-    // Denne funksjonaliteten kan beholdes eller tilpasses etter behov
-    const parties = [
+function fallbackPartyOverview(partiesFromJson = []) {
+    const fallbackParties = partiesFromJson.length ? partiesFromJson : [
         { name: "Rødt", shorthand: "R", seats: 8, position: 1, color: "#da291c", classPrefix: "r", logo: "images/parties/r.png" },
         { name: "Sosialistisk Venstreparti", shorthand: "SV", seats: 13, position: 2, color: "#eb2e2d", classPrefix: "sv", logo: "images/parties/sv.png" },
         { name: "Arbeiderpartiet", shorthand: "AP", seats: 48, position: 3, color: "#ed1b34", classPrefix: "ap", logo: "images/parties/ap.png" },
@@ -69,6 +81,11 @@ function fallbackPartyOverview() {
         { name: "Høyre", shorthand: "H", seats: 36, position: 8, color: "#007ac8", classPrefix: "h", logo: "images/parties/h.png" },
         { name: "Fremskrittspartiet", shorthand: "FrP", seats: 21, position: 9, color: "#002e5e", classPrefix: "frp", logo: "images/parties/frp.png" },
     ];
+
+    const parties = fallbackParties.map(party => ({
+        ...party,
+        logo: party.logo || partyLogos[party.shorthand] || `images/parties/${party.shorthand.toLowerCase()}.png`
+    })).sort((a, b) => a.position - b.position);
     
     const partyIssuesMap = {};
     
@@ -80,7 +97,9 @@ function fallbackPartyOverview() {
         };
     });
     
-    window.issues.forEach(issue => {
+    const detailedIssues = Array.isArray(window.issues) ? window.issues : [];
+
+    detailedIssues.forEach(issue => {
         if (issue.partiesInAgreement) {
             issue.partiesInAgreement.forEach(partyCode => {
                 if (partyIssuesMap[partyCode]) {
@@ -120,7 +139,13 @@ function generatePartyBoxes(parties, partyIssuesMap) {
                 <img src="${party.logo}" alt="${party.name} logo" class="party-logo">
                 <div class="party-info">
                     <h2 class="party-name">${party.name}</h2>
-                    <div class="party-seat-count">${party.seats} mandater</div>
+                    <div class="party-seat-count" aria-label="${party.seats} mandater totalt">
+                        <div class="seat-pill">
+                            <span class="seat-icon" aria-hidden="true">🪑</span>
+                            <span class="seat-number">${party.seats}</span>
+                        </div>
+                        <span class="seat-label">mandater</span>
+                    </div>
                 </div>
             </div>
             
