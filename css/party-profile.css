@@ -413,7 +413,8 @@
 
 /* ===== START: Saker Boks (Topp-Venstre) ===== */
 .box-issues .profile-inner-content {
-    max-height: 65vh;
+    max-height: none;
+    min-height: clamp(440px, 54vh, 680px);
     overflow: hidden;
     position: relative;
     background: linear-gradient(160deg, rgba(255,255,255,0.96) 0%, rgba(243,248,255,0.9) 100%);
@@ -430,9 +431,8 @@
 
 .issues-header {
     display: flex;
-    justify-content: space-between;
-    gap: clamp(16px, 4vw, 32px);
-    align-items: flex-start;
+    flex-direction: column;
+    gap: clamp(16px, 3vw, 28px);
 }
 
 .issues-heading-group h3 {
@@ -451,10 +451,10 @@
 
 .issues-stats {
     display: grid;
-    grid-auto-flow: column;
-    gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 14px;
     background: linear-gradient(135deg, rgba(15,35,67,0.08) 0%, rgba(15,35,67,0.02) 100%);
-    padding: 12px 18px;
+    padding: 16px 20px;
     border-radius: 16px;
     border: 1px solid rgba(15, 35, 67, 0.08);
     box-shadow: 0 12px 30px rgba(12, 32, 68, 0.12);
@@ -463,10 +463,9 @@
 .issues-stat {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
+    align-items: flex-start;
+    text-align: left;
     gap: 4px;
-    min-width: 92px;
 }
 
 .issues-stat-label {
@@ -488,6 +487,26 @@
     flex: 1;
     min-height: 0;
     position: relative;
+}
+
+@media (min-width: 1024px) {
+    .issues-header {
+        display: grid;
+        grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+        align-items: stretch;
+        gap: clamp(20px, 4vw, 40px);
+    }
+
+    .issues-heading-group {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .issues-stats {
+        height: 100%;
+        align-items: center;
+    }
 }
 
 .issues-tabs {
@@ -532,12 +551,13 @@
 
 .tab-content {
     display: none;
-    flex: 1;
+    flex: initial;
     overflow-y: auto;
     margin-top: 14px;
     padding-right: 10px;
     padding-bottom: 8px;
     position: relative;
+    max-height: clamp(340px, 45vh, 420px);
 }
 
 .tab-content.active {
@@ -979,8 +999,17 @@
     overflow: hidden;
 }
 .box-candidates .profile-inner-content {
-    max-height: 65vh;
+    max-height: 90vh;
+    min-height: clamp(420px, 60vh, 780px);
     overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .box-issues .profile-inner-content,
+    .box-candidates .profile-inner-content {
+        max-height: none;
+        min-height: auto;
+    }
 }
 
 /* Kandidatfiltre */
