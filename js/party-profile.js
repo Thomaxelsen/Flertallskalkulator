@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 processInitialData();
                 initializeProfilePage();
+                applyInitialPartySelectionFromUrl();
             })
             .catch(error => {
                 console.error("Party Profile v2.3: Failed to load required data:", error);
@@ -100,6 +101,31 @@ document.addEventListener('DOMContentLoaded', function() {
         if (candidateGrid) { candidateGrid.addEventListener('click', handleRepresentativeCardClick); }
 
         console.log("Party Profile v2.3: Page initialized.");
+    }
+
+    function applyInitialPartySelectionFromUrl() {
+        if (!partySelect) return;
+        const params = new URLSearchParams(window.location.search);
+        const requestedParty = params.get('party');
+        if (!requestedParty) return;
+
+        const normalizedParty = requestedParty.trim().toLowerCase();
+        if (!normalizedParty) return;
+
+        const availablePartyKey = Object.keys(partiesMap).find(key => key.toLowerCase() === normalizedParty);
+        if (!availablePartyKey) {
+            console.warn(`Party Profile v2.3: Ingen parti med kode som matcher '${requestedParty}' ble funnet.`);
+            return;
+        }
+
+        const option = partySelect.querySelector(`option[value="${availablePartyKey}"]`);
+        if (!option) {
+            console.warn(`Party Profile v2.3: Partiet '${availablePartyKey}' er ikke tilgjengelig i listen (mangler data?).`);
+            return;
+        }
+
+        partySelect.value = availablePartyKey;
+        partySelect.dispatchEvent(new Event('change'));
     }
 
     loadAllData();
