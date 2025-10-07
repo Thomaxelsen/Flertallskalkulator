@@ -104,6 +104,18 @@
             <!-- Matrisen genereres her av issue-matrix.js -->
         </div>
 
+        <!-- Sidepanel for detaljer om sak -->
+        <div id="matrix-panel-overlay" class="panel-overlay" aria-hidden="true"></div>
+        <aside id="matrix-detail-panel" class="detail-panel" aria-hidden="true" aria-labelledby="matrix-panel-title" role="dialog" aria-modal="true">
+            <div class="panel-header">
+                <h3 id="matrix-panel-title">Saksdetaljer</h3>
+                <button id="matrix-close-panel" class="close-panel-btn" type="button" aria-label="Lukk panelet">&times;</button>
+            </div>
+            <div id="matrix-panel-content" class="panel-content">
+                <div class="loader">Velg en sak for å se detaljer.</div>
+            </div>
+        </aside>
+
 
         <!-- Footer -->
         <footer>
