@@ -10,6 +10,11 @@ document.addEventListener('DOMContentLoaded', function() {
     let partiesMap = {};
     let representativesMapByParty = {};
     const NO_COMMITTEE_VALUE = '__none__';
+    const STANCE_SEGMENT_COLORS = {
+        level0: '#d04f4f',
+        level1: '#f2a33c',
+        level2: '#35a46f'
+    };
 
     // Referanser til DOM-elementer
     const profileContentGrid = document.getElementById('profile-content');
@@ -115,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
                  setActivePartyLogo(selectedShorthand);
                  updatePartyHero(partyInfo, partyIssueData);
                  renderIssuesBox(partyIssueData.issuesByLevel, partyIssueData.stanceCounts);
-                 renderStanceChartBox(partyIssueData.stanceCounts, partyInfo);
+                renderStanceChartBox(partyIssueData.stanceCounts);
                  renderAreaChartBox(partyIssueData.sortedAreas, partyInfo);
                  initializeRepresentativesBox(selectedShorthand);
              } catch(error) { console.error("Error displaying party profile:", error); showError(issuesBoxContent, error.message); showError(candidatesBoxContent, error.message); showError(stanceChartBoxContent, error.message); showError(areaChartBoxContent, error.message); }
@@ -148,11 +153,11 @@ document.addEventListener('DOMContentLoaded', function() {
         issuesBoxContent.appendChild(issuesDiv);
         setupProfileTabs(issuesDiv);
     }
-    function renderStanceChartBox(stanceCounts, partyInfo) {
+    function renderStanceChartBox(stanceCounts) {
          clearBoxContent(stanceChartBoxContent); if (!stanceChartBoxContent) return;
          const chartContainer = document.createElement('div'); chartContainer.className = 'chart-container';
          chartContainer.innerHTML = `<h3>Fordeling av Standpunkt</h3><div id="plotly-stance-chart" class="chart-surface"></div>`;
-         stanceChartBoxContent.appendChild(chartContainer); createStanceChart(stanceCounts, partyInfo);
+         stanceChartBoxContent.appendChild(chartContainer); createStanceChart(stanceCounts);
     }
     function renderAreaChartBox(sortedAreasData, partyInfo) {
          clearBoxContent(areaChartBoxContent); if (!areaChartBoxContent) return;
@@ -389,8 +394,13 @@ document.addEventListener('DOMContentLoaded', function() {
         issuesData.forEach(issue => { partyProfile.stanceCounts.total++; let level = 0; let quote = null; if (issue.partyStances && issue.partyStances[partyShorthand]) { const stance = issue.partyStances[partyShorthand]; level = stance.level ?? 0; quote = stance.quote; } if (level === 2) partyProfile.stanceCounts.level2++; else if (level === 1) partyProfile.stanceCounts.level1++; else partyProfile.stanceCounts.level0++; const issueDetails = { id: issue.id, name: issue.name, area: issue.area, quote: quote }; if (level === 2) partyProfile.issuesByLevel.level2.push(issueDetails); else if (level === 1) partyProfile.issuesByLevel.level1.push(issueDetails); else partyProfile.issuesByLevel.level0.push(issueDetails); if (issue.area) { if (!areasTemp[issue.area]) areasTemp[issue.area] = { totalPoints: 0, count: 0 }; areasTemp[issue.area].totalPoints += level; areasTemp[issue.area].count++; } });
         for (const areaName in areasTemp) { const areaData = areasTemp[areaName]; partyProfile.scoresByArea[areaName] = { totalPoints: areaData.totalPoints, count: areaData.count, averageScore: areaData.count > 0 ? (areaData.totalPoints / areaData.count) : 0 }; } const sortedAreaEntries = Object.entries(partyProfile.scoresByArea).sort((a, b) => a[0].localeCompare(b[0])); partyProfile.sortedAreas = sortedAreaEntries.map(([areaName, data]) => ({ name: areaName, score: data.averageScore })); return partyProfile;
     }
-    function createStanceChart(stanceCounts, partyInfo) {
-         const plotDivId = 'plotly-stance-chart'; const plotDiv = document.getElementById(plotDivId); if (!plotDiv) { console.error(`Element with ID ${plotDivId} not found`); return; } plotDiv.innerHTML = ''; const palette = buildChartPalette(partyInfo.color); const data = [{ values: [stanceCounts.level2, stanceCounts.level1, stanceCounts.level0], labels: ['Full Enighet (2)', 'Delvis Enighet (1)', 'Ingen Støtte (0)'], type: 'pie', hole: .56, marker: { colors: [palette.success, palette.warning, palette.danger], line: { color: '#f7fbff', width: 2 } }, hoverinfo: 'label+percent+value', textinfo: 'percent', textfont: { size: 14, color: '#23314f' }, pull: [0.04, 0, 0] }]; const layout = { showlegend: true, legend: { x: 0.5, y: -0.12, xanchor: 'center', orientation: 'h', font: { color: '#35425f', size: 12 } }, height: 320, margin: { l: 14, r: 14, t: 10, b: 60 }, paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)', annotations: [{ text: `Totalt ${stanceCounts.total}`, font: { size: 12, color: '#4a5a78' }, showarrow: false, x: 0.5, y: 0.48 }] }; try { Plotly.newPlot(plotDivId, data, layout, {responsive: true, displayModeBar: false}); } catch (e) { console.error("Plotly error Stance Chart:", e); plotDiv.innerHTML = '<p class="error">Feil ved lasting.</p>'; }
+    function createStanceChart(stanceCounts) {
+         const plotDivId = 'plotly-stance-chart'; const plotDiv = document.getElementById(plotDivId); if (!plotDiv) { console.error(`Element with ID ${plotDivId} not found`); return; } plotDiv.innerHTML = ''; const safeCounts = {
+            level2: stanceCounts?.level2 ?? 0,
+            level1: stanceCounts?.level1 ?? 0,
+            level0: stanceCounts?.level0 ?? 0,
+            total: stanceCounts?.total ?? ((stanceCounts?.level2 ?? 0) + (stanceCounts?.level1 ?? 0) + (stanceCounts?.level0 ?? 0))
+        }; const donutColors = [STANCE_SEGMENT_COLORS.level2, STANCE_SEGMENT_COLORS.level1, STANCE_SEGMENT_COLORS.level0]; const totalStandpoints = safeCounts.total; const totalLabel = totalStandpoints === 1 ? 'Totalt 1 standpunkt' : `Totalt ${totalStandpoints} standpunkter`; const data = [{ values: [safeCounts.level2, safeCounts.level1, safeCounts.level0], labels: ['Full Enighet (2)', 'Delvis Enighet (1)', 'Ingen Støtte (0)'], type: 'pie', hole: 0.6, marker: { colors: donutColors, line: { color: 'rgba(18, 45, 76, 0.12)', width: 6 } }, hoverinfo: 'label+percent+value', textinfo: 'percent', textfont: { size: 15, color: '#23314f' }, pull: [0.05, 0, 0], rotation: -35 }]; const layout = { showlegend: true, legend: { x: 0.5, y: -0.16, xanchor: 'center', orientation: 'h', font: { color: '#34405c', size: 12 } }, height: 340, margin: { l: 10, r: 10, t: 10, b: 70 }, paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)', annotations: [{ text: totalLabel, font: { size: 13, color: '#35425f', family: '"Source Sans Pro", "Helvetica Neue", Arial, sans-serif' }, showarrow: false, x: 0.5, y: 0.5 }], hoverlabel: { bgcolor: '#f8fbff', bordercolor: '#dce6f7', font: { color: '#1f2d46' } } }; try { Plotly.newPlot(plotDivId, data, layout, {responsive: true, displayModeBar: false}); } catch (e) { console.error("Plotly error Stance Chart:", e); plotDiv.innerHTML = '<p class="error">Feil ved lasting.</p>'; }
     }
     function createAreaChart(sortedAreasData, partyInfo) {
         const plotDivId = 'plotly-area-chart'; const plotDiv = document.getElementById(plotDivId); if (!plotDiv) { console.error(`Element with ID ${plotDivId} not found`); return; } plotDiv.innerHTML = ''; const labels = sortedAreasData.map(area => area.name); const values = sortedAreasData.map(area => area.score); const palette = buildChartPalette(partyInfo.color); const data = [{ type: 'scatterpolar', r: values, theta: labels, fill: 'toself', name: partyInfo.name, marker: { color: palette.primary, size: 8 }, line: { color: palette.primary, width: 3 }, fillcolor: palette.primarySoft, hovertemplate: '<b>%{theta}</b><br>Score: %{r:.2f}<extra></extra>' }]; const layout = { polar: { radialaxis: { visible: true, range: [0, 2], tickvals: [0, 1, 2], ticktext: ['0', '1', '2'], angle: 90, tickfont: { size: 12, color: '#3b4a66' }, gridcolor: 'rgba(35, 70, 120, 0.12)', gridwidth: 1.4 }, angularaxis: { tickfont: { size: 12, color: '#3b4a66' }, gridcolor: 'rgba(35, 70, 120, 0.14)', gridwidth: 1 }, bgcolor: 'rgba(255,255,255,0.55)' }, showlegend: false, height: 320, margin: { l: 40, r: 40, t: 30, b: 40 }, paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)', font: { color: '#23314f' } }; try { Plotly.newPlot(plotDivId, data, layout, {responsive: true, displayModeBar: false}); } catch (e) { console.error("Plotly error Area Chart:", e); plotDiv.innerHTML = '<p class="error">Feil ved lasting.</p>'; }
@@ -475,11 +485,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const reps = representativesMapByParty[partyInfo.shorthand] || [];
         const representativeCount = reps.length;
         const stanceCounts = partyIssueData.stanceCounts;
-        const total = stanceCounts.total || 1;
-        const fullAgreementPercent = Math.round((stanceCounts.level2 / total) * 100);
-        const partialPercent = Math.round((stanceCounts.level1 / total) * 100);
-        const weightedScore = ((stanceCounts.level2 * 2) + (stanceCounts.level1 * 1)) / total;
+        const rawTotal = stanceCounts.total ?? 0;
+        const denominator = rawTotal > 0 ? rawTotal : 1;
+        const fullAgreementPercent = rawTotal > 0 ? Math.round((stanceCounts.level2 / rawTotal) * 100) : 0;
+        const partialPercent = rawTotal > 0 ? Math.round((stanceCounts.level1 / rawTotal) * 100) : 0;
+        const weightedScore = ((stanceCounts.level2 * 2) + (stanceCounts.level1 * 1)) / denominator;
+        const averageScoreNumeric = Number.isFinite(weightedScore) ? weightedScore : 0;
         const averageScore = Number.isFinite(weightedScore) ? weightedScore.toFixed(2) : '0.00';
+        const supportTier = getSupportIndexTier(averageScoreNumeric);
 
         partyHeroSection.innerHTML = `
             <div class="party-hero-card" style="--party-color:${cardColor}; --party-color-soft:${palette.primarySoft}; --party-color-border:${palette.primarySoftBorder}; --party-color-strong:${palette.primary};">
@@ -489,9 +502,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="party-hero-details">
                     <h2 class="party-hero-title">${partyInfo.name}</h2>
                     <div class="party-hero-meta">
-                        <span class="party-hero-pill accent">Støtteindeks ${averageScore} / 2</span>
+                        <span class="party-hero-pill party-hero-pill--support" data-support-tier="${supportTier}">Støtteindeks ${averageScore} / 2</span>
                         <span class="party-hero-pill">${representativeCount} representanter</span>
-                        ${partyInfo.seats ? `<span class="party-hero-pill">${partyInfo.seats} mandater</span>` : ''}
                     </div>
                     <p class="party-hero-summary">
                         Full enighet i ${fullAgreementPercent}% av sakene og delvis enighet i ${partialPercent}%. Utforsk partiets prioriterte saker, representanter og stemmemønster nedenfor.
@@ -499,6 +511,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </div>
         `;
+    }
+
+    function getSupportIndexTier(score) {
+        if (!Number.isFinite(score)) {
+            return 'unknown';
+        }
+        if (score <= 0.3) {
+            return 'low';
+        }
+        if (score <= 0.45) {
+            return 'mid';
+        }
+        if (score <= 0.75) {
+            return 'elevated';
+        }
+        return 'high';
     }
 
     function resetPartyHero() {

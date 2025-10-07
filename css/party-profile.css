@@ -100,12 +100,54 @@
     padding: 6px 14px;
     border-radius: 999px;
     font-size: 0.9rem;
+    box-shadow: 0 6px 14px rgba(15, 45, 92, 0.1);
 }
 
-.party-hero-pill.accent {
-    background: var(--party-color-soft);
-    border-color: var(--party-color-border);
-    color: var(--party-color-strong);
+.party-hero-pill--support {
+    --support-pill-bg: linear-gradient(135deg, rgba(13, 109, 253, 0.2) 0%, rgba(13, 109, 253, 0.08) 100%);
+    --support-pill-border: rgba(13, 109, 253, 0.24);
+    --support-pill-color: #10325a;
+    --support-pill-shadow: rgba(15, 45, 92, 0.18);
+    background: var(--support-pill-bg);
+    border-color: var(--support-pill-border);
+    color: var(--support-pill-color);
+    box-shadow: 0 12px 28px var(--support-pill-shadow);
+    font-weight: 700;
+}
+
+.party-hero-pill--support[data-support-tier="low"] {
+    --support-pill-bg: linear-gradient(135deg, #fde5e9 0%, #f8ccd5 100%);
+    --support-pill-border: rgba(208, 79, 79, 0.45);
+    --support-pill-color: #b22738;
+    --support-pill-shadow: rgba(208, 79, 79, 0.25);
+}
+
+.party-hero-pill--support[data-support-tier="mid"] {
+    --support-pill-bg: linear-gradient(135deg, #ffedd8 0%, #ffd7ad 100%);
+    --support-pill-border: rgba(242, 163, 60, 0.45);
+    --support-pill-color: #c46611;
+    --support-pill-shadow: rgba(242, 163, 60, 0.25);
+}
+
+.party-hero-pill--support[data-support-tier="elevated"] {
+    --support-pill-bg: linear-gradient(135deg, #fef6cf 0%, #fdeca2 100%);
+    --support-pill-border: rgba(242, 198, 58, 0.45);
+    --support-pill-color: #b08507;
+    --support-pill-shadow: rgba(242, 198, 58, 0.22);
+}
+
+.party-hero-pill--support[data-support-tier="high"] {
+    --support-pill-bg: linear-gradient(135deg, #dcf4e7 0%, #c0ebd6 100%);
+    --support-pill-border: rgba(53, 164, 111, 0.45);
+    --support-pill-color: #25724d;
+    --support-pill-shadow: rgba(53, 164, 111, 0.25);
+}
+
+.party-hero-pill--support[data-support-tier="unknown"] {
+    --support-pill-bg: linear-gradient(135deg, #e7ecf6 0%, #d7dff0 100%);
+    --support-pill-border: rgba(112, 128, 159, 0.35);
+    --support-pill-color: #3d4b63;
+    --support-pill-shadow: rgba(112, 128, 159, 0.22);
 }
 
 .party-hero-summary {
@@ -615,5 +657,24 @@
     width: 100% !important; height: auto !important;
     min-height: 300px;
     flex-grow: 1;
+}
+
+#plotly-stance-chart {
+    position: relative;
+    border-radius: 28px;
+    padding: 18px;
+    background: radial-gradient(140% 140% at 50% 32%, rgba(255, 255, 255, 0.95) 0%, rgba(232, 239, 253, 0.86) 62%, rgba(216, 228, 250, 0.82) 100%);
+    box-shadow: 0 24px 46px rgba(15, 45, 92, 0.16);
+    overflow: hidden;
+}
+
+#plotly-stance-chart::after {
+    content: "";
+    position: absolute;
+    inset: auto -25% -35% auto;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle at center, rgba(53, 164, 111, 0.14) 0%, rgba(53, 164, 111, 0) 70%);
+    pointer-events: none;
 }
 /* ===== SLUTT: Chart Bokser ===== */
