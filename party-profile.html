@@ -36,11 +36,20 @@
             <div class="nav-links"></div>
         </header>
 
-        <div class="party-selector-profile">
-            <label for="party-select">Velg parti for å se detaljert profil:</label>
-            <select id="party-select" class="filter-dropdown">
-                <option value="">Velg parti...</option>
-                </select>
+        <section class="party-hero" id="party-hero" aria-live="polite">
+            <div class="party-hero-placeholder">
+                <p>Velg et parti for å låse opp en skreddersydd profil.</p>
+            </div>
+        </section>
+
+        <div class="party-selector-wrapper">
+            <div class="party-logo-banner" id="party-logo-banner" aria-label="Tilgjengelige partier"></div>
+            <div class="party-selector-profile">
+                <label for="party-select">Velg parti for å se detaljert profil:</label>
+                <select id="party-select" class="filter-dropdown">
+                    <option value="">Velg parti...</option>
+                    </select>
+            </div>
         </div>
 
         <main id="profile-content" class="profile-content-grid">

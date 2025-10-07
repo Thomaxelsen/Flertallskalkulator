@@ -1,6 +1,239 @@
 /* css/party-profile.css (Version 2.2 - Fjerner konflikter for featured view) */
 
 /* Container for partivelger */
+.party-hero {
+    margin-top: 30px;
+}
+
+.party-hero-placeholder {
+    background: linear-gradient(135deg, #f6f9ff 0%, #eef2ff 100%);
+    border-radius: 22px;
+    padding: 32px;
+    text-align: center;
+    color: #506080;
+    box-shadow: 0 18px 45px rgba(24, 61, 116, 0.12);
+}
+
+.party-hero-card {
+    --party-color: var(--kf-blue);
+    --party-color-soft: rgba(13, 109, 253, 0.12);
+    --party-color-border: rgba(13, 109, 253, 0.24);
+    --party-color-strong: #0d6efd;
+    background: linear-gradient(140deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.88) 40%, rgba(255,255,255,0.82) 100%);
+    border-radius: 26px;
+    padding: 34px clamp(24px, 5vw, 48px);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: clamp(20px, 4vw, 40px);
+    align-items: center;
+    box-shadow: 0 24px 55px rgba(13, 45, 94, 0.18);
+    position: relative;
+    overflow: hidden;
+}
+
+.party-hero-card::after {
+    content: "";
+    position: absolute;
+    inset: -40% auto auto -40%;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 70%);
+    opacity: 0.9;
+}
+
+.party-hero-card::before {
+    content: "";
+    position: absolute;
+    inset: auto -35% -60% auto;
+    width: 260px;
+    height: 260px;
+    background: radial-gradient(circle at center, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0) 70%);
+    opacity: 0.7;
+}
+
+.party-hero-logo {
+    position: relative;
+    z-index: 1;
+    width: clamp(84px, 12vw, 120px);
+    aspect-ratio: 1 / 1;
+    border-radius: 24px;
+    background: linear-gradient(145deg, rgba(255,255,255,0.8), rgba(255,255,255,0.4));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 18px 38px rgba(13, 45, 94, 0.16);
+    border: 1px solid rgba(255,255,255,0.75);
+}
+
+.party-hero-logo img {
+    max-width: 70%;
+    height: auto;
+}
+
+.party-hero-details {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 10px;
+    color: #1f2d46;
+}
+
+.party-hero-title {
+    margin: 0;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 700;
+    color: #0f2343;
+}
+
+.party-hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 4px;
+}
+
+.party-hero-pill {
+    background: rgba(13, 109, 253, 0.08);
+    border: 1px solid rgba(13, 109, 253, 0.18);
+    color: #0d6efd;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    box-shadow: 0 6px 14px rgba(15, 45, 92, 0.1);
+}
+
+.party-hero-pill--support {
+    --support-pill-bg: linear-gradient(135deg, rgba(13, 109, 253, 0.2) 0%, rgba(13, 109, 253, 0.08) 100%);
+    --support-pill-border: rgba(13, 109, 253, 0.24);
+    --support-pill-color: #10325a;
+    --support-pill-shadow: rgba(15, 45, 92, 0.18);
+    background: var(--support-pill-bg);
+    border-color: var(--support-pill-border);
+    color: var(--support-pill-color);
+    box-shadow: 0 12px 28px var(--support-pill-shadow);
+    font-weight: 700;
+}
+
+.party-hero-pill--support[data-support-tier="low"] {
+    --support-pill-bg: linear-gradient(135deg, #fde5e9 0%, #f8ccd5 100%);
+    --support-pill-border: rgba(208, 79, 79, 0.45);
+    --support-pill-color: #b22738;
+    --support-pill-shadow: rgba(208, 79, 79, 0.25);
+}
+
+.party-hero-pill--support[data-support-tier="mid"] {
+    --support-pill-bg: linear-gradient(135deg, #ffedd8 0%, #ffd7ad 100%);
+    --support-pill-border: rgba(242, 163, 60, 0.45);
+    --support-pill-color: #c46611;
+    --support-pill-shadow: rgba(242, 163, 60, 0.25);
+}
+
+.party-hero-pill--support[data-support-tier="elevated"] {
+    --support-pill-bg: linear-gradient(135deg, #fef6cf 0%, #fdeca2 100%);
+    --support-pill-border: rgba(242, 198, 58, 0.45);
+    --support-pill-color: #b08507;
+    --support-pill-shadow: rgba(242, 198, 58, 0.22);
+}
+
+.party-hero-pill--support[data-support-tier="high"] {
+    --support-pill-bg: linear-gradient(135deg, #dcf4e7 0%, #c0ebd6 100%);
+    --support-pill-border: rgba(53, 164, 111, 0.45);
+    --support-pill-color: #25724d;
+    --support-pill-shadow: rgba(53, 164, 111, 0.25);
+}
+
+.party-hero-pill--support[data-support-tier="unknown"] {
+    --support-pill-bg: linear-gradient(135deg, #e7ecf6 0%, #d7dff0 100%);
+    --support-pill-border: rgba(112, 128, 159, 0.35);
+    --support-pill-color: #3d4b63;
+    --support-pill-shadow: rgba(112, 128, 159, 0.22);
+}
+
+.party-hero-summary {
+    margin: 0;
+    color: #42516d;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.party-selector-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 30px;
+}
+
+.party-logo-banner {
+    display: none;
+    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(247,250,255,0.95) 100%);
+    border-radius: 18px;
+    padding: 16px clamp(16px, 3vw, 28px);
+    box-shadow: 0 18px 45px rgba(15, 45, 92, 0.14);
+    gap: 12px;
+    overflow-x: auto;
+    align-items: center;
+}
+
+.party-logo-banner::-webkit-scrollbar {
+    height: 8px;
+}
+
+.party-logo-banner::-webkit-scrollbar-thumb {
+    background: rgba(15, 45, 92, 0.2);
+    border-radius: 999px;
+}
+
+.party-logo-button {
+    border: none;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 14px;
+    border-radius: 16px;
+    gap: 8px;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    min-width: 92px;
+    position: relative;
+}
+
+.party-logo-button:focus-visible {
+    outline: 3px solid rgba(13, 109, 253, 0.35);
+    outline-offset: 4px;
+}
+
+.party-logo-button img {
+    width: 46px;
+    height: 46px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 6px rgba(15, 45, 92, 0.16));
+    transition: transform 0.25s ease;
+}
+
+.party-logo-button span {
+    font-weight: 600;
+    color: #32415e;
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+}
+
+.party-logo-button:hover {
+    transform: translateY(-4px);
+    background: rgba(13, 109, 253, 0.08);
+}
+
+.party-logo-button.selected {
+    background: linear-gradient(140deg, rgba(13, 109, 253, 0.12), rgba(13, 109, 253, 0.22));
+    box-shadow: 0 18px 35px rgba(13, 45, 94, 0.18);
+}
+
+.party-logo-button.selected img {
+    transform: scale(1.08);
+}
+
 .party-selector-profile {
     background-color: white;
     padding: 20px;
@@ -37,9 +270,10 @@
 
 /* Stil for hver boks i rutenettet */
 .profile-box {
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    background: linear-gradient(160deg, rgba(255,255,255,0.96), rgba(245,250,255,0.92));
+    border-radius: 22px;
+    box-shadow: 0 26px 55px rgba(13, 45, 94, 0.12);
+    border: 1px solid rgba(13, 45, 94, 0.05);
     padding: 0; /* Padding settes på inner-content */
     display: flex; /* Bruker flex for å håndtere inner-content */
     flex-direction: column;
@@ -48,7 +282,7 @@
 }
 
 .profile-inner-content {
-    padding: 25px;
+    padding: clamp(22px, 3vw, 28px);
     flex-grow: 1; /* Tar tilgjengelig plass */
     display: flex;
     flex-direction: column;
@@ -89,6 +323,36 @@
     color: #888;
     margin: auto; /* Sentrerer i flex container */
 }
+
+.chart-container {
+    background: linear-gradient(145deg, rgba(255,255,255,0.92) 0%, rgba(235,242,255,0.92) 100%);
+    border-radius: 18px;
+    padding: clamp(18px, 4vw, 26px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+    position: relative;
+    overflow: hidden;
+}
+
+.chart-container::after {
+    content: "";
+    position: absolute;
+    inset: auto -30% -40% auto;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle at center, rgba(13, 109, 253, 0.12) 0%, rgba(13, 109, 253, 0) 70%);
+    pointer-events: none;
+}
+
+.chart-container h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    color: #16315c;
+}
+
+.chart-surface {
+    width: 100%;
+    min-height: 260px;
+}
 .profile-box .loader.error p {
     color: var(--fail-color);
     font-weight: bold;
@@ -117,6 +381,31 @@
         position: relative; /* Tilbake til normal flyt */
         height: 200px; /* Gi litt fast høyde */
         margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .party-hero-card {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .party-hero-logo {
+        margin: 0 auto;
+    }
+
+    .party-hero-meta {
+        justify-content: center;
+    }
+}
+
+@media (min-width: 992px) {
+    .party-logo-banner {
+        display: flex;
+    }
+
+    .party-selector-profile {
+        display: none;
     }
 }
 /* ===== SLUTT: 2x2 Grid Layout ===== */
@@ -368,5 +657,24 @@
     width: 100% !important; height: auto !important;
     min-height: 300px;
     flex-grow: 1;
+}
+
+#plotly-stance-chart {
+    position: relative;
+    border-radius: 28px;
+    padding: 18px;
+    background: radial-gradient(140% 140% at 50% 32%, rgba(255, 255, 255, 0.95) 0%, rgba(232, 239, 253, 0.86) 62%, rgba(216, 228, 250, 0.82) 100%);
+    box-shadow: 0 24px 46px rgba(15, 45, 92, 0.16);
+    overflow: hidden;
+}
+
+#plotly-stance-chart::after {
+    content: "";
+    position: absolute;
+    inset: auto -25% -35% auto;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle at center, rgba(53, 164, 111, 0.14) 0%, rgba(53, 164, 111, 0) 70%);
+    pointer-events: none;
 }
 /* ===== SLUTT: Chart Bokser ===== */
