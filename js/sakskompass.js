@@ -86,18 +86,23 @@ document.addEventListener('DOMContentLoaded', function() {
     function createPartyListHTML(partiesArray, title, className) {
         if (partiesArray.length === 0) return '';
         partiesArray.sort((a, b) => (a.position || 99) - (b.position || 99));
-        let listItems = partiesArray.map(party => `
+        let listItems = partiesArray.map(party => {
+            const profileUrl = `party-profile.html?party=${encodeURIComponent(party.shorthand)}`;
+            return `
             <div class="stance-party-item">
-                <img src="images/parties/${party.shorthand.toLowerCase()}.png" alt="${party.name}" class="party-logo">
+                <a href="${profileUrl}" class="party-logo-link" aria-label="Les mer om ${party.name}">
+                    <img src="images/parties/${party.shorthand.toLowerCase()}.png" alt="${party.name}" class="party-logo">
+                </a>
                 <div class="party-details">
                     <div class="party-name">${party.name}</div>
-                    ${party.quote 
-                        ? `<div class="party-quote">«${party.quote}»</div>` 
+                    ${party.quote
+                        ? `<div class="party-quote">«${party.quote}»</div>`
                         : `<div class="party-quote no-quote">(Ingen utdypende begrunnelse)</div>`
                     }
                 </div>
             </div>
-        `).join('');
+        `;
+        }).join('');
         return `<div class="stance-group ${className}"><h4>${title} (${partiesArray.length})</h4>${listItems}</div>`;
     }
 
