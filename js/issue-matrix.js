@@ -399,8 +399,11 @@ function generateMatrix(areaFilter, viewMode) {
         partyHeader.title = party.name;
         
         // === ENDRING: Byttet ut header-innhold med kun logoen ===
+        const profileUrl = `party-profile.html?party=${encodeURIComponent(party.shorthand)}`;
         partyHeader.innerHTML = `
-            <img src="images/parties/${party.shorthand.toLowerCase()}.png" alt="${party.name}" class="matrix-header-logo">
+            <a href="${profileUrl}" class="matrix-header-link" aria-label="Gå til ${party.name} sin partiprofil">
+                <img src="images/parties/${party.shorthand.toLowerCase()}.png" alt="${party.name}" class="matrix-header-logo">
+            </a>
         `;
         // === SLUTT ENDRING ===
 
