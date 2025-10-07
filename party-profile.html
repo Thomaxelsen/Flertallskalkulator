@@ -31,7 +31,7 @@
             </div>
             <div class="header-text">
                 <h1>Partiprofil</h1>
-                <div class="header-subtitle">Detaljert analyse av partiets politikk og kandidater</div>
+                <div class="header-subtitle">Detaljert analyse av partiets politikk og representanter</div>
             </div>
             <div class="nav-links"></div>
         </header>
@@ -57,32 +57,31 @@
 
             <div class="profile-box box-candidates">
                  <div class="profile-inner-content">
-                    <h3 class="box-title">Partiets Kandidater 2025</h3>
+                    <h3 class="box-title">Partiets stortingsrepresentanter</h3>
                     <div class="profile-candidate-filters">
-                        <div class="filter-group">
-                            <label for="candidate-view-mode-select">Visning:</label>
-                            <select id="candidate-view-mode-select" class="filter-dropdown">
-                                <option value="normal" selected>Normal visning</option>
-                                <option value="featured">Kun utvalgte</option>
-                            </select>
-                        </div>
                         <div class="filter-group">
                             <label for="candidate-constituency-filter">Valgkrets:</label>
                             <select id="candidate-constituency-filter" class="filter-dropdown">
                                 <option value="all">Alle Valgkretser</option>
                                 </select>
                         </div>
+                        <div class="filter-group">
+                            <label for="candidate-committee-filter">Komité:</label>
+                            <select id="candidate-committee-filter" class="filter-dropdown">
+                                <option value="all">Alle komiteer</option>
+                            </select>
+                        </div>
                          <div class="filter-group count-group">
-                             <span id="profile-candidate-count">0</span> kandidater vises.
+                             <span id="profile-candidate-count">0</span> representanter vises.
                          </div>
                     </div>
                     <div id="profile-candidate-grid" class="candidate-grid profile-candidate-grid-area">
-                         <div class="loader">Laster kandidater...</div>
+                         <div class="loader">Laster representanter...</div>
                     </div>
                  </div>
                  <aside id="profile-candidate-detail-overlay" class="candidate-detail-panel-overlay">
                      <div class="overlay-header">
-                         <h4>Kandidatinformasjon</h4>
+                         <h4>Representantinformasjon</h4>
                          <button class="close-overlay-button" id="close-candidate-overlay">×</button>
                      </div>
                      <div class="overlay-content" id="profile-candidate-detail-content">

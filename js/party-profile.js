@@ -1,21 +1,15 @@
-// js/party-profile.js (Version 2.2 - Bruker klasser fra candidates.css for grid)
+// js/party-profile.js (Version 2.3 - viser aktive representanter i partiprofilen)
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("Party Profile v2.2: DOM loaded. Waiting for data..."); // Oppdatert versjonsnummer
+    console.log("Party Profile v2.3: DOM loaded. Waiting for data...");
 
     // Globale variabler
     let issuesData = [];
     let partiesData = [];
-    let candidatesData = [];
+    let representativesData = [];
     let partiesMap = {};
-    let candidatesMapByParty = {};
-    let constituencyMandates = {};
-    let allConstituencyNames = [];
-
-    // Flagg for datastatus
-    let issuesReady = false;
-    let partiesReady = false;
-    let candidatesReady = false;
+    let representativesMapByParty = {};
+    const NO_COMMITTEE_VALUE = '__none__';
 
     // Referanser til DOM-elementer
     const profileContentGrid = document.getElementById('profile-content');
@@ -26,8 +20,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const candidatesBoxContent = candidatesBox?.querySelector('.profile-inner-content');
     const stanceChartBoxContent = document.getElementById('profile-stance-chart-content');
     const areaChartBoxContent = document.getElementById('profile-area-chart-content');
-    const candidateViewModeSelect = document.getElementById('candidate-view-mode-select');
     const candidateConstituencyFilter = document.getElementById('candidate-constituency-filter');
+    const candidateCommitteeFilter = document.getElementById('candidate-committee-filter');
     const candidateCountSpan = document.getElementById('profile-candidate-count');
     const candidateGrid = document.getElementById('profile-candidate-grid');
     const candidateGridArea = document.querySelector('.profile-candidate-grid-area'); // For å bytte klasse
@@ -38,31 +32,23 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Datainnlasting og Initialisering ---
 
     function loadAllData() {
-        console.log("Party Profile v2.2: Loading all data...");
+        console.log("Party Profile v2.3: Loading all data...");
         const issuesPromise = fetch('data/issues.json').then(r => r.ok ? r.json() : Promise.reject('Issues fetch failed'));
         const partiesPromise = fetch('data/parties.json').then(r => r.ok ? r.json() : Promise.reject('Parties fetch failed'));
-        const candidatesPromise = fetch('data/candidates.json').then(r => r.ok ? r.json() : Promise.reject('Candidates fetch failed'));
-        const mandatesPromise = fetch('data/constituency_mandates.json')
-            .then(r => r.ok ? r.json() : {})
-             .catch(() => ({}));
+        const representativesPromise = fetch('data/representatives.json').then(r => r.ok ? r.json() : Promise.reject('Representatives fetch failed'));
 
-        Promise.all([issuesPromise, partiesPromise, candidatesPromise, mandatesPromise])
-            .then(([issues, parties, candidates, mandates]) => {
-                console.log("Party Profile v2.2: All data fetched.");
+        Promise.all([issuesPromise, partiesPromise, representativesPromise])
+            .then(([issues, parties, representatives]) => {
+                console.log("Party Profile v2.3: All data fetched.");
                 issuesData = issues;
                 partiesData = parties;
-                candidatesData = candidates;
-                constituencyMandates = mandates;
-
-                issuesReady = true;
-                partiesReady = true;
-                candidatesReady = true;
+                representativesData = representatives.filter(rep => rep.isActive === true);
 
                 processInitialData();
                 initializeProfilePage();
             })
             .catch(error => {
-                console.error("Party Profile v2.2: Failed to load required data:", error);
+                console.error("Party Profile v2.3: Failed to load required data:", error);
                 if (profileContentGrid) {
                     profileContentGrid.innerHTML = '<div class="profile-placeholder error full-grid-placeholder"><p>Kunne ikke laste all nødvendig data. Prøv å laste siden på nytt.</p></div>';
                 }
@@ -71,31 +57,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function processInitialData() {
         partiesData.forEach(p => partiesMap[p.shorthand] = p);
-        candidatesMapByParty = {};
-        let uniqueConstituencyNames = new Set();
-        candidatesData.forEach(constituency => {
-            uniqueConstituencyNames.add(constituency.constituencyName);
-            constituency.parties.forEach(party => {
-                if (!candidatesMapByParty[party.partyShorthand]) {
-                    candidatesMapByParty[party.partyShorthand] = [];
-                }
-                party.candidates.forEach(candidate => {
-                    candidatesMapByParty[party.partyShorthand].push({
-                        ...candidate,
-                        constituencyName: constituency.constituencyName,
-                        partyShorthand: party.partyShorthand,
-                        partyName: party.partyName || partiesMap[party.partyShorthand]?.name || party.partyShorthand
-                    });
-                });
-            });
+        representativesMapByParty = {};
+        representativesData.forEach(rep => {
+            if (!representativesMapByParty[rep.partyShorthand]) {
+                representativesMapByParty[rep.partyShorthand] = [];
+            }
+            representativesMapByParty[rep.partyShorthand].push(rep);
         });
-        allConstituencyNames = [...uniqueConstituencyNames].sort();
-        console.log("Party Profile v2.2: Initial data processed.");
+        console.log("Party Profile v2.3: Initial data processed.");
     }
 
     function initializeProfilePage() {
         if (!partySelect || !profileContentGrid || !placeholderDiv) {
-             console.error("Party Profile v2.2: Essential elements missing, cannot initialize."); return;
+             console.error("Party Profile v2.3: Essential elements missing, cannot initialize."); return;
          }
         placeholderDiv.style.display = 'flex';
         profileContentGrid.classList.remove('active');
@@ -104,18 +78,18 @@ document.addEventListener('DOMContentLoaded', function() {
         partySelect.querySelectorAll('option:not([value=""])').forEach(o => o.remove());
         const sortedParties = [...partiesData].sort((a, b) => (a.position || 99) - (b.position || 99));
         sortedParties.forEach(party => {
-             if (candidatesMapByParty[party.shorthand] && candidatesMapByParty[party.shorthand].length > 0) {
+             if (representativesMapByParty[party.shorthand] && representativesMapByParty[party.shorthand].length > 0) {
                 const option = document.createElement('option'); option.value = party.shorthand; option.textContent = party.name; partySelect.appendChild(option);
-             } else { console.warn(`Party Profile v2.2: Skipping party ${party.shorthand} in dropdown - no candidate data found.`); }
+             } else { console.warn(`Party Profile v2.3: Skipping party ${party.shorthand} in dropdown - no representative data found.`); }
         });
         partySelect.addEventListener('change', handlePartySelection);
 
-        if (candidateViewModeSelect) candidateViewModeSelect.addEventListener('change', () => handleCandidateFiltering(partySelect.value));
-        if (candidateConstituencyFilter) candidateConstituencyFilter.addEventListener('change', () => handleCandidateFiltering(partySelect.value));
-        if (closeOverlayButton) closeOverlayButton.addEventListener('click', closeCandidateDetailOverlay);
-        if (candidateGrid) { candidateGrid.addEventListener('click', handleCandidateCardClick); }
+        if (candidateConstituencyFilter) candidateConstituencyFilter.addEventListener('change', () => handleRepresentativeFiltering(partySelect.value));
+        if (candidateCommitteeFilter) candidateCommitteeFilter.addEventListener('change', () => handleRepresentativeFiltering(partySelect.value));
+        if (closeOverlayButton) closeOverlayButton.addEventListener('click', closeRepresentativeDetailOverlay);
+        if (candidateGrid) { candidateGrid.addEventListener('click', handleRepresentativeCardClick); }
 
-        console.log("Party Profile v2.2: Page initialized.");
+        console.log("Party Profile v2.3: Page initialized.");
     }
 
     loadAllData();
@@ -127,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
          placeholderDiv.style.display = 'none'; profileContentGrid.classList.add('active');
          showLoader(issuesBoxContent); showLoader(candidateGrid);
          showLoader(stanceChartBoxContent); showLoader(areaChartBoxContent);
-         console.log(`Party Profile v2.2: Party selected: ${selectedShorthand}. Rendering profile...`);
+         console.log(`Party Profile v2.3: Party selected: ${selectedShorthand}. Rendering profile...`);
 
          setTimeout(() => {
              try {
@@ -136,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
                  renderIssuesBox(partyIssueData.issuesByLevel, partyIssueData.stanceCounts);
                  renderStanceChartBox(partyIssueData.stanceCounts, partyInfo);
                  renderAreaChartBox(partyIssueData.sortedAreas, partyInfo);
-                 initializeCandidatesBox(selectedShorthand);
+                 initializeRepresentativesBox(selectedShorthand);
              } catch(error) { console.error("Error displaying party profile:", error); showError(issuesBoxContent, error.message); showError(candidatesBoxContent, error.message); showError(stanceChartBoxContent, error.message); showError(areaChartBoxContent, error.message); }
          }, 50);
     }
@@ -179,143 +153,227 @@ document.addEventListener('DOMContentLoaded', function() {
          chartContainer.innerHTML = `<h3>Gj.snitt Støtte per Saksområde</h3><div id="plotly-area-chart"></div>`;
          areaChartBoxContent.appendChild(chartContainer); createAreaChart(sortedAreasData, partyInfo);
     }
-    function initializeCandidatesBox(partyShorthand) {
-         clearBoxContent(candidatesBoxContent, true); if (!candidatesBoxContent || !candidateGrid) return;
-         populateCandidateConstituencyFilter(partyShorthand); handleCandidateFiltering(partyShorthand);
+    function initializeRepresentativesBox(partyShorthand) {
+         clearBoxContent(candidatesBoxContent, true);
+         if (!candidatesBoxContent || !candidateGrid || !candidateGridArea) return;
+         candidateGridArea.classList.add('candidate-grid');
+         candidateGridArea.classList.remove('featured-candidates-grid');
+         populateRepresentativeFilters(partyShorthand);
+         handleRepresentativeFiltering(partyShorthand);
     }
 
-    // --- Funksjoner for Kandidathåndtering ---
-    function populateCandidateConstituencyFilter(partyShorthand) {
-         if (!candidateConstituencyFilter) return;
-         candidateConstituencyFilter.querySelectorAll('option:not([value="all"])').forEach(o => o.remove()); candidateConstituencyFilter.value = 'all';
-         const partyCandidates = candidatesMapByParty[partyShorthand] || [];
-         const relevantConstituencies = [...new Set(partyCandidates.map(c => c.constituencyName))].sort();
-         relevantConstituencies.forEach(name => { const option = document.createElement('option'); option.value = name; option.textContent = name; candidateConstituencyFilter.appendChild(option); });
-         console.log(`Party Profile v2.2: Populated constituency filter for ${partyShorthand}`);
+    // --- Funksjoner for representanthåndtering ---
+    function populateRepresentativeFilters(partyShorthand) {
+         const partyRepresentatives = representativesMapByParty[partyShorthand] || [];
+
+         if (candidateConstituencyFilter) {
+             candidateConstituencyFilter.querySelectorAll('option:not([value="all"])').forEach(o => o.remove());
+             candidateConstituencyFilter.value = 'all';
+             const relevantConstituencies = [...new Set(partyRepresentatives.map(rep => rep.constituencyName).filter(Boolean))].sort();
+             relevantConstituencies.forEach(name => {
+                 const option = document.createElement('option');
+                 option.value = name;
+                 option.textContent = name;
+                 candidateConstituencyFilter.appendChild(option);
+             });
+         }
+
+         if (candidateCommitteeFilter) {
+             candidateCommitteeFilter.querySelectorAll('option:not([value="all"])').forEach(o => o.remove());
+             candidateCommitteeFilter.value = 'all';
+             const committeeValues = [...new Set(partyRepresentatives.map(rep => normalizeCommitteeValue(rep.committee)))];
+             committeeValues
+                 .sort((a, b) => {
+                     if (a === NO_COMMITTEE_VALUE) return 1;
+                     if (b === NO_COMMITTEE_VALUE) return -1;
+                     return a.localeCompare(b);
+                 })
+                 .forEach(value => {
+                     const option = document.createElement('option');
+                     option.value = value;
+                     option.textContent = value === NO_COMMITTEE_VALUE ? 'Ikke tildelt komité' : value;
+                     candidateCommitteeFilter.appendChild(option);
+                 });
+         }
+
+         console.log(`Party Profile v2.3: Populated representative filters for ${partyShorthand}`);
     }
 
-    function handleCandidateFiltering(partyShorthand) {
-        if (!candidateGrid || !candidateCountSpan || !candidateViewModeSelect || !candidateConstituencyFilter || !candidateGridArea) { console.error("Party Profile v2.2: Missing elements for candidate filtering."); return; }
-        if (!partyShorthand || !candidatesMapByParty[partyShorthand]) { candidateGrid.innerHTML = '<p class="no-results">Velg et parti først.</p>'; candidateCountSpan.textContent = '0'; return; }
+    function handleRepresentativeFiltering(partyShorthand) {
+        if (!candidateGrid || !candidateCountSpan || !candidateConstituencyFilter || !candidateGridArea) { console.error("Party Profile v2.3: Missing elements for representative filtering."); return; }
+        if (!partyShorthand || !representativesMapByParty[partyShorthand]) { candidateGrid.innerHTML = '<p class="no-results">Velg et parti først.</p>'; candidateCountSpan.textContent = '0'; return; }
 
-        showLoader(candidateGrid);
-
-        const selectedViewMode = candidateViewModeSelect.value;
-        const selectedConstituency = candidateConstituencyFilter.value;
-        const partyInfo = partiesMap[partyShorthand];
-        const allPartyCandidates = candidatesMapByParty[partyShorthand];
-
-        let filteredCandidates = allPartyCandidates;
-        if (selectedConstituency !== 'all') { filteredCandidates = filteredCandidates.filter(c => c.constituencyName === selectedConstituency); }
-
-        // === HER ER ENDRINGEN ===
-        if (selectedViewMode === 'featured') {
-            filteredCandidates = filteredCandidates.filter(c => c.isFeatured);
-            // Bruk klassene fra candidates.css:
-            candidateGridArea.classList.remove('candidate-grid'); // Fjern normal grid klasse
-            candidateGridArea.classList.add('featured-candidates-grid'); // Legg til featured grid klasse
-        } else {
-            // Bruk klassene fra candidates.css:
-            candidateGridArea.classList.remove('featured-candidates-grid'); // Fjern featured grid klasse
-            candidateGridArea.classList.add('candidate-grid'); // Legg til normal grid klasse
+        if (candidateGrid) {
+            candidateGrid.innerHTML = '<div class="loader">Laster representanter...</div>';
         }
-        // === SLUTT PÅ ENDRING ===
 
-        filteredCandidates.sort((a, b) => { if (a.constituencyName !== b.constituencyName) { return a.constituencyName.localeCompare(b.constituencyName); } return (a.rank || 999) - (b.rank || 999); });
-        console.log(`Party Profile v2.2: Filtering candidates for ${partyShorthand}. Mode: ${selectedViewMode}, Constituency: ${selectedConstituency}. Found ${filteredCandidates.length}`);
+        const selectedConstituency = candidateConstituencyFilter.value;
+        const selectedCommittee = candidateCommitteeFilter ? candidateCommitteeFilter.value : 'all';
+        const partyInfo = partiesMap[partyShorthand];
+        const allPartyRepresentatives = representativesMapByParty[partyShorthand];
 
-        displayPartyCandidatesList(filteredCandidates, partyInfo, selectedViewMode);
-        candidateCountSpan.textContent = filteredCandidates.length;
+        let filteredRepresentatives = allPartyRepresentatives;
+        if (selectedConstituency !== 'all') {
+            filteredRepresentatives = filteredRepresentatives.filter(rep => rep.constituencyName === selectedConstituency);
+        }
+        if (selectedCommittee !== 'all') {
+            filteredRepresentatives = filteredRepresentatives.filter(rep => normalizeCommitteeValue(rep.committee) === selectedCommittee);
+        }
+
+        filteredRepresentatives.sort((a, b) => {
+            const committeeA = getCommitteeDisplayName(a);
+            const committeeB = getCommitteeDisplayName(b);
+            if (committeeA !== committeeB) {
+                if (committeeA === 'Ikke tildelt komité') return 1;
+                if (committeeB === 'Ikke tildelt komité') return -1;
+                return committeeA.localeCompare(committeeB);
+            }
+            return a.name.localeCompare(b.name);
+        });
+
+        console.log(`Party Profile v2.3: Filtering representatives for ${partyShorthand}. Constituency: ${selectedConstituency}, Committee: ${selectedCommittee}. Found ${filteredRepresentatives.length}`);
+
+        displayPartyRepresentativesList(filteredRepresentatives, partyInfo);
+        candidateCountSpan.textContent = filteredRepresentatives.length;
     }
 
-    function displayPartyCandidatesList(candidates, partyInfo, viewMode) {
+    function displayPartyRepresentativesList(representatives, partyInfo) {
          if (!candidateGrid) return;
          candidateGrid.innerHTML = '';
 
-         if (candidates.length === 0) { candidateGrid.innerHTML = '<p class="no-results">Ingen kandidater funnet.</p>'; return; }
+         if (representatives.length === 0) { candidateGrid.innerHTML = '<p class="no-results">Ingen representanter funnet.</p>'; return; }
 
-         let currentConstituency = null;
-         candidates.forEach(candidate => {
-             if (candidate.constituencyName !== currentConstituency) {
-                 const separator = createConstituencySeparator(candidate.constituencyName);
-                 candidateGrid.appendChild(separator);
-                 currentConstituency = candidate.constituencyName;
+         const groupedByCommittee = representatives.reduce((acc, rep) => {
+             const committeeName = getCommitteeDisplayName(rep);
+             if (!acc[committeeName]) {
+                 acc[committeeName] = [];
              }
-             let card;
-             if (viewMode === 'featured') {
-                 card = createProfileFeaturedImageCard(candidate, partyInfo); // Bruker nå styles fra candidates.css
-             } else {
-                 card = createCandidateCard(candidate, partyInfo);
-             }
-             candidateGrid.appendChild(card);
+             acc[committeeName].push(rep);
+             return acc;
+         }, {});
+
+         const sortedCommittees = Object.keys(groupedByCommittee).sort((a, b) => {
+             if (a === 'Ikke tildelt komité') return 1;
+             if (b === 'Ikke tildelt komité') return -1;
+             return a.localeCompare(b);
+         });
+
+         sortedCommittees.forEach(committeeName => {
+             const separator = createCommitteeSeparator(committeeName, groupedByCommittee[committeeName].length);
+             candidateGrid.appendChild(separator);
+             groupedByCommittee[committeeName]
+                 .sort((a, b) => a.name.localeCompare(b.name))
+                 .forEach(rep => {
+                     const card = createRepresentativeCard(rep, partyInfo);
+                     candidateGrid.appendChild(card);
+                 });
          });
      }
 
-     function createConstituencySeparator(constituencyName) {
+     function createCommitteeSeparator(committeeName, count) {
          const separator = document.createElement('div');
          separator.className = 'constituency-separator';
-         const count = constituencyMandates[constituencyName];
-         const text = typeof count === 'number' ? `(${count} mandater)` : '(?)';
-         separator.innerHTML = `<span class="name">${constituencyName || '?'}</span> <span class="count">${text}</span>`;
+         const displayName = committeeName || 'Ikke tildelt komité';
+         const countText = typeof count === 'number' ? `${count} representant${count === 1 ? '' : 'er'}` : '';
+         separator.innerHTML = `<span class="name">${displayName}</span> <span class="count">${countText}</span>`;
          return separator;
      }
 
-     // Denne funksjonen lager HTML for featured-kortet.
-     // Stylingen (utseendet) kommer nå fra candidates.css via klassen 'featured-candidate-card'
-     function createProfileFeaturedImageCard(candidate, partyInfo) {
+     function createRepresentativeCard(representative, partyInfo) {
+        const safePartyInfo = partyInfo || partiesMap[representative.partyShorthand] || {};
+        const shorthand = safePartyInfo.shorthand || representative.partyShorthand || '';
+        const normalizedShorthand = (shorthand || '').toLowerCase();
+        const partyClassPrefix = safePartyInfo.classPrefix || normalizedShorthand || 'ukjent';
+        const placeholderPath = shorthand
+            ? `images/candidates/placeholder-${normalizedShorthand}.png`
+            : 'images/placeholder-generic.png';
+        const imageUrl = representative.imageUrl || placeholderPath;
         const card = document.createElement('div');
-        const partyClass = `party-${partyInfo.classPrefix || partyInfo.shorthand.toLowerCase()}`;
-        // VIKTIG: Bruker klassen fra candidates.css
-        card.className = `featured-candidate-card ${partyClass}`;
-        card.dataset.candidateInfo = JSON.stringify(candidate);
-        card.dataset.partyInfo = JSON.stringify(partyInfo);
-        // Setter CSS-variabel som brukes av candidates.css for border-color
-        card.style.setProperty('--card-party-color', partyInfo.color || '#ccc');
-
+        card.className = `candidate-card party-${partyClassPrefix}`;
+        card.style.setProperty('--party-color', safePartyInfo.color || '#ccc');
+        card.dataset.representativeInfo = JSON.stringify(representative);
         card.innerHTML = `
-            ${candidate.imageUrl
-                ? `<img src="${candidate.imageUrl}" alt="${candidate.name || ''}" loading="lazy">`
-                : '<div class="image-placeholder">Bilde mangler</div>'}
-        `;
-        card.title = `${candidate.name || '?'} (${partyInfo.name || '?'}) - Klikk for detaljer`;
-
-        // Ingen egen listener her, bruker den på parent 'candidateGrid'
-        return card;
+            <div class="card-header">
+                <img src="${imageUrl}" alt="Profilbilde av ${representative.name || 'representant'}" class="candidate-avatar" onerror="this.onerror=null; this.src='${placeholderPath}';">
+                <div class="candidate-header-info">
+                    <span class="candidate-name">${representative.name || 'Ukjent navn'}</span>
+                </div>
+                <div class="party-icon icon-${partyClassPrefix}" style="background-color:${safePartyInfo.color || '#ccc'}" title="${safePartyInfo.name || representative.partyShorthand || '?'}">${(shorthand || '?').charAt(0) || '?'}</div>
+            </div>
+            <div class="card-body">
+                <div class="candidate-meta">
+                    <span>${representative.committee && representative.committee.trim() ? representative.committee : 'Ikke tildelt komité'}</span>
+                    ${representative.constituencyName ? `<span class="candidate-location"> | Valgkrets: ${representative.constituencyName}</span>` : ''}
+                </div>
+            </div>
+         `;
+         card.title = `${representative.name || '?'} (${safePartyInfo.name || representative.partyShorthand || '?'}) - Klikk for detaljer`;
+         return card;
      }
 
-     function createCandidateCard(candidate, partyInfo) {
-         const card = document.createElement('div'); const partyClassPrefix = partyInfo.classPrefix || partyInfo.shorthand.toLowerCase();
-         card.className = `candidate-card party-${partyClassPrefix}`; if (candidate.hasRealisticChance) card.classList.add('realistic-chance'); card.style.setProperty('--party-color', partyInfo.color || '#ccc');
-         card.dataset.candidateInfo = JSON.stringify(candidate); card.dataset.partyInfo = JSON.stringify(partyInfo);
-         card.innerHTML = `
-            <div class="card-header"><span class="candidate-rank">${candidate.rank || '?'}</span><div class="candidate-header-info"><span class="candidate-name">${candidate.name || 'Ukjent navn'}</span><span class="party-name-header">${partyInfo.name || candidate.partyShorthand || 'Ukjent parti'}</span></div><div class="party-icon icon-${partyClassPrefix}" style="background-color: ${partyInfo.color || '#ccc'}" title="${partyInfo.name || '?'}">${candidate.partyShorthand?.charAt(0) || '?'}</div></div>
-            <div class="card-body"><div class="candidate-meta">${candidate.age ? `<span>Alder: ${candidate.age}</span>` : ''}${candidate.location ? `<span class="candidate-location"> | Fra: ${candidate.location}</span>` : ''}</div></div>
-            ${candidate.hasRealisticChance ? `<div class="card-footer"><span class="realistic-badge">Realistisk sjanse</span></div>` : '<div class="card-footer"></div>'} `;
-         card.title = `${candidate.name || '?'} (${partyInfo.name || '?'}) - Klikk for detaljer`; return card;
+     function normalizeCommitteeValue(rawCommittee) {
+         if (!rawCommittee || !rawCommittee.trim()) {
+             return NO_COMMITTEE_VALUE;
+         }
+         return rawCommittee.trim();
      }
 
-    // --- Funksjoner for Kandidat Detalj Overlay ---
-    function handleCandidateCardClick(event) {
-        const card = event.target.closest('.candidate-card[data-candidate-info], .featured-candidate-card[data-candidate-info]');
-        if (card && card.dataset.candidateInfo && card.dataset.partyInfo) {
-             console.log("Party Profile v2.2: Candidate card clicked.");
+     function getCommitteeDisplayName(representative) {
+         const normalized = normalizeCommitteeValue(representative.committee);
+         return normalized === NO_COMMITTEE_VALUE ? 'Ikke tildelt komité' : normalized;
+     }
+
+    // --- Funksjoner for Representant Detalj Overlay ---
+    function handleRepresentativeCardClick(event) {
+        const card = event.target.closest('.candidate-card[data-representative-info]');
+        if (card && card.dataset.representativeInfo) {
+             console.log("Party Profile v2.3: Representative card clicked.");
              try {
-                 const candidate = JSON.parse(card.dataset.candidateInfo); const partyInfo = JSON.parse(card.dataset.partyInfo); displayCandidateDetailOverlay(candidate, partyInfo);
-             } catch (e) { console.error("Party Profile v2.2: Error parsing candidate data from card:", e); if(candidateOverlayContent) candidateOverlayContent.innerHTML = "<p>Kunne ikke laste kandidatdata.</p>"; if(candidateOverlay) candidateOverlay.classList.add('active'); }
+                 const representative = JSON.parse(card.dataset.representativeInfo);
+                 const partyInfo = partiesMap[representative.partyShorthand];
+                 displayRepresentativeDetailOverlay(representative, partyInfo);
+             } catch (e) {
+                 console.error("Party Profile v2.3: Error parsing representative data from card:", e);
+                 if (candidateOverlayContent) candidateOverlayContent.innerHTML = "<p>Kunne ikke laste representantdata.</p>";
+                 if (candidateOverlay) candidateOverlay.classList.add('active');
+             }
         }
     }
-    function displayCandidateDetailOverlay(candidate, partyInfo) {
+    function displayRepresentativeDetailOverlay(representative, partyInfo) {
          if (!candidateOverlay || !candidateOverlayContent) return;
-         const partyClassPrefix = partyInfo.classPrefix || partyInfo.shorthand.toLowerCase();
-         const imageHtml = candidate.imageUrl ? `<img src="${candidate.imageUrl}" alt="${candidate.name || 'Kandidatbilde'}" class="detail-image">` : `<img src="images/candidates/placeholder-${partyInfo.shorthand.toLowerCase()}.png" alt="Placeholder for ${partyInfo.name || 'partiet'}" class="detail-image placeholder-image" onerror="this.onerror=null; this.src='images/placeholder-generic.png';">`;
+         const effectivePartyInfo = partyInfo || partiesMap[representative.partyShorthand] || {};
+         const shorthand = effectivePartyInfo.shorthand || representative.partyShorthand || '';
+         const normalizedShorthand = shorthand.toLowerCase();
+         const partyClassPrefix = effectivePartyInfo.classPrefix || normalizedShorthand || 'ukjent';
+         const placeholderPath = shorthand ? `images/candidates/placeholder-${normalizedShorthand}.png` : 'images/placeholder-generic.png';
+         const imageHtml = representative.imageUrl
+             ? `<img src="${representative.imageUrl}" alt="${representative.name || 'Representantbilde'}" class="detail-image">`
+             : `<img src="${placeholderPath}" alt="Placeholder for ${effectivePartyInfo.name || 'partiet'}" class="detail-image placeholder-image" onerror="this.onerror=null; this.src='images/placeholder-generic.png';">`;
          candidateOverlayContent.innerHTML = `
-             <div class="detail-image-container">${imageHtml}</div> <div class="detail-header"><div class="party-icon icon-${partyClassPrefix}" style="background-color: ${partyInfo.color || '#ccc'};">${partyInfo.shorthand?.charAt(0) || '?'}</div><h3>${candidate.name || '?'}</h3></div>
-             <div class="detail-info"><p><strong>Rangering:</strong> ${candidate.rank || '?'}. plass</p><p><strong>Parti:</strong> ${partyInfo.name || '?'}</p><p><strong>Valgkrets:</strong> ${candidate.constituencyName || '?'}</p>${candidate.age ? `<p><strong>Alder:</strong> ${candidate.age}</p>` : ''}${candidate.location ? `<p><strong>Fra:</strong> ${candidate.location}</p>` : ''}<p><strong>Realistisk sjanse:</strong> ${typeof candidate.hasRealisticChance !== 'undefined' ? (candidate.hasRealisticChance ? 'Ja' : 'Nei') : '?'}</p>${candidate.email ? `<p><strong>E-post:</strong> <a href="mailto:${candidate.email}">${candidate.email}</a></p>` : ''}${candidate.phone ? `<p><strong>Telefon:</strong> <a href="tel:${candidate.phone}">${candidate.phone}</a></p>` : ''}</div>
-             <p class="privacy-notice-panel">Husk personvern ved bruk av kontaktinformasjon.</p> `;
+             <div class="detail-image-container">${imageHtml}</div>
+             <div class="detail-header">
+                 <div class="party-icon icon-${partyClassPrefix}" style="background-color: ${effectivePartyInfo.color || '#ccc'};">${(shorthand || '?').charAt(0) || '?'}</div>
+                 <h3>${representative.name || '?'}</h3>
+             </div>
+             <div class="detail-info">
+                 <p><strong>Parti:</strong> ${effectivePartyInfo.name || representative.partyShorthand || '?'}</p>
+                 <p><strong>Valgkrets:</strong> ${representative.constituencyName || '?'}</p>
+                 ${representative.committee ? `<p><strong>Komité:</strong> ${representative.committee}</p>` : ''}
+                 ${representative.phone ? `<p><strong>Telefon:</strong> <a href="tel:${representative.phone}">${representative.phone}</a></p>` : ''}
+                 ${representative.email ? `<p><strong>E-post:</strong> <a href="mailto:${representative.email}">${representative.email}</a></p>` : ''}
+                 ${representative.regionOffice ? `<p><strong>Regionkontor:</strong> ${representative.regionOffice}</p>` : ''}
+                 ${representative.kfContact ? `<p><strong>KF-kontakt:</strong> ${representative.kfContact}</p>` : ''}
+             </div>
+             ${representative.profileUrl ? `<a href="${representative.profileUrl}" class="profile-link-btn" target="_blank" rel="noopener noreferrer">Se profil i Microsoft Lists</a>` : ''}
+             <p class="privacy-notice-panel">Husk personvern ved bruk av kontaktinformasjon.</p>
+         `;
          candidateOverlay.classList.add('active'); candidateOverlay.scrollTop = 0;
     }
-    function closeCandidateDetailOverlay() {
-        if (candidateOverlay) { candidateOverlay.classList.remove('active'); setTimeout(() => { if(candidateOverlayContent) candidateOverlayContent.innerHTML = ''; }, 400); }
+    function closeRepresentativeDetailOverlay() {
+        if (candidateOverlay) {
+            candidateOverlay.classList.remove('active');
+            setTimeout(() => { if (candidateOverlayContent) candidateOverlayContent.innerHTML = ''; }, 400);
+        }
     }
 
     // --- Funksjoner for Issues og Charts ---
@@ -338,10 +396,10 @@ document.addEventListener('DOMContentLoaded', function() {
          const tabButtons = issuesSectionElement?.querySelectorAll('.tab-button');
          const tabContents = issuesSectionElement?.querySelectorAll('.tab-content');
          if (!tabButtons || !tabContents || tabButtons.length === 0 || tabContents.length === 0) {
-             console.warn("Party Profile v2.2: Could not find tab buttons or content to set up listeners.");
+             console.warn("Party Profile v2.3: Could not find tab buttons or content to set up listeners.");
              return;
          }
-          console.log(`Party Profile v2.2: Setting up ${tabButtons.length} tab buttons.`);
+          console.log(`Party Profile v2.3: Setting up ${tabButtons.length} tab buttons.`);
          tabButtons.forEach(button => {
              button.replaceWith(button.cloneNode(true));
          });
@@ -358,7 +416,7 @@ document.addEventListener('DOMContentLoaded', function() {
                  } else { console.warn(`Could not find tab content with ID: ${tabIdToShow}`); }
              });
          });
-         console.log("Party Profile v2.2: Tab listeners set up.");
+         console.log("Party Profile v2.3: Tab listeners set up.");
     }
 
     // Hjelpefunksjoner

@@ -322,6 +322,21 @@
 .overlay-content .detail-info strong { display: inline-block; min-width: 80px; color: #222; font-weight: 600; margin-right: 5px;}
 .overlay-content .detail-info a { color: var(--kf-blue); text-decoration: none; }
 .overlay-content .detail-info a:hover { text-decoration: underline; }
+.overlay-content .profile-link-btn {
+    display: block;
+    margin-top: 15px;
+    padding: 10px 15px;
+    background-color: var(--kf-blue);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 500;
+    text-align: center;
+    transition: background-color 0.2s ease;
+}
+.overlay-content .profile-link-btn:hover {
+    background-color: var(--kf-purple);
+}
 .overlay-content .privacy-notice-panel { font-size: 0.75rem; color: #888; margin-top: 15px; text-align: center; border-top: 1px dashed #ddd; padding-top: 8px;}
 /* ===== SLUTT: Kandidat Boks ===== */
 
