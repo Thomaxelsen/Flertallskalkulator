@@ -16,6 +16,24 @@ function isTouchDevice() {
 // Global variables for popup logic within this script
 let hoverTimerMatrix = null;
 let currentHoveredCell = null;
+let activeIssueButton = null;
+
+let matrixDetailPanel = null;
+let matrixPanelOverlay = null;
+let matrixPanelContent = null;
+let matrixPanelTitle = null;
+let matrixPanelCloseBtn = null;
+let matrixPanelInitialized = false;
+
+function escapeHtml(text) {
+    if (typeof text !== 'string') return '';
+    return text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
 
 // Create the popup modal (if it doesn't exist from another script)
 function createPopupModalMatrix() {
@@ -262,6 +280,7 @@ function initializeMatrix() {
     // Opprett modal og legg til stiler FØR matrisen genereres
     createPopupModalMatrix();
     addQuoteStylesMatrix();
+    setupMatrixDetailPanel();
 
     // Fyll filter og generer matrise
     const areas = getUniqueAreas();
@@ -353,6 +372,7 @@ function generateMatrix(areaFilter, viewMode) {
         console.error("Matrix container #matrix-visualization ikke funnet.");
         return;
     }
+    closeMatrixDetailPanel(false);
     matrixVisualizationDiv.innerHTML = ''; // Tøm den ytre containeren først
 
     let filteredIssues = matrixIssues;
@@ -435,8 +455,31 @@ function generateMatrix(areaFilter, viewMode) {
             const row = document.createElement('tr');
             const issueCell = document.createElement('td');
             issueCell.className = 'issue-col';
-            issueCell.textContent = issue.name;
-            issueCell.title = issue.name;
+            issueCell.title = `Klikk for å se detaljer for ${issue.name}`;
+
+            const issueButton = document.createElement('button');
+            issueButton.type = 'button';
+            issueButton.className = 'issue-name-button';
+            issueButton.setAttribute('aria-expanded', 'false');
+            issueButton.setAttribute('aria-controls', 'matrix-detail-panel');
+            issueButton.dataset.issueId = issue.id;
+
+            const issueNameSpan = document.createElement('span');
+            issueNameSpan.className = 'issue-name-text';
+            issueNameSpan.textContent = issue.name;
+            issueButton.appendChild(issueNameSpan);
+
+            const indicatorSpan = document.createElement('span');
+            indicatorSpan.className = 'issue-open-indicator';
+            indicatorSpan.setAttribute('aria-hidden', 'true');
+            indicatorSpan.textContent = '›';
+            issueButton.appendChild(indicatorSpan);
+
+            issueButton.addEventListener('click', () => {
+                showIssueDetailPanel(issue.id, issueButton);
+            });
+
+            issueCell.appendChild(issueButton);
             row.appendChild(issueCell);
             let totalPoints = 0;
             parties.forEach(party => {
@@ -551,6 +594,161 @@ function handleMatrixCellLeave(event) {
             currentHoveredCell = null;
         }
     }, 100);
+}
+
+
+function setupMatrixDetailPanel() {
+    if (matrixPanelInitialized) return;
+    matrixDetailPanel = document.getElementById('matrix-detail-panel');
+    matrixPanelOverlay = document.getElementById('matrix-panel-overlay');
+    matrixPanelContent = document.getElementById('matrix-panel-content');
+    matrixPanelTitle = document.getElementById('matrix-panel-title');
+    matrixPanelCloseBtn = document.getElementById('matrix-close-panel');
+
+    if (!matrixDetailPanel || !matrixPanelOverlay || !matrixPanelContent || !matrixPanelTitle) {
+        console.warn('Detaljpanel for matrisen er ikke tilgjengelig i DOM.');
+        return;
+    }
+
+    matrixPanelOverlay.addEventListener('click', () => {
+        closeMatrixDetailPanel(false);
+    });
+
+    if (matrixPanelCloseBtn) {
+        matrixPanelCloseBtn.addEventListener('click', () => {
+            closeMatrixDetailPanel();
+        });
+    }
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && matrixDetailPanel.classList.contains('active')) {
+            closeMatrixDetailPanel();
+        }
+    });
+
+    matrixPanelInitialized = true;
+}
+
+function showIssueDetailPanel(issueId, triggerElement) {
+    if (!matrixDetailPanel || !matrixPanelContent || !matrixPanelTitle) return;
+
+    const issue = matrixIssues.find(iss => iss.id == issueId);
+    if (!issue) {
+        matrixPanelContent.innerHTML = '<p class="panel-empty-state">Kunne ikke finne detaljer for valgt sak.</p>';
+        matrixDetailPanel.classList.add('active');
+        matrixPanelOverlay?.classList.add('active');
+        matrixDetailPanel.setAttribute('aria-hidden', 'false');
+        matrixPanelOverlay?.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        if (matrixPanelCloseBtn) matrixPanelCloseBtn.focus();
+        return;
+    }
+
+    matrixPanelTitle.textContent = issue.name || 'Saksdetaljer';
+    matrixPanelContent.innerHTML = buildPanelContent(issue);
+
+    if (activeIssueButton && activeIssueButton !== triggerElement) {
+        activeIssueButton.setAttribute('aria-expanded', 'false');
+    }
+    activeIssueButton = triggerElement || null;
+    if (activeIssueButton) {
+        activeIssueButton.setAttribute('aria-expanded', 'true');
+    }
+
+    matrixDetailPanel.classList.add('active');
+    matrixPanelOverlay?.classList.add('active');
+    matrixDetailPanel.setAttribute('aria-hidden', 'false');
+    matrixPanelOverlay?.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    if (matrixPanelCloseBtn) {
+        matrixPanelCloseBtn.focus();
+    }
+}
+
+function closeMatrixDetailPanel(restoreFocus = true) {
+    if (!matrixDetailPanel) return;
+
+    matrixDetailPanel.classList.remove('active');
+    matrixPanelOverlay?.classList.remove('active');
+    matrixDetailPanel.setAttribute('aria-hidden', 'true');
+    matrixPanelOverlay?.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+
+    if (activeIssueButton) {
+        activeIssueButton.setAttribute('aria-expanded', 'false');
+        if (restoreFocus && document.body.contains(activeIssueButton)) {
+            activeIssueButton.focus();
+        }
+        activeIssueButton = null;
+    }
+}
+
+function buildPanelContent(issue) {
+    const levelGroups = { 2: [], 1: [], 0: [] };
+    parties.forEach(party => {
+        const stance = issue.partyStances?.[party.shorthand] || {};
+        let level = typeof stance.level === 'number' ? stance.level : 0;
+        if (![0, 1, 2].includes(level)) level = 0;
+        levelGroups[level].push({
+            ...party,
+            quote: stance.quote
+        });
+    });
+
+    let htmlParts = [];
+    if (issue.area) {
+        htmlParts.push(`<p class="panel-issue-area">${escapeHtml(issue.area)}</p>`);
+    }
+    if (issue.description) {
+        htmlParts.push(`<p class="panel-issue-description">${escapeHtml(issue.description)}</p>`);
+    }
+
+    const levelMeta = [
+        { level: 2, title: 'Full enighet', className: 'level-2' },
+        { level: 1, title: 'Delvis enighet', className: 'level-1' },
+        { level: 0, title: 'Ingen støtte / Uenig', className: 'level-0' }
+    ];
+
+    let hasContent = false;
+
+    levelMeta.forEach(({ level, title, className }) => {
+        const partiesForLevel = levelGroups[level];
+        if (!partiesForLevel || partiesForLevel.length === 0) return;
+        hasContent = true;
+
+        partiesForLevel.sort((a, b) => (a.position || 99) - (b.position || 99));
+        const itemsHtml = partiesForLevel.map(party => {
+            const profileUrl = `party-profile.html?party=${encodeURIComponent(party.shorthand)}`;
+            const quoteText = typeof party.quote === 'string' && party.quote.trim().length > 0
+                ? `<div class="party-quote">«${escapeHtml(party.quote)}»</div>`
+                : '<div class="party-quote no-quote">Ingen utdypende begrunnelse.</div>';
+            return `
+                <div class="stance-party-item">
+                    <a class="party-logo-link" href="${profileUrl}" aria-label="Gå til ${escapeHtml(party.name)}">
+                        <img src="images/parties/${party.shorthand.toLowerCase()}.png" alt="${escapeHtml(party.name)}" class="party-logo">
+                    </a>
+                    <div class="party-details">
+                        <div class="party-name"><a href="${profileUrl}">${escapeHtml(party.name)}</a></div>
+                        ${quoteText}
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        htmlParts.push(`
+            <div class="stance-group ${className}">
+                <h4>${title} (${partiesForLevel.length})</h4>
+                ${itemsHtml}
+            </div>
+        `);
+    });
+
+    if (!hasContent) {
+        htmlParts.push('<p class="panel-empty-state">Ingen partier er registrert på denne saken.</p>');
+    }
+
+    return htmlParts.join('');
 }
 
 
