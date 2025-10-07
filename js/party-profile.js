@@ -280,16 +280,24 @@ document.addEventListener('DOMContentLoaded', function() {
      }
 
      function createRepresentativeCard(representative, partyInfo) {
-         const safePartyInfo = partyInfo || partiesMap[representative.partyShorthand] || {};
-         const shorthand = safePartyInfo.shorthand || representative.partyShorthand || '';
-         const partyClassPrefix = safePartyInfo.classPrefix || shorthand.toLowerCase() || 'ukjent';
-         const card = document.createElement('div');
-         card.className = `candidate-card party-${partyClassPrefix}`;
-         card.style.setProperty('--party-color', safePartyInfo.color || '#ccc');
-         card.dataset.representativeInfo = JSON.stringify(representative);
-         card.innerHTML = `
+        const safePartyInfo = partyInfo || partiesMap[representative.partyShorthand] || {};
+        const shorthand = safePartyInfo.shorthand || representative.partyShorthand || '';
+        const normalizedShorthand = (shorthand || '').toLowerCase();
+        const partyClassPrefix = safePartyInfo.classPrefix || normalizedShorthand || 'ukjent';
+        const placeholderPath = shorthand
+            ? `images/candidates/placeholder-${normalizedShorthand}.png`
+            : 'images/placeholder-generic.png';
+        const imageUrl = representative.imageUrl || placeholderPath;
+        const card = document.createElement('div');
+        card.className = `candidate-card party-${partyClassPrefix}`;
+        card.style.setProperty('--party-color', safePartyInfo.color || '#ccc');
+        card.dataset.representativeInfo = JSON.stringify(representative);
+        card.innerHTML = `
             <div class="card-header">
-                <span class="candidate-name">${representative.name || 'Ukjent navn'}</span>
+                <img src="${imageUrl}" alt="Profilbilde av ${representative.name || 'representant'}" class="candidate-avatar" onerror="this.onerror=null; this.src='${placeholderPath}';">
+                <div class="candidate-header-info">
+                    <span class="candidate-name">${representative.name || 'Ukjent navn'}</span>
+                </div>
                 <div class="party-icon icon-${partyClassPrefix}" style="background-color:${safePartyInfo.color || '#ccc'}" title="${safePartyInfo.name || representative.partyShorthand || '?'}">${(shorthand || '?').charAt(0) || '?'}</div>
             </div>
             <div class="card-body">
