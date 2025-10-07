@@ -153,6 +153,22 @@
 }
 /* *** SLUTT PÅ ENDRING *** */
 
+.constellation-seat-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(0, 95, 171, 0.15), rgba(0, 95, 171, 0.05));
+    color: #004a85;
+    font-size: 0.95rem;
+    border: 1px solid rgba(0, 95, 171, 0.25);
+}
+
+.constellation-seat-badge strong {
+    font-size: 1.05rem;
+}
+
 .issue-category-group {
     border: 1px solid #e0e0e0;
     border-radius: 8px;

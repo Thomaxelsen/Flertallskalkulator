@@ -248,81 +248,124 @@
 }
 
 /* Quiz 3: Koble til komité */
-.match-committee-container {
+.committee-quiz-container {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.5rem;
 }
 .match-instructions {
     font-style: italic;
     color: #666;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
-.match-lists-wrapper {
+.committee-card-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.committee-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 1.25rem;
+    background-color: #fdfdfd;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.04);
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    gap: 2rem;
+    flex-direction: column;
+    gap: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
-.draggable-names-list, .droppable-committees-list {
-    flex: 1;
-    min-width: 300px;
-    padding: 1rem;
-    background-color: #f8f9fa;
-    border-radius: 8px;
+.committee-card.correct {
+    border-color: rgba(40, 167, 69, 0.7);
+    box-shadow: 0 6px 16px rgba(40, 167, 69, 0.12);
 }
-.list-title {
-    font-weight: bold;
-    margin-bottom: 1rem;
-    text-align: center;
+.committee-card.incorrect {
+    border-color: rgba(220, 53, 69, 0.6);
+    box-shadow: 0 6px 16px rgba(220, 53, 69, 0.12);
+}
+.committee-card.unanswered {
+    border-color: rgba(255, 193, 7, 0.6);
+}
+.committee-rep-info {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+.committee-rep-visual {
+    flex-shrink: 0;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #e6ecf5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.committee-rep-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+}
+.committee-rep-placeholder {
+    font-weight: 600;
     color: var(--kf-blue);
 }
-.name-item {
-    background-color: white;
-    padding: 0.75rem;
-    margin-bottom: 0.5rem;
-    border-radius: 4px;
-    cursor: grab;
-    border: 1px solid #ddd;
-    transition: box-shadow 0.2s;
-    user-select: none;
+.committee-rep-meta {
+    text-align: left;
 }
-.name-item.dragging {
-    opacity: 0.5;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+.committee-rep-name {
+    font-weight: 600;
+    color: #222;
 }
-.committee-target {
-    border: 2px dashed #ccc;
-    border-radius: 4px;
-    margin-bottom: 0.5rem;
-    padding: 0.75rem;
-    min-height: 50px;
-    transition: background-color 0.2s, border-color 0.2s;
+.committee-rep-party {
+    font-size: 0.9rem;
+    color: #666;
 }
-.committee-target.drag-over {
-    background-color: #e9ecef;
+.committee-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.committee-option {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.committee-option:hover {
+    border-color: var(--kf-blue);
+    background-color: rgba(18, 119, 189, 0.08);
+}
+.committee-option input {
+    accent-color: var(--kf-blue);
+}
+.committee-option.selected {
     border-color: var(--kf-blue);
 }
-.committee-target .committee-name {
-    font-weight: 500;
-    color: #555;
-    pointer-events: none;
+.committee-option.correct {
+    border-color: rgba(40, 167, 69, 0.8);
+    background-color: rgba(40, 167, 69, 0.12);
+    font-weight: 600;
 }
-.committee-target .name-item {
-    cursor: default;
+.committee-option.incorrect {
+    border-color: rgba(220, 53, 69, 0.7);
+    background-color: rgba(220, 53, 69, 0.12);
 }
-.committee-target.correct {
-    border-style: solid;
-    border-color: #28a745;
-    background-color: rgba(40, 167, 69, 0.1);
-}
-.committee-target.incorrect {
-    border-style: solid;
-    border-color: #dc3545;
-    background-color: rgba(220, 53, 69, 0.1);
-}
-.committee-target.incorrect .name-item {
-    cursor: grab;
+
+@media (max-width: 600px) {
+    .committee-card {
+        padding: 1rem;
+    }
+
+    .committee-rep-info {
+        align-items: flex-start;
+    }
 }
 
 /* Kontroller nederst */
