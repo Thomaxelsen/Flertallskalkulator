@@ -821,6 +821,9 @@ footer {
 .quote-modal.hover-mode .quote-modal-content {
    padding: 15px 20px; position: fixed; width: auto; max-width: 350px; z-index: 1001;
 }
+body.modal-open {
+   overflow: hidden;
+}
 @keyframes modalFadeIn { from {opacity: 0; transform: translateY(-10px);} to {opacity: 1; transform: translateY(0);} }
 .close-modal {
    color: #aaa; position: absolute; right: 15px; top: 10px; font-size: 28px; font-weight: bold; cursor: pointer; transition: color 0.2s;
@@ -837,6 +840,37 @@ footer {
 .quote-party-title.party-tag-mdg { background-color: #439539; } .quote-party-title.party-tag-pf { background-color: #a04d94; }
 .quote-text {
    font-size: 1rem; line-height: 1.5; color: #333; padding: 12px; background-color: #f8f9fa; border-left: 3px solid var(--kf-purple); margin: 10px 0 0 0; border-radius: 4px; font-style: italic;
+}
+
+#representative-detail-modal .quote-modal-content {
+   max-height: 90vh;
+   overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+   #representative-detail-modal.quote-modal:not(.hover-mode) .quote-modal-content {
+      margin: 0;
+      width: 100%;
+      max-width: none;
+      height: 100%;
+      max-height: none;
+      border-radius: 0;
+      padding: 24px 20px 36px;
+      display: flex;
+      flex-direction: column;
+   }
+
+   #representative-detail-modal .close-modal {
+      top: 18px;
+      right: 22px;
+      font-size: 34px;
+   }
+
+   #representative-detail-modal #representative-detail-content {
+      flex: 1;
+      overflow-y: auto;
+      margin-top: 20px;
+   }
 }
 .no-quote-text {
     font-style: italic;
