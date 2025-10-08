@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const detailPanelContent = detailPanel?.querySelector('.panel-content');
     const modal = document.getElementById('representative-detail-modal');
     const modalContentContainer = document.getElementById('representative-detail-content');
+    const modalContentWrapper = modal?.querySelector('.quote-modal-content');
     const closeModalBtn = document.getElementById('close-representative-modal');
 
     // --- Datainnlasting ---
@@ -98,8 +99,18 @@ document.addEventListener('DOMContentLoaded', () => {
             if (card) handleCardInteraction(card);
         });
 
-        closeModalBtn?.addEventListener('click', () => { if (modal) modal.style.display = 'none'; });
-        modal?.addEventListener('click', (event) => { if (event.target === modal) modal.style.display = 'none'; });
+        closeModalBtn?.addEventListener('click', closeModal);
+        modal?.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        window.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && isModalOpen()) {
+                closeModal();
+            }
+        });
 
         resetDetailPanel();
     }
@@ -132,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function displayInModal(rep) {
         const partyInfo = partiesMap[rep.partyShorthand];
         modalContentContainer.innerHTML = generateDetailHTML(rep, partyInfo, true);
-        modal.style.display = 'block';
+        openModal();
     }
 
     // =======================================================
@@ -172,6 +183,26 @@ document.addEventListener('DOMContentLoaded', () => {
             currentlySelectedCard.classList.remove('selected-detail');
             currentlySelectedCard = null;
         }
+    }
+
+    function isModalOpen() {
+        return modal && modal.style.display === 'flex';
+    }
+
+    function openModal() {
+        if (!modal) return;
+        modal.style.display = 'flex';
+        modal.scrollTop = 0;
+        if (modalContentWrapper) {
+            modalContentWrapper.scrollTop = 0;
+        }
+        document.body.classList.add('modal-open');
+    }
+
+    function closeModal() {
+        if (!modal) return;
+        modal.style.display = 'none';
+        document.body.classList.remove('modal-open');
     }
     
     // --- Filtrering og Visning ---
