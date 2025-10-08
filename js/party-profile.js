@@ -36,6 +36,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const candidateOverlayContent = document.getElementById('profile-candidate-detail-content');
     const closeOverlayButton = document.getElementById('close-candidate-overlay');
 
+    const MOBILE_OVERLAY_MEDIA_QUERY = window.matchMedia
+        ? window.matchMedia('(max-width: 1023px)')
+        : { matches: false };
+    let candidateOverlayKeyListenerBound = false;
+    let candidateOverlayMediaListenerBound = false;
+
     // --- Datainnlasting og Initialisering ---
 
     function loadAllData() {
@@ -104,6 +110,27 @@ document.addEventListener('DOMContentLoaded', function() {
         if (candidateCommitteeFilter) candidateCommitteeFilter.addEventListener('change', () => handleRepresentativeFiltering(partySelect.value));
         if (closeOverlayButton) closeOverlayButton.addEventListener('click', closeRepresentativeDetailOverlay);
         if (candidateGrid) { candidateGrid.addEventListener('click', handleRepresentativeCardClick); }
+        if (candidateOverlay) {
+            candidateOverlay.addEventListener('click', event => {
+                if (MOBILE_OVERLAY_MEDIA_QUERY.matches && event.target === candidateOverlay && candidateOverlay.classList.contains('active')) {
+                    closeRepresentativeDetailOverlay();
+                }
+            });
+            if (!candidateOverlayMediaListenerBound) {
+                const mediaListener = event => handleOverlayMediaQueryChange(event);
+                if (typeof MOBILE_OVERLAY_MEDIA_QUERY.addEventListener === 'function') {
+                    MOBILE_OVERLAY_MEDIA_QUERY.addEventListener('change', mediaListener);
+                } else if (typeof MOBILE_OVERLAY_MEDIA_QUERY.addListener === 'function') {
+                    MOBILE_OVERLAY_MEDIA_QUERY.addListener(mediaListener);
+                }
+                candidateOverlayMediaListenerBound = true;
+            }
+        }
+
+        if (!candidateOverlayKeyListenerBound) {
+            document.addEventListener('keydown', handleCandidateOverlayKeydown);
+            candidateOverlayKeyListenerBound = true;
+        }
 
         console.log("Party Profile v2.3: Page initialized.");
     }
@@ -505,11 +532,32 @@ document.addEventListener('DOMContentLoaded', function() {
              <p class="privacy-notice-panel">Husk personvern ved bruk av kontaktinformasjon.</p>
          `;
          candidateOverlay.classList.add('active'); candidateOverlay.scrollTop = 0;
+         if (MOBILE_OVERLAY_MEDIA_QUERY.matches) {
+             document.body.classList.add('modal-open');
+         }
     }
     function closeRepresentativeDetailOverlay() {
         if (candidateOverlay) {
             candidateOverlay.classList.remove('active');
             setTimeout(() => { if (candidateOverlayContent) candidateOverlayContent.innerHTML = ''; }, 400);
+        }
+        document.body.classList.remove('modal-open');
+    }
+
+    function handleCandidateOverlayKeydown(event) {
+        if (event.key === 'Escape' && candidateOverlay && candidateOverlay.classList.contains('active')) {
+            closeRepresentativeDetailOverlay();
+        }
+    }
+
+    function handleOverlayMediaQueryChange(event) {
+        if (!candidateOverlay) return;
+        if (event.matches) {
+            if (candidateOverlay.classList.contains('active')) {
+                document.body.classList.add('modal-open');
+            }
+        } else {
+            document.body.classList.remove('modal-open');
         }
     }
 
