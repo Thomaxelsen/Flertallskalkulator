@@ -36,6 +36,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const candidateOverlayContent = document.getElementById('profile-candidate-detail-content');
     const closeOverlayButton = document.getElementById('close-candidate-overlay');
 
+    const MOBILE_OVERLAY_MEDIA_QUERY = window.matchMedia
+        ? window.matchMedia('(max-width: 1023px)')
+        : { matches: false };
+    let candidateOverlayKeyListenerBound = false;
+    let candidateOverlayMediaListenerBound = false;
+
     // --- Datainnlasting og Initialisering ---
 
     function loadAllData() {
@@ -49,7 +55,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log("Party Profile v2.3: All data fetched.");
                 issuesData = issues;
                 partiesData = parties;
-                representativesData = representatives.filter(rep => rep.isActive === true);
+                representativesData = representatives
+                    .filter(rep => rep.isActive === true)
+                    .map(rep => ({
+                        ...rep,
+                        committees: parseCommitteeField(rep.committee)
+                    }));
 
                 processInitialData();
                 initializeProfilePage();
@@ -99,6 +110,27 @@ document.addEventListener('DOMContentLoaded', function() {
         if (candidateCommitteeFilter) candidateCommitteeFilter.addEventListener('change', () => handleRepresentativeFiltering(partySelect.value));
         if (closeOverlayButton) closeOverlayButton.addEventListener('click', closeRepresentativeDetailOverlay);
         if (candidateGrid) { candidateGrid.addEventListener('click', handleRepresentativeCardClick); }
+        if (candidateOverlay) {
+            candidateOverlay.addEventListener('click', event => {
+                if (MOBILE_OVERLAY_MEDIA_QUERY.matches && event.target === candidateOverlay && candidateOverlay.classList.contains('active')) {
+                    closeRepresentativeDetailOverlay();
+                }
+            });
+            if (!candidateOverlayMediaListenerBound) {
+                const mediaListener = event => handleOverlayMediaQueryChange(event);
+                if (typeof MOBILE_OVERLAY_MEDIA_QUERY.addEventListener === 'function') {
+                    MOBILE_OVERLAY_MEDIA_QUERY.addEventListener('change', mediaListener);
+                } else if (typeof MOBILE_OVERLAY_MEDIA_QUERY.addListener === 'function') {
+                    MOBILE_OVERLAY_MEDIA_QUERY.addListener(mediaListener);
+                }
+                candidateOverlayMediaListenerBound = true;
+            }
+        }
+
+        if (!candidateOverlayKeyListenerBound) {
+            document.addEventListener('keydown', handleCandidateOverlayKeydown);
+            candidateOverlayKeyListenerBound = true;
+        }
 
         console.log("Party Profile v2.3: Page initialized.");
     }
@@ -253,7 +285,18 @@ document.addEventListener('DOMContentLoaded', function() {
          if (candidateCommitteeFilter) {
              candidateCommitteeFilter.querySelectorAll('option:not([value="all"])').forEach(o => o.remove());
              candidateCommitteeFilter.value = 'all';
-             const committeeValues = [...new Set(partyRepresentatives.map(rep => normalizeCommitteeValue(rep.committee)))];
+
+             const committeeValuesSet = new Set();
+             partyRepresentatives.forEach(rep => {
+                 const committees = getRepresentativeCommittees(rep);
+                 if (!committees.length) {
+                     committeeValuesSet.add(NO_COMMITTEE_VALUE);
+                 } else {
+                     committees.forEach(name => committeeValuesSet.add(name));
+                 }
+             });
+
+             const committeeValues = [...committeeValuesSet];
              committeeValues
                  .sort((a, b) => {
                      if (a === NO_COMMITTEE_VALUE) return 1;
@@ -289,17 +332,30 @@ document.addEventListener('DOMContentLoaded', function() {
             filteredRepresentatives = filteredRepresentatives.filter(rep => rep.constituencyName === selectedConstituency);
         }
         if (selectedCommittee !== 'all') {
-            filteredRepresentatives = filteredRepresentatives.filter(rep => normalizeCommitteeValue(rep.committee) === selectedCommittee);
+            filteredRepresentatives = filteredRepresentatives.filter(rep => {
+                const committees = getRepresentativeCommittees(rep);
+                if (selectedCommittee === NO_COMMITTEE_VALUE) {
+                    return committees.length === 0;
+                }
+                return committees.includes(selectedCommittee);
+            });
         }
 
         filteredRepresentatives.sort((a, b) => {
-            const committeeA = getCommitteeDisplayName(a);
-            const committeeB = getCommitteeDisplayName(b);
-            if (committeeA !== committeeB) {
-                if (committeeA === 'Ikke tildelt komité') return 1;
-                if (committeeB === 'Ikke tildelt komité') return -1;
-                return committeeA.localeCompare(committeeB);
+            const committeesA = getRepresentativeCommittees(a);
+            const committeesB = getRepresentativeCommittees(b);
+            const hasCommitteeA = committeesA.length > 0;
+            const hasCommitteeB = committeesB.length > 0;
+
+            if (hasCommitteeA && hasCommitteeB) {
+                const compare = committeesA[0].localeCompare(committeesB[0]);
+                if (compare !== 0) return compare;
+            } else if (hasCommitteeA && !hasCommitteeB) {
+                return -1;
+            } else if (!hasCommitteeA && hasCommitteeB) {
+                return 1;
             }
+
             return a.name.localeCompare(b.name);
         });
 
@@ -316,11 +372,20 @@ document.addEventListener('DOMContentLoaded', function() {
          if (representatives.length === 0) { candidateGrid.innerHTML = '<p class="no-results">Ingen representanter funnet.</p>'; return; }
 
          const groupedByCommittee = representatives.reduce((acc, rep) => {
-             const committeeName = getCommitteeDisplayName(rep);
-             if (!acc[committeeName]) {
-                 acc[committeeName] = [];
+             const committees = getRepresentativeCommittees(rep);
+             if (committees.length === 0) {
+                 if (!acc['Ikke tildelt komité']) {
+                     acc['Ikke tildelt komité'] = [];
+                 }
+                 acc['Ikke tildelt komité'].push(rep);
+             } else {
+                 committees.forEach(name => {
+                     if (!acc[name]) {
+                         acc[name] = [];
+                     }
+                     acc[name].push(rep);
+                 });
              }
-             acc[committeeName].push(rep);
              return acc;
          }, {});
 
@@ -374,7 +439,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <div class="card-body">
                 <div class="candidate-meta">
-                    <span>${representative.committee && representative.committee.trim() ? representative.committee : 'Ikke tildelt komité'}</span>
+                    <span>${formatRepresentativeCommitteeSummary(representative)}</span>
                     ${representative.constituencyName ? `<span class="candidate-location"> | Valgkrets: ${representative.constituencyName}</span>` : ''}
                 </div>
             </div>
@@ -383,16 +448,43 @@ document.addEventListener('DOMContentLoaded', function() {
          return card;
      }
 
-     function normalizeCommitteeValue(rawCommittee) {
-         if (!rawCommittee || !rawCommittee.trim()) {
-             return NO_COMMITTEE_VALUE;
+     function parseCommitteeField(rawValue) {
+         if (!rawValue) return [];
+         if (Array.isArray(rawValue)) {
+             return rawValue.map(value => value.trim()).filter(Boolean);
          }
-         return rawCommittee.trim();
+         return String(rawValue)
+             .split(',')
+             .map(value => value.trim())
+             .filter(Boolean);
      }
 
-     function getCommitteeDisplayName(representative) {
-         const normalized = normalizeCommitteeValue(representative.committee);
-         return normalized === NO_COMMITTEE_VALUE ? 'Ikke tildelt komité' : normalized;
+     function getRepresentativeCommittees(representative) {
+         if (!representative) return [];
+         if (Array.isArray(representative.committees)) {
+             return representative.committees;
+         }
+         if (typeof representative.committee === 'string') {
+             return parseCommitteeField(representative.committee);
+         }
+         return [];
+     }
+
+     function formatRepresentativeCommitteeSummary(representative) {
+         const committees = getRepresentativeCommittees(representative);
+         if (!committees.length) {
+             return 'Ikke tildelt komité';
+         }
+         return committees.join(', ');
+     }
+
+     function formatRepresentativeCommitteeDetails(representative) {
+         const committees = getRepresentativeCommittees(representative);
+         if (!committees.length) {
+             return '';
+         }
+         const label = committees.length > 1 ? 'Komitéer' : 'Komité';
+         return `<p><strong>${label}:</strong> ${committees.join(', ')}</p>`;
      }
 
     // --- Funksjoner for Representant Detalj Overlay ---
@@ -430,7 +522,7 @@ document.addEventListener('DOMContentLoaded', function() {
              <div class="detail-info">
                  <p><strong>Parti:</strong> ${effectivePartyInfo.name || representative.partyShorthand || '?'}</p>
                  <p><strong>Valgkrets:</strong> ${representative.constituencyName || '?'}</p>
-                 ${representative.committee ? `<p><strong>Komité:</strong> ${representative.committee}</p>` : ''}
+                 ${formatRepresentativeCommitteeDetails(representative)}
                  ${representative.phone ? `<p><strong>Telefon:</strong> <a href="tel:${representative.phone}">${representative.phone}</a></p>` : ''}
                  ${representative.email ? `<p><strong>E-post:</strong> <a href="mailto:${representative.email}">${representative.email}</a></p>` : ''}
                  ${representative.regionOffice ? `<p><strong>Regionkontor:</strong> ${representative.regionOffice}</p>` : ''}
@@ -440,11 +532,32 @@ document.addEventListener('DOMContentLoaded', function() {
              <p class="privacy-notice-panel">Husk personvern ved bruk av kontaktinformasjon.</p>
          `;
          candidateOverlay.classList.add('active'); candidateOverlay.scrollTop = 0;
+         if (MOBILE_OVERLAY_MEDIA_QUERY.matches) {
+             document.body.classList.add('modal-open');
+         }
     }
     function closeRepresentativeDetailOverlay() {
         if (candidateOverlay) {
             candidateOverlay.classList.remove('active');
             setTimeout(() => { if (candidateOverlayContent) candidateOverlayContent.innerHTML = ''; }, 400);
+        }
+        document.body.classList.remove('modal-open');
+    }
+
+    function handleCandidateOverlayKeydown(event) {
+        if (event.key === 'Escape' && candidateOverlay && candidateOverlay.classList.contains('active')) {
+            closeRepresentativeDetailOverlay();
+        }
+    }
+
+    function handleOverlayMediaQueryChange(event) {
+        if (!candidateOverlay) return;
+        if (event.matches) {
+            if (candidateOverlay.classList.contains('active')) {
+                document.body.classList.add('modal-open');
+            }
+        } else {
+            document.body.classList.remove('modal-open');
         }
     }
 

@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const detailPanelContent = detailPanel?.querySelector('.panel-content');
     const modal = document.getElementById('representative-detail-modal');
     const modalContentContainer = document.getElementById('representative-detail-content');
+    const modalContentWrapper = modal?.querySelector('.quote-modal-content');
     const closeModalBtn = document.getElementById('close-representative-modal');
 
     // --- Datainnlasting ---
@@ -35,7 +36,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     window.partiesData = parties;
                     window.partiesDataLoaded = true;
                 }
-                allRepresentativesData = representatives.filter(rep => rep.isActive === true);
+                allRepresentativesData = representatives
+                    .filter(rep => rep.isActive === true)
+                    .map(rep => ({
+                        ...rep,
+                        committees: parseCommitteeField(rep.committee)
+                    }));
                 parties.forEach(p => { partiesMap[p.shorthand] = p; });
                 const activeParties = parties.filter(p => allRepresentativesData.some(r => r.partyShorthand === p.shorthand));
                 
@@ -71,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
             partyFilter.appendChild(option);
         });
 
-        const committees = [...new Set(allRepresentativesData.map(r => r.committee).filter(Boolean))].sort();
+        const committees = [...new Set(allRepresentativesData.flatMap(r => r.committees || []))].sort();
         committees.forEach(name => {
             const option = document.createElement('option');
             option.value = name;
@@ -93,8 +99,18 @@ document.addEventListener('DOMContentLoaded', () => {
             if (card) handleCardInteraction(card);
         });
 
-        closeModalBtn?.addEventListener('click', () => { if (modal) modal.style.display = 'none'; });
-        modal?.addEventListener('click', (event) => { if (event.target === modal) modal.style.display = 'none'; });
+        closeModalBtn?.addEventListener('click', closeModal);
+        modal?.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        window.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && isModalOpen()) {
+                closeModal();
+            }
+        });
 
         resetDetailPanel();
     }
@@ -127,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function displayInModal(rep) {
         const partyInfo = partiesMap[rep.partyShorthand];
         modalContentContainer.innerHTML = generateDetailHTML(rep, partyInfo, true);
-        modal.style.display = 'block';
+        openModal();
     }
 
     // =======================================================
@@ -150,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="detail-info">
                 <p><strong>Parti:</strong> ${party.name}</p>
                 <p><strong>Valgkrets:</strong> ${rep.constituencyName}</p>
-                ${rep.committee ? `<p><strong>Komité:</strong> ${rep.committee}</p>` : ''}
+                ${formatCommitteeDetails(rep.committees)}
                 ${rep.phone ? `<p><strong>Telefon:</strong> <a href="tel:${rep.phone}">${rep.phone}</a></p>` : ''}
                 ${rep.email ? `<p><strong>E-post:</strong> <a href="mailto:${rep.email}">${rep.email}</a></p>` : ''}
                 ${rep.regionOffice ? `<p><strong>Regionkontor:</strong> ${rep.regionOffice}</p>` : ''}
@@ -168,6 +184,26 @@ document.addEventListener('DOMContentLoaded', () => {
             currentlySelectedCard = null;
         }
     }
+
+    function isModalOpen() {
+        return modal && modal.style.display === 'flex';
+    }
+
+    function openModal() {
+        if (!modal) return;
+        modal.style.display = 'flex';
+        modal.scrollTop = 0;
+        if (modalContentWrapper) {
+            modalContentWrapper.scrollTop = 0;
+        }
+        document.body.classList.add('modal-open');
+    }
+
+    function closeModal() {
+        if (!modal) return;
+        modal.style.display = 'none';
+        document.body.classList.remove('modal-open');
+    }
     
     // --- Filtrering og Visning ---
     function handleFilteringAndDisplay() {
@@ -182,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let filteredReps = allRepresentativesData.filter(rep => {
             const inConstituency = selectedConstituency === 'all' || rep.constituencyName === selectedConstituency;
             const inParty = selectedParty === 'all' || rep.partyShorthand === selectedParty;
-            const inCommittee = selectedCommittee === 'all' || rep.committee === selectedCommittee;
+            const inCommittee = selectedCommittee === 'all' || (rep.committees || []).includes(selectedCommittee);
             const matchesSearch = searchTerm === '' || rep.name.toLowerCase().includes(searchTerm);
             return inConstituency && inParty && inCommittee && matchesSearch;
         });
@@ -209,11 +245,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 return acc;
             }, {});
         } else if (groupBy === 'committee') {
-            reps.sort((a,b) => (a.committee || 'zzz').localeCompare(b.committee || 'zzz') || a.name.localeCompare(b.name));
+            reps.sort((a, b) => {
+                const committeeA = (a.committees && a.committees[0]) || 'zzzz';
+                const committeeB = (b.committees && b.committees[0]) || 'zzzz';
+                if (committeeA === committeeB) {
+                    return a.name.localeCompare(b.name);
+                }
+                if (committeeA === 'zzzz') return 1;
+                if (committeeB === 'zzzz') return -1;
+                return committeeA.localeCompare(committeeB);
+            });
             grouped = reps.reduce((acc, rep) => {
-                const key = rep.committee || 'Ikke tildelt komité';
-                if (!acc[key]) acc[key] = [];
-                acc[key].push(rep);
+                const committees = (rep.committees && rep.committees.length > 0) ? rep.committees : ['Ikke tildelt komité'];
+                committees.forEach(name => {
+                    if (!acc[name]) acc[name] = [];
+                    acc[name].push(rep);
+                });
                 return acc;
             }, {});
         } else { // Default to constituency
@@ -274,13 +321,39 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div class="card-body">
                 <div class="representative-meta">
-                    <span>${rep.committee || 'Ingen komité tildelt'}</span>
+                    <span>${formatCommitteeSummary(rep.committees)}</span>
                 </div>
             </div>
         `;
         return card;
     }
-    
+
+    function parseCommitteeField(rawValue) {
+        if (!rawValue) return [];
+        if (Array.isArray(rawValue)) {
+            return rawValue.map(value => value.trim()).filter(Boolean);
+        }
+        return rawValue
+            .split(',')
+            .map(value => value.trim())
+            .filter(Boolean);
+    }
+
+    function formatCommitteeSummary(committees = []) {
+        if (!committees || committees.length === 0) {
+            return 'Ingen komité tildelt';
+        }
+        return committees.join(', ');
+    }
+
+    function formatCommitteeDetails(committees = []) {
+        if (!committees || committees.length === 0) {
+            return '';
+        }
+        const label = committees.length > 1 ? 'Komitéer' : 'Komité';
+        return `<p><strong>${label}:</strong> ${committees.join(', ')}</p>`;
+    }
+
     function debounce(func, wait) {
         let timeout;
         return function executedFunction(...args) {

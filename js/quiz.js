@@ -22,7 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch('data/representatives.json').then(res => res.json()),
         fetch('data/parties.json').then(res => res.json())
     ]).then(([repsData, partiesData]) => {
-        allRepresentatives = repsData.filter(rep => rep.isActive && rep.gender);
+        allRepresentatives = repsData
+            .filter(rep => rep.isActive && rep.gender)
+            .map(rep => ({
+                ...rep,
+                committees: parseCommitteeField(rep.committee)
+            }));
         partiesData.forEach(p => partiesMap[p.shorthand] = p);
 
         repsWithImagesAndGender = allRepresentatives.filter(rep => rep.imageUrl);
@@ -30,8 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         womenWithImages = repsWithImagesAndGender.filter(rep => rep.gender === 'K');
 
         allCommittees = [...new Set(allRepresentatives
-            .filter(rep => rep.committee && rep.committee.trim() !== '')
-            .map(rep => rep.committee.trim())
+            .flatMap(rep => rep.committees || [])
         )];
         
         console.log(`Quiz: Loaded ${allRepresentatives.length} active reps and ${Object.keys(partiesMap).length} parties.`);
@@ -291,6 +295,17 @@ document.addEventListener('DOMContentLoaded', () => {
         return escapeHtml(text);
     }
 
+    function parseCommitteeField(rawValue) {
+        if (!rawValue) return [];
+        if (Array.isArray(rawValue)) {
+            return rawValue.map(value => value.trim()).filter(Boolean);
+        }
+        return String(rawValue)
+            .split(',')
+            .map(value => value.trim())
+            .filter(Boolean);
+    }
+
     function createRepresentativeImageMarkup(rep) {
         if (rep.imageUrl) {
             const safeUrl = escapeAttribute(rep.imageUrl);
@@ -309,8 +324,12 @@ document.addEventListener('DOMContentLoaded', () => {
         return `<div class="committee-rep-placeholder">${initials}</div>`;
     }
 
-    function getCommitteeOptions(correctCommittee, optionPool) {
-        const options = new Set([correctCommittee]);
+    function getCommitteeOptions(correctCommittees, optionPool) {
+        const normalizedCorrect = Array.isArray(correctCommittees) ? correctCommittees : [correctCommittees].filter(Boolean);
+        const options = new Set(normalizedCorrect);
+        if (options.size === 0 && optionPool.length > 0) {
+            options.add(optionPool[0]);
+        }
         const shuffledPool = shuffleArray([...optionPool]);
 
         for (const committee of shuffledPool) {
@@ -322,7 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function startMatchCommitteeQuiz() {
-        const repsWithCommittee = allRepresentatives.filter(rep => rep.committee && rep.committee.trim() !== "");
+        const repsWithCommittee = allRepresentatives.filter(rep => (rep.committees || []).length > 0);
         if (repsWithCommittee.length < 4 || allCommittees.length < 2) {
             quizContent.innerHTML = "<p>For få representanter med komité-tilhørighet til å starte quizen.</p>";
             return;
@@ -332,15 +351,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedReps = shuffleArray([...repsWithCommittee]).slice(0, numberOfQuestions);
 
         const cardsHTML = selectedReps.map((rep, index) => {
-            const trimmedCommittee = rep.committee.trim();
-            const safeCommitteeAttr = escapeAttribute(trimmedCommittee);
+            const repCommittees = rep.committees || [];
+            const committeeOptions = getCommitteeOptions(repCommittees, allCommittees);
+            const safeCommitteesAttr = escapeAttribute(JSON.stringify(repCommittees));
             const safeName = escapeHtml(rep.name);
             const safeParty = rep.partyShorthand ? escapeHtml(rep.partyShorthand) : '';
-            const committeeOptions = getCommitteeOptions(trimmedCommittee, allCommittees);
             const imageMarkup = createRepresentativeImageMarkup(rep);
 
             return `
-                <div class="committee-card" data-correct-committee="${safeCommitteeAttr}">
+                <div class="committee-card" data-correct-committees='${safeCommitteesAttr}'>
                     <div class="committee-rep-info">
                         <div class="committee-rep-visual">${imageMarkup}</div>
                         <div class="committee-rep-meta">
@@ -390,7 +409,15 @@ document.addEventListener('DOMContentLoaded', () => {
         let unansweredCount = 0;
 
         cards.forEach(card => {
-            const correctCommittee = card.dataset.correctCommittee;
+            let correctCommittees = [];
+            try {
+                correctCommittees = JSON.parse(card.dataset.correctCommittees || '[]');
+            } catch (e) {
+                console.error('Kunne ikke tolke komitédata for kortet:', e);
+            }
+            if (!Array.isArray(correctCommittees)) {
+                correctCommittees = [];
+            }
             const selectedInput = card.querySelector('input[type="radio"]:checked');
             const optionLabels = card.querySelectorAll('.committee-option');
 
@@ -410,7 +437,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 selectedLabel.classList.add('selected');
             }
 
-            if (selectedInput.value === correctCommittee) {
+            if (correctCommittees.includes(selectedInput.value)) {
                 card.classList.add('correct');
                 if (selectedLabel) {
                     selectedLabel.classList.add('correct');
@@ -422,7 +449,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     selectedLabel.classList.add('incorrect');
                 }
                 optionLabels.forEach(label => {
-                    if (label.dataset.committee === correctCommittee) {
+                    if (correctCommittees.includes(label.dataset.committee)) {
                         label.classList.add('correct');
                     }
                 });
