@@ -186,12 +186,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function isModalOpen() {
-        return modal && modal.style.display === 'block';
+        return modal && modal.style.display === 'flex';
     }
 
     function openModal() {
         if (!modal) return;
-        modal.style.display = 'block';
+        modal.style.display = 'flex';
         modal.scrollTop = 0;
         if (modalContentWrapper) {
             modalContentWrapper.scrollTop = 0;
