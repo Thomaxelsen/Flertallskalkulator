@@ -166,6 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="detail-info">
                 <p><strong>Parti:</strong> ${party.name}</p>
                 <p><strong>Valgkrets:</strong> ${rep.constituencyName}</p>
+                ${rep.committeeRole ? `<p><strong>Komitérolle:</strong> ${rep.committeeRole}</p>` : ''}
                 ${formatCommitteeDetails(rep.committees)}
                 ${rep.phone ? `<p><strong>Telefon:</strong> <a href="tel:${rep.phone}">${rep.phone}</a></p>` : ''}
                 ${rep.email ? `<p><strong>E-post:</strong> <a href="mailto:${rep.email}">${rep.email}</a></p>` : ''}
@@ -282,6 +283,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return a.localeCompare(b);
         });
 
+        const isGroupedByCommittee = groupBy === 'committee';
+
         sortedGroupKeys.forEach(groupKey => {
             let separator;
             if (groupBy === 'party') {
@@ -300,19 +303,60 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             representativeGrid.appendChild(separator);
 
-            grouped[groupKey].forEach(rep => {
+            const representatives = isGroupedByCommittee
+                ? [...grouped[groupKey]].sort(sortByCommitteeRoleThenName)
+                : grouped[groupKey];
+
+            representatives.forEach(rep => {
                 const partyInfo = partiesMap[rep.partyShorthand];
-                const card = createRepresentativeCard(rep, partyInfo);
+                const card = createRepresentativeCard(rep, partyInfo, {
+                    highlightCommitteeRole: isGroupedByCommittee
+                });
                 representativeGrid.appendChild(card);
             });
         });
     }
 
-    function createRepresentativeCard(rep, party) {
+    function sortByCommitteeRoleThenName(a, b) {
+        const priorityDiff = getCommitteeRolePriority(a.committeeRole) - getCommitteeRolePriority(b.committeeRole);
+        if (priorityDiff !== 0) return priorityDiff;
+        return a.name.localeCompare(b.name, 'nb');
+    }
+
+    function getCommitteeRolePriority(role = '') {
+        if (!role) return 3;
+        const normalized = role.trim().toLowerCase();
+        switch (normalized) {
+            case 'leder':
+            case 'komiteleder':
+            case 'komitéleder':
+                return 0;
+            case '1. nestleder':
+            case '1.nestleder':
+            case 'første nestleder':
+                return 1;
+            case '2. nestleder':
+            case '2.nestleder':
+            case 'andre nestleder':
+                return 2;
+            default:
+                return 3;
+        }
+    }
+
+    function createRepresentativeCard(rep, party, { highlightCommitteeRole = false } = {}) {
         const card = document.createElement('div');
         card.className = 'representative-card';
         card.style.setProperty('--party-color', party.color || '#ccc');
         card.dataset.info = JSON.stringify(rep);
+
+        if (highlightCommitteeRole && rep.committeeRole) {
+            card.classList.add('committee-role-highlight');
+        }
+
+        const committeeRoleMarkup = rep.committeeRole
+            ? `<span class="committee-role-badge" aria-label="Komitérolle">${rep.committeeRole}</span>`
+            : '';
 
         card.innerHTML = `
             <div class="card-header">
@@ -321,6 +365,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div class="card-body">
                 <div class="representative-meta">
+                    ${committeeRoleMarkup}
                     <span>${formatCommitteeSummary(rep.committees)}</span>
                 </div>
             </div>
