@@ -71,6 +71,57 @@
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
+.representative-card.stortingspresident-card {
+    background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 50%, #ffe082 100%);
+    border: 1px solid rgba(212, 175, 55, 0.55);
+    border-top-color: #d4af37;
+    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.25);
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.representative-card.stortingspresident-card::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.6) 45%, rgba(255, 255, 255, 0.1) 60%, transparent 100%);
+    transform: translateX(-100%) rotate(20deg);
+    animation: stortingspresident-shimmer 4s infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.representative-card.stortingspresident-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+.representative-card.stortingspresident-card .committee-role-badge {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(212, 175, 55, 0.45));
+    color: #6b4e00;
+}
+
+.representative-card.stortingspresident-card:hover::after,
+.representative-card.stortingspresident-card.selected-detail::after {
+    animation-duration: 2.5s;
+}
+
+@keyframes stortingspresident-shimmer {
+    0% {
+        transform: translateX(-120%) rotate(20deg);
+    }
+    60% {
+        transform: translateX(60%) rotate(20deg);
+    }
+    100% {
+        transform: translateX(120%) rotate(20deg);
+    }
+}
+
 .representative-card:hover,
 .representative-card.selected-detail {
     transform: translateY(-4px);

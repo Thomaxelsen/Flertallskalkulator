@@ -278,9 +278,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (groupBy === 'party') {
                 return (partiesMap[a]?.position || 99) - (partiesMap[b]?.position || 99);
             }
-            if (a === 'Ikke tildelt komité') return 1; // Plasser denne sist
-            if (b === 'Ikke tildelt komité') return -1;
-            return a.localeCompare(b);
+            if (groupBy === 'committee') {
+                const priorityDiff = getCommitteeGroupPriority(a) - getCommitteeGroupPriority(b);
+                if (priorityDiff !== 0) return priorityDiff;
+                return a.localeCompare(b, 'nb');
+            }
+            return a.localeCompare(b, 'nb');
         });
 
         const isGroupedByCommittee = groupBy === 'committee';
@@ -327,6 +330,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!role) return 3;
         const normalized = role.trim().toLowerCase();
         switch (normalized) {
+            case 'stortingspresident':
+                return -1;
             case 'leder':
             case 'komiteleder':
             case 'komitéleder':
@@ -348,6 +353,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const card = document.createElement('div');
         card.className = 'representative-card';
         card.style.setProperty('--party-color', party.color || '#ccc');
+
+        const isStortingspresident = (rep.committees || []).includes('Stortingspresident')
+            || (rep.committeeRole && rep.committeeRole.trim().toLowerCase() === 'stortingspresident');
+
+        if (isStortingspresident) {
+            card.classList.add('stortingspresident-card');
+            card.style.setProperty('--party-color', '#d4af37');
+        }
         card.dataset.info = JSON.stringify(rep);
 
         if (highlightCommitteeRole && rep.committeeRole) {
@@ -397,6 +410,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const label = committees.length > 1 ? 'Komitéer' : 'Komité';
         return `<p><strong>${label}:</strong> ${committees.join(', ')}</p>`;
+    }
+
+    function getCommitteeGroupPriority(name = '') {
+        if (name === 'Ikke tildelt komité') return 2;
+        if (name === 'Stortingspresident') return 1;
+        return 0;
     }
 
     function debounce(func, wait) {
