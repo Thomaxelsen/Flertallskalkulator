@@ -41,8 +41,8 @@
             <h2>Stortingsdokumenter uten egen backend</h2>
             <p>Denne siden henter ferske dokumenter direkte fra Stortingets åpne API. Alt kjører i nettleseren, så du kan
                 publisere løsningen på GitHub Pages eller andre statiske tjenester uten å sette opp en server.</p>
-            <p>Legg inn din egen API-nøkkel fra <a href="https://data.stortinget.no/dokumentasjon-og-hjelp/" target="_blank" rel="noopener">data.stortinget.no</a>
-                for å hente data. Nøkkelen lagres lokalt i nettleseren din.</p>
+            <p>API-et kan som oftest brukes uten nøkkel, men du kan legge inn din egen API-nøkkel fra <a href="https://data.stortinget.no/dokumentasjon-og-hjelp/" target="_blank" rel="noopener">data.stortinget.no</a>
+                for høyere stabilitet og kvoter. Nøkkelen lagres lokalt i nettleseren din.</p>
         </section>
 
         <section class="document-controls">
@@ -50,7 +50,7 @@
                 <div class="control-group">
                     <label for="apiKeyInput">API-nøkkel</label>
                     <input id="apiKeyInput" type="password" placeholder="Lim inn Ocp-Apim-Subscription-Key" autocomplete="off">
-                    <small class="help-text">Nøkkelen lagres trygt i nettleserens <em>localStorage</em> og sendes kun til Stortingets API.</small>
+                    <small class="help-text">Valgfritt. Nøkkelen lagres trygt i nettleserens <em>localStorage</em> og sendes kun til Stortingets API.</small>
                 </div>
                 <div class="control-group">
                     <label for="documentTypeSelect">Dokumenttype</label>
@@ -80,7 +80,7 @@
                     <button id="clearFiltersBtn" class="btn-secondary">Nullstill filtre</button>
                 </div>
             </div>
-            <div class="status-message" id="statusMessage">Oppgi API-nøkkel og klikk «Hent dokumenter».</div>
+            <div class="status-message" id="statusMessage">Klikk «Hent dokumenter» for å laste data. Legg inn API-nøkkel ved behov.</div>
         </section>
 
         <section class="document-results">

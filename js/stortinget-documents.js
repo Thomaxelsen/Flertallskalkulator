@@ -117,10 +117,6 @@
     }
 
     function resetAndFetch() {
-        if (!state.apiKey) {
-            showStatus("Du må legge inn en gyldig API-nøkkel før du kan hente data.", "warning");
-            return;
-        }
         state.page = 1;
         state.cachedItems = [];
         state.hasMore = true;
@@ -178,7 +174,14 @@
             }
         } catch (error) {
             console.error("Klarte ikke å hente dokumenter", error);
-            showStatus(`Kunne ikke hente data: ${error.message}`, "error");
+            if (!state.apiKey && /401|subscription/i.test(error.message)) {
+                showStatus(
+                    "Kunne ikke hente data uten API-nøkkel. Legg inn en nøkkel fra data.stortinget.no, eller prøv igjen senere.",
+                    "warning"
+                );
+            } else {
+                showStatus(`Kunne ikke hente data: ${error.message}`, "error");
+            }
         } finally {
             state.loading = false;
             updateLoadMoreVisibility();
