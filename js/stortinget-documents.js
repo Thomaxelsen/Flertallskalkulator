@@ -117,10 +117,6 @@
     }
 
     function resetAndFetch() {
-        if (!state.apiKey) {
-            showStatus("Du må legge inn en gyldig API-nøkkel før du kan hente data.", "warning");
-            return;
-        }
         state.page = 1;
         state.cachedItems = [];
         state.hasMore = true;
@@ -134,11 +130,42 @@
             throw new Error("Ukjent dokumenttype valgt.");
         }
         const params = new URLSearchParams({
-            format: "json",
+            format: "JSON",
             side: String(state.page),
             antall: String(PAGE_SIZE)
         });
         return `${API_BASE}${current.endpoint}?${params.toString()}`;
+    }
+
+    function createUserFacingError(message, type, meta = {}) {
+        const error = new Error(message);
+        error.userMessage = message;
+        error.type = type;
+        error.meta = meta;
+        return error;
+    }
+
+    function sanitizeErrorBody(bodyText) {
+        if (!bodyText) {
+            return "";
+        }
+        return bodyText
+            .replace(/<style[\s\S]*?<\/style>/gi, " ")
+            .replace(/<script[\s\S]*?<\/script>/gi, " ")
+            .replace(/<[^>]+>/g, " ")
+            .replace(/&nbsp;/gi, " ")
+            .replace(/\s+/g, " ")
+            .trim();
+    }
+
+    function truncate(text, maxLength = 280) {
+        if (typeof text !== "string") {
+            return "";
+        }
+        if (text.length <= maxLength) {
+            return text;
+        }
+        return `${text.slice(0, maxLength - 1).trim()}…`;
     }
 
     async function fetchDocuments() {
@@ -152,15 +179,44 @@
                 headers: buildHeaders()
             });
 
+            const contentType = response.headers.get("content-type") || "";
+
             if (!response.ok) {
                 const errorText = await response.text();
-                throw new Error(`Feil ${response.status}: ${errorText || response.statusText}`);
+                const sanitized = sanitizeErrorBody(errorText);
+
+                if (response.status === 404 && /<html/i.test(errorText)) {
+                    throw createUserFacingError(
+                        "Stortinget returnerte 404 for forespørselen. Kontroller at valgt dokumenttype støttes og at " +
+                            `${url} er gyldig.`,
+                        "notFound",
+                        { url, bodyPreview: sanitized }
+                    );
+                }
+
+                const reason = sanitized ? truncate(sanitized) : (response.statusText || "ukjent feil");
+                throw createUserFacingError(`Feil ${response.status}: ${reason}`, "httpError", {
+                    status: response.status,
+                    url,
+                    bodyPreview: sanitized
+                });
+            }
+
+            if (!/json/i.test(contentType)) {
+                const unexpectedBody = await response.text();
+                const sanitized = sanitizeErrorBody(unexpectedBody).slice(0, 200);
+                throw createUserFacingError(
+                    "Stortinget returnerte et svar som ikke var JSON. Dette kan skje ved midlertidige driftsavvik eller dersom " +
+                        "API-et krever nøkkel.",
+                    "unexpectedFormat",
+                    { url, bodyPreview: sanitized }
+                );
             }
 
             const data = await response.json();
             const items = extractItems(data);
             if (!Array.isArray(items)) {
-                throw new Error("Uventet datastruktur fra API-et.");
+                throw createUserFacingError("Uventet datastruktur fra API-et.", "invalidData", { url });
             }
 
             state.cachedItems = state.cachedItems.concat(items);
@@ -177,8 +233,18 @@
                 showStatus(`Viser ${state.cachedItems.length} ${typeName}${state.cachedItems.length === 1 ? "" : "er"}.`, "success");
             }
         } catch (error) {
-            console.error("Klarte ikke å hente dokumenter", error);
-            showStatus(`Kunne ikke hente data: ${error.message}`, "error");
+            console.error("Klarte ikke å hente dokumenter", error, error?.meta || null);
+            if (!state.apiKey && /401|subscription/i.test(error.message)) {
+                showStatus(
+                    "Kunne ikke hente data uten API-nøkkel. Legg inn en nøkkel fra data.stortinget.no, eller prøv igjen senere.",
+                    "warning"
+                );
+            } else if (error.userMessage) {
+                const statusType = error.type === "notFound" ? "warning" : "error";
+                showStatus(error.userMessage, statusType);
+            } else {
+                showStatus(`Kunne ikke hente data: ${error.message}`, "error");
+            }
         } finally {
             state.loading = false;
             updateLoadMoreVisibility();
