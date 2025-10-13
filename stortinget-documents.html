@@ -32,38 +32,28 @@
             </div>
             <div class="header-text">
                 <h1>Direkte data fra Stortinget</h1>
-                <div class="header-subtitle">Skriftlige spørsmål, interpellasjoner, spørretimespørsmål og Dok 8-forslag</div>
+                <div class="header-subtitle">Skriftlige spørsmål, interpellasjoner og spørretimespørsmål</div>
             </div>
             <div class="nav-links"></div>
         </header>
 
         <section class="introduction">
             <h2>Stortingsdokumenter uten egen backend</h2>
-            <p>Denne siden henter ferske dokumenter direkte fra Stortingets åpne API. Alt kjører i nettleseren, så du kan
+            <p>Denne siden henter ferske spørsmål direkte fra Stortingets åpne API. Alt kjører i nettleseren, så du kan
                 publisere løsningen på GitHub Pages eller andre statiske tjenester uten å sette opp en server.</p>
-            <p>API-et kan som oftest brukes uten nøkkel, men du kan legge inn din egen API-nøkkel fra <a href="https://data.stortinget.no/dokumentasjon-og-hjelp/" target="_blank" rel="noopener">data.stortinget.no</a>
-                for høyere stabilitet og kvoter. Nøkkelen lagres lokalt i nettleseren din.</p>
+            <p>Forespørslene er delt i de tre hovedtypene for spørsmål slik Stortinget organiserer dem: skriftlige spørsmål,
+                interpellasjoner og spørretimespørsmål.</p>
         </section>
 
         <section class="document-controls">
             <div class="control-row">
                 <div class="control-group">
-                    <label for="apiKeyInput">API-nøkkel</label>
-                    <input id="apiKeyInput" type="password" placeholder="Lim inn Ocp-Apim-Subscription-Key" autocomplete="off">
-                    <small class="help-text">Valgfritt. Nøkkelen lagres trygt i nettleserens <em>localStorage</em> og sendes kun til Stortingets API.</small>
-                </div>
-                <div class="control-group">
-                    <label for="documentTypeSelect">Dokumenttype</label>
+                    <label for="documentTypeSelect">Spørsmålstype</label>
                     <select id="documentTypeSelect">
                         <option value="skriftligesporsmal">Skriftlige spørsmål</option>
                         <option value="interpellasjoner">Interpellasjoner</option>
                         <option value="sporretimesporsmal">Spørretimespørsmål</option>
-                        <option value="representantforslag">Representantforslag (Dok 8)</option>
                     </select>
-                </div>
-                <div class="control-group">
-                    <label for="searchInput">Fritekstsøk (klientside)</label>
-                    <input id="searchInput" type="search" placeholder="Filtrer på tittel eller innhold">
                 </div>
             </div>
             <div class="control-row">
@@ -76,11 +66,11 @@
                     <input id="toDate" type="date">
                 </div>
                 <div class="control-group action-group">
-                    <button id="loadDocumentsBtn" class="btn-primary">Hent dokumenter</button>
+                    <button id="loadDocumentsBtn" class="btn-primary">Hent spørsmål</button>
                     <button id="clearFiltersBtn" class="btn-secondary">Nullstill filtre</button>
                 </div>
             </div>
-            <div class="status-message" id="statusMessage">Klikk «Hent dokumenter» for å laste data. Legg inn API-nøkkel ved behov.</div>
+            <div class="status-message" id="statusMessage">Klikk «Hent spørsmål» for å laste data fra Stortinget.</div>
         </section>
 
         <section class="document-results">
@@ -95,7 +85,7 @@
                 <li>Push endringene til <code>main</code>-branchen (eller den grenen GitHub Pages bygger fra).</li>
                 <li>Aktiver GitHub Pages under <strong>Settings &gt; Pages</strong> og velg riktig kilde (for eksempel «Deploy from a branch»).</li>
                 <li>Når GitHub Pages er aktivert, blir siden tilgjengelig på <code>https://&lt;brukernavn&gt;.github.io/&lt;repo&gt;/stortinget-documents.html</code>.</li>
-                <li>Besøk adressen og lim inn API-nøkkelen i feltet for å starte henting av data direkte i nettleseren.</li>
+                <li>Besøk adressen for å starte henting av data direkte i nettleseren.</li>
             </ol>
         </section>
 

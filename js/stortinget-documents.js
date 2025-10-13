@@ -17,11 +17,6 @@
             title: "Spørretimespørsmål",
             endpoint: "sporretimesporsmal",
             friendlyName: "spørretimespørsmål"
-        },
-        representantforslag: {
-            title: "Representantforslag (Dokument 8)",
-            endpoint: "representantforslag",
-            friendlyName: "representantforslag"
         }
     };
 
@@ -32,17 +27,13 @@
         cachedItems: [],
         filters: {
             type: "skriftligesporsmal",
-            search: "",
             fromDate: "",
             toDate: ""
-        },
-        apiKey: ""
+        }
     };
 
     const elements = {
-        apiKeyInput: document.getElementById("apiKeyInput"),
         documentTypeSelect: document.getElementById("documentTypeSelect"),
-        searchInput: document.getElementById("searchInput"),
         fromDate: document.getElementById("fromDate"),
         toDate: document.getElementById("toDate"),
         loadButton: document.getElementById("loadDocumentsBtn"),
@@ -53,34 +44,13 @@
     };
 
     function init() {
-        if (!elements.apiKeyInput || !elements.list) {
+        if (!elements.list) {
             console.error("Stortinget documents: Mangler forventede DOM-elementer.");
             return;
         }
 
-        const storedKey = localStorage.getItem("stortingetApiKey");
-        if (storedKey) {
-            elements.apiKeyInput.value = storedKey;
-            state.apiKey = storedKey;
-        }
-
-        elements.apiKeyInput.addEventListener("input", (event) => {
-            const value = event.target.value.trim();
-            state.apiKey = value;
-            if (value) {
-                localStorage.setItem("stortingetApiKey", value);
-            } else {
-                localStorage.removeItem("stortingetApiKey");
-            }
-        });
-
         elements.documentTypeSelect.addEventListener("change", (event) => {
             state.filters.type = event.target.value;
-        });
-
-        elements.searchInput.addEventListener("input", (event) => {
-            state.filters.search = event.target.value.trim().toLowerCase();
-            filterAndRender();
         });
 
         elements.fromDate.addEventListener("change", (event) => {
@@ -98,10 +68,8 @@
         });
 
         elements.clearButton.addEventListener("click", () => {
-            elements.searchInput.value = "";
             elements.fromDate.value = "";
             elements.toDate.value = "";
-            state.filters.search = "";
             state.filters.fromDate = "";
             state.filters.toDate = "";
             filterAndRender();
@@ -132,7 +100,8 @@
         const params = new URLSearchParams({
             format: "JSON",
             side: String(state.page),
-            antall: String(PAGE_SIZE)
+            antall: String(PAGE_SIZE),
+            status: "alle"
         });
         return `${API_BASE}${current.endpoint}?${params.toString()}`;
     }
@@ -227,19 +196,14 @@
             filterAndRender();
             updateLoadMoreVisibility();
             if (state.cachedItems.length === 0) {
-                showStatus("Fant ingen dokumenter for valgt type.", "info");
+                showStatus("Fant ingen spørsmål for valgt type.", "info");
             } else {
                 const typeName = DOCUMENT_TYPES[state.filters.type].friendlyName;
                 showStatus(`Viser ${state.cachedItems.length} ${typeName}${state.cachedItems.length === 1 ? "" : "er"}.`, "success");
             }
         } catch (error) {
-            console.error("Klarte ikke å hente dokumenter", error, error?.meta || null);
-            if (!state.apiKey && /401|subscription/i.test(error.message)) {
-                showStatus(
-                    "Kunne ikke hente data uten API-nøkkel. Legg inn en nøkkel fra data.stortinget.no, eller prøv igjen senere.",
-                    "warning"
-                );
-            } else if (error.userMessage) {
+            console.error("Klarte ikke å hente spørsmål", error, error?.meta || null);
+            if (error.userMessage) {
                 const statusType = error.type === "notFound" ? "warning" : "error";
                 showStatus(error.userMessage, statusType);
             } else {
@@ -255,9 +219,6 @@
         const headers = {
             "Accept": "application/json"
         };
-        if (state.apiKey) {
-            headers["Ocp-Apim-Subscription-Key"] = state.apiKey;
-        }
         return headers;
     }
 
@@ -289,50 +250,8 @@
     }
 
     function filterAndRender() {
-        const filtered = state.cachedItems.filter((item) => {
-            return matchesSearch(item, state.filters.search) && matchesDate(item);
-        });
+        const filtered = state.cachedItems.filter((item) => matchesDate(item));
         renderDocuments(filtered);
-    }
-
-    function matchesSearch(item, searchTerm) {
-        if (!searchTerm) {
-            return true;
-        }
-        const searchableText = buildSearchString(item).toLowerCase();
-        return searchableText.includes(searchTerm);
-    }
-
-    function buildSearchString(item) {
-        const parts = [];
-        const title = pickValue(item, [
-            ["tittel"],
-            ["sak", "tittel"],
-            ["dokumentreferanse"],
-            ["korttittel"],
-            ["overskrift"],
-            ["innhold", "tittel"],
-            ["sporsmalstekst"],
-            ["interpellasjonstekst"],
-            ["forslagstittel"]
-        ]);
-        if (title) parts.push(title);
-
-        const summary = pickValue(item, [
-            ["sammendrag"],
-            ["beskrivelse"],
-            ["sporsmalstekst"],
-            ["begrunnelse"],
-            ["interpellasjonstekst"],
-            ["forslagstekst"],
-            ["innhold", "tekst"]
-        ]);
-        if (summary) parts.push(summary);
-
-        if (item && typeof item === "object") {
-            parts.push(JSON.stringify(item));
-        }
-        return parts.join(" \n ");
     }
 
     function matchesDate(item) {
@@ -376,7 +295,7 @@
         if (!items || items.length === 0) {
             const placeholder = document.createElement("div");
             placeholder.className = "document-card empty";
-            placeholder.textContent = "Ingen dokumenter å vise med valgt filtrering.";
+            placeholder.textContent = "Ingen spørsmål å vise med valgt filtrering.";
             elements.list.appendChild(placeholder);
             return;
         }
@@ -414,7 +333,6 @@
             ["sammendrag"],
             ["sporsmalstekst"],
             ["begrunnelse"],
-            ["forslagstekst"],
             ["interpellasjonstekst"],
             ["innhold", "tekst"]
         ]);
@@ -442,12 +360,12 @@
         const proposer = pickValue(item, [
             ["representant", "navn"],
             ["sporsmalstiller", "navn"],
-            ["forslagsstiller", "navn"],
+            ["sporsmal_fra", "navn"],
             ["innsender", "navn"],
             ["person", "navn"]
         ]);
         if (proposer) {
-            metadataItems.push({ label: "Forslagsstiller", value: proposer });
+            metadataItems.push({ label: "Spørsmål fra", value: proposer });
         }
 
         const header = document.createElement("header");
