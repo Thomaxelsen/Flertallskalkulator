@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stortingsdokumenter - Direkte fra API</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="burger-menu" id="burgerMenu">
+        <div class="burger-bar"></div>
+        <div class="burger-bar"></div>
+        <div class="burger-bar"></div>
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="menu-header">
+            <h3>Meny</h3>
+            <button class="close-button" id="closeMenu">×</button>
+        </div>
+        <div class="menu-items" id="mobileMenuItems"></div>
+    </div>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <a href="index.html">
+                    <img src="images/Logo.png" alt="Kreftforeningens logo" class="logo-image">
+                </a>
+            </div>
+            <div class="header-text">
+                <h1>Direkte data fra Stortinget</h1>
+                <div class="header-subtitle">Skriftlige spørsmål, interpellasjoner, spørretimespørsmål og Dok 8-forslag</div>
+            </div>
+            <div class="nav-links"></div>
+        </header>
+
+        <section class="introduction">
+            <h2>Stortingsdokumenter uten egen backend</h2>
+            <p>Denne siden henter ferske dokumenter direkte fra Stortingets åpne API. Alt kjører i nettleseren, så du kan
+                publisere løsningen på GitHub Pages eller andre statiske tjenester uten å sette opp en server.</p>
+            <p>Legg inn din egen API-nøkkel fra <a href="https://data.stortinget.no/dokumentasjon-og-hjelp/" target="_blank" rel="noopener">data.stortinget.no</a>
+                for å hente data. Nøkkelen lagres lokalt i nettleseren din.</p>
+        </section>
+
+        <section class="document-controls">
+            <div class="control-row">
+                <div class="control-group">
+                    <label for="apiKeyInput">API-nøkkel</label>
+                    <input id="apiKeyInput" type="password" placeholder="Lim inn Ocp-Apim-Subscription-Key" autocomplete="off">
+                    <small class="help-text">Nøkkelen lagres trygt i nettleserens <em>localStorage</em> og sendes kun til Stortingets API.</small>
+                </div>
+                <div class="control-group">
+                    <label for="documentTypeSelect">Dokumenttype</label>
+                    <select id="documentTypeSelect">
+                        <option value="skriftligesporsmal">Skriftlige spørsmål</option>
+                        <option value="interpellasjoner">Interpellasjoner</option>
+                        <option value="sporretimesporsmal">Spørretimespørsmål</option>
+                        <option value="representantforslag">Representantforslag (Dok 8)</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="searchInput">Fritekstsøk (klientside)</label>
+                    <input id="searchInput" type="search" placeholder="Filtrer på tittel eller innhold">
+                </div>
+            </div>
+            <div class="control-row">
+                <div class="control-group">
+                    <label for="fromDate">Fra dato</label>
+                    <input id="fromDate" type="date">
+                </div>
+                <div class="control-group">
+                    <label for="toDate">Til dato</label>
+                    <input id="toDate" type="date">
+                </div>
+                <div class="control-group action-group">
+                    <button id="loadDocumentsBtn" class="btn-primary">Hent dokumenter</button>
+                    <button id="clearFiltersBtn" class="btn-secondary">Nullstill filtre</button>
+                </div>
+            </div>
+            <div class="status-message" id="statusMessage">Oppgi API-nøkkel og klikk «Hent dokumenter».</div>
+        </section>
+
+        <section class="document-results">
+            <div id="documentsList" class="documents-list"></div>
+            <button id="loadMoreBtn" class="btn-secondary load-more-button" hidden>Last inn flere</button>
+        </section>
+
+        <section class="documentation-hint">
+            <h2>Slik publiserer du på GitHub Pages</h2>
+            <ol>
+                <li>Legg denne HTML-filen og JavaScript-filen i repoet ditt og sørg for at de versjoneres i Git.</li>
+                <li>Push endringene til <code>main</code>-branchen (eller den grenen GitHub Pages bygger fra).</li>
+                <li>Aktiver GitHub Pages under <strong>Settings &gt; Pages</strong> og velg riktig kilde (for eksempel «Deploy from a branch»).</li>
+                <li>Når GitHub Pages er aktivert, blir siden tilgjengelig på <code>https://&lt;brukernavn&gt;.github.io/&lt;repo&gt;/stortinget-documents.html</code>.</li>
+                <li>Besøk adressen og lim inn API-nøkkelen i feltet for å starte henting av data direkte i nettleseren.</li>
+            </ol>
+        </section>
+
+        <footer>
+            Data hentes fra Stortingets åpne API ved hver forespørsel. Ingen data lagres på server-siden.
+        </footer>
+    </div>
+
+    <script src="js/navigationConfig.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/stortinget-documents.js"></script>
+</body>
+</html>
