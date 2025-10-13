@@ -8,7 +8,8 @@ window.navigationConfig = {
             links: [
                 { href: "index.html", title: "Flertallskalkulator" },
                 { href: "issue-matrix.html", title: "Saksmatrise" },
-                { href: "sakskompass.html", title: "Sakskompass" }
+                { href: "sakskompass.html", title: "Sakskompass" },
+                { href: "stortinget-documents.html", title: "Stortingsdokumenter" }
             ]
         },
         {
