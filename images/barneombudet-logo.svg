@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 120" role="img" aria-labelledby="title desc">
+  <title id="title">Barneombudet merke</title>
+  <desc id="desc">Stilisert logo inspirert av Barneombudets profil med vennlige former og farger.</desc>
+  <defs>
+    <linearGradient id="sunrise" x1="0%" x2="100%" y1="0%" y2="0%">
+      <stop offset="0%" stop-color="#ff8a5c" />
+      <stop offset="100%" stop-color="#ffd85c" />
+    </linearGradient>
+  </defs>
+  <rect width="320" height="120" rx="18" fill="#1d3bc7" />
+  <circle cx="70" cy="60" r="34" fill="#2ed9c3" />
+  <circle cx="70" cy="52" r="10" fill="#fff" />
+  <rect x="52" y="70" width="36" height="16" rx="8" fill="url(#sunrise)" />
+  <text x="125" y="74" fill="#fff" font-family="'Segoe UI', 'Inter', system-ui, sans-serif" font-weight="700" font-size="28">Barneombudet</text>
+  <text x="125" y="96" fill="#cdd7ff" font-family="'Segoe UI', 'Inter', system-ui, sans-serif" font-size="14">på lag med barn og unge</text>
+</svg>

@@ -50,9 +50,9 @@
 }
 
 .party-card.selected {
-    border-color: #005FAB; /* Kreftforeningens blåfarge */
-    box-shadow: 0 4px 15px rgba(0, 95, 171, 0.25);
-    background-color: #f0f8ff;
+    border-color: #1d3bc7; /* Barneombudets hovedblå */
+    box-shadow: 0 4px 15px rgba(29, 59, 199, 0.2);
+    background-color: #eef2ff;
 }
 
 .party-logo {

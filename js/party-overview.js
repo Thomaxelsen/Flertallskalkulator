@@ -151,7 +151,7 @@ function generatePartyBoxes(parties, partyIssuesMap) {
             
             <div class="party-stats">
                 <div class="agreement-percentage">${supportPercentage}%</div>
-                <div class="agreement-text">full enighet med Kreftforeningens politikk</div>
+                <div class="agreement-text">full enighet med Barneombudets politikk</div>
                 <div class="agreement-bars">
                     <div class="bar-container">
                         <div class="label">Full enighet (${supportedIssues.length})</div>

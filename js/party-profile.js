@@ -874,7 +874,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function getPartyLogoPath(shorthand) {
-        if (!shorthand) return 'images/Logo.png';
+        if (!shorthand) return 'images/barneombudet-logo.svg';
         return `images/parties/${shorthand.toLowerCase()}.png`;
     }
 

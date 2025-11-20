@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }];
 
         const layout = {
-            title: 'Partienes Enighet om Kreftforeningens Saker (Heatmap)', // Tydeliggjort tittel
+            title: 'Partienes Enighet om Barneombudets Saker (Heatmap)', // Tydeliggjort tittel
             xaxis: { tickangle: -45, automargin: true, side: 'top', tickfont: { size: 11 } },
             yaxis: { automargin: true, autorange: 'reversed', tickfont: { size: 11 } },
             margin: { l: 60, r: 80, b: 20, t: 120 }, autosize: true

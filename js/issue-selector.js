@@ -229,7 +229,7 @@ function createIssueSelector() {
     const sortedIssues = (window.issues || []).slice().sort((a, b) => a.name.localeCompare(b.name));
 
     containerDiv.innerHTML = `
-        <p class="issue-description">Velg en sak for å se om det er flertall for Kreftforeningens standpunkt på Stortinget.</p>
+        <p class="issue-description">Velg en sak for å se om det er flertall for Barneombudets standpunkt på Stortinget.</p>
         <div class="issue-filters">
             <select id="areaFilter" class="area-filter">
                 <option value="">Alle saksområder</option>
@@ -241,7 +241,7 @@ function createIssueSelector() {
             ${sortedIssues.map(issue => `<option value="${issue.id}">${issue.name}</option>`).join('')}
         </select>
         <div id="issueDetails" class="issue-details">
-            <p class="issue-explainer">Velg en sak fra listen ovenfor for å se hvilke partier som er enige med Kreftforeningens standpunkt.</p>
+            <p class="issue-explainer">Velg en sak fra listen ovenfor for å se hvilke partier som er enige med Barneombudets standpunkt.</p>
         </div>
     `;
     issueSelectorContainer.appendChild(containerDiv);
@@ -347,7 +347,7 @@ function updateIssueDetails(issue = null, partiesLevel2 = []) {
     if (!issueDetails) return;
 
     if (!issue) {
-        issueDetails.innerHTML = `<p class="issue-explainer">Velg en sak fra listen ovenfor for å se hvilke partier som er enige med Kreftforeningens standpunkt.</p>`;
+        issueDetails.innerHTML = `<p class="issue-explainer">Velg en sak fra listen ovenfor for å se hvilke partier som er enige med Barneombudets standpunkt.</p>`;
         return;
     }
 
@@ -390,12 +390,12 @@ function updateIssueDetails(issue = null, partiesLevel2 = []) {
         <p class="issue-area">${issue.area || 'Ukjent område'}</p>
         <div class="issue-status ${hasMajority ? 'majority' : 'no-majority'}">
             ${hasMajority
-                ? `<strong>Flertall!</strong> ${totalSeats} av 169 mandater støtter Kreftforeningens standpunkt.`
+                ? `<strong>Flertall!</strong> ${totalSeats} av 169 mandater støtter Barneombudets standpunkt.`
                 : `<strong>Ikke flertall.</strong> ${totalSeats} av 169 mandater støtter. Trenger ${Math.max(0, 85 - totalSeats)} flere for flertall.`
             }
         </div>
         <div class="issue-parties">
-            <h4>Partier som er helt enige med Kreftforeningen (Nivå 2):</h4>
+            <h4>Partier som er helt enige med Barneombudet (Nivå 2):</h4>
             ${partiesLevel2.length > 0 && hasAnyQuote ? `<p class="interaction-tip">${interactionTip}</p>` : ''}
             <div class="issue-parties-list">
                 ${partiesHTML}

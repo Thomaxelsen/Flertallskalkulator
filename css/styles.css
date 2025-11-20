@@ -1,22 +1,22 @@
 /* === styles.css === */
 
 :root {
-    --primary-color: #003087;
-    --secondary-color: #c8102e;
-    --accent-color: #6e2b62;
-    --success-color: #28a745;
-    --fail-color: #dc3545;
+    --primary-color: #1d3bc7;
+    --secondary-color: #2ed9c3;
+    --accent-color: #ff8a5c;
+    --success-color: #2abf9d;
+    --fail-color: #f25c8d;
     --neutral-color: #6c757d;
-    --light-bg: #f7f9fc;
-    --border-color: #dee2e6;
-    /* Kreftforeningens fargepalett */
-    --kf-blue: #003087;
-    --kf-purple: #6e2b62;
-    --kf-pink: #e63c8c;
-    --kf-orange: #ff6d30;
-    --kf-yellow: #ffbe2c;
-    --kf-light-green: #8ece3f;
-    --kf-green: #00a8a3;
+    --light-bg: #f1f4ff;
+    --border-color: #dfe6ff;
+    /* Barneombudets inspirerte fargepalett */
+    --kf-blue: #1d3bc7;
+    --kf-purple: #2ed9c3;
+    --kf-pink: #ff8a5c;
+    --kf-orange: #ffb347;
+    --kf-yellow: #ffd85c;
+    --kf-light-green: #b6f3e5;
+    --kf-green: #2abf9d;
     /* Variabel for menybredde */
     --menu-width: 250px;
 }
@@ -121,7 +121,7 @@ header h1 strong {
 }
 
 .nav-link:hover {
-    background-color: rgba(0, 48, 135, 0.05);
+    background-color: rgba(29, 59, 199, 0.05);
     color: var(--kf-purple);
     transform: translateY(-1px);
 }
@@ -218,8 +218,8 @@ header h1 strong {
 /* MODIFISERT: .selected stil for nye kort */
 .party-card.selected {
     border-color: var(--kf-pink); /* Bruker rosa for index.html for konsistens med resten av siden */
-    box-shadow: 0 4px 15px rgba(230, 60, 140, 0.25);
-    background-color: rgba(230, 60, 140, 0.05);
+    box-shadow: 0 4px 15px rgba(255, 138, 92, 0.25);
+    background-color: rgba(255, 138, 92, 0.05);
 }
 
 /* NY: Stil for logoer i kortene */
@@ -442,15 +442,15 @@ header h1 strong {
     box-shadow: 0 3px 8px rgba(0,0,0,0.08);
 }
 
-.required-votes { background-color: #f8f9fa; color: var(--kf-blue); border: 1px solid rgba(0, 48, 135, 0.1); }
-.votes-for { background-color: rgba(142, 206, 63, 0.08); color: var(--kf-green); border: 1px solid rgba(0, 168, 163, 0.2); }
-.votes-against { background-color: rgba(230, 60, 140, 0.08); color: var(--kf-pink); border: 1px solid rgba(230, 60, 140, 0.2); }
+.required-votes { background-color: #f8f9fa; color: var(--kf-blue); border: 1px solid rgba(29, 59, 199, 0.12); }
+.votes-for { background-color: rgba(182, 243, 229, 0.3); color: var(--kf-green); border: 1px solid rgba(42, 191, 157, 0.35); }
+.votes-against { background-color: rgba(255, 138, 92, 0.12); color: var(--kf-pink); border: 1px solid rgba(255, 138, 92, 0.3); }
 .has-majority { background: linear-gradient(90deg, var(--kf-light-green), var(--kf-green)); color: white; }
 .no-majority { background: linear-gradient(90deg, var(--kf-pink), var(--kf-purple)); color: white; }
 
 .selected-parties {
     margin-top: 25px;
-    background-color: rgba(0, 48, 135, 0.03);
+    background-color: rgba(29, 59, 199, 0.05);
     padding: 15px;
     border-radius: 10px;
 }
@@ -597,7 +597,7 @@ footer {
 }
 .legend-item.selected {
     opacity: 1;
-    background-color: rgba(0, 48, 135, 0.1);
+    background-color: rgba(29, 59, 199, 0.1);
     border: 1px solid var(--kf-blue);
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     transform: translateY(-1px);
@@ -678,7 +678,7 @@ footer {
    transition: all 0.2s ease;
 }
 .area-filter:hover, .issue-dropdown:hover { border-color: var(--kf-purple); box-shadow: 0 2px 5px rgba(0,0,0,0.06); }
-.area-filter:focus, .issue-dropdown:focus { outline: none; border-color: var(--kf-pink); box-shadow: 0 0 0 2px rgba(230, 60, 140, 0.2); }
+.area-filter:focus, .issue-dropdown:focus { outline: none; border-color: var(--kf-pink); box-shadow: 0 0 0 2px rgba(255, 138, 92, 0.2); }
 .issue-details {
    background-color: #f0f4f8;
    border-radius: 6px;
@@ -968,7 +968,7 @@ body.menu-open .burger-menu {
     flex-grow: 1;
 }
 .menu-items a { display: block; padding: 12px 15px; margin-bottom: 10px; color: #333; text-decoration: none; border-radius: 5px; transition: background-color 0.2s, color 0.2s; font-weight: 500; }
-.menu-items a:hover { background-color: rgba(0, 48, 135, 0.05); color: var(--kf-blue); }
+.menu-items a:hover { background-color: rgba(29, 59, 199, 0.05); color: var(--kf-blue); }
 .menu-items a.active { background-color: var(--kf-blue); color: white; font-weight: 600; }
 .menu-overlay {
     position: fixed;
@@ -1089,7 +1089,7 @@ body.menu-open .burger-menu {
     width: 26px;
     height: 26px;
     border-radius: 50%;
-    background-color: rgba(0, 48, 135, 0.08);
+    background-color: rgba(29, 59, 199, 0.08);
     color: var(--kf-blue);
     font-size: 0.8rem;
     transition: transform 0.2s ease;
@@ -1111,8 +1111,8 @@ body.menu-open .burger-menu {
     background-color: white;
 }
 .matrix-table tr.area-header td {
-    background-color: #b3d7f0;
-    color: #003087;
+    background-color: #d6ddff;
+    color: #1d3bc7;
     font-weight: bold;
     font-size: 1.1rem;
     text-align: center;
@@ -1159,7 +1159,7 @@ body.menu-open .burger-menu {
 .matrix-table .cell.has-quote:hover .info-indicator {
     background-color: white;
     color: var(--kf-blue);
-    border-color: rgba(0, 48, 135, 0.3);
+    border-color: rgba(29, 59, 199, 0.3);
 }
 .sum-cell-content { display: inline-flex; align-items: center; justify-content: center; width: 70px; height: 36px; border-radius: 24px; font-weight: bold; font-size: 1rem; border: 1px solid transparent; box-sizing: border-box; cursor: default; }
 .matrix-tooltip { display: none; position: absolute; z-index: 1000; background-color: white; box-shadow: 0 4px 20px rgba(0,0,0,0.15); border-radius: 8px; padding: 15px 20px; max-width: 350px; font-size: 0.95rem; line-height: 1.5; border-left: 4px solid var(--kf-purple); }
@@ -1483,7 +1483,7 @@ body.menu-open .burger-menu {
 }
 .nav-category-title:hover,
 .nav-category-dropdown:hover .nav-category-title {
-    background-color: rgba(0, 48, 135, 0.05);
+    background-color: rgba(29, 59, 199, 0.05);
     color: var(--kf-purple);
 }
 .nav-category-title.active-category {
@@ -1516,13 +1516,13 @@ body.menu-open .burger-menu {
     white-space: nowrap;
 }
 .dropdown-content a:hover {
-    background-color: rgba(0, 48, 135, 0.05);
+    background-color: rgba(29, 59, 199, 0.05);
     color: var(--kf-purple);
 }
 .dropdown-content a.active {
     font-weight: bold;
     color: var(--kf-pink);
-    background-color: rgba(230, 60, 140, 0.05);
+    background-color: rgba(255, 138, 92, 0.05);
     pointer-events: none;
     cursor: default;
 }

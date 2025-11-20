@@ -169,7 +169,7 @@ function toggleParty(partyCard) {
     const issueDetails = document.getElementById('issueDetails');
     if (issueDetails) {
       issueDetails.innerHTML = `
-        <p class="issue-explainer">Velg en sak fra listen ovenfor for å se hvilke partier som er enige med Kreftforeningens standpunkt.</p>
+        <p class="issue-explainer">Velg en sak fra listen ovenfor for å se hvilke partier som er enige med Barneombudets standpunkt.</p>
       `;
     }
   }
@@ -233,7 +233,7 @@ function setupEventListeners() {
       const issueDetails = document.getElementById('issueDetails');
       if (issueDetails) {
         issueDetails.innerHTML = `
-          <p class="issue-explainer">Velg en sak fra listen ovenfor for å se hvilke partier som er enige med Kreftforeningens standpunkt.</p>
+          <p class="issue-explainer">Velg en sak fra listen ovenfor for å se hvilke partier som er enige med Barneombudets standpunkt.</p>
         `;
       }
     }
@@ -252,7 +252,7 @@ function setupEventListeners() {
       const issueDetails = document.getElementById('issueDetails');
       if (issueDetails) {
         issueDetails.innerHTML = `
-          <p class="issue-explainer">Velg en sak fra listen ovenfor for å se hvilke partier som er enige med Kreftforeningens standpunkt.</p>
+          <p class="issue-explainer">Velg en sak fra listen ovenfor for å se hvilke partier som er enige med Barneombudets standpunkt.</p>
         `;
       }
     }
